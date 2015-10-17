@@ -563,6 +563,7 @@ Template.watch_page.events({
   },
   'click .context-mini-preview' (e,t){
     clearCurrentContext();
+    Session.set('mediaDataType', null);
     Meteor.setTimeout( () =>{
       var offset = 130;
       var contextToScrollTo = $('.context-section[data-context-id=' + this._id + ']');
