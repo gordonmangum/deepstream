@@ -18,10 +18,11 @@
 .watch{
   height: 800px;
   .stream-title{
+    @height: 42px;
     display: inline-block;
     font-size: 36px;
-    line-height: normal;
-    height: 42px;
+    line-height: @height;
+    height: @height;
     white-space: nowrap;
     width: calc(100% ~"-" (2* @left-margin + @live-indicator-width));
     max-width: @mainStreamMaxWidth - @left-margin - @live-indicator-width;
