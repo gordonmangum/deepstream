@@ -648,8 +648,8 @@
       }
     }
 
-    &.news-card:not(.list-item-context-section){
-      height: calc(100% ~"-" 2 * @contextAreaPadding + 39px); // not clear why the fudge factor is needed but it is
+    &.news-card.solo-context-section{
+      height: 100%;
       display: flex;
       flex-flow: column;
       .news-section{
@@ -678,6 +678,16 @@
   }
 
 
+}
+
+// because of the add button on top in curate
+.curate-mode{
+  .context-section {
+
+    &.news-card.solo-context-section {
+      height: calc(100%~"-"2 * @contextAreaPadding + 39px); // not clear why the fudge factor is needed but it is
+    }
+  }
 }
 
 .context-section{
