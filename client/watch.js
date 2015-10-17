@@ -676,13 +676,6 @@ Template.context_browser.helpers({
 });
 
 Template.context_browser.events({
-  'click .close' (){
-    Session.set('previousMediaDataType', Session.get('mediaDataType'));
-    Session.set('reducedView', true);
-  },
-  'click .open' (){
-    Session.set('reducedView', false);
-  },
   'click .add-new-context-row' (){
     Session.set('mediaDataType', Session.get('previousMediaDataType') || 'image');
   },
