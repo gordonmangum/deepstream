@@ -1015,6 +1015,19 @@
     .action-button;
     right: 5px;
   }
+  .report-inappropriate-content{
+    position: absolute;
+    bottom: 5px;
+    right: 7px;
+    svg{
+      .size(20px);
+    }
+    &:hover{
+      .fg{
+        fill: @white-icon-color;
+      }
+    }
+  }
 }
 
 .edit-menu{
