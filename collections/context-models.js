@@ -870,6 +870,8 @@ ImageBlock = (function (_super) {
         return 'https://s.yimg.com/pw/favicon.ico';
       case 'imgur':
         return '//s.imgur.com/images/favicon-32x32.png';
+      default:
+        return '/images/image_icon.svg'
     }
   };
 
