@@ -714,7 +714,8 @@ Meteor.methods({
     }
 
     res = HTTP.get('http://api.bambuser.com/broadcast.json', {
-      params: requestParams
+      params: requestParams,
+      timeout: 20000
     });
 
     items = res.data.result;
@@ -751,7 +752,8 @@ Meteor.methods({
     requestParams['page'] = page;
 
     res = HTTP.get('http://api.ustream.tv/json/' + kindOfThingToSearch + '/' + sortBy + '/search/' + searchString, {
-      params: requestParams
+      params: requestParams,
+      timeout: 20000
     });
 
     //console.log('aaaaaaaaaaa')
