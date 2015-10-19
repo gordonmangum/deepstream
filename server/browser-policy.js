@@ -1,5 +1,6 @@
 BrowserPolicy.framing.disallow(); // disallow iframe, for now
-BrowserPolicy.content.disallowInlineScripts(); // this provides a backstop against XSS
+//BrowserPolicy.content.disallowInlineScripts(); // this provides a backstop against XSS
+BrowserPolicy.content.allowInlineScripts(); // this provides a backstop against XSS
 BrowserPolicy.content.allowEval(); // need to allow eval for YouTube iFrame API
 BrowserPolicy.content.allowInlineStyles(); // we use inline styles a fair bit
 BrowserPolicy.content.allowImageOrigin('*'); // allowing all images is easiest and seems safe
@@ -18,6 +19,7 @@ BrowserPolicy.content.allowFontOrigin('*.gstatic.com');
 BrowserPolicy.content.allowFontOrigin('*.bootstrapcdn.com');
 BrowserPolicy.content.allowFontOrigin('*.googleapis.com');
 BrowserPolicy.content.allowFontOrigin('*.bambuser.com');
+BrowserPolicy.content.allowStyleOrigin('*');
 
 // allow scripts from everywhere (we already don't allow inline above)
 BrowserPolicy.content.allowScriptOrigin('*');
@@ -32,3 +34,10 @@ BrowserPolicy.content.allowObjectOrigin('www-cdn.jtvnw.net');
 
 // allow connect everywhere
 BrowserPolicy.content.allowConnectOrigin('*');
+
+// allow lots of twitter
+BrowserPolicy.content.allowOriginForAll("http://platform.twitter.com");
+BrowserPolicy.content.allowOriginForAll("https://platform.twitter.com");
+BrowserPolicy.content.allowOriginForAll("https://*.twimg.com");
+BrowserPolicy.content.allowOriginForAll("https://twitter.com");
+BrowserPolicy.content.allowOriginForAll("https://*.twitter.com");

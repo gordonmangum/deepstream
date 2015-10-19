@@ -427,6 +427,7 @@ Template.watch_page.helpers({
   showStreamSwitcher (){
     return Session.get('curateMode') || this.userStreamSwitchAllowed();
   },
+
   settingsMenuOpen (){
     return Template.instance().settingsMenuOpen.get();
   },
@@ -604,6 +605,9 @@ Template.stream_li.events({
 Template.context_browser_area.helpers({
   showShowTimelineButton (){
     return Session.get('curateMode');
+  },
+  showTimeline (){
+    return true;
   }
 });
 
@@ -854,4 +858,24 @@ Template.webcam_setup.events({
       notifySuccess('You are now narrating your DeepStream!');
     });
   }
+});
+
+Template.timeline_section.onRendered(function(){
+  this.autorun(() => {
+    if (FlowRouter.subsReady()) {
+      var timelineId = Deepstreams.findOne({shortId: this.shortId}, {fields: {twitterTimelineId: 1}});
+      this.$('#twitter-timeline iframe').remove();
+      twttr.widgets.createTimeline(
+        timelineId,
+        this.$('#twitter-timeline')[0],
+        {
+          theme: 'dark',
+          height: '100%',
+          width: '100%'
+        })
+        .then(function (el) {
+          console.log("Timeline have been displayed.")
+        });
+    }
+  });
 });

@@ -1366,3 +1366,10 @@
     .action-button;
   }
 }
+
+.timeline-container{
+  height: @mainStreamHeight - 15px;
+  //padding-right: @contextAreaPadding * 2;
+  margin-left: @card-column-width;
+  width: @right-section-width - @card-column-width - @contextAreaPadding * 2;
+}
