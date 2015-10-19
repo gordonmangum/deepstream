@@ -10,11 +10,14 @@
 @light-transparent-color: rgba(244,244,244,0.75);
 
 @top-row-color: @black-color;
-@annotation-color: @dark-medium-color;
 
-@background-color: @black-color;
-@alt-background-color: @black-color;
-@context-background-color: @dark-medium-color;
+@background-color: transparent;//@black-color;
+@alt-background-color: transparent;//@black-color;
+@context-background-color: fade(@dark-medium-color, 80%);
+@watch-background-color: @black-color;
+
+@annotation-color: @context-background-color;
+
 
 @dark-text-color: @black-color;
 @light-text-color: @light-color;
@@ -442,9 +445,7 @@ body {
   // font-family: 'Alegreya Sans' , sans-serif;
   margin: 0;
   color: @light-text-color;
-  background-color: @background-color;
-  transition: color 0.25s ease;
-  transition: background-color 0.25s ease;
+  background-color: @black-color;
 
   line-height: 23px;
   font-size: 15px;
@@ -737,7 +738,6 @@ div.text-content {
 
 .text-content{
   color: @light-text-color;
-  background-color: @annotation-color;
   line-height: 20px;
 }
 
