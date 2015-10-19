@@ -78,7 +78,7 @@ var servicesToFetch = [
     initialPagesGuess: 3,
     guessBias: 0,
     maxPages: parseInt(process.env.MAX_BAMBUSER_PAGES) || parseInt(Meteor.settings.MAX_BAMBUSER_PAGES) || 1000,
-    asyncWaitTime: 50,
+    asyncWaitTime: 100,
     mapFn (doc) {
       _.extend(doc, {
         _streamSource: 'bambuser',
