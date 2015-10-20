@@ -84,13 +84,17 @@ Deepstream = (function() {
   };
 
   Deepstream.prototype.mostRecentContextOfTypes = function(types) {
+    this.mostRecentContextsOfTypes(types, 1);
+  };
+
+  Deepstream.prototype.mostRecentContextsOfTypes = function(types, number) {
     return _.chain(this.internalContextOfTypes(types))
       .sortBy('addedAt')
       .map(function(internalCBlock){
         return ContextBlocks.findOne(internalCBlock._id)
       })
       .compact()
-      .last()
+      .last(number)
       .value()
   };
 

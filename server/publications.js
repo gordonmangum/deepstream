@@ -179,7 +179,7 @@ Meteor.publish("deepstreamPreviewContext", function(streamShortId) {
     return this.ready();
   }
   check(streamShortId, String);
-  return ContextBlocks.find({streamShortId: streamShortId, deleted: {$ne: true}, type: {$in: ['news', 'twitter', 'text']}},{
+  return ContextBlocks.find({streamShortId: streamShortId, deleted: {$ne: true}, type: {$in: HOMEPAGE_PREVIEW_CONTEXT_TYPES}},{
     fields: contextFields
   });
 });

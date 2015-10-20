@@ -528,7 +528,7 @@ VideoBlock = (function (_super) {
   VideoBlock.prototype.searchListTemplate = 'create_video_section';
   VideoBlock.prototype.searchSoloTemplate = 'create_video_section';
   VideoBlock.prototype.homepagePreview = false;
-  VideoBlock.prototype.homepagePreviewTemplate = null;
+  VideoBlock.prototype.homepagePreviewTemplate  = 'homepage_preview_video_section';
 
   return VideoBlock;
 

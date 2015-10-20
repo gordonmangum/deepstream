@@ -6,7 +6,7 @@
 
 <template name="homepage_preview_text_section">
   <div class="homepage-preview-text-section" dir="auto">
-    {{{annotation}}}
+    {{{content}}}
   </div>
 </template>
 
@@ -100,10 +100,8 @@
 
 <template name="homepage_preview_news_section">
   <div class="homepage-preview-news-section">
-    <div class="news-source">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}{{providerName}}</div>
-    <h4 class="news-title">{{title}}</h4>
-    <div class="news-date">{{formatDateNice publicationDate}}</div>
-    <div class="news-html">{{{html}}}</div>
+    <div class="news-source">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}<span>{{providerName}}</span></div>
+    <div class="preview">{{title}}</div>
   </div>
 </template>
 
@@ -266,6 +264,13 @@
     </div>
     <div class="preview-placeholder" style="height: {{height}}px; width: {{width}}px;">
     </div>
+  </div>
+</template>
+
+<template name="homepage_preview_video_section">
+  <div class="homepage-preview-video-section">
+    <div class="provider-source">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}{{providerName}}</div>
+    <div class="preview">{{title}}</div>
   </div>
 </template>
 
