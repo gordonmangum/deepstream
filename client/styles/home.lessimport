@@ -199,7 +199,7 @@ div.logo-title {
 }
 
 .deepstream-preview{
-  @width: 500px;
+  @width: 570px;
   @stream-image-width: 290px;
   @padding: 12px;
   @content-section-width: @width - @stream-image-width - 2 * @padding;
@@ -250,7 +250,6 @@ div.logo-title {
       }
       padding-left: 10px;
       padding-right: 10px;
-      background-color: @homepage-shade-5;
       top: 0;
       right: 0;
       position: absolute;
@@ -269,7 +268,7 @@ div.logo-title {
   }
   .title{
     .ellipsis-text;
-    font-size: 18px;
+    font-size: 20px;
   }
   .small-stream-info, .views{
     color: @deemphasized-light-text-color;
@@ -315,17 +314,23 @@ div.logo-title {
 }
 
 .homepage-content-preview{
+  @gap: 6px;
   overflow-y: hidden;
-  height: 50%;
+  font-size: 16px;
+  line-height: normal;
+  height: calc(50% ~"-" @gap / 2);
   position: relative;
-}
-
-.homepage-preview-news-section{
-  @heading-size: 20px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  .news-source{
+  background-color: @homepage-shade-5;
+  padding: 10px;
+  &:first-child{
+    margin-bottom: @gap;
+  }
+  @heading-size: 12px;
+  .news-source, .provider-source{
     font-size: @heading-size;
+    height: @heading-size;
+    line-height: @heading-size;
+    margin-bottom: 5px;
   }
   .provider-image{
     .size(@heading-size);
@@ -334,8 +339,14 @@ div.logo-title {
 }
 
 .homepage-preview-text-section{
-  padding-top: 6px;
-  padding-bottom: 6px;
+    @lineHeight: 20px;
+    line-height: @lineHeight;
+    height: @lineHeight * 4 - 0px;
+    display: -webkit-box;
+    //-webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    //text-overflow: ellipsis;
 }
 
 .homepage-preview-twitter-section{

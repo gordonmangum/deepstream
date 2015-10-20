@@ -292,7 +292,7 @@ Template.deepstream_preview.helpers({
     return Template.instance().data.linkToCurate ? this.curatePath() : this.watchPath();
   },
   contentPreviews (){
-    return this.mostRecentContextsOfTypes(['news', 'twitter', 'text'], 2);
+    return this.mostRecentContextsOfTypes(HOMEPAGE_PREVIEW_CONTEXT_TYPES, 2);
   }
 });
 
