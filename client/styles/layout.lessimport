@@ -443,8 +443,6 @@ body {
   margin: 0;
   color: @light-text-color;
   background-color: @background-color;
-  transition: color 0.25s ease;
-  transition: background-color 0.25s ease;
 
   line-height: 23px;
   font-size: 15px;
