@@ -571,9 +571,6 @@ Template.watch_page.events({
       var container = $('.context-area');
       container.animate({scrollTop: (contextToScrollTo.offset().top - container.offset().top + container.scrollTop() - offset)});
     })
-  },
-  'click .show-timeline' (e,t){
-    notifyFeature('Twitter timeline: Coming soon!')
   }
 });
 
@@ -604,10 +601,19 @@ Template.stream_li.events({
 
 Template.context_browser_area.helpers({
   showShowTimelineButton (){
-    return Session.get('curateMode');
+    return Session.get('curateMode') || Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
   },
   showTimeline (){
-    return true;
+    return Session.get('showTimeline');
+  }
+});
+
+Template.context_browser_area.events({
+  'click .show-timeline'(){
+    return Session.set('showTimeline', true);
+  },
+  'click .show-context-browser'(){
+    return Session.set('showTimeline', false);
   }
 });
 
