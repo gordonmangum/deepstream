@@ -390,11 +390,8 @@
   {{#if showChat}}
     {{> unimplemented_chat_section}}
   {{else}}
-    {{#if showTimeline}}
-      {{> timeline_section}}
-    {{else}}
-      {{> context_browser}}
-    {{/if}}
+      {{> timeline_section show=showTimeline}}
+      {{> context_browser show=showContextBrowser deepstream=this}}
   {{/if}}
 </template>
 
@@ -409,29 +406,30 @@
 </template>
 
 <template name="context_browser">
-  <div class="context-browser">
+  <div class="context-browser {{#unless show}}hide{{/unless}}">
+    {{#with deepstream}}
+      {{#if curateMode}}
+        <div class="add-new-context-row">
+          <button class="add-new-context">{{> add_icon}}</button>
+        </div>
+      {{/if}}
 
-    {{#if curateMode}}
-      <div class="add-new-context-row">
-        <button class="add-new-context">{{> add_icon}}</button>
+      {{#if soloSidebarContextMode}}
+        <div class="context-area">
+          {{#with currentContext}}
+            {{> solo_context_section}}
+          {{/with}}
+        </div>
+      {{else}}
+        <div class="top-bar"></div>
+      {{/if}}
+      <div class="context-area list-mode {{#if soloSidebarContextMode}}hide{{/if}}">
+        {{#each contextBlocks}}
+          {{> list_item_context_section}}
+        {{/each}}
+        <div class="bottom-bar"></div>
       </div>
-    {{/if}}
-
-    {{#if soloSidebarContextMode}}
-      <div class="context-area">
-        {{#with currentContext}}
-          {{> solo_context_section}}
-        {{/with}}
-      </div>
-    {{else}}
-      <div class="top-bar"></div>
-    {{/if}}
-    <div class="context-area list-mode {{#if soloSidebarContextMode}}hide{{/if}}">
-      {{#each contextBlocks}}
-        {{> list_item_context_section}}
-      {{/each}}
-      <div class="bottom-bar"></div>
-    </div>
+    {{/with}}
   </div>
 </template>
 
@@ -507,7 +505,7 @@
 </template>
 
 <template name="timeline_section">
-    <div class="timeline-section">
+    <div class="timeline-section {{#unless show}}hide{{/unless}}">
       {{#if curateMode}}
         <form id="timeline-embed" action="">
           <label for="timeline-embed-code-input">Enter your Timeline embed code or url here</label>

@@ -1368,7 +1368,16 @@
 }
 
 
+.context-browser {
+  &.hide {
+    display: none;
+  }
+}
+
 .timeline-section{
+  &.hide{
+    display: none;
+  }
   display: flex;
   flex-flow: column;
   height: @mainStreamHeight - 15px;

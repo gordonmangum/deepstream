@@ -565,6 +565,7 @@ Template.watch_page.events({
   'click .context-mini-preview' (e,t){
     clearCurrentContext();
     Session.set('mediaDataType', null);
+    Session.set('showTimeline', null);
     Meteor.setTimeout( () =>{
       var offset = 130;
       var contextToScrollTo = $('.context-section[data-context-id=' + this._id + ']');
@@ -605,15 +606,22 @@ Template.context_browser_area.helpers({
   },
   showTimeline (){
     return Session.get('showTimeline');
+  },
+  showContextBrowser (){
+    return !Session.get('showTimeline');
   }
 });
 
 Template.context_browser_area.events({
   'click .show-timeline'(){
-    return Session.set('showTimeline', true);
+    Session.set('showTimeline', true);
+    Session.set('activeContextId', null);
   },
   'click .show-context-browser'(){
-    return Session.set('showTimeline', false);
+    Session.set('showTimeline', false);
+    setTimeout(() => { // need to wait till display has switched back to context
+      updateActiveContext();
+    })
   }
 });
 

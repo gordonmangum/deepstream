@@ -427,8 +427,6 @@ Meteor.methods({
       twitterTimelineId = simpleNumberMatch[1]
     }
 
-
-    console.log(twitterTimelineId)
     if (!twitterTimelineId){
       throw new Meteor.Error('Invalid widget code or url');
     }
