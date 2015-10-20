@@ -508,6 +508,14 @@
 
 <template name="timeline_section">
     <div class="timeline-section">
+      {{#if curateMode}}
+        <form id="timeline-embed" action="">
+          <label for="timeline-embed-code-input">Enter your Timeline embed code or url here</label>
+          <input id="timeline-embed-code-input" name="timeline-embed-code" type="text"/>
+          <div class="button-container"><button type="submit" class="submit-timeline-embed-code">Update Timeline</button></div>
+        </form>
+      {{/if}}
       <div id='twitter-timeline' class="timeline-container"></div>
+
     </div>
 </template>

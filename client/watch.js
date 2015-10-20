@@ -863,19 +863,40 @@ Template.webcam_setup.events({
 Template.timeline_section.onRendered(function(){
   this.autorun(() => {
     if (FlowRouter.subsReady()) {
-      var timelineId = Deepstreams.findOne({shortId: this.shortId}, {fields: {twitterTimelineId: 1}});
+      var timelineId = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
       this.$('#twitter-timeline iframe').remove();
-      twttr.widgets.createTimeline(
-        timelineId,
-        this.$('#twitter-timeline')[0],
-        {
-          theme: 'dark',
-          height: '100%',
-          width: '100%'
-        })
-        .then(function (el) {
-          console.log("Timeline have been displayed.")
+      if(timelineId){
+        twttr.ready((twttr) => {
+          console.log(this.$('#twitter-timeline')[0])
+            twttr.widgets.createTimeline(
+              timelineId,
+              this.$('#twitter-timeline')[0],
+              {
+                theme: 'dark',
+                height: 'auto',
+                width: 'auto'
+              })
+              .then(function (el) {
+                console.log("Timeline has been displayed.")
+              });
         });
+      }
     }
   });
+});
+
+
+Template.timeline_section.events({
+  'submit #timeline-embed' (e, t){
+    e.preventDefault();
+    var timelineWidgetCode = t.$('input[name=timeline-embed-code]').val();
+    if(!timelineWidgetCode){
+      return notifyError('Please enter your timeline widget code')
+    }
+    Meteor.call('addTimelineWidget', Session.get("streamShortId"), timelineWidgetCode, function(err, result){
+      if(err){
+        return basicErrorHandler(err);
+      }
+    });
+  }
 });

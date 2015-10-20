@@ -1367,9 +1367,32 @@
   }
 }
 
-.timeline-container{
+
+.timeline-section{
+  display: flex;
+  flex-flow: column;
   height: @mainStreamHeight - 15px;
-  //padding-right: @contextAreaPadding * 2;
-  margin-left: @card-column-width;
   width: @right-section-width - @card-column-width - @contextAreaPadding * 2;
+  form{
+    margin-bottom: 15px;
+    input{
+      margin-bottom: 10px;
+    }
+  }
+  .button-container{
+    text-align: right;
+
+    button{
+      .action-button;
+    }
+  }
+}
+.timeline-container{
+  flex: auto;
+  display: flex;
+  //padding-right: @contextAreaPadding * 2;
+
+  iframe{
+    flex: auto;
+  }
 }
