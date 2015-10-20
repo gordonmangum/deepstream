@@ -255,6 +255,9 @@ window.formatDateNice = function (date) {
 
 window.updateActiveContext = function(){
 
+  if($('.context-browser').hasClass('hide')){
+    return;
+  }
 
   var container = $('.context-area.list-mode');
   var containerOffset = container.offset().top;
