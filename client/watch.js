@@ -427,6 +427,7 @@ Template.watch_page.helpers({
   showStreamSwitcher (){
     return Session.get('curateMode') || this.userStreamSwitchAllowed();
   },
+
   settingsMenuOpen (){
     return Template.instance().settingsMenuOpen.get();
   },
@@ -570,9 +571,6 @@ Template.watch_page.events({
       var container = $('.context-area');
       container.animate({scrollTop: (contextToScrollTo.offset().top - container.offset().top + container.scrollTop() - offset)});
     })
-  },
-  'click .show-timeline' (e,t){
-    notifyFeature('Twitter timeline: Coming soon!')
   }
 });
 
@@ -603,7 +601,19 @@ Template.stream_li.events({
 
 Template.context_browser_area.helpers({
   showShowTimelineButton (){
-    return Session.get('curateMode');
+    return Session.get('curateMode') || Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
+  },
+  showTimeline (){
+    return Session.get('showTimeline');
+  }
+});
+
+Template.context_browser_area.events({
+  'click .show-timeline'(){
+    return Session.set('showTimeline', true);
+  },
+  'click .show-context-browser'(){
+    return Session.set('showTimeline', false);
   }
 });
 
@@ -852,6 +862,47 @@ Template.webcam_setup.events({
         return basicErrorHandler(err);
       }
       notifySuccess('You are now narrating your DeepStream!');
+    });
+  }
+});
+
+Template.timeline_section.onRendered(function(){
+  this.autorun(() => {
+    if (FlowRouter.subsReady()) {
+      var timelineId = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
+      this.$('#twitter-timeline iframe').remove();
+      if(timelineId){
+        twttr.ready((twttr) => {
+          console.log(this.$('#twitter-timeline')[0])
+            twttr.widgets.createTimeline(
+              timelineId,
+              this.$('#twitter-timeline')[0],
+              {
+                theme: 'dark',
+                height: 'auto',
+                width: 'auto'
+              })
+              .then(function (el) {
+                console.log("Timeline has been displayed.")
+              });
+        });
+      }
+    }
+  });
+});
+
+
+Template.timeline_section.events({
+  'submit #timeline-embed' (e, t){
+    e.preventDefault();
+    var timelineWidgetCode = t.$('input[name=timeline-embed-code]').val();
+    if(!timelineWidgetCode){
+      return notifyError('Please enter your timeline widget code')
+    }
+    Meteor.call('addTimelineWidget', Session.get("streamShortId"), timelineWidgetCode, function(err, result){
+      if(err){
+        return basicErrorHandler(err);
+      }
     });
   }
 });

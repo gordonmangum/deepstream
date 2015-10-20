@@ -620,6 +620,10 @@ Schema.Deepstreams = new SimpleSchema({
     type: Boolean,
     optional: true
   },
+  twitterTimelineId: {
+    type: String,
+    optional: true
+  },
   streams: {
     type: [Schema.Streams],
     defaultValue: [],

@@ -407,6 +407,40 @@ Meteor.methods({
       }
     });
   },
+  addTimelineWidget (shortId, timelineWidgetCode){
+    check(shortId, String);
+    check(timelineWidgetCode, String);
+
+    // match embed code or url from edit widget url
+
+    var embedCodeMatch = timelineWidgetCode.match(/data\-widget\-id\=\"(\d*?)\"/m);
+    var urlMatch = timelineWidgetCode.match(/\/settings\/widgets\/(.\d*)/);
+    var simpleNumberMatch = timelineWidgetCode.match(/^(.\d+)$/);
+
+    var twitterTimelineId;
+
+    if (embedCodeMatch && embedCodeMatch[1]){
+      twitterTimelineId = embedCodeMatch[1]
+    } else if (urlMatch && urlMatch[1]){
+      twitterTimelineId = urlMatch[1]
+    } else if (simpleNumberMatch && simpleNumberMatch[1]){
+      twitterTimelineId = simpleNumberMatch[1]
+    }
+
+
+    console.log(twitterTimelineId)
+    if (!twitterTimelineId){
+      throw new Meteor.Error('Invalid widget code or url');
+    }
+
+    return updateDeepstream.call(this, {
+      shortId: shortId
+    }, {
+      $set: {
+        twitterTimelineId: twitterTimelineId
+      }
+    });
+  },
   stopCuratorWebcam (shortId){
     check(shortId, String);
 
