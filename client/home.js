@@ -282,7 +282,6 @@ Template.deepstreams.helpers({
 
 Template.deepstream_preview.onCreated(function(){
   this.subscribe('deepstreamPreviewContext', this.data.deepstream.shortId);
-  this.contentPreviewType = new ReactiveVar('latest');
 });
 
 Template.deepstream_preview.helpers({
@@ -292,39 +291,8 @@ Template.deepstream_preview.helpers({
   linkPath () {
     return Template.instance().data.linkToCurate ? this.curatePath() : this.watchPath();
   },
-  contentPreview (){
-    switch (Template.instance().contentPreviewType.get()){
-      case 'latest':
-        return this.mostRecentContextOfTypes(['news', 'twitter', 'text']);
-      case 'news':
-        return this.mostRecentContextOfType('news');
-      case 'twitter':
-        return this.mostRecentContextOfType('twitter');
-      case 'text':
-        return this.mostRecentContextOfType('text');
-    }
-  },
-  previewTypeIs (type){
-    if (Template.instance().contentPreviewType.get() === 'latest'){
-      let context;
-      if (context = this.mostRecentContextOfTypes(['news', 'twitter', 'text'])){
-        return context.type === type;
-      }
-    } else {
-      return Template.instance().contentPreviewType.get() === type;
-    }
-  }
-});
-
-Template.deepstream_preview.events({
-  'click .news-button' (d, t) {
-    t.contentPreviewType.set('news');
-  },
-  'click .twitter-button' (d, t) {
-    t.contentPreviewType.set('twitter');
-  },
-  'click .text-button' (d, t) {
-    t.contentPreviewType.set('text');
+  contentPreviews (){
+    return this.mostRecentContextsOfTypes(['news', 'twitter', 'text'], 2);
   }
 });
 

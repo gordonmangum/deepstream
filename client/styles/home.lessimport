@@ -315,8 +315,9 @@ div.logo-title {
 }
 
 .homepage-content-preview{
-  overflow-y: scroll;
-  height: 100%;
+  overflow-y: hidden;
+  height: 50%;
+  position: relative;
 }
 
 .homepage-preview-news-section{
