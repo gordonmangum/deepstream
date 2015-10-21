@@ -53,9 +53,10 @@ var servicesToFetch = [
     maxPages: parseInt(process.env.MAX_USTREAM_PAGES) || parseInt(Meteor.settings.MAX_USTREAM_PAGES) || 1000,
     asyncWaitTime: 10,
     mapFn (doc) {
+      var username = doc.user.userName;
       _.extend(doc, {
         _streamSource: 'ustream',
-        username: doc.user.userName,
+        username: username,
         creationDate: convertUStreamDateToUTC(doc.createdAt),
         lastStreamedAt: convertUStreamDateToUTC(doc.lastStreamedAt),
         currentViewers: parseInt(doc.viewersNow),
@@ -65,7 +66,7 @@ var servicesToFetch = [
         _es: {
           title: doc.title,
           description: cheerio.load('<body>' + doc.description + '</body>')('body').text(), // parse html and grab text
-          broadcaster: doc.username,
+          broadcaster: username,
           tags: []
         }
       });
@@ -82,6 +83,7 @@ var servicesToFetch = [
     maxPages: parseInt(process.env.MAX_BAMBUSER_PAGES) || parseInt(Meteor.settings.MAX_BAMBUSER_PAGES) || 1000,
     asyncWaitTime: 50,
     mapFn (doc) {
+
       _.extend(doc, {
         _streamSource: 'bambuser',
         id: doc.vid,
