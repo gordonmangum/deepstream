@@ -167,20 +167,20 @@ var generateFetchFunction = function(serviceInfo){
 
       //elasticsearch
 
-      var id=0;
-      _.each(mapResults, function(result){
-		insertES({
-			index: ES_CONSTANTS.index,
-        		type:"stream",
-        		body:{
-                  doc: result,
-				          source: result._streamSource,
-          			  broadcaster: result._es.broadcaster,
-          			  description: result._es.description,
-	  			        tags : result._es.tags,
-          			  title: result._es.title,
-        		}
-		});
+
+    _.each(mapResults, function(result){
+  		insertES({
+  			index: ES_CONSTANTS.index,
+          		type:"stream",
+          		body:{
+                    doc: result,
+  				          source: result._streamSource,
+            			  broadcaster: result._es.broadcaster,
+            			  description: result._es.description,
+  	  			        tags : result._es.tags.split(',') || '',
+            			  title: result._es.title,
+          		}
+  		});
 	});
 
 
