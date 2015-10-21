@@ -141,10 +141,15 @@ Template.watch_page.onCreated(function () {
       var stream = Deepstreams.findOne({shortId: that.data.shortId()}, {reactive: false});
       var user = Meteor.user();
 
+
       if(!stream){
         setStatusCode(404);
         return FlowLayout.render("stream_not_found");
       }
+
+      setTitle(stream.title);
+      setMetaDescription(stream.description);
+      setStatusCode();
 
       if (that.data.onCuratePage()){
         if ((user = Meteor.user())) { // if there is a user
