@@ -1,4 +1,4 @@
 ES_CONSTANTS = {
   index: "deepstream",
-  pageSize: 2,
+  pageSize: 30,
 }
