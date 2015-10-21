@@ -98,9 +98,6 @@ Meteor.publish("deepstreamsOnAir", function(options) {
   options = options ? options : {};
   _.defaults(options, {page: 0});
 
-  if(!this.userId){ // TO-DO Launch remove
-    return this.ready();
-  }
   return Deepstreams.find({
     onAir: true
   }, {
@@ -131,9 +128,6 @@ Meteor.publish("deepstreamsOnAir", function(options) {
 //});
 
 Meteor.publish("bestStreams", function() {
-  if(!this.userId){ // TO-DO Launch remove
-    return this.ready();
-  }
   return Streams.find({ oneIfCurrent: 1 }, {
     sort: {
       currentViewers: -1
@@ -142,9 +136,6 @@ Meteor.publish("bestStreams", function() {
   });
 });
 Meteor.publish("mostRecentStreams", function() {
-  if(!this.userId){ // TO-DO Launch remove
-    return this.ready();
-  }
   return Streams.find({ oneIfCurrent: 1 }, {
     sort: {
       creationDate: -1
@@ -155,9 +146,6 @@ Meteor.publish("mostRecentStreams", function() {
 
 
 Meteor.publish("singleDeepstream", function(userPathSegment, shortId) {
-  if(!this.userId){ // TO-DO Launch remove
-    return this.ready();
-  }
   check(shortId, String);
   return Deepstreams.find({userPathSegment: userPathSegment, shortId: shortId},{
     fields: deepstreamFields
@@ -165,9 +153,6 @@ Meteor.publish("singleDeepstream", function(userPathSegment, shortId) {
 });
 
 Meteor.publish("deepstreamContext", function(streamShortId) {
-  if(!this.userId){ // TO-DO Launch remove
-    return this.ready();
-  }
   check(streamShortId, String);
   return ContextBlocks.find({streamShortId: streamShortId, deleted: {$ne: true}},{
     fields: contextFields
@@ -175,9 +160,6 @@ Meteor.publish("deepstreamContext", function(streamShortId) {
 });
 
 Meteor.publish("deepstreamPreviewContext", function(streamShortId) {
-  if(!this.userId){ // TO-DO Launch remove
-    return this.ready();
-  }
   check(streamShortId, String);
   return ContextBlocks.find({streamShortId: streamShortId, deleted: {$ne: true}, type: {$in: HOMEPAGE_PREVIEW_CONTEXT_TYPES}},{
     fields: contextFields

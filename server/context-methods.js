@@ -538,13 +538,6 @@ Meteor.methods({
     };
   },
   streamSearchList (query, option, page){
-    if(!this.userId){ // TO-DO Launch remove
-      return {
-        items: [],
-        nextPage: 'end'
-      };
-    }
-
     var youtubeResults, twitchResults;
     if (!page) {
       page = {};
