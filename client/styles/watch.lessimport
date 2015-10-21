@@ -876,7 +876,7 @@
 .list-item-context-section{
   line-height: 0;
 
-  margin-bottom: 5px;
+  margin-bottom: 1px;
   .video-preview{
     @playIconSize: 60px;
     position: relative;
