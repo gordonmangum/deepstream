@@ -30,6 +30,9 @@ else
 				echo "We encountered an error please run the following command and check the ElasticSeach logs"
 				exit 1
 			fi
+		else
+			echo "please run ElasticSearch and rerun the startup script"
+			exit 1
 		fi
 	fi
 fi
