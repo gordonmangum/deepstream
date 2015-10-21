@@ -1388,6 +1388,14 @@
       margin-bottom: 10px;
     }
   }
+  label{
+    a{
+      color: @action-color;
+      &:hover{
+        text-decoration: underline !important;
+      }
+    }
+  }
   .button-container{
     text-align: right;
 
