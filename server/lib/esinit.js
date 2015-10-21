@@ -26,6 +26,11 @@ var putSettings = Meteor.wrapAsync(esClient.indices.putSettings, esClient);
 var closeIndex = Meteor.wrapAsync(esClient.indices.close, esClient);
 var openIndex = Meteor.wrapAsync(esClient.indices.open, esClient);
 
+
+function esCreateMapping(json, callback){
+	putMapping(json, callback);
+}
+
 if (!indexExists({index: ES_CONSTANTS.index})){
 	 createIndex({ index: ES_CONSTANTS.index });
    Meteor._sleepForMs(1000);
@@ -63,7 +68,7 @@ if (!indexExists({index: ES_CONSTANTS.index})){
               }
             });
       Meteor._sleepForMs(1000);
-      putMapping({
+      esCreateMapping({
               index: ES_CONSTANTS.index,
               type: "stream",
               "body":{
@@ -104,8 +109,4 @@ if (!indexExists({index: ES_CONSTANTS.index})){
             });
 
     openIndex({index: ES_CONSTANTS.index});
-/*
-
-*/
-
-}
+  }
