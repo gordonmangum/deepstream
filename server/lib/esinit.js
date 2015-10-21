@@ -73,30 +73,37 @@ if (!indexExists({index: ES_CONSTANTS.index})){
               type: "stream",
               "body":{
                 "stream":{
-                      //  "dynamic": "strict",
-                        "properties": {
-                          "title": {
-                            "type": "string",
-                            "_boost": 5, // give it more priority
-                            "analyzer": "my_ngram_analyzer", //"analyzers" English and more
-                          },
-                          "broadcaster": {
-                            "type": "string",
-                            "_boost": 10,
-                          },
-                          "tags": {
-                            "type": "string",
-                          },
-                          "description":{
-                            "type": "string",
-                            "analyzer": "my_ngram_analyzer",
-                          },
-                          "source": {
-                            "type": "string",
-                          },
+                      // "dynamic": "strict",
+                      "_ttl": { // if ttl werks we don't need timestamp because the documents will be deleted automatically
+                        "enabled" : true,
+                        "default" : "3m"
+                      },
+                      // "_timestamp": {
+                      //   "enabled": true
+                      // },
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "_boost": 5, // give it more priority
+                          "analyzer": "my_ngram_analyzer", //"analyzers" English and more
+                        },
+                        "broadcaster": {
+                          "type": "string",
+                          "_boost": 10,
+                        },
+                        "tags": {
+                          "type": "string",
+                        },
+                        "description":{
+                          "type": "string",
+                          "analyzer": "my_ngram_analyzer",
+                        },
+                        "source": {
+                          "type": "string",
                         },
                       },
-                    }
+                    },
+                  }
             }, function(err, result){
               if(err){
                 console.log("ElasticSearch: putMapping: Faild to map data");
