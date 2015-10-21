@@ -213,10 +213,12 @@ Template.home.events({
     Session.set('homeStreamListMode', 'search');
 
     if(getHomepageStreamSearchResults().count() === 0){
-      t.streamSearch(query);
+      //t.streamSearch(query);
     } else {
+      SearchResults.remove({type: 'stream'});
       t.noMoreStreamResults.set(null);
     }
+    t.streamSearch(query);
   },
   "click .show-best-streams" (e, t) {
     t.$('#stream-search-input').val('');
