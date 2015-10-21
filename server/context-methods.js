@@ -699,7 +699,7 @@ Meteor.methods({
       type: "stream",
       size: ES_CONSTANTS.pageSize,
       body:{
-        "min_score": 0.5,
+        "min_score": 0.1,
         query:{
           multi_match:{
             query: query,
