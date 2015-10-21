@@ -142,12 +142,14 @@ Template.watch_page.onCreated(function () {
       var user = Meteor.user();
 
       if(!stream){
+        setStatusCode(404);
         return FlowLayout.render("stream_not_found");
       }
 
       if (that.data.onCuratePage()){
         if ((user = Meteor.user())) { // if there is a user
           if (!_.contains(stream.curatorIds, user._id)) { // if they don't own the stream take them to stream not found
+            setStatusCode(404);
             return FlowLayout.render("stream_not_found");
           }
           var accessPriority = Meteor.user().accessPriority;
