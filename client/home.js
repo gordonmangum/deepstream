@@ -43,6 +43,7 @@ Template.login_buttons.events({
     Template.instance().showUserInfo.set(false);
   },
   "click .signin" (d) {
+    analytics.track('Click login signup button');
     Session.set('signingIn', true);
     setSigningInFrom();
   },
