@@ -253,6 +253,10 @@ Template.home.events({
       label: 'deepstream & livestreams'
     });
     Session.set('homeStreamListType', 'both');
+  },
+  "click .logo-title" (e, t){
+    Session.set('homeStreamListType', 'both');
+    Session.set('homeStreamListMode', 'best');
   }
 });
 
