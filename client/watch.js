@@ -461,6 +461,7 @@ var saveStreamTitle = function(template){
 
 Template.watch_page.events({
   'click .set-main-stream' (e, t){
+    analytics.track('Click mini-stream to set main stream');
     if(Session.get('curateMode')){
       Meteor.call('setActiveStream', t.data.shortId(), this._id ,basicErrorHandler);
     } else {
@@ -555,21 +556,29 @@ Template.watch_page.events({
     Meteor.call('stopCuratorWebcam', t.data.shortId(), basicErrorHandler);
   },
   'click .email-share-button' (e,t){
+    analytics.track('Click email share');
     notifyFeature('Success!! Email share: coming soon!');
   },
   'click .twitter-share-button' (e,t){
+    analytics.track('Click twitter share');
     notifyFeature('Success!! Twitter share: coming soon!');
   },
   'click .facebook-share-button' (e,t){
+    analytics.track('Click facebook share');
     notifyFeature('Success!! Facebook share: coming soon!');
   },
   'click .favorite-button' (e,t){
+    analytics.track('Click favorite button');
     notifyFeature('Success!! Favoriting streams: coming soon!');
   },
   'click .PiP-overlay' (e,t){
     clearCurrentContext();
   },
   'click .context-mini-preview' (e,t){
+    analytics.track('Click context mini preview', {
+      label: this.type,
+      contentType: this.type
+    });
     clearCurrentContext();
     Session.set('mediaDataType', null);
     Session.set('showTimeline', null);
@@ -603,6 +612,7 @@ Template.stream_li.helpers({
 
 Template.stream_li.events({
   'click .preview-stream' (e, t){
+    analytics.track('Click preview mini-stream');
     return t.previewMode.set(true);
   }
 });
@@ -621,10 +631,12 @@ Template.context_browser_area.helpers({
 
 Template.context_browser_area.events({
   'click .show-timeline'(){
+    analytics.track('Click show timeline');
     Session.set('showTimeline', true);
     Session.set('activeContextId', null);
   },
   'click .show-context-browser'(){
+    analytics.track('Click show context browser');
     Session.set('showTimeline', false);
     setTimeout(() => { // need to wait till display has switched back to context
       updateActiveContext();
@@ -710,6 +722,13 @@ Template.context_browser.events({
           Meteor.call('removeContextFromStream', Session.get("streamShortId"), this._id, basicErrorHandler);
       });
     }
+  },
+  'click .list-item-context-section' (e, t) {
+    analytics.track('Click context section in list mode', {
+      label: this.type,
+      contentType: this.type,
+      id: this._id
+    });
   },
   'click .context-section .clickable' (e, t){
 

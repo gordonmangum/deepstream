@@ -209,6 +209,11 @@ Template.home.events({
   "submit .stream-search-form" (e, t) {
     e.preventDefault();
     var query = t.$('#stream-search-input').val();
+
+    analytics.track('Search on homepage', {
+      query: query,
+      label: query
+    });
     Session.set('homeStreamListQuery', query);
     Session.set('homeStreamListMode', 'search');
 
@@ -221,20 +226,25 @@ Template.home.events({
     t.streamSearch(query);
   },
   "click .show-best-streams" (e, t) {
+    analytics.track('Click best streams button on homepage');
     t.$('#stream-search-input').val('');
     Session.set('homeStreamListMode', 'best');
   },
   "click .show-most-recent-streams" (e, t) {
+    analytics.track('Click most recent button on homepage');
     t.$('#stream-search-input').val('');
     Session.set('homeStreamListMode', 'most_recent');
   },
   "click .show-deepstreams-only" (e, t) {
+    analytics.track('Click purple pill on homepage');
     Session.set('homeStreamListType', 'deepstreams');
   },
   "click .show-livestreams-only" (e, t) {
+    analytics.track('Click purple pill on homepage');
     Session.set('homeStreamListType', 'livestreams');
   },
   "click .show-deepstreams-and-livestreams" (e, t) {
+    analytics.track('Click purple pill on homepage');
     Session.set('homeStreamListType', 'both');
   }
 });
@@ -298,6 +308,18 @@ Template.deepstream_preview.helpers({
   }
 });
 
+Template.deepstream_preview.events({
+  'click a' () {
+    analytics.track('Click deepstream link on homepage', {
+      label: this._id,
+      title: this.title
+    });
+  },
+  'click .content' () {
+    analytics.track('Click deepstream content preview on homepage');
+  }
+});
+
 Template.streams.helpers({
   streams () {
     if (FlowRouter.subsReady()) {
@@ -336,6 +358,7 @@ Template.stream_preview.events({
     Session.set('showPreviewOverlayForStreamId', null);
   },
   'click .show-preview-overlay' (e,t){
+    analytics.track('Click stream on homepage');
     Session.set('showPreviewOverlayForStreamId', this._id);
   }
 });

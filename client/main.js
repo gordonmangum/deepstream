@@ -296,7 +296,7 @@ Template.create_deepstream.events({
             notifyError(err);
             throw(err);
           }
-          analytics.track('User clicked create and created story');
+          analytics.track('User clicked create and created deepstream');
 
         })
       } else {
@@ -305,7 +305,7 @@ Template.create_deepstream.events({
     } else {
       Session.set('signingIn', true);
       Session.set('signingInFrom', setSigningInFrom());
-      analytics.track('User clicked curate on homepage and needs to sign in');
+      analytics.track('User clicked create and needs to sign in');
     }
   }
 });
