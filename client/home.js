@@ -315,7 +315,7 @@ Template.deepstream_preview.helpers({
     return Template.instance().data.linkToCurate ? this.curatePath() : this.watchPath();
   },
   contentPreviews (){
-    return this.mostRecentContextsOfTypes(HOMEPAGE_PREVIEW_CONTEXT_TYPES, 2);
+    return this.topContextsOfTypes(HOMEPAGE_PREVIEW_CONTEXT_TYPES, 2);
   }
 });
 

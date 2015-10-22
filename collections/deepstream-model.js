@@ -98,6 +98,19 @@ Deepstream = (function() {
       .value()
   };
 
+  Deepstream.prototype.topContextsOfTypes = function(types, number) {
+    return _.chain(this.internalContextOfTypes(types))
+      .sortBy('addedAt')
+      .reverse()
+      .sortBy('rank')
+      .map(function(internalCBlock){
+        return ContextBlocks.findOne(internalCBlock._id)
+      })
+      .compact()
+      .first(number)
+      .value()
+  };
+
   Deepstream.prototype.activeStream = function(){
     return this.getStream(this.activeStreamId);
   };
