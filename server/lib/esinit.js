@@ -31,84 +31,87 @@ function esCreateMapping(json, callback){
 	putMapping(json, callback);
 }
 
-if (!indexExists({index: ES_CONSTANTS.index})){
-	 createIndex({ index: ES_CONSTANTS.index });
-   Meteor._sleepForMs(1000);
-   closeIndex({index: ES_CONSTANTS.index});
+Meteor.startup(() => {
+  if (!indexExists({index: ES_CONSTANTS.index})){
+    createIndex({ index: ES_CONSTANTS.index });
+    Meteor._sleepForMs(1000);
+    closeIndex({index: ES_CONSTANTS.index});
 
-   putSettings({
-              index: ES_CONSTANTS.index,
-              type: "stream",
-              "body":{
-                  "analysis": {
-                    "analyzer": {
-                      "my_ngram_analyzer": {
-                        "tokenizer": "my_ngram_tokenizer",
-                        "filter": ["standard", "lowercase"],
-                    }
-                  },
-                    "tokenizer": {
-                      "my_ngram_tokenizer":{
-                        "type": "nGram",
-                        "min_gram": 2,
-                        "max_gram": 7,
-                        "token_chars": ["letter", "digit"],
-                      }
-                    }
-                  }
-                }
-            }, function(err, result){
-              if(err){
-                console.log("ElasticSearch: putSettings: Error");
-                console.log(err);
+    putSettings({
+      index: ES_CONSTANTS.index,
+      type: "stream",
+      "body":{
+        "analysis": {
+          "analyzer": {
+            "my_ngram_analyzer": {
+              "tokenizer": "my_ngram_tokenizer",
+              "filter": ["standard", "lowercase"],
             }
-              else {
-                console.log("ElasticSearch: putSettings: Success");
-                console.log(result);
-              }
-            });
-      Meteor._sleepForMs(1000);
-      esCreateMapping({
-              index: ES_CONSTANTS.index,
-              type: "stream",
-              "body":{
-                "stream":{
-                      "_ttl": { // if ttl works we don't need timestamp because the documents will be deleted automatically
-                        "enabled" : true,
-                        "default" : "3m"
-                      },
-                      "properties": {
-                        "title": {
-                          "type": "string",
-                          "_boost": 5, // give it more priority
-                          "analyzer": "my_ngram_analyzer", //"analyzers" English and more
-                        },
-                        "broadcaster": {
-                          "type": "string",
-                          "_boost": 10,
-                        },
-                        "tags": {
-                          "type": "string",
-                        },
-                        "description":{
-                          "type": "string",
-                          "analyzer": "my_ngram_analyzer",
-                        },
-                        "source": {
-                          "type": "string",
-                        },
-                      },
-                    },
-                  }
-            }, function(err, result){
-              if(err){
-                console.log("ElasticSearch: putMapping: Faild to map data");
-                console.log(err);
-              }
-              else {
-                console.log("ElasticSearch: putMapping: Success");
-                console.log(result);
-              }
-            });
+          },
+          "tokenizer": {
+            "my_ngram_tokenizer":{
+              "type": "nGram",
+              "min_gram": 2,
+              "max_gram": 7,
+              "token_chars": ["letter", "digit"],
+            }
+          }
+        }
+      }
+    }, function(err, result){
+      if(err){
+        console.log("ElasticSearch: putSettings: Error");
+        console.log(err);
+      }
+      else {
+        console.log("ElasticSearch: putSettings: Success");
+        console.log(result);
+      }
+    });
+    Meteor._sleepForMs(1000);
+    esCreateMapping({
+      index: ES_CONSTANTS.index,
+      type: "stream",
+      "body":{
+        "stream":{
+          "_ttl": { // if ttl works we don't need timestamp because the documents will be deleted automatically
+            "enabled" : true,
+            "default" : "3m"
+          },
+          "properties": {
+            "title": {
+              "type": "string",
+              "_boost": 5, // give it more priority
+              "analyzer": "my_ngram_analyzer", //"analyzers" English and more
+            },
+            "broadcaster": {
+              "type": "string",
+              "_boost": 10,
+            },
+            "tags": {
+              "type": "string",
+            },
+            "description":{
+              "type": "string",
+              "analyzer": "my_ngram_analyzer",
+            },
+            "source": {
+              "type": "string",
+            },
+          },
+        },
+      }
+    }, function(err, result){
+      if(err){
+        console.log("ElasticSearch: putMapping: Faild to map data");
+        console.log(err);
+      }
+      else {
+        console.log("ElasticSearch: putMapping: Success");
+        console.log(result);
+      }
+    });
     openIndex({index: ES_CONSTANTS.index});
   }
+});
+
