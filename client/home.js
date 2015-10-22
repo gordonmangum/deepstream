@@ -364,7 +364,10 @@ Template.stream_preview.events({
     Session.set('showPreviewOverlayForStreamId', null);
   },
   'click .show-preview-overlay' (e,t){
-    analytics.track('Click stream on homepage');
+    analytics.track('Click stream on homepage', {
+      label: this.source,
+      contentSource: this.source
+    });
     Session.set('showPreviewOverlayForStreamId', this._id);
   }
 });

@@ -577,7 +577,8 @@ Template.watch_page.events({
   'click .context-mini-preview' (e,t){
     analytics.track('Click context mini preview', {
       label: this.type,
-      contentType: this.type
+      contentType: this.type,
+      contentSource: this.source
     });
     clearCurrentContext();
     Session.set('mediaDataType', null);
@@ -727,6 +728,7 @@ Template.context_browser.events({
     analytics.track('Click context section in list mode', {
       label: this.type,
       contentType: this.type,
+      contentSource: this.source,
       id: this._id
     });
   },
