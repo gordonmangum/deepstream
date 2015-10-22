@@ -187,6 +187,8 @@ Template.watch_page.onCreated(function () {
     Session.set("streamShortId", that.data.shortId());
   });
 
+  Session.set('showTimeline', null);
+
   // march through creation steps, or setup most recent context type to display when arrive on page if past curation
   this.autorun(function(){
     if(FlowRouter.subsReady()){
