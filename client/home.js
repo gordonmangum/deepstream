@@ -236,15 +236,21 @@ Template.home.events({
     Session.set('homeStreamListMode', 'most_recent');
   },
   "click .show-deepstreams-only" (e, t) {
-    analytics.track('Click purple pill on homepage');
+    analytics.track('Click purple pill on homepage', {
+      label: 'deepstreams'
+    });
     Session.set('homeStreamListType', 'deepstreams');
   },
   "click .show-livestreams-only" (e, t) {
-    analytics.track('Click purple pill on homepage');
+    analytics.track('Click purple pill on homepage', {
+      label: 'livestreams'
+    });
     Session.set('homeStreamListType', 'livestreams');
   },
   "click .show-deepstreams-and-livestreams" (e, t) {
-    analytics.track('Click purple pill on homepage');
+    analytics.track('Click purple pill on homepage', {
+      label: 'deepstream & livestreams'
+    });
     Session.set('homeStreamListType', 'both');
   }
 });
