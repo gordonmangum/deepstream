@@ -654,6 +654,12 @@ div.action-items {
       height: 100%;
       background-color: inherit;
       color: @light-text-color;
+      // fix autofill behavior of inputs
+      &:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 1000px @homepage-shade-3 inset;
+        -webkit-text-fill-color: @light-text-color !important;
+        color: @light-text-color !important;
+      }
     }
   }
 
