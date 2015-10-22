@@ -994,9 +994,6 @@
     vertical-align: top;
     margin-top: 10px;
   }
-  .curator-info{
-    width: 160px;
-  }
   .webcam-button-container{
     float: right;
     margin-top: 10px;
