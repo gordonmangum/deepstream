@@ -205,17 +205,7 @@
       {{#with getCuratorWebcamStream}}
 
         <div class="curator-webcam-stream-container">
-          <object id="curator-webcam-stream" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-                  class="curator-webcam-stream-flash-object">
-            <embed name="curator-webcam-stream" src="//static.bambuser.com/r/player.swf"
-                   type="application/x-shockwave-flash" flashvars="{{curatorWebcamFlashVars}}" allowfullscreen="true"
-                   allowscriptaccess="always" wmode="opaque"/>
-            <param name="movie" value="//static.bambuser.com/r/player.swf"/>
-            <param name="flashvars" value="{{curatorWebcamFlashVars}}"/>
-            <param name="allowfullscreen" value="true"/>
-            <param name="allowscriptaccess" value="always"/>
-            <param name="wmode" value="opaque"/>
-          </object>
+          {{> curator_webcam_display}}
 
           <!--<iframe-->
               <!--class="curator-webcam-stream-iframe"-->
@@ -516,4 +506,18 @@
       <div id='twitter-timeline' class="timeline-container"></div>
 
     </div>
+</template>
+
+<template name="curator_webcam_display">
+  <object id="curator-webcam-stream" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+          class="curator-webcam-stream-flash-object">
+    <embed name="curator-webcam-stream" src="//static.bambuser.com/r/player.swf"
+           type="application/x-shockwave-flash" flashvars="{{curatorWebcamFlashVars}}" allowfullscreen="true"
+           allowscriptaccess="always" wmode="opaque"/>
+    <param name="movie" value="//static.bambuser.com/r/player.swf"/>
+    <param name="flashvars" value="{{curatorWebcamFlashVars}}"/>
+    <param name="allowfullscreen" value="true"/>
+    <param name="allowscriptaccess" value="always"/>
+    <param name="wmode" value="opaque"/>
+  </object>
 </template>

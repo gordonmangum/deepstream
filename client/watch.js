@@ -3,6 +3,9 @@ var ytScriptLoaded = false;
 var ytApiReady = new ReactiveVar(false);
 
 window.mainPlayer = {
+  activated(){
+    return this.activeStreamSource ? true : false;
+  },
   play(){
     switch(this.activeStreamSource){
       case 'youtube':
@@ -987,3 +990,25 @@ Template.timeline_section.events({
     });
   }
 });
+
+var mutingTemplates = [
+  'curator_webcam_display',
+  'display_video_section'
+];
+
+_.each(mutingTemplates, function(templateName){
+  // mute and unmute main video when show video overlay
+  Template[templateName].onCreated(function(){
+    // TO-DO check and store current mute status in case already muted
+    if(mainPlayer && mainPlayer.activated()){
+      mainPlayer.mute();
+    }
+  });
+  Template[templateName].onDestroyed(function(){
+    if(mainPlayer && mainPlayer.activated()){
+      mainPlayer.unmute();
+    }
+  });
+});
+
+
