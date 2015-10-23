@@ -591,7 +591,7 @@ Template.watch_page.events({
     var height = 400;
     var left = ($(window).width() - width) / 2;
     var top = ($(window).height() - height) / 2;
-    var deepstreamUrl = encodeURIComponent(location.href);
+    var deepstreamUrl = encodeURIComponent(location.href).replace(/%2Fcurate%2F/, "%2Fwatch%2F");
     var url = "mailto:?subject=Check out " + this.title + " On DeepStream&body=" + deepstreamUrl;
     var opts = 'status=1' +
       ',width=' + width +
@@ -607,12 +607,12 @@ Template.watch_page.events({
     var height = 400;
     var left = ($(window).width() - width) / 2;
     var top = ($(window).height() - height) / 2;
-    var url = '//twitter.com/intent/tweet?text=Check out "' + this.title + '" on DeepStream&url=' + encodeURIComponent(location.href);
+    var url = '//twitter.com/intent/tweet?text=Check out "' + this.title + '" on DeepStream&url=' + encodeURIComponent(location.href).replace(/%2Fcurate%2F/, "%2Fwatch%2F");
     var opts = 'status=1' +
       ',width=' + width +
       ',height=' + height +
       ',top=' + top +
-      ',left=' + left
+      ',left=' + left;
     window.open(url, 'twitter', opts);
     Meteor.call('countDeepstreamShare', this.shortId, 'twitter');
     analytics.track('Click twitter share');
@@ -622,7 +622,7 @@ Template.watch_page.events({
     var height = 400;
     var left = ($(window).width() - width) / 2;
     var top = ($(window).height() - height) / 2;
-    var url = "//facebook.com/sharer/sharer.php?u=" + encodeURIComponent(location.href);
+    var url = "//facebook.com/sharer/sharer.php?u=" + encodeURIComponent(location.href).replace(/%2Fcurate%2F/, "%2Fwatch%2F");
     var opts = 'status=1' +
       ',width=' + width +
       ',height=' + height +
