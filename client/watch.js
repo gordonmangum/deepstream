@@ -96,6 +96,10 @@ window.mainPlayer = {
 };
 
 
+
+
+var deepstreamViewed = '';
+
 Template.watch_page.onCreated(function () {
   if(!ytScriptLoaded){
     $.getScript('https://www.youtube.com/iframe_api', function () {});
@@ -224,6 +228,20 @@ Template.watch_page.onCreated(function () {
       }
     }
   });
+
+
+  var shortId = this.data.shortId();
+
+  if (deepstreamViewed !== shortId) {
+    deepstreamViewed = shortId;
+    Meteor.call('countDeepstreamView', shortId);
+    analytics.track('View stream', {
+      label: shortId,
+      onCuratePage: this.data.onCuratePage(),
+      userPathSegment: this.data.userPathSegment(),
+      streamPathSegment: this.data.streamPathSegment()
+    });
+  }
 
 });
 
@@ -463,18 +481,17 @@ var saveStreamTitle = function(template){
 
 Template.watch_page.events({
   'click .set-main-stream' (e, t){
-    analytics.track('Click mini-stream to set main stream');
-    if(Session.get('curateMode')){
-      Meteor.call('setActiveStream', t.data.shortId(), this._id ,basicErrorHandler);
+    if (Session.get('curateMode')) {
+      Meteor.call('setActiveStream', t.data.shortId(), this._id, basicErrorHandler);
     } else {
       t.userControlledActiveStreamId.set(this._id);
     }
+    analytics.track('Click mini-stream to set main stream');
   },
   'click .delete-stream' (e, t){
     var streamElement = t.$('[data-stream-id=' + this._id + ']');
     streamElement.addClass('to-delete');
-    if(confirm('Are you sure you want to delete this stream?'))
-    {
+    if (confirm('Are you sure you want to delete this stream?')) {
       streamElement.fadeOut(500, () => {
         Meteor.call('removeStreamFromStream', Session.get("streamShortId"), this._id, basicErrorHandler);
       });
@@ -482,7 +499,7 @@ Template.watch_page.events({
       streamElement.removeClass('to-delete');
     }
   },
-  'click .preview' (e,t){
+  'click .preview' (e, t){
     t.userControlledActiveStreamId.set(null); // so that stream selection doesn't switch
     Session.set('curateMode', false);
   },
@@ -491,15 +508,15 @@ Template.watch_page.events({
   },
   'click .publish' (e, t){
     if (this.creationStep === 'go_on_air') {
-      if(!this.streams.length){
+      if (!this.streams.length) {
         notifyError('Please add a stream before you publish your deepstream');
         Meteor.call('goToFindStreamStep', t.data.shortId(), basicErrorHandler);
       } else {
         Meteor.call('proceedFromGoOnAirStep', t.data.shortId(), basicErrorHandler);
       }
     } else if (!this.creationStep) {
-      Meteor.call('publishStream', t.data.shortId(), function(err){
-        if(err){
+      Meteor.call('publishStream', t.data.shortId(), function (err) {
+        if (err) {
           basicErrorHandler(err);
         } else {
           notifySuccess("Congratulations! Your Deep Stream is now on air!");
@@ -511,17 +528,17 @@ Template.watch_page.events({
     Meteor.call('unpublishStream', t.data.shortId(), basicErrorHandler);
   },
   'click .show-stream-search' (e, t){
-    if(this.creationStep && this.creationStep !== 'go_on_air'){
+    if (this.creationStep && this.creationStep !== 'go_on_air') {
       Meteor.call('goToFindStreamStep', t.data.shortId(), basicErrorHandler);
     } else {
       Session.set('mediaDataType', 'stream');
     }
   },
-  'blur .stream-title[contenteditable]' (e,template) {
+  'blur .stream-title[contenteditable]' (e, template) {
     saveStreamTitle(template);
   },
-  'keypress .stream-title[contenteditable]' (e,template) {
-    if (e.keyCode === 13){ // return
+  'keypress .stream-title[contenteditable]' (e, template) {
+    if (e.keyCode === 13) { // return
       e.preventDefault();
       saveStreamTitle(template);
     }
@@ -531,15 +548,15 @@ Template.watch_page.events({
     e.preventDefault();
     return false;
   },
-  'blur .stream-description[contenteditable]' (e,template) {
+  'blur .stream-description[contenteditable]' (e, template) {
     streamDescription = $.trim(template.$('div.stream-description').text());
     Session.set('saveState', 'saving');
     return Meteor.call('updateStreamDescription', template.data.shortId(), streamDescription, basicErrorHandler);
   },
-  'click .director-mode-off' (e,t){
+  'click .director-mode-off' (e, t){
     return Meteor.call('directorModeOff', t.data.shortId(), basicErrorHandler)
   },
-  'click .director-mode-on' (e,t){
+  'click .director-mode-on' (e, t){
     return Meteor.call('directorModeOn', t.data.shortId(), basicErrorHandler)
   },
   'mouseenter .settings-button-and-menu' (e, template){
@@ -548,49 +565,84 @@ Template.watch_page.events({
   'mouseleave .settings-menu-container' (e, template){
     template.settingsMenuOpen.set(false);
   },
-  'click .microphone' (e,t){
+  'click .microphone' (e, t){
     notifyFeature('Live audio broadcast: coming soon!');
   },
-  'click .webcam' (e,t){
+  'click .webcam' (e, t){
     Session.set('mediaDataType', 'webcam');
   },
-  'click .end-curator-webcam-stream' (e,t){
+  'click .end-curator-webcam-stream' (e, t){
     Meteor.call('stopCuratorWebcam', t.data.shortId(), basicErrorHandler);
   },
-  'click .email-share-button' (e,t){
+  'click .email-share-button' (e, t){
+    var width = 575;
+    var height = 400;
+    var left = ($(window).width() - width) / 2;
+    var top = ($(window).height() - height) / 2;
+    var deepstreamUrl = encodeURIComponent(location.href);
+    var url = "mailto:?subject=Check out " + this.title + " On DeepStream&body=" + deepstreamUrl;
+    var opts = 'status=1' +
+      ',width=' + width +
+      ',height=' + height +
+      ',top=' + top +
+      ',left=' + left;
+    window.open(url, 'facebook', opts);
+    Meteor.call('countDeepstreamShare', this._id, 'email');
     analytics.track('Click email share');
-    notifyFeature('Success!! Email share: coming soon!');
   },
-  'click .twitter-share-button' (e,t){
+  'click .twitter-share-button' (e, t){
+    var width = 575;
+    var height = 400;
+    var left = ($(window).width() - width) / 2;
+    var top = ($(window).height() - height) / 2;
+    var url = '//twitter.com/intent/tweet?text=Check out "' + this.title + '" on DeepStream&url=' + encodeURIComponent(location.href);
+    var opts = 'status=1' +
+      ',width=' + width +
+      ',height=' + height +
+      ',top=' + top +
+      ',left=' + left
+    window.open(url, 'twitter', opts);
+    Meteor.call('countDeepstreamShare', this._id, 'twitter');
     analytics.track('Click twitter share');
-    notifyFeature('Success!! Twitter share: coming soon!');
   },
-  'click .facebook-share-button' (e,t){
+  'click .facebook-share-button' (e, t){
+    var width = 575;
+    var height = 400;
+    var left = ($(window).width() - width) / 2;
+    var top = ($(window).height() - height) / 2;
+    var url = "//facebook.com/sharer/sharer.php?u=" + encodeURIComponent(location.href);
+    var opts = 'status=1' +
+      ',width=' + width +
+      ',height=' + height +
+      ',top=' + top +
+      ',left=' + left;
+    window.open(url, 'facebook', opts);
+    Meteor.call('countDeepstreamShare', this._id, 'facebook');
     analytics.track('Click facebook share');
-    notifyFeature('Success!! Facebook share: coming soon!');
   },
-  'click .favorite-button' (e,t){
-    analytics.track('Click favorite button');
+  'click .favorite-button' (e, t){
     notifyFeature('Success!! Favoriting streams: coming soon!');
+    analytics.track('Click favorite button');
   },
-  'click .PiP-overlay' (e,t){
+  'click .PiP-overlay' (e, t){
     clearCurrentContext();
   },
-  'click .context-mini-preview' (e,t){
-    analytics.track('Click context mini preview', {
-      label: this.type,
-      contentType: this.type,
-      contentSource: this.source
-    });
+  'click .context-mini-preview' (e, t){
+
     clearCurrentContext();
     Session.set('mediaDataType', null);
     Session.set('showTimeline', null);
-    Meteor.setTimeout( () =>{
+    Meteor.setTimeout(() => {
       var offset = 130;
       var contextToScrollTo = $('.context-section[data-context-id=' + this._id + ']');
       var container = $('.context-area');
       container.animate({scrollTop: (contextToScrollTo.offset().top - container.offset().top + container.scrollTop() - offset)});
     })
+    analytics.track('Click context mini preview', {
+      label: this.type,
+      contentType: this.type,
+      contentSource: this.source
+    });
   }
 });
 

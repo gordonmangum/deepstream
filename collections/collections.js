@@ -53,6 +53,9 @@ Schema.DeepstreamStats = new SimpleSchema({
   streamId: {
     type: String
   },
+  streamShortId: {
+    type: String
+  },
   deepAnalytics: {
     type: Object,
     optional: true

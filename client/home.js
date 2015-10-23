@@ -43,9 +43,9 @@ Template.login_buttons.events({
     Template.instance().showUserInfo.set(false);
   },
   "click .signin" (d) {
-    analytics.track('Click login signup button');
     Session.set('signingIn', true);
     setSigningInFrom();
+    analytics.track('Click login signup button');
   },
   "click .logout" (e, t) {
     e.preventDefault();
@@ -211,10 +211,6 @@ Template.home.events({
     e.preventDefault();
     var query = t.$('#stream-search-input').val();
 
-    analytics.track('Search on homepage', {
-      query: query,
-      label: query
-    });
     Session.set('homeStreamListQuery', query);
     Session.set('homeStreamListMode', 'search');
 
@@ -225,34 +221,39 @@ Template.home.events({
       t.noMoreStreamResults.set(null);
     }
     t.streamSearch(query);
+
+    analytics.track('Search on homepage', {
+      query: query,
+      label: query
+    });
   },
   "click .show-best-streams" (e, t) {
-    analytics.track('Click best streams button on homepage');
     t.$('#stream-search-input').val('');
     Session.set('homeStreamListMode', 'best');
+    analytics.track('Click best streams button on homepage');
   },
   "click .show-most-recent-streams" (e, t) {
-    analytics.track('Click most recent button on homepage');
     t.$('#stream-search-input').val('');
     Session.set('homeStreamListMode', 'most_recent');
+    analytics.track('Click most recent button on homepage');
   },
   "click .show-deepstreams-only" (e, t) {
+    Session.set('homeStreamListType', 'deepstreams');
     analytics.track('Click purple pill on homepage', {
       label: 'deepstreams'
     });
-    Session.set('homeStreamListType', 'deepstreams');
   },
   "click .show-livestreams-only" (e, t) {
+    Session.set('homeStreamListType', 'livestreams');
     analytics.track('Click purple pill on homepage', {
       label: 'livestreams'
     });
-    Session.set('homeStreamListType', 'livestreams');
   },
   "click .show-deepstreams-and-livestreams" (e, t) {
+    Session.set('homeStreamListType', 'both');
     analytics.track('Click purple pill on homepage', {
       label: 'deepstream & livestreams'
     });
-    Session.set('homeStreamListType', 'both');
   },
   "click .logo-title" (e, t){
     Session.set('homeStreamListType', 'both');
@@ -369,11 +370,11 @@ Template.stream_preview.events({
     Session.set('showPreviewOverlayForStreamId', null);
   },
   'click .show-preview-overlay' (e,t){
+    Session.set('showPreviewOverlayForStreamId', this._id);
     analytics.track('Click stream on homepage', {
       label: this.source,
       contentSource: this.source
     });
-    Session.set('showPreviewOverlayForStreamId', this._id);
   }
 });
 

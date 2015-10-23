@@ -1,15 +1,15 @@
-var countStat = function(streamId, stat, details) {
+var countStat = function(shortId, stat, details) {
 
   var connectionId = this.connection.id;
   var clientIP = this.connection.httpHeaders['x-forwarded-for'] || this.connection.clientAddress;
 
-  var story = Deepstreams.findOne({_id: streamId, onAir: true});
+  var stream = Deepstreams.findOne({shortId: shortId, onAir: true});
 
-  if (!story){
-    throw new Meteor.error('Deepstream not found for count ' + stat + ': ' + streamId); // this mostly confirms the stream has been published
+  if (!stream){
+    throw new Meteor.error('Deepstream not found for count ' + stat + ': ' + shortId); // this mostly confirms the stream has been published
   }
 
-  var stats = DeepstreamStats.findOne({streamId: streamId}, {fields: {all: 0}});
+  var stats = DeepstreamStats.findOne({streamShortId: shortId}, {fields: {all: 0}});
 
   if(!stats){
     stats = {};
@@ -58,19 +58,19 @@ var countStat = function(streamId, stat, details) {
 
   push['deepAnalytics.' + stat + '.all'] = fullData;
 
-  Deepstreams.update( {_id: streamId}, {$inc: inc });
-  DeepstreamStats.upsert( {streamId: streamId} , {$inc: inc, $addToSet: addToSet, $push: push} );
+  Deepstreams.update( {shortId: shortId}, {$inc: inc });
+  DeepstreamStats.upsert( {streamShortId: shortId, streamId: stream._id}, {$inc: inc, $addToSet: addToSet, $push: push} );
 };
 
 Meteor.methods({
-  countStoryView (streamId) {
+  countDeepstreamView (streamShortId) {
     this.unblock();
-    check(streamId, String);
-    countStat.call(this, streamId, 'views');
+    check(streamShortId, String);
+    countStat.call(this, streamShortId, 'views');
   },
-  countStoryShare (streamId, service) {
+  countDeepstreamShare (streamShortId, service) {
     this.unblock();
-    check(streamId, String);
-    countStat.call(this, streamId, 'shares', {service: service});
+    check(streamShortId, String);
+    countStat.call(this, streamShortId, 'shares', {service: service});
   },
 });

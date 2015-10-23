@@ -185,44 +185,6 @@ Template.preview_text_section.helpers(horizontalBlockHelpers);
 Template.homepage_preview_text_section.helpers(horizontalBlockHelpers);
 Template.display_text_section.events(editableTextEventsBoilerplate('editTextSection'));
 
-//
-//Template.share_button.events({
-//  'click' (e, t) {
-//    t.tooltipShown.set(!t.tooltipShown.get());
-//  },
-//  'click .share-facebook' (e, t) {
-//    var width  = 575;
-//    var height = 400;
-//    var left   = ($(window).width()  - width)  / 2;
-//    var top    = ($(window).height() - height) / 2;
-//    var url    = "//facebook.com/sharer/sharer.php?u=" + encodeURIComponent(location.href);
-//    var opts   = 'status=1' +
-//      ',width='  + width  +
-//      ',height=' + height +
-//      ',top='    + top    +
-//      ',left='   + left
-//    window.open(url, 'facebook', opts);
-//    Meteor.call('countStoryShare', this._id, 'facebook');
-//    analytics.track('Share on Facebook');
-//  },
-//  'click .share-twitter' (e, t) {
-//    var title = $(".story-title").text();
-//    var width  = 575;
-//    var height = 400;
-//    var left   = ($(window).width()  - width)  / 2;
-//    var top    = ($(window).height() - height) / 2;
-//    var url    = '//twitter.com/intent/tweet?text=Read "' + title + '" on @readFOLD&url=' + encodeURIComponent(location.href);
-//    var opts   = 'status=1' +
-//      ',width='  + width  +
-//      ',height=' + height +
-//      ',top='    + top    +
-//      ',left='   + left
-//    window.open(url, 'twitter', opts);
-//    Meteor.call('countStoryShare', this._id, 'twitter');
-//    analytics.track('Share on Twitter');
-//  }
-//});
-
 
 Template.favorite_button.helpers({
   userFavorited () {
@@ -310,10 +272,6 @@ Template.create_deepstream.events({
   }
 });
 
-//
-//var storyViewed = '';
-//Template.read.onCreated(function(){
-//
 //  // analytics autorun
 //  this.autorun(function(){
 //    if (!Session.equals("currentY", null)){
@@ -329,15 +287,3 @@ Template.create_deepstream.events({
 //    }
 //  });
 //
-//  var id = this.data._id;
-//  if (storyViewed !== id){
-//    storyViewed = id;
-//    Meteor.call('countStoryView', id);
-//    analytics.track('View story', trackingInfoFromStory(this.data));
-//  }
-//});
-//
-//
-//Template.read.onRendered(function(){
-//  $(window).scrollTop(Session.get('scrollTop'));
-//});
