@@ -592,7 +592,7 @@ Template.watch_page.events({
     var left = ($(window).width() - width) / 2;
     var top = ($(window).height() - height) / 2;
     var deepstreamUrl = encodeURIComponent(location.href).replace(/%2Fcurate%2F/, "%2Fwatch%2F");
-    var url = "mailto:?subject=Check out " + this.title + " On DeepStream&body=" + deepstreamUrl;
+    var url = 'mailto:?subject=Check out '+ this.title + ' On DeepStream&body=' + deepstreamUrl;
     var opts = 'status=1' +
       ',width=' + width +
       ',height=' + height +
@@ -607,7 +607,7 @@ Template.watch_page.events({
     var height = 400;
     var left = ($(window).width() - width) / 2;
     var top = ($(window).height() - height) / 2;
-    var url = '//twitter.com/intent/tweet?text=Check out "' + this.title + '" on DeepStream&url=' + encodeURIComponent(location.href).replace(/%2Fcurate%2F/, "%2Fwatch%2F");
+    var url = '//twitter.com/intent/tweet?text=Check out "' + encodeURIComponent(this.title) + '" on DeepStream&url=' + encodeURIComponent(location.href).replace(/%2Fcurate%2F/, "%2Fwatch%2F");
     var opts = 'status=1' +
       ',width=' + width +
       ',height=' + height +
