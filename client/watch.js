@@ -84,7 +84,7 @@ window.mainPlayer = {
         this._youTubePlayer.unMute();
         break;
       case 'ustream':
-        this._ustreamPlayer.callMethod('volume', 100); // TO-DO return volume to wherever they were before mute
+        this._ustreamPlayer.callMethod('volume', 70); // TO-DO return volume to wherever they were before mute
         break;
       case 'bambuser':
         this._bambuserPlayer.unmute();
