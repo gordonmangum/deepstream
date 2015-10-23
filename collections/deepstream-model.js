@@ -139,6 +139,10 @@ Deepstream = (function() {
     return !this.directorMode;
   };
 
+  Deepstream.prototype.viewCount = function(){
+    return this.analytics.views.total;
+  };
+
   return Deepstream;
 
 })();

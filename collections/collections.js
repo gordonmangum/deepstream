@@ -647,7 +647,16 @@ Schema.Deepstreams = new SimpleSchema({
     type: [Schema.Streams],
     minCount: 0,
     maxCount: 100
-  }
+  },
+  analytics: {
+    type: Object
+  },
+  'analytics.views': {
+    type: analyticsSchema
+  },
+  'analytics.shares': {
+    type: analyticsSchema
+  },
 });
 
 this.Deepstreams.attachSchema(Schema.Deepstreams);

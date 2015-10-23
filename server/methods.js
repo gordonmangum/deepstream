@@ -72,5 +72,5 @@ Meteor.methods({
     this.unblock();
     check(streamShortId, String);
     countStat.call(this, streamShortId, 'shares', {service: service});
-  },
+  }
 });
