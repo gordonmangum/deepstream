@@ -347,13 +347,22 @@
       display: inline-flex;
       flex-flow: column;
       align-items: center;
+      -webkit-align-items: center;
       flex-direction: column;
       justify-content: center;
       height: 100%;
+      text-align: center;
       .padding-sides(10px);
+      @rectangle-width: 20px;
+      .rectangles{
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        width: @rectangle-width;
+      }
       .rectangle {
         height: 13px;
-        width: 20px;
+        width: @rectangle-width;
         &:not(:first-child) {
           margin-top: 4px;
         }
@@ -454,6 +463,7 @@
       padding: 1.5px;
       vertical-align: top;
       display: inline-block;
+      overflow: visible;
       .bg{
         fill: none;
         stroke: @dark-color;
