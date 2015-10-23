@@ -96,6 +96,24 @@ window.mainPlayer = {
         throw new Meteor.Error('main player has no active stream source')
     }
   },
+  lowerVolume(){
+    switch(this.activeStreamSource){
+      case 'youtube':
+        this._youTubePlayer.setVolume(15);
+        break;
+      case 'ustream':
+        this._ustreamPlayer.callMethod('volume', 15);
+        break;
+      case 'bambuser':
+        this._bambuserPlayer.mute();
+        break;
+      case 'twitch':
+        this._twitchPlayer.mute();
+        break;
+      default:
+        throw new Meteor.Error('main player has no active stream source')
+    }
+  },
   isMuted(){
     switch(this.activeStreamSource){
       case 'youtube':
