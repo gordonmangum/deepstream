@@ -95,11 +95,6 @@ window.mainPlayer = {
   }
 };
 
-
-
-
-var deepstreamViewed = '';
-
 Template.watch_page.onCreated(function () {
   if(!ytScriptLoaded){
     $.getScript('https://www.youtube.com/iframe_api', function () {});
@@ -232,8 +227,8 @@ Template.watch_page.onCreated(function () {
 
   var shortId = this.data.shortId();
 
-  if (deepstreamViewed !== shortId) {
-    deepstreamViewed = shortId;
+  if (Session.get('deepstreamViewed') !== shortId) {
+    Session.set('deepstreamViewed', shortId);
     Meteor.call('countDeepstreamView', shortId);
     analytics.track('View stream', {
       label: shortId,

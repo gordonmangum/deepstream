@@ -197,7 +197,7 @@ Template.favorite_button.events({
     if(!Meteor.user()){
       return notifyInfo('Please sign up or log in to favorite stories');
     }
-    return Meteor.call('favoriteStory', this._id, function(err) {
+    return Meteor.call('favoriteDeepstream', this._id, function(err) {
       if (err) {
         notifyError(err);
         throw(err);
@@ -208,7 +208,7 @@ Template.favorite_button.events({
     });
   },
   "click .unfavorite" () {
-    return Meteor.call('unfavoriteStory', this._id, function(err) {
+    return Meteor.call('unfavoriteDeepstream', this._id, function(err) {
       if (err) {
         notifyError(err);
         throw(err);
