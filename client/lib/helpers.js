@@ -260,7 +260,14 @@ window.updateActiveContext = function(){
   }
 
   var container = $('.context-area.list-mode');
-  var containerOffset = container.offset().top;
+
+  var containerOffset = container.offset();
+
+  if (!containerOffset){
+    return
+  }
+
+  var containerOffsetTop = containerOffset.top;
   var lastActivationBias = 0;
   var currentActivationBias = 30;
   var activeId;
@@ -279,7 +286,7 @@ window.updateActiveContext = function(){
 
     activeId = _.chain(contextOffsetObjects)
       .filter((obj) => {
-        return obj.offset + obj.height / 2 > containerOffset + currentActivationBias;
+        return obj.offset + obj.height / 2 > containerOffsetTop + currentActivationBias;
       })
       .pluck('id')
       .first()
