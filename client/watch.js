@@ -971,18 +971,17 @@ Template.timeline_section.onRendered(function(){
       this.$('#twitter-timeline iframe').remove();
       if(timelineId){
         twttr.ready((twttr) => {
-          console.log(this.$('#twitter-timeline')[0])
-            twttr.widgets.createTimeline(
-              timelineId,
-              this.$('#twitter-timeline')[0],
-              {
-                theme: 'dark',
-                height: 'auto',
-                width: 'auto'
-              })
-              .then(function (el) {
-                console.log("Timeline has been displayed.")
-              });
+          twttr.widgets.createTimeline(
+            timelineId,
+            this.$('#twitter-timeline')[0],
+            {
+              theme: 'dark',
+              height: 'auto',
+              width: 'auto'
+            })
+            .then(function (el) {
+              console.log("Timeline has been displayed.")
+            });
         });
       }
     }
