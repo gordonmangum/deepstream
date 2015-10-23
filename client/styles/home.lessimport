@@ -3,7 +3,7 @@ div.home-top {
   &.not-sticky{
     position: absolute;
   }
-  height: 145px;
+  height: 120px;
   @media @mobile{
     img{
       vertical-align: middle;
