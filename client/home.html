@@ -273,12 +273,12 @@
       <a href="{{linkPath}}">
         <div class="title-and-views">
           <span class="title">{{title}}</span>
-          <span class="views">{{viewCount}} Views</span>
+          <span class="views">{{formatNumber viewCount}} Views</span>
         </div>
         <div class="small-stream-info">
           <div>
             <span class="stream-count">Tracking {{streams.length}} streamers</span>
-            <span class="favorited">{{favoritedTotal}} {{> favorite_icon}}</span>
+            <span class="favorited">{{formatNumber favoritedTotal}} {{> favorite_icon}}</span>
           </div>
           <div>
             <span class="date">Updated {{dateInPast savedAt}}</span>
@@ -319,7 +319,7 @@
           <div class="small-stream-info">
             <div class="username">{{username}}</div>
             {{#if totalViews}}
-              <div class="views">{{totalViews}} Views</div>
+              <div class="views">{{formatNumber totalViews}} Views</div>
             {{/if}}
           </div>
         </div>
