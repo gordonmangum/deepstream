@@ -95,6 +95,20 @@ window.mainPlayer = {
       default:
         throw new Meteor.Error('main player has no active stream source')
     }
+  },
+  isMuted(){
+    switch(this.activeStreamSource){
+      case 'youtube':
+        return this._youTubePlayer.isMuted();
+      //case 'ustream':
+      //  return
+      //case 'bambuser':
+      //  return
+      //case 'twitch':
+      //  return
+      default:
+        return false
+    }
   }
 };
 
@@ -1001,12 +1015,19 @@ _.each(mutingTemplates, function(templateName){
   Template[templateName].onCreated(function(){
     // TO-DO check and store current mute status in case already muted
     if(mainPlayer && mainPlayer.activated()){
+      if(mainPlayer.isMuted()){
+        Session.set('previouslyMuted', true);
+      } else {
+        Session.set('previouslyMuted', false);
+      }
       mainPlayer.mute();
     }
   });
   Template[templateName].onDestroyed(function(){
     if(mainPlayer && mainPlayer.activated()){
-      mainPlayer.unmute();
+      if(!Session.get('previouslyMuted')){
+        mainPlayer.unmute();
+      }
     }
   });
 });
