@@ -43,14 +43,9 @@ changeFavorite = function(shortId, toFavorite) {
     'profile.favorites': shortId
   };
 
-  console.log(deepstreamOperation)
-
-
-  if(!_.isEmpty(deepstreamOperation)){
-    Deepstreams.update({
-      shortId: shortId
-    }, deepstreamOperation);
-  }
+  Deepstreams.update({
+    shortId: shortId
+  }, deepstreamOperation);
 
   return Meteor.users.update({
     _id: this.userId
