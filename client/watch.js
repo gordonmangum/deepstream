@@ -200,10 +200,7 @@ Template.watch_page.onCreated(function () {
           }
         } else if (Meteor.loggingIn()) {
           return
-        } else {
-          Session.set('signingIn', true); // if there is no user, take them to the signin page
-          Session.set('signingInFrom', setSigningInFrom());
-
+        } else { // if there is no user
           FlowRouter.withReplaceState(function(){
             FlowRouter.go(stream.watchPath());
           });
