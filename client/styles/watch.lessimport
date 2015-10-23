@@ -972,7 +972,7 @@
   .curator-info{
     display: inline-block;
     font-weight: 500;
-    width: @right-section-width - 100px;
+    width: @right-section-width - 170px;
     line-height: 17px;
   }
 
