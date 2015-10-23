@@ -615,10 +615,6 @@ Template.watch_page.events({
     Meteor.call('countDeepstreamShare', this._id, 'facebook');
     analytics.track('Click facebook share');
   },
-  'click .favorite-button' (e, t){
-    notifyFeature('Success!! Favoriting streams: coming soon!');
-    analytics.track('Click favorite button');
-  },
   'click .PiP-overlay' (e, t){
     clearCurrentContext();
   },

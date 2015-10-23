@@ -188,7 +188,7 @@ Template.display_text_section.events(editableTextEventsBoilerplate('editTextSect
 
 Template.favorite_button.helpers({
   userFavorited () {
-    return Meteor.user() && _.contains(Meteor.user().profile.favorites, this._id);
+    return Meteor.user() && _.contains(Meteor.user().profile.favorites, this.shortId);
   }
 });
 
@@ -197,7 +197,7 @@ Template.favorite_button.events({
     if(!Meteor.user()){
       return notifyInfo('Please sign up or log in to favorite stories');
     }
-    return Meteor.call('favoriteDeepstream', this._id, function(err) {
+    return Meteor.call('favoriteDeepstream', this.shortId, function(err) {
       if (err) {
         notifyError(err);
         throw(err);
@@ -208,7 +208,7 @@ Template.favorite_button.events({
     });
   },
   "click .unfavorite" () {
-    return Meteor.call('unfavoriteDeepstream', this._id, function(err) {
+    return Meteor.call('unfavoriteDeepstream', this.shortId, function(err) {
       if (err) {
         notifyError(err);
         throw(err);
@@ -221,7 +221,7 @@ Template.favorite_button.events({
 
 Template.editors_pick_button.events({
   "click .pick" () {
-    return Meteor.call('designateEditorsPick', this._id, function(err) {
+    return Meteor.call('designateEditorsPick', this.shortId, function(err) {
       if (err) {
         notifyError(err);
         throw(err);
@@ -229,7 +229,7 @@ Template.editors_pick_button.events({
     });
   },
   "click .unpick" () {
-    return Meteor.call('stripEditorsPick', this._id, function(err) {
+    return Meteor.call('stripEditorsPick', this.shortId, function(err) {
       if (err) {
         notifyError(err);
         throw(err);

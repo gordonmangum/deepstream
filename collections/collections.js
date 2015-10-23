@@ -657,6 +657,15 @@ Schema.Deepstreams = new SimpleSchema({
   'analytics.shares': {
     type: analyticsSchema
   },
+  favorited: {
+    type: [String],
+    defaultValue: []
+  },
+  favoritedTotal: {
+    type: Number,
+    defaultValue: 0
+  }
+
 });
 
 this.Deepstreams.attachSchema(Schema.Deepstreams);
