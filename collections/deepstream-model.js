@@ -140,7 +140,9 @@ Deepstream = (function() {
   };
 
   Deepstream.prototype.viewCount = function(){
-    return this.analytics.views.total;
+    if(this.analytics){
+      return this.analytics.views.total;
+    }
   };
 
   return Deepstream;
