@@ -439,7 +439,7 @@ Template.watch_page.helpers({
     return Session.get('mediaDataType') && Session.get("curateMode") && Session.get('mediaDataType') !=='webcam';
   },
   showPreviewEditButton (){
-    return this.onAir || this.creationStep === 'go_on_air';
+    return !this.creationStep || this.creationStep === 'go_on_air';
   },
   soloOverlayContextMode (){
     return soloOverlayContextModeActive();
