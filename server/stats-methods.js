@@ -3,10 +3,10 @@ var countStat = function(shortId, stat, details) {
   var connectionId = this.connection.id;
   var clientIP = this.connection.httpHeaders['x-forwarded-for'] || this.connection.clientAddress;
 
-  var stream = Deepstreams.findOne({shortId: shortId, onAir: true});
+  var stream = Deepstreams.findOne({shortId: shortId});
 
   if (!stream){
-    throw new Meteor.error('Deepstream not found for count ' + stat + ': ' + shortId); // this mostly confirms the stream has been published
+    throw new Meteor.Error('Deepstream not found for count ' + stat + ': ' + shortId); // this mostly confirms the stream has been published
   }
 
   var stats = DeepstreamStats.findOne({streamShortId: shortId}, {fields: {all: 0}});

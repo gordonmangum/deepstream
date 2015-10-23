@@ -599,7 +599,7 @@ Template.watch_page.events({
       ',top=' + top +
       ',left=' + left;
     window.open(url, 'facebook', opts);
-    Meteor.call('countDeepstreamShare', this._id, 'email');
+    Meteor.call('countDeepstreamShare', this.shortId, 'email');
     analytics.track('Click email share');
   },
   'click .twitter-share-button' (e, t){
@@ -614,7 +614,7 @@ Template.watch_page.events({
       ',top=' + top +
       ',left=' + left
     window.open(url, 'twitter', opts);
-    Meteor.call('countDeepstreamShare', this._id, 'twitter');
+    Meteor.call('countDeepstreamShare', this.shortId, 'twitter');
     analytics.track('Click twitter share');
   },
   'click .facebook-share-button' (e, t){
@@ -629,7 +629,7 @@ Template.watch_page.events({
       ',top=' + top +
       ',left=' + left;
     window.open(url, 'facebook', opts);
-    Meteor.call('countDeepstreamShare', this._id, 'facebook');
+    Meteor.call('countDeepstreamShare', this.shortId, 'facebook');
     analytics.track('Click facebook share');
   },
   'click .PiP-overlay' (e, t){
