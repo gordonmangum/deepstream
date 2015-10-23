@@ -51,6 +51,20 @@ i.loading-icon{
   color: @action-color;
 }
 
+.favorite, .unfavorite {
+  &:hover {
+    .fg {
+      fill: @hover-favorite-color !important;
+    }
+  }
+}
+
+.unfavorite {
+  .fg {
+    fill: @favorite-color !important;;
+  }
+}
+
 .link-hover-icon, .expand-in-sidebar-icon, .expand-in-overlay-icon{
   .fg{
     fill: @black-color;
