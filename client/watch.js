@@ -753,7 +753,7 @@ Template.context_browser_area.onRendered(function(){
     });
     this.$(sortableOuterDiv).disableSelection();
 
-    Tracker.autorun(function () {
+    Tracker.autorun(() => {
       if(Session.get('curateMode')){
         this.$(sortableOuterDiv).sortable('enable');
       } else {
