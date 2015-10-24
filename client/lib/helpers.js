@@ -253,7 +253,7 @@ window.formatDateNice = function (date) {
 
 };
 
-window.updateActiveContext = function(){
+unthrottledUpdateActiveContext = function(){
 
   if($('.context-browser').hasClass('hide')){
     return;
@@ -280,11 +280,15 @@ window.updateActiveContext = function(){
   } else {
     var contextOffsetObjects = _.map(orderedContextIds, (id) => {
         var e = $('.list-item-context-plus-annotation[data-context-id=' + id + ']');
-        return {id: id, offset: e.offset().top, height: e.outerHeight()};
+        var offset = e.offset();
+        if (offset){
+          return {id: id, offset: offset.top, height: e.outerHeight()};
+        }
       }
     );
 
     activeId = _.chain(contextOffsetObjects)
+      .compact()
       .filter((obj) => {
         return obj.offset + obj.height / 2 > containerOffsetTop + currentActivationBias;
       })
@@ -295,3 +299,6 @@ window.updateActiveContext = function(){
 
   Session.set('activeContextId', activeId);
 };
+
+
+window.updateActiveContext = _.throttle(unthrottledUpdateActiveContext, 20);
