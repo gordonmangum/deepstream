@@ -756,6 +756,9 @@ div.action-items {
 .mailchimp-signup-form-on-mobile{
   padding: 20px;
   width: 80%;
+  input[type=email]{
+    margin-top: 20px;
+  }
 }
 
 .no-results{
