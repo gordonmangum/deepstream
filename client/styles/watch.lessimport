@@ -435,6 +435,9 @@
   justify-content: center;
   width: @card-column-width;
   height: 100%;
+  min-height: 200px;
+  position: relative;
+  .transform(translateY(50%));
   .padding-sides(10px);
   .previews-container{
   }
