@@ -131,9 +131,11 @@ Deepstream = (function() {
     return '/curate/' + this.userPathSegment + '/' + this.streamPathSegment;
   };
 
+  Deepstream.prototype.defaultPreviewUrl = "http://res.cloudinary.com/deepstream/image/upload/v1445697869/Default_Thumbnail_xyoxwn.png";
+
   Deepstream.prototype.previewUrl = function(){
     var activeStream = this.activeStream();
-    return activeStream ? activeStream.previewUrl() : null;
+    return activeStream && activeStream.hasPreviewImage() ? activeStream.previewUrl() : this.defaultPreviewUrl;
   };
   Deepstream.prototype.userStreamSwitchAllowed = function(){
     return !this.directorMode;
