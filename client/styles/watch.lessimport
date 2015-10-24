@@ -10,13 +10,52 @@
 @second-row-height: 65px;
 
 
-@mainStreamHeight: 545px;
+@mainStreamHeight0: 945px;
+@mainStreamHeight1: 745px;
+@mainStreamHeight2: 535px;
+@mainStreamHeight3: 425px;
+@mainStreamHeight4: 320px;
 @mainStreamExpandedHeight: 645px;
-@mainStreamMaxWidth: (@mainStreamHeight) * 16 / 9;
+@mainStreamMaxWidth0: (@mainStreamHeight0) * 16 / 9;
+@mainStreamMaxWidth1: (@mainStreamHeight1) * 16 / 9;
+@mainStreamMaxWidth2: (@mainStreamHeight2) * 16 / 9;
+@mainStreamMaxWidth3: (@mainStreamHeight3) * 16 / 9;
+@mainStreamMaxWidth4: (@mainStreamHeight4) * 16 / 9;
+
+.watchHeightMixin(@offset){
+  height: @mainStreamHeight0 + @offset;
+  @media (max-height: 1200px) {
+    height: @mainStreamHeight1 + @offset;
+  }
+  @media (max-height: 1000px) {
+    height: @mainStreamHeight2 + @offset;
+  }
+  @media (max-height: 700px) {
+    height: @mainStreamHeight3 + @offset;
+  }
+  @media (max-height: 600px) {
+    height: @mainStreamHeight4 + @offset;
+  }
+}
+
+.watchMaxWidthMixin(@offset){
+  max-width: @mainStreamMaxWidth0 + @offset;
+  @media (max-height: 1200px) {
+    max-width: @mainStreamMaxWidth1 + @offset;
+  }
+  @media (max-height: 1000px) {
+    max-width: @mainStreamMaxWidth2 + @offset;
+  }
+  @media (max-height: 700px) {
+    max-width: @mainStreamMaxWidth3 + @offset;
+  }
+  @media (max-height: 600px) {
+    max-width: @mainStreamMaxWidth4 + @offset;
+  }
+}
 
 
 .watch{
-  height: 800px;
   .stream-title{
     @height: 42px;
     display: inline-block;
@@ -25,7 +64,7 @@
     height: @height;
     white-space: nowrap;
     width: calc(100% ~"-" (2* @left-margin + @live-indicator-width));
-    max-width: @mainStreamMaxWidth - @left-margin - @live-indicator-width;
+    .watchMaxWidthMixin(-@left-margin - @live-indicator-width);
     overflow: hidden;
   }
   .streams-list{
@@ -188,7 +227,7 @@
 .main-section{
   width: calc(100% ~'-' @left-margin);
   margin-left: @left-margin;
-  max-width: @mainStreamMaxWidth;
+  .watchMaxWidthMixin(0);
 
   .height-transition;
   &.expanded{
@@ -233,7 +272,7 @@
 
 .main-stream{
   width: 100%;
-  height: @mainStreamHeight;
+  .watchHeightMixin(0);
 
   &.expanded{
     width: 100%;
@@ -556,7 +595,7 @@
 @contextAreaPadding: 10px;
 
 .context-browser{
-  height: @mainStreamHeight - 15px;
+  .watchHeightMixin(-15px);
   overflow: hidden;
   display: flex;
   flex-flow: column;
@@ -762,7 +801,7 @@
   }
 
   .video-section, .map-section, .image-section{
-    height: @mainStreamHeight - @topPaddingHeight;
+    .watchHeightMixin(-@topPaddingHeight);
     background-color: @black-color;
     display: flex;
     flex-direction: column;
@@ -1387,7 +1426,7 @@
   }
   display: flex;
   flex-flow: column;
-  height: @mainStreamHeight - 15px;
+  .watchHeightMixin(-15px);
   width: @right-section-width - @card-column-width - @contextAreaPadding * 2;
   form{
     margin-bottom: 15px;
