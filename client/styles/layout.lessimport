@@ -908,7 +908,9 @@ div.loading-container {
 }
 
 .mobile{
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   .message{
     font-size: 18px;
     .center-over-parent-div;
