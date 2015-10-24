@@ -63,7 +63,7 @@ Handlebars.registerHelper("CONTEXT_WIDTH", function() {
 });
 
 Handlebars.registerHelper("isMobile", function() {
-  return (Meteor.Device.isPhone() || Meteor.Device.isTablet()) && !Meteor.Device.isBot();
+  return window.isMobile();
 });
 
 Handlebars.registerHelper("profileImage", function(user, size) {

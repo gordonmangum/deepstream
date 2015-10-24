@@ -302,3 +302,7 @@ unthrottledUpdateActiveContext = function(){
 
 
 window.updateActiveContext = _.throttle(unthrottledUpdateActiveContext, 20);
+
+window.isMobile = function(){
+  return (Meteor.Device.isPhone() || Meteor.Device.isTablet()) && !Meteor.Device.isBot()
+};
