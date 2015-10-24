@@ -906,3 +906,11 @@ div.loading-container {
     text-align: center;
   }
 }
+
+.mobile{
+  position: relative;
+  .message{
+    font-size: 18px;
+    .center-over-parent-div;
+  }
+}

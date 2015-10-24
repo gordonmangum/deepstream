@@ -677,7 +677,7 @@ Schema.Deepstreams = new SimpleSchema({
       if (this.isInsert) {
         return new Date;
       }
-    },
+    }
   }
 });
 
