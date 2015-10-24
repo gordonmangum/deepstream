@@ -907,12 +907,14 @@ div.loading-container {
   }
 }
 
-.mobile{
+.mobile-progress-overlay{
   position: fixed;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(50,50,50,1);
+  color: @medium-color;
+  z-index: 9999999;
   top: 0;
   left: 0;
-  .message{
-    font-size: 18px;
-    .center-over-parent-div;
-  }
 }

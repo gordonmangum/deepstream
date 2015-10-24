@@ -753,6 +753,11 @@ div.action-items {
   }
 }
 
+.mailchimp-signup-form-on-mobile{
+  padding: 20px;
+  width: 80%;
+}
+
 .no-results{
   height: 100px;
 }

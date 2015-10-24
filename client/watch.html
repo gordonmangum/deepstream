@@ -1,4 +1,8 @@
 <template name="watch_page">
+  {{#if isMobile}}
+    {{> mobile_progress_overlay}}
+  {{/if}}
+
   {{#with thisDeepstream}}
 
     <div class="watch {{#if onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}}">
