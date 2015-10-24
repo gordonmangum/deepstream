@@ -667,11 +667,17 @@ Schema.Deepstreams = new SimpleSchema({
   },
   editorsPick: {
     type: Boolean,
-    optional: true
+    optional: true,
+    defaultValue: true // TO-DO launch remove
   },
   editorsPickAt: {
     type: Date,
-    optional: true
+    optional: true,
+    autoValue () {
+      if (this.isInsert) {
+        return new Date;
+      }
+    },
   }
 });
 
