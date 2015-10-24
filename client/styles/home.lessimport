@@ -276,13 +276,15 @@ div.logo-title {
   }
   .small-stream-info{
     width: 100%;
+  }
+  .favorited{
     svg{
-      .fg{
-        fill: @favorite-color;
-      }
       margin-bottom: -2px;
       margin-left: 1px;
       .size(14px);
+    }
+    .fg{
+      fill: @favorite-color;
     }
   }
   .views, .curator-name, .favorited{

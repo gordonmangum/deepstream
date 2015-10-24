@@ -272,6 +272,23 @@ Template.create_deepstream.events({
   }
 });
 
+
+Meteor.startup(function(){
+  $( window ).konami({
+    code : [38,38,40,40,37,39,37,39, 66, 65], // you know...
+    cheat: function() {
+      Session.set('showEditorsPickButton', true); // we still check for admin
+    }
+  });
+
+  $( window ).konami({
+    code : [68,69,69,80], //deep
+    cheat: function() {
+      Session.set('showEditorsPickButton', true); // we still check for admin
+    }
+  });
+});
+
 //  // analytics autorun
 //  this.autorun(function(){
 //    if (!Session.equals("currentY", null)){

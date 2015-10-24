@@ -36,6 +36,10 @@ Handlebars.registerHelper("signingIn", function() {
   return Session.get("signingIn");
 });
 
+Handlebars.registerHelper("showEditorsPickButton", function(){
+  return Session.get('showEditorsPickButton') && Meteor.user().admin;
+});
+
 Handlebars.registerHelper("isContextOfType", function(type) {
   return type == this.type;
 });

@@ -664,8 +664,15 @@ Schema.Deepstreams = new SimpleSchema({
   favoritedTotal: {
     type: Number,
     defaultValue: 0
+  },
+  editorsPick: {
+    type: Boolean,
+    optional: true
+  },
+  editorsPickAt: {
+    type: Date,
+    optional: true
   }
-
 });
 
 this.Deepstreams.attachSchema(Schema.Deepstreams);
