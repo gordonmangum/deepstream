@@ -63,8 +63,8 @@
     line-height: @height;
     height: @height;
     white-space: nowrap;
-    width: calc(100% ~"-" (2* @left-margin + @live-indicator-width));
-    .watchMaxWidthMixin(-@left-margin - @live-indicator-width);
+    width: calc(100% ~"-" (@left-margin + @live-indicator-width));
+    max-width: calc(100% ~"-" ( @left-margin + @live-indicator-width));
     overflow: hidden;
   }
   .streams-list{
@@ -227,7 +227,7 @@
 .main-section{
   width: calc(100% ~'-' @left-margin);
   margin-left: @left-margin;
-  .watchMaxWidthMixin(0);
+  //.watchMaxWidthMixin(0);
 
   .height-transition;
   &.expanded{
@@ -272,7 +272,7 @@
 
 .main-stream{
   width: 100%;
-  .watchHeightMixin(0);
+  //.watchHeightMixin(0);
 
   &.expanded{
     width: 100%;
@@ -326,6 +326,7 @@
   display: inline-block;
   z-index: 10;
   width: @right-section-width;
+  padding-bottom: 15px;
   .top-part{
     position: relative;
     height: calc(100% ~"-" @footer-section-height);
@@ -436,8 +437,6 @@
   width: @card-column-width;
   height: 100%;
   min-height: 200px;
-  position: relative;
-  .transform(translateY(50%));
   .padding-sides(10px);
   .previews-container{
   }
@@ -598,7 +597,7 @@
 @contextAreaPadding: 10px;
 
 .context-browser{
-  .watchHeightMixin(-15px);
+  //.watchHeightMixin(-15px);
   overflow: hidden;
   display: flex;
   flex-flow: column;
@@ -615,7 +614,7 @@
 
   }
   .bottom-bar{
-    bottom: -10px;
+    bottom: 0px;
     height: 8px;
 
     .box-shadow(-4px -4px 12px 0px rgba(0,0,0,0.75));
@@ -769,7 +768,7 @@
   background-color: @dark-transparent-color;
   .context-area {
     margin-left: @PiP-width + 2 * @left-margin;
-    width: 789px;
+    margin-right: @left-margin;
     position: relative;
     top: @top-row-height + @second-row-height;
     text-align: center;
@@ -804,7 +803,6 @@
   }
 
   .video-section, .map-section, .image-section{
-    .watchHeightMixin(-@topPaddingHeight);
     background-color: @black-color;
     display: flex;
     flex-direction: column;
@@ -1011,13 +1009,12 @@
 
 
 .curator-menu{
-  margin-top: 10px;
   position: relative;
   padding-top: 10px;
   .padding-sides(17px);
   width: calc(100% ~'-' (@card-column-width + @contextAreaPadding*2));
   height: 135px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   margin-left: @card-column-width;
   background-color: @context-background-color;
   .curator-info{
@@ -1429,7 +1426,7 @@
   }
   display: flex;
   flex-flow: column;
-  .watchHeightMixin(-15px);
+  //.watchHeightMixin(-15px);
   width: @right-section-width - @card-column-width - @contextAreaPadding * 2;
   form{
     margin-bottom: 15px;

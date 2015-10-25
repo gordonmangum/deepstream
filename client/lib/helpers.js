@@ -268,7 +268,7 @@ unthrottledUpdateActiveContext = function(){
   }
 
   var containerOffsetTop = containerOffset.top;
-  var lastActivationBias = 0;
+  var lastActivationBias = 10;
   var currentActivationBias = 30;
   var activeId;
 
@@ -288,7 +288,7 @@ unthrottledUpdateActiveContext = function(){
     );
 
     activeId = _.chain(contextOffsetObjects)
-      .compact()
+      //.compact()
       .filter((obj) => {
         return obj.offset + obj.height / 2 > containerOffsetTop + currentActivationBias;
       })
@@ -301,7 +301,7 @@ unthrottledUpdateActiveContext = function(){
 };
 
 
-window.updateActiveContext = _.throttle(unthrottledUpdateActiveContext, 20);
+window.updateActiveContext = _.throttle(unthrottledUpdateActiveContext, 50, {leading: false});
 
 window.isMobile = function(){
   return (Meteor.Device.isPhone()) && !Meteor.Device.isBot()

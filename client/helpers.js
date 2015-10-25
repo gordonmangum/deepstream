@@ -66,6 +66,22 @@ Handlebars.registerHelper("isMobile", function() {
   return window.isMobile();
 });
 
+getMainStreamHeight = function(offset){
+  return Session.get("windowHeight") - 60 - 65 - 130 - 20 + (offset || 0);
+};
+
+getMainStreamMaxWidth = function(offset){
+  return getMainStreamHeight() * 16 / 9 + (offset || 0);
+};
+
+Handlebars.registerHelper("mainStreamMaxWidth", function(offset) {
+  return getMainStreamMaxWidth(offset);
+});
+
+Handlebars.registerHelper("mainStreamHeight", function(offset) {
+  return getMainStreamHeight(offset);
+});
+
 Handlebars.registerHelper("profileImage", function(user, size) {
   var diameter;
   if (size === 'large'){

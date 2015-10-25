@@ -5,14 +5,14 @@
 
   {{#with thisDeepstream}}
 
-    <div class="watch {{#if onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}}">
+    <div class="watch {{#if onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}}" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
       <div class="left-section">
 
         <div class="header-section">
           <div class="top-row">
             {{> logo_title}}
           </div>
-          <div class="second-row">
+          <div class="second-row" style="max-width: {{mainStreamMaxWidth}}px;">
             {{#if activeStream.live}}
               <div class="live-indicator">
                 LIVE
@@ -21,9 +21,9 @@
             {{{streamTitleElement}}}
           </div>
         </div>
-        <div class="main-section {{#if expandMainSection}}expanded{{/if}}">
+        <div class="main-section {{#if expandMainSection}}expanded{{/if}}" style="max-width: {{mainStreamMaxWidth}}px;">
 
-          <div class="main-stream {{#if expandMainSection}}expanded{{/if}} {{#if PiP}}PiP{{/if}}">
+          <div class="main-stream {{#if expandMainSection}}expanded{{/if}} {{#if PiP}}PiP{{/if}}" style="height: {{mainStreamHeight}}px;">
             {{#if showTutorial}}
               {{> creation_tutorial}}
             {{/if}}
@@ -402,7 +402,7 @@
 </template>
 
 <template name="context_browser">
-  <div class="context-browser {{#unless show}}hide{{/unless}}">
+  <div class="context-browser {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -20}}px">
     {{#with deepstream}}
       {{#if curateMode}}
         <div class="add-new-context-row">
@@ -501,7 +501,7 @@
 </template>
 
 <template name="timeline_section">
-    <div class="timeline-section {{#unless show}}hide{{/unless}}">
+    <div class="timeline-section {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -15}}px">
       {{#if curateMode}}
         <form id="timeline-embed" action="">
           <label for="timeline-embed-code-input"><a href="https://twitter.com/settings/widgets/new/search" target="_blank">Create a new Timeline widget</a> and enter the generated embed code or url here</label>
