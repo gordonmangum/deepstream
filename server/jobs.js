@@ -26,6 +26,7 @@ var dstObject = {
 var defaultYear = 2018;
 
 var insertES = Meteor.wrapAsync(esClient.create, esClient);
+var bulkES = Meteor.wrapAsync(esClient.bulk, esClient);
 
 var convertUStreamDateToUTC = function(ustreamDateString){
   var proposedDate = new Date(ustreamDateString + ' PDT'); // assume PDT to start
@@ -166,24 +167,31 @@ var generateFetchFunction = function(serviceInfo){
       Streams.batchInsert(mapResults);
 
       //elasticsearch
+      
+      var esInput = _.chain(mapResults)
+        .map(function(result){
+          return [
+            {
+              create: {
+                _index: ES_CONSTANTS.index,
+                _type: "stream",
+                _ttl: process.env.ELASTICSEARCH_TTL || Meteor.settings.ELASTICSEARCH_TTL || '3m'
+              }
+            },
+            {
+              doc: result,
+              source: result._streamSource,
+              broadcaster: result._es.broadcaster,
+              description: result._es.description,
+              tags: result._es.tags,
+              title: result._es.title,
+            }
+            ]
+          })
+        .flatten(true)
+        .value();
 
-
-    _.each(mapResults, function(result){
-  		insertES({
-        index: ES_CONSTANTS.index,
-        type: "stream",
-        body: {
-          doc: result,
-          source: result._streamSource,
-          broadcaster: result._es.broadcaster,
-          description: result._es.description,
-          tags: result._es.tags,
-          title: result._es.title,
-        },
-        ttl: process.env.ELASTICSEARCH_TTL || Meteor.settings.ELASTICSEARCH_TTL || '3m'
-      });
-    });
-
+      bulkES({body: esInput});
 
       //console.log('Added ' + serviceName + ' streams to database for page: ' + page);
       return cb();
