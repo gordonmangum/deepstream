@@ -1,6 +1,8 @@
 var ES = Meteor.npmRequire('elasticsearch');
 esClient = new ES.Client({
-  host: process.env.ELASTICSEARCH_URL || Meteor.settings.ELASTICSEARCH_URL || "localhost:9200"
+  hosts: (process.env.ELASTICSEARCH_URL ? process.env.ELASTICSEARCH_URL.split(',') : null) ||
+  (Meteor.settings.ELASTICSEARCH_URL ? Meteor.settings.ELASTICSEARCH_URL.split(',') : null) ||
+  ["localhost:9200"]
 });
 
 
