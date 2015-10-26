@@ -33,8 +33,11 @@ var deleteIndex = Meteor.wrapAsync(esClient.indices.delete, esClient);
 
 
 resetES = function () {
-  console.log("indexExists function: going to delete index");
-  deleteIndex({index: ES_CONSTANTS.index});
+  if(indexExists({index: ES_CONSTANTS.index})){
+    console.log("indexExists function: going to delete index");
+    deleteIndex({index: ES_CONSTANTS.index});
+  }
+
   console.log("indexExists function: going to create");
   createIndex({index: ES_CONSTANTS.index});
 
