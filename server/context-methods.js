@@ -614,7 +614,7 @@ Meteor.methods({
         .first(ES_CONSTANTS.pageSize)
         .value();
 
-      if (esItems.length > ES_CONSTANTS.pageSize)
+      if (esItems.length === ES_CONSTANTS.pageSize)
         nextESPage = page.es + 1;
       else
         nextESPage = 'end';
