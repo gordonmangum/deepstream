@@ -170,18 +170,19 @@ var generateFetchFunction = function(serviceInfo){
 
     _.each(mapResults, function(result){
   		insertES({
-  			index: ES_CONSTANTS.index,
-          		type:"stream",
-          		body:{
-                    doc: result,
-  				          source: result._streamSource,
-            			  broadcaster: result._es.broadcaster,
-            			  description: result._es.description,
-  	  			        tags : result._es.tags,
-            			  title: result._es.title,
-          		}
-  		});
-	});
+        index: ES_CONSTANTS.index,
+        type: "stream",
+        body: {
+          doc: result,
+          source: result._streamSource,
+          broadcaster: result._es.broadcaster,
+          description: result._es.description,
+          tags: result._es.tags,
+          title: result._es.title,
+        },
+        ttl: parseInt(process.env.ELASTICSEARCH_TTL) || parseInt(Meteor.settings.ELASTICSEARCH_TTL) || '3m'
+      });
+    });
 
 
       //console.log('Added ' + serviceName + ' streams to database for page: ' + page);
