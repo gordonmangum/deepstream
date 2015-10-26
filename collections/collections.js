@@ -53,6 +53,9 @@ Schema.DeepstreamStats = new SimpleSchema({
   streamId: {
     type: String
   },
+  streamShortId: {
+    type: String
+  },
   deepAnalytics: {
     type: Object,
     optional: true
@@ -620,6 +623,10 @@ Schema.Deepstreams = new SimpleSchema({
     type: Boolean,
     optional: true
   },
+  twitterTimelineId: {
+    type: String,
+    optional: true
+  },
   streams: {
     type: [Schema.Streams],
     defaultValue: [],
@@ -640,6 +647,37 @@ Schema.Deepstreams = new SimpleSchema({
     type: [Schema.Streams],
     minCount: 0,
     maxCount: 100
+  },
+  analytics: {
+    type: Object
+  },
+  'analytics.views': {
+    type: analyticsSchema
+  },
+  'analytics.shares': {
+    type: analyticsSchema
+  },
+  favorited: {
+    type: [String],
+    defaultValue: []
+  },
+  favoritedTotal: {
+    type: Number,
+    defaultValue: 0
+  },
+  editorsPick: {
+    type: Boolean,
+    optional: true,
+    defaultValue: true // TO-DO launch remove
+  },
+  editorsPickAt: {
+    type: Date,
+    optional: true,
+    autoValue () {
+      if (this.isInsert) {
+        return new Date;
+      }
+    }
   }
 });
 

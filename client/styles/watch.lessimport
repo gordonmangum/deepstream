@@ -10,14 +10,57 @@
 @second-row-height: 65px;
 
 
-@mainStreamHeight: 545px;
+@mainStreamHeight0: 945px;
+@mainStreamHeight1: 745px;
+@mainStreamHeight2: 535px;
+@mainStreamHeight3: 425px;
+@mainStreamHeight4: 320px;
 @mainStreamExpandedHeight: 645px;
-@mainStreamMaxWidth: (@mainStreamHeight) * 16 / 9;
+@mainStreamMaxWidth0: (@mainStreamHeight0) * 16 / 9;
+@mainStreamMaxWidth1: (@mainStreamHeight1) * 16 / 9;
+@mainStreamMaxWidth2: (@mainStreamHeight2) * 16 / 9;
+@mainStreamMaxWidth3: (@mainStreamHeight3) * 16 / 9;
+@mainStreamMaxWidth4: (@mainStreamHeight4) * 16 / 9;
+
+.watchHeightMixin(@offset){
+  height: @mainStreamHeight0 + @offset;
+  @media (max-height: 1200px) {
+    height: @mainStreamHeight1 + @offset;
+  }
+  @media (max-height: 1000px) {
+    height: @mainStreamHeight2 + @offset;
+  }
+  @media (max-height: 700px) {
+    height: @mainStreamHeight3 + @offset;
+  }
+  @media (max-height: 600px) {
+    height: @mainStreamHeight4 + @offset;
+  }
+}
+
+.watchMaxWidthMixin(@offset){
+  max-width: @mainStreamMaxWidth0 + @offset;
+  @media (max-height: 1200px) {
+    max-width: @mainStreamMaxWidth1 + @offset;
+  }
+  @media (max-height: 1000px) {
+    max-width: @mainStreamMaxWidth2 + @offset;
+  }
+  @media (max-height: 700px) {
+    max-width: @mainStreamMaxWidth3 + @offset;
+  }
+  @media (max-height: 600px) {
+    max-width: @mainStreamMaxWidth4 + @offset;
+  }
+}
 
 
 .watch{
+<<<<<<< HEAD
   background-color: @watch-background-color;
   height: 800px;
+=======
+>>>>>>> master
   .stream-title{
     @height: 42px;
     display: inline-block;
@@ -25,8 +68,8 @@
     line-height: @height;
     height: @height;
     white-space: nowrap;
-    width: calc(100% ~"-" (2* @left-margin + @live-indicator-width));
-    max-width: @mainStreamMaxWidth - @left-margin - @live-indicator-width;
+    width: calc(100% ~"-" (@left-margin + @live-indicator-width));
+    max-width: calc(100% ~"-" ( @left-margin + @live-indicator-width));
     overflow: hidden;
   }
   .streams-list{
@@ -187,10 +230,9 @@
 
 
 .main-section{
-  height: @mainStreamHeight + @footer-section-height;
   width: calc(100% ~'-' @left-margin);
   margin-left: @left-margin;
-  max-width: @mainStreamMaxWidth;
+  //.watchMaxWidthMixin(0);
 
   .height-transition;
   &.expanded{
@@ -221,6 +263,7 @@
         margin-top: 20px;
       }
       button{
+        text-align: center;
         .size(20px);
         padding: 3px;
         background: @light-icon-color;
@@ -234,7 +277,7 @@
 
 .main-stream{
   width: 100%;
-  height: @mainStreamHeight;
+  //.watchHeightMixin(0);
 
   &.expanded{
     width: 100%;
@@ -287,6 +330,7 @@
   display: inline-block;
   z-index: 10;
   width: @right-section-width;
+  padding-bottom: 15px;
   .top-part{
     position: relative;
     height: calc(100% ~"-" @footer-section-height);
@@ -346,13 +390,22 @@
       display: inline-flex;
       flex-flow: column;
       align-items: center;
+      -webkit-align-items: center;
       flex-direction: column;
       justify-content: center;
       height: 100%;
+      text-align: center;
       .padding-sides(10px);
+      @rectangle-width: 20px;
+      .rectangles{
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        width: @rectangle-width;
+      }
       .rectangle {
         height: 13px;
-        width: 20px;
+        width: @rectangle-width;
         &:not(:first-child) {
           margin-top: 4px;
         }
@@ -387,6 +440,7 @@
   justify-content: center;
   width: @card-column-width;
   height: 100%;
+  min-height: 200px;
   .padding-sides(10px);
   .previews-container{
   }
@@ -453,6 +507,7 @@
       padding: 1.5px;
       vertical-align: top;
       display: inline-block;
+      overflow: visible;
       .bg{
         fill: none;
         stroke: @dark-color;
@@ -546,7 +601,7 @@
 @contextAreaPadding: 10px;
 
 .context-browser{
-  height: @mainStreamHeight - 15px;
+  //.watchHeightMixin(-15px);
   overflow: hidden;
   display: flex;
   flex-flow: column;
@@ -563,7 +618,7 @@
 
   }
   .bottom-bar{
-    bottom: -10px;
+    bottom: 0px;
     height: 8px;
 
     .box-shadow(-4px -4px 12px 0px rgba(0,0,0,0.75));
@@ -717,7 +772,7 @@
   background-color: @dark-transparent-color;
   .context-area {
     margin-left: @PiP-width + 2 * @left-margin;
-    width: 789px;
+    margin-right: @left-margin;
     position: relative;
     top: @top-row-height + @second-row-height;
     text-align: center;
@@ -752,7 +807,6 @@
   }
 
   .video-section, .map-section, .image-section{
-    height: @mainStreamHeight - @topPaddingHeight;
     background-color: @black-color;
     display: flex;
     flex-direction: column;
@@ -876,7 +930,7 @@
 .list-item-context-section{
   line-height: 0;
 
-  margin-bottom: 5px;
+  margin-bottom: 1px;
   .video-preview{
     @playIconSize: 60px;
     position: relative;
@@ -959,19 +1013,18 @@
 
 
 .curator-menu{
-  margin-top: 10px;
   position: relative;
   padding-top: 10px;
   .padding-sides(17px);
   width: calc(100% ~'-' (@card-column-width + @contextAreaPadding*2));
   height: 135px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   margin-left: @card-column-width;
   background-color: @context-background-color;
   .curator-info{
     display: inline-block;
     font-weight: 500;
-    width: @right-section-width - 100px;
+    width: @right-section-width - 170px;
     line-height: 17px;
   }
 
@@ -992,9 +1045,6 @@
     display: inline-block;
     vertical-align: top;
     margin-top: 10px;
-  }
-  .curator-info{
-    width: 160px;
   }
   .webcam-button-container{
     float: right;
@@ -1298,8 +1348,8 @@
   z-index: 99999999;
   top: @top-row-height + @second-row-height + 10px;
   left: @left-margin + 10px;
-  height: @mainStreamHeight;
-  width: @mainStreamMaxWidth;
+  height: 500px;
+  width: 600px;
   opacity: 0;
   &.ready{
     height: @PiP-height;
@@ -1364,5 +1414,52 @@
     padding-top: 8px;
     padding-bottom: 8px;
     .action-button;
+  }
+}
+
+
+.context-browser {
+  &.hide {
+    display: none;
+  }
+}
+
+.timeline-section{
+  &.hide{
+    display: none;
+  }
+  display: flex;
+  flex-flow: column;
+  //.watchHeightMixin(-15px);
+  width: @right-section-width - @card-column-width - @contextAreaPadding * 2;
+  form{
+    margin-bottom: 15px;
+    input{
+      margin-bottom: 10px;
+    }
+  }
+  label{
+    a{
+      color: @action-color;
+      &:hover{
+        text-decoration: underline !important;
+      }
+    }
+  }
+  .button-container{
+    text-align: right;
+
+    button{
+      .action-button;
+    }
+  }
+}
+.timeline-container{
+  flex: auto;
+  display: flex;
+  //padding-right: @contextAreaPadding * 2;
+
+  iframe{
+    flex: auto;
   }
 }

@@ -36,6 +36,10 @@ Handlebars.registerHelper("signingIn", function() {
   return Session.get("signingIn");
 });
 
+Handlebars.registerHelper("showEditorsPickButton", function(){
+  return Session.get('showEditorsPickButton') && Meteor.user().admin;
+});
+
 Handlebars.registerHelper("isContextOfType", function(type) {
   return type == this.type;
 });
@@ -58,6 +62,26 @@ Handlebars.registerHelper("CONTEXT_WIDTH", function() {
   return window.CONTEXT_WIDTH;
 });
 
+Handlebars.registerHelper("isMobile", function() {
+  return window.isMobile();
+});
+
+getMainStreamHeight = function(offset){
+  return Session.get("windowHeight") - 60 - 65 - 130 - 20 + (offset || 0);
+};
+
+getMainStreamMaxWidth = function(offset){
+  return getMainStreamHeight() * 16 / 9 + (offset || 0);
+};
+
+Handlebars.registerHelper("mainStreamMaxWidth", function(offset) {
+  return getMainStreamMaxWidth(offset);
+});
+
+Handlebars.registerHelper("mainStreamHeight", function(offset) {
+  return getMainStreamHeight(offset);
+});
+
 Handlebars.registerHelper("profileImage", function(user, size) {
   var diameter;
   if (size === 'large'){
@@ -73,6 +97,13 @@ Handlebars.registerHelper("profileImage", function(user, size) {
       return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/twitter/w_' + diameter + ',h_' + diameter + ',c_fill,g_face' + dprSetting + '/' + user.services.twitter.id
     }
   }
+});
+
+Handlebars.registerHelper("formatNumber", function(num){
+  if(!num){
+    return 0;
+  }
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 });
 
 Handlebars.registerHelper("formatDate", window.formatDate);

@@ -45,6 +45,7 @@ Template.login_buttons.events({
   "click .signin" (d) {
     Session.set('signingIn', true);
     setSigningInFrom();
+    analytics.track('Click login signup button');
   },
   "click .logout" (e, t) {
     e.preventDefault();
@@ -209,31 +210,54 @@ Template.home.events({
   "submit .stream-search-form" (e, t) {
     e.preventDefault();
     var query = t.$('#stream-search-input').val();
+
     Session.set('homeStreamListQuery', query);
     Session.set('homeStreamListMode', 'search');
 
     if(getHomepageStreamSearchResults().count() === 0){
-      t.streamSearch(query);
+      //t.streamSearch(query);
     } else {
+      SearchResults.remove({type: 'stream'});
       t.noMoreStreamResults.set(null);
     }
+    t.streamSearch(query);
+
+    analytics.track('Search on homepage', {
+      query: query,
+      label: query
+    });
   },
   "click .show-best-streams" (e, t) {
     t.$('#stream-search-input').val('');
     Session.set('homeStreamListMode', 'best');
+    analytics.track('Click best streams button on homepage');
   },
   "click .show-most-recent-streams" (e, t) {
     t.$('#stream-search-input').val('');
     Session.set('homeStreamListMode', 'most_recent');
+    analytics.track('Click most recent button on homepage');
   },
   "click .show-deepstreams-only" (e, t) {
     Session.set('homeStreamListType', 'deepstreams');
+    analytics.track('Click purple pill on homepage', {
+      label: 'deepstreams'
+    });
   },
   "click .show-livestreams-only" (e, t) {
     Session.set('homeStreamListType', 'livestreams');
+    analytics.track('Click purple pill on homepage', {
+      label: 'livestreams'
+    });
   },
   "click .show-deepstreams-and-livestreams" (e, t) {
     Session.set('homeStreamListType', 'both');
+    analytics.track('Click purple pill on homepage', {
+      label: 'deepstream & livestreams'
+    });
+  },
+  "click .logo-title" (e, t){
+    Session.set('homeStreamListType', 'both');
+    Session.set('homeStreamListMode', 'best');
   }
 });
 
@@ -245,7 +269,7 @@ Template.deepstreams.helpers({
       switch (Session.get('homeStreamListMode')) {
         case 'best':
           _.extend(selector, {
-            //editorsPick: true // TODO launch uncomment
+            editorsPick: true
           });
           _.extend(sort, {
             editorsPickAt: -1
@@ -282,7 +306,6 @@ Template.deepstreams.helpers({
 
 Template.deepstream_preview.onCreated(function(){
   this.subscribe('deepstreamPreviewContext', this.data.deepstream.shortId);
-  this.contentPreviewType = new ReactiveVar('latest');
 });
 
 Template.deepstream_preview.helpers({
@@ -292,39 +315,20 @@ Template.deepstream_preview.helpers({
   linkPath () {
     return Template.instance().data.linkToCurate ? this.curatePath() : this.watchPath();
   },
-  contentPreview (){
-    switch (Template.instance().contentPreviewType.get()){
-      case 'latest':
-        return this.mostRecentContextOfTypes(['news', 'twitter', 'text']);
-      case 'news':
-        return this.mostRecentContextOfType('news');
-      case 'twitter':
-        return this.mostRecentContextOfType('twitter');
-      case 'text':
-        return this.mostRecentContextOfType('text');
-    }
-  },
-  previewTypeIs (type){
-    if (Template.instance().contentPreviewType.get() === 'latest'){
-      let context;
-      if (context = this.mostRecentContextOfTypes(['news', 'twitter', 'text'])){
-        return context.type === type;
-      }
-    } else {
-      return Template.instance().contentPreviewType.get() === type;
-    }
+  contentPreviews (){
+    return this.topContextsOfTypes(HOMEPAGE_PREVIEW_CONTEXT_TYPES, 2);
   }
 });
 
 Template.deepstream_preview.events({
-  'click .news-button' (d, t) {
-    t.contentPreviewType.set('news');
+  'click a' () {
+    analytics.track('Click deepstream link on homepage', {
+      label: this._id,
+      title: this.title
+    });
   },
-  'click .twitter-button' (d, t) {
-    t.contentPreviewType.set('twitter');
-  },
-  'click .text-button' (d, t) {
-    t.contentPreviewType.set('text');
+  'click .content' () {
+    analytics.track('Click deepstream content preview on homepage');
   }
 });
 
@@ -367,6 +371,10 @@ Template.stream_preview.events({
   },
   'click .show-preview-overlay' (e,t){
     Session.set('showPreviewOverlayForStreamId', this._id);
+    analytics.track('Click stream on homepage', {
+      label: this.source,
+      contentSource: this.source
+    });
   }
 });
 

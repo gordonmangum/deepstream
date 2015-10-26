@@ -14,7 +14,7 @@
           </ul>
         </div>
         <div class="stream-search">
-          <form class="stream-search-form">
+          <form class="stream-search-form" autocomplete="off">
             <label for="stream-search-input">
 
               <div class="stream-search-icon">
@@ -165,70 +165,53 @@
 <!--DEEPSTREAM-->
 
 <template name="home">
+  {{#if isMobile}}
+    {{> mobile_progress_overlay}}
+  {{/if}}
   <div class="home">
-    {{> top_banner showFilters=currentUser}}
-    {{#if currentUser}}
-      <div class="deepstreams-and-streams-and-selector">
-        <div class="stream-type-selector-container">
-          <div class="stream-type-selector">
-              <ul>
-                <li class="{{#if showDeepstreamsOnly}}selected{{/if}}">
-                  <button class="show-deepstreams-only">DEEPSTREAMS</button>
-                </li><li class="{{#if showDeepstreamsAndLivestreams}}selected{{/if}}">
-                  <button class="show-deepstreams-and-livestreams">BOTH</button>
-                </li><li class="{{#if showLivestreamsOnly}}selected{{/if}}">
-                  <button class="show-livestreams-only">LIVESTREAMS</button>
-                </li>
-              </ul>
-          </div>
-        </div>
-        <div class="deepstreams-and-streams">
-          <ol>
-            {{#if showDeepstreams}}
-              <li>
-                <div class="deepstreams-container container">
-                  <h2>DEEPSTREAMS</h2>
-                  <h3>Deepstreams are livestreams that people have enhanced with great content like images, tweets, and news stories.</h3>
-                  {{> deepstreams}}
-                </div>
+    {{> top_banner showFilters=true}}
+    <div class="deepstreams-and-streams-and-selector">
+      <div class="stream-type-selector-container">
+        <div class="stream-type-selector">
+            <ul>
+              <li class="{{#if showDeepstreamsOnly}}selected{{/if}}">
+                <button class="show-deepstreams-only">DEEPSTREAMS</button>
+              </li><li class="{{#if showDeepstreamsAndLivestreams}}selected{{/if}}">
+                <button class="show-deepstreams-and-livestreams">BOTH</button>
+              </li><li class="{{#if showLivestreamsOnly}}selected{{/if}}">
+                <button class="show-livestreams-only">LIVESTREAMS</button>
               </li>
-            {{/if}}
-            {{#if showLivestreams}}
-              <li>
-                <div class="streams-container container">
-                  <h2>LIVESTREAMS</h2>
-                  {{#if loadingStreamResults}}
-                    Loading...
-                  {{/if}}
-                  {{#if noMoreStreamResults}}
-                    {{noMoreStreamResults}}
-                  {{/if}}
-                  {{> streams}}
-                </div>
-              </li>
-            {{/if}}
-          </ol>
+            </ul>
         </div>
       </div>
-    {{else}}
-      <div class="mailchimp-signup-form-on-homepage">
-      <!-- Begin MailChimp Signup Form -->
-      <!--<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">-->
-      <div id="mc_embed_signup">
-        <form action="//deepstream.us11.list-manage.com/subscribe/post?u=c5bb61c940fb52c8906a972c7&amp;id=d1c5471edf" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-          <div id="mc_embed_signup_scroll">
-            <label for="mce-EMAIL">Thanks for visiting us! We're are currently in closed Beta, but if you'd like to be notified when you can search, view livestreams, and create DeepStreams please sign up below!</label>
-            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
-            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-            <div style="position: absolute; left: -5000px;"><input type="text" name="b_c5bb61c940fb52c8906a972c7_d1c5471edf" tabindex="-1" value=""></div>
-            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-          </div>
-        </form>
+      <div class="deepstreams-and-streams">
+        <ol>
+          {{#if showDeepstreams}}
+            <li>
+              <div class="deepstreams-container container">
+                <h2>DEEPSTREAMS</h2>
+                <h3>Deepstreams are livestreams that people have enhanced with great content like images, tweets, and news stories.</h3>
+                {{> deepstreams}}
+              </div>
+            </li>
+          {{/if}}
+          {{#if showLivestreams}}
+            <li>
+              <div class="streams-container container">
+                <h2>LIVESTREAMS</h2>
+                {{#if loadingStreamResults}}
+                  Loading...
+                {{/if}}
+                {{#if noMoreStreamResults}}
+                  {{noMoreStreamResults}}
+                {{/if}}
+                {{> streams}}
+              </div>
+            </li>
+          {{/if}}
+        </ol>
       </div>
-      </div>
-
-      <!--End mc_embed_signup-->
-    {{/if}}
+    </div>
   </div>
 </template>
 
@@ -285,45 +268,20 @@
           {{/if}}
         </a>
         <div class="content">
-          <div class="content-preview-icons content-icons">
-            <ol>
-              {{#if hasContextOfType "news"}}
-                <li>
-                  <button class='news-button {{#if previewTypeIs "news"}}active{{/if}}'>
-                    {{> news_icon }}
-                  </button>
-                </li>
-              {{/if}}
-              {{#if hasContextOfType "twitter"}}
-                <li>
-                  <button class='twitter-button {{#if previewTypeIs "twitter"}}active{{/if}}'>
-                    {{> twitter_icon }}
-                  </button>
-                </li>
-              {{/if}}
-              {{#if hasContextOfType "text"}}
-                <li>
-                  <button class='text-button {{#if previewTypeIs "text"}}active{{/if}}'>
-                    {{> text_icon }}
-                  </button>
-                </li>
-              {{/if}}
-            </ol>
-          </div>
-          {{#with contentPreview}}
+          {{#each contentPreviews}}
             {{> homepage_content_preview}}
-          {{/with}}
+          {{/each}}
         </div>
       </div>
       <a href="{{linkPath}}">
         <div class="title-and-views">
           <span class="title">{{title}}</span>
-          <span class="views">3,730 Views</span>
+          <span class="views">{{formatNumber viewCount}} Views</span>
         </div>
         <div class="small-stream-info">
           <div>
             <span class="stream-count">Tracking {{streams.length}} streamers</span>
-            <span class="favorited">3 {{> favorite_icon}}</span>
+            <span class="favorited">{{formatNumber favoritedTotal}} {{> favorite_icon}}</span>
           </div>
           <div>
             <span class="date">Updated {{dateInPast savedAt}}</span>
@@ -332,6 +290,9 @@
 
         </div>
       </a>
+      {{#if showEditorsPickButton}}
+        {{> editors_pick_button}}
+      {{/if}}
     </div>
   {{/with}}
 
@@ -364,14 +325,13 @@
           <div class="small-stream-info">
             <div class="username">{{username}}</div>
             {{#if totalViews}}
-              <div class="views">{{totalViews}} Views</div>
+              <div class="views">{{formatNumber totalViews}} Views</div>
             {{/if}}
           </div>
         </div>
       </div>
     </button>
     {{#if showPreviewOverlay}}
-      {{debugContext}}
       <div class="stream-preview-screen-overlay" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
         <button class="close">{{> close_circle}}</button>
         <div class="preview-box">

@@ -8,16 +8,16 @@ if (Meteor.isClient) {
 
 var changeFavorite;
 
-changeFavorite = function(storyId, toFavorite) {
-  var operator, storyOperation, userOperation;
+changeFavorite = function(shortId, toFavorite) {
+  var operator, deepstreamOperation, userOperation;
 
   this.unblock();
   if (!this.userId) {
     throw new Meteor.Error('not-logged-in', 'Sorry, you must be logged in to favorite a story');
   }
 
-  var story = Stories.findOne({
-    _id: storyId,
+  var deepstream = Deepstreams.findOne({
+    shortId: shortId
   }, {
     fields: {
       favorited: 1
@@ -25,40 +25,42 @@ changeFavorite = function(storyId, toFavorite) {
   });
 
   operator = toFavorite ? '$addToSet' : '$pull';
-  storyOperation = {};
-  storyOperation[operator] = {
+  deepstreamOperation = {};
+  deepstreamOperation[operator] = {
     favorited: this.userId
   };
 
-  var currentlyFavorited = (_.contains(story.favorited, this.userId));
+  var currentlyFavorited = (_.contains(deepstream.favorited, this.userId));
 
   if (toFavorite && !currentlyFavorited){
-    storyOperation['$inc'] = { favoritedTotal : 1 };
+    deepstreamOperation['$inc'] = { favoritedTotal : 1 };
   } else if (!toFavorite && currentlyFavorited){
-    storyOperation['$inc'] = { favoritedTotal : -1 };
+    deepstreamOperation['$inc'] = { favoritedTotal : -1 };
   }
 
   userOperation = {};
   userOperation[operator] = {
-    'profile.favorites': storyId
+    'profile.favorites': shortId
   };
-  Stories.update({
-    _id: storyId
-  }, storyOperation);
+
+  Deepstreams.update({
+    shortId: shortId
+  }, deepstreamOperation);
+
   return Meteor.users.update({
     _id: this.userId
   }, userOperation);
 };
 
-var changeEditorsPick = function(storyId, isPick) {
+var changeEditorsPick = function(shortId, isPick) {
 
   this.unblock();
   if (!Meteor.user().admin) {
     throw new Meteor.Error('not-admin-in', 'Sorry, you must be an admin to designate an editors pick');
   }
 
-  Stories.update({
-    _id: storyId
+  Deepstreams.update({
+    shortId: shortId
   }, {
     $set: {
       editorsPick: isPick,
@@ -407,6 +409,38 @@ Meteor.methods({
       }
     });
   },
+  addTimelineWidget (shortId, timelineWidgetCode){
+    check(shortId, String);
+    check(timelineWidgetCode, String);
+
+    // match embed code or url from edit widget url
+
+    var embedCodeMatch = timelineWidgetCode.match(/data\-widget\-id\=\"(\d*?)\"/m);
+    var urlMatch = timelineWidgetCode.match(/\/settings\/widgets\/(.\d*)/);
+    var simpleNumberMatch = timelineWidgetCode.match(/^(.\d+)$/);
+
+    var twitterTimelineId;
+
+    if (embedCodeMatch && embedCodeMatch[1]){
+      twitterTimelineId = embedCodeMatch[1]
+    } else if (urlMatch && urlMatch[1]){
+      twitterTimelineId = urlMatch[1]
+    } else if (simpleNumberMatch && simpleNumberMatch[1]){
+      twitterTimelineId = simpleNumberMatch[1]
+    }
+
+    if (!twitterTimelineId){
+      throw new Meteor.Error('Invalid widget code or url');
+    }
+
+    return updateDeepstream.call(this, {
+      shortId: shortId
+    }, {
+      $set: {
+        twitterTimelineId: twitterTimelineId
+      }
+    });
+  },
   stopCuratorWebcam (shortId){
     check(shortId, String);
 
@@ -418,21 +452,21 @@ Meteor.methods({
       }
     });
   },
-  favoriteStory (storyId) {
-    check(storyId, String);
-    return changeFavorite.call(this, storyId, true);
+  favoriteDeepstream (streamShortId) {
+    check(streamShortId, String);
+    return changeFavorite.call(this, streamShortId, true);
   },
-  unfavoriteStory (storyId) {
-    check(storyId, String);
-    return changeFavorite.call(this, storyId, false);
+  unfavoriteDeepstream (streamShortId) {
+    check(streamShortId, String);
+    return changeFavorite.call(this, streamShortId, false);
   },
-  designateEditorsPick (storyId) {
-    check(storyId, String);
-    return changeEditorsPick.call(this, storyId, true);
+  designateEditorsPick (streamShortId) {
+    check(streamShortId, String);
+    return changeEditorsPick.call(this, streamShortId, true);
   },
-  stripEditorsPick (storyId) {
-    check(storyId, String);
-    return changeEditorsPick.call(this, storyId, false);
+  stripEditorsPick (streamShortId) {
+    check(streamShortId, String);
+    return changeEditorsPick.call(this, streamShortId, false);
   },
   deleteDeepstream: function(shortId){
     check(shortId, String);
@@ -464,7 +498,7 @@ Meteor.methods({
   createDeepstream (shortId, initialStream) { // TO-DO find a way to generate these ids in a trusted way server without compromising UI speed
     var user = Meteor.user();
     if (!user) {
-      throw new Meteor.Error('not-logged-in', 'Sorry, you must be logged in to create a story');
+      throw new Meteor.Error('not-logged-in', 'Sorry, you must be logged in to create a deepstream');
     }
     var accessPriority = user.accessPriority;
     if(!accessPriority || accessPriority > createAccessLevel){

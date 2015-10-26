@@ -1,14 +1,18 @@
 <template name="watch_page">
+  {{#if isMobile}}
+    {{> mobile_progress_overlay}}
+  {{/if}}
+
   {{#with thisDeepstream}}
 
-    <div class="watch {{#if onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}}">
+    <div class="watch {{#if onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}}" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
       <div class="left-section">
 
         <div class="header-section">
           <div class="top-row">
             {{> logo_title}}
           </div>
-          <div class="second-row">
+          <div class="second-row" style="max-width: {{mainStreamMaxWidth}}px;">
             {{#if activeStream.live}}
               <div class="live-indicator">
                 LIVE
@@ -17,9 +21,9 @@
             {{{streamTitleElement}}}
           </div>
         </div>
-        <div class="main-section {{#if expandMainSection}}expanded{{/if}}">
+        <div class="main-section {{#if expandMainSection}}expanded{{/if}}" style="max-width: {{mainStreamMaxWidth}}px;">
 
-          <div class="main-stream {{#if expandMainSection}}expanded{{/if}} {{#if PiP}}PiP{{/if}}">
+          <div class="main-stream {{#if expandMainSection}}expanded{{/if}} {{#if PiP}}PiP{{/if}}" style="height: {{mainStreamHeight}}px;">
             {{#if showTutorial}}
               {{> creation_tutorial}}
             {{/if}}
@@ -68,15 +72,15 @@
                 {{#if PiP}}
                   <div class="PiP-overlay"></div>{{/if}}
               </div>
-              {{#unless PiP}}
-                {{#with activeStream}}
-                  <div class="bottom-overlay">
-                    <span class="stream-url">Livestream:  <a href="{{sourceUrl}}"
-                                                             target="_blank">{{sourceUrl}}</a></span>
-                    <span class="stream-username">Streamer:  {{username}}</span>
-                  </div>
-                {{/with}}
-              {{/unless}}
+              <!--{{#unless PiP}}-->
+                <!--{{#with activeStream}}-->
+                  <!--<div class="bottom-overlay">-->
+                    <!--<span class="stream-url">Livestream:  <a href="{{sourceUrl}}"-->
+                                                             <!--target="_blank">{{sourceUrl}}</a></span>-->
+                    <!--<span class="stream-username">Streamer:  {{username}}</span>-->
+                  <!--</div>-->
+                <!--{{/with}}-->
+              <!--{{/unless}}-->
             {{/if}}
           </div>
           <div class="footer-section">
@@ -110,13 +114,13 @@
             {{/if}}
             <div class="stream-stats-and-share">
               <div class="share-and-favorite">
-                <button class="favorite-button">{{> favorite_icon}}</button>
+                {{> favorite_button}}
                 <button class="twitter-share-button">{{> twitter_share_icon}}</button>
                 <button class="facebook-share-button">{{> facebook_share_icon}}</button>
                 <button class="email-share-button">{{> email_share_icon}}</button>
               </div>
               <div class="stream-stats">
-                <div class="views">Views: 12,245</div>
+                <div class="views">Views: {{formatNumber viewCount}}</div>
               </div>
             </div>
             <div class="about-stream">
@@ -205,17 +209,7 @@
       {{#with getCuratorWebcamStream}}
 
         <div class="curator-webcam-stream-container">
-          <object id="curator-webcam-stream" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-                  class="curator-webcam-stream-flash-object">
-            <embed name="curator-webcam-stream" src="//static.bambuser.com/r/player.swf"
-                   type="application/x-shockwave-flash" flashvars="{{curatorWebcamFlashVars}}" allowfullscreen="true"
-                   allowscriptaccess="always" wmode="opaque"/>
-            <param name="movie" value="//static.bambuser.com/r/player.swf"/>
-            <param name="flashvars" value="{{curatorWebcamFlashVars}}"/>
-            <param name="allowfullscreen" value="true"/>
-            <param name="allowscriptaccess" value="always"/>
-            <param name="wmode" value="opaque"/>
-          </object>
+          {{> curator_webcam_display}}
 
           <!--<iframe-->
               <!--class="curator-webcam-stream-iframe"-->
@@ -247,22 +241,22 @@
       </button>
       {{#if curateMode}}
         <button class="delete-stream">{{> close_circle}}</button>
-        {{#if showPreviewButton}}
-          {{#if previewMode}}
-            <iframe class="stream-preview-overlay-iframe" width="100%" height="100%" frameborder="0" style="border:0"
-                    src="{{iframePreviewUrl}}"></iframe>
-            <div class="lower-stream-button-overlay">
-              <button class="set-main-stream">SET AS MAIN</button>
-            </div>
-          {{else}}
-            <div class="lower-stream-button-overlay">
+      {{/if}}
+      {{#if showPreviewButton}}
+        {{#if previewMode}}
+          <iframe class="stream-preview-overlay-iframe" width="100%" height="100%" frameborder="0" style="border:0"
+                  src="{{iframePreviewUrl}}"></iframe>
+          <div class="lower-stream-button-overlay">
+            <button class="set-main-stream">SET AS MAIN</button>
+          </div>
+        {{else}}
+          <div class="lower-stream-button-overlay">
             {{#if disablePreviewButton}}
               <button class="preview-stream" disabled="disabled">NO PREVIEW</button>
-              {{else}}
+            {{else}}
               <button class="preview-stream">PREVIEW</button>
             {{/if}}
-            </div>
-          {{/if}}
+          </div>
         {{/if}}
       {{/if}}
     </li>
@@ -359,7 +353,7 @@
   <div class="title-description-overlay" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
     <button class="close">✕</button>
     <div class="title-description-inputs">
-      <form id="publish-with-title-description" action="action">
+      <form id="publish-with-title-description" action="action" autocomplete="off">
         <label for="title">Enter a title for your Deep Stream:</label>
         <input type="text" name="title" value="{{title}}" class="set-title" autofocus="autofocus">
 
@@ -379,18 +373,21 @@
 <template name="context_browser_area">
   {{ > context_card_column}}
   <div class="context-timeline-switcher">
-    <button class="show-context-browser active">
-      <div class="rectangle"></div>
-      <div class="rectangle"></div>
+    <button class="show-context-browser {{#unless showTimeline}}active{{/unless}}">
+      <div class="rectangles">
+        <div class="rectangle"></div>
+        <div class="rectangle"></div>
+      </div>
     </button>
-    <button class="show-timeline" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>
+    <button class="show-timeline {{#if showTimeline}}active{{/if}}" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>
       #
     </button>
   </div>
   {{#if showChat}}
     {{> unimplemented_chat_section}}
   {{else}}
-    {{> context_browser}}
+      {{> timeline_section show=showTimeline}}
+      {{> context_browser show=showContextBrowser deepstream=this}}
   {{/if}}
 </template>
 
@@ -405,29 +402,30 @@
 </template>
 
 <template name="context_browser">
-  <div class="context-browser">
+  <div class="context-browser {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -20}}px">
+    {{#with deepstream}}
+      {{#if curateMode}}
+        <div class="add-new-context-row">
+          <button class="add-new-context">{{> add_icon}}</button>
+        </div>
+      {{/if}}
 
-    {{#if curateMode}}
-      <div class="add-new-context-row">
-        <button class="add-new-context">{{> add_icon}}</button>
+      {{#if soloSidebarContextMode}}
+        <div class="context-area">
+          {{#with currentContext}}
+            {{> solo_context_section}}
+          {{/with}}
+        </div>
+      {{else}}
+        <div class="top-bar"></div>
+      {{/if}}
+      <div class="context-area list-mode {{#if soloSidebarContextMode}}hide{{/if}}">
+        {{#each contextBlocks}}
+          {{> list_item_context_section}}
+        {{/each}}
+        <div class="bottom-bar"></div>
       </div>
-    {{/if}}
-
-    {{#if soloSidebarContextMode}}
-      <div class="context-area">
-        {{#with currentContext}}
-          {{> solo_context_section}}
-        {{/with}}
-      </div>
-    {{else}}
-      <div class="top-bar"></div>
-    {{/if}}
-    <div class="context-area list-mode {{#if soloSidebarContextMode}}hide{{/if}}">
-      {{#each contextBlocks}}
-        {{> list_item_context_section}}
-      {{/each}}
-      <div class="bottom-bar"></div>
-    </div>
+    {{/with}}
   </div>
 </template>
 
@@ -500,4 +498,32 @@
       </li>
     </ul>
   </div>
+</template>
+
+<template name="timeline_section">
+    <div class="timeline-section {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -15}}px">
+      {{#if curateMode}}
+        <form id="timeline-embed" action="" autocomplete="off">
+          <label for="timeline-embed-code-input"><a href="https://twitter.com/settings/widgets/new/search" target="_blank">Create a new Timeline widget</a> and enter the generated embed code or url here</label>
+          <input id="timeline-embed-code-input" name="timeline-embed-code" type="text"/>
+          <div class="button-container"><button type="submit" class="submit-timeline-embed-code">Update Timeline</button></div>
+        </form>
+      {{/if}}
+      <div id='twitter-timeline' class="timeline-container"></div>
+
+    </div>
+</template>
+
+<template name="curator_webcam_display">
+  <object id="curator-webcam-stream" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+          class="curator-webcam-stream-flash-object">
+    <embed name="curator-webcam-stream" src="//static.bambuser.com/r/player.swf"
+           type="application/x-shockwave-flash" flashvars="{{curatorWebcamFlashVars}}" allowfullscreen="true"
+           allowscriptaccess="always" wmode="opaque"/>
+    <param name="movie" value="//static.bambuser.com/r/player.swf"/>
+    <param name="flashvars" value="{{curatorWebcamFlashVars}}"/>
+    <param name="allowfullscreen" value="true"/>
+    <param name="allowscriptaccess" value="always"/>
+    <param name="wmode" value="opaque"/>
+  </object>
 </template>

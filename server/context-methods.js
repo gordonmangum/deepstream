@@ -21,6 +21,7 @@ if (!GOOGLE_API_SERVER_KEY) {
   throw new Meteor.Error('Settings must be loaded for apis to work');
 }
 
+
 var decrementByOne = function(bigInt) {
   var intArr = bigInt.split("");
   if (intArr.length === 1) {
@@ -59,6 +60,12 @@ var makeTwitterCall = function(apiCall, params) {
   }
   return res;
 };
+
+var searchES = Meteor.wrapAsync(
+    esClient.search
+, esClient);
+
+var suggestES = Meteor.wrapAsync(esClient.suggest, esClient);
 
 var searchYouTube = function (query, option, page) {
   var res;
@@ -538,19 +545,11 @@ Meteor.methods({
     };
   },
   streamSearchList (query, option, page){
-    if(!this.userId){ // TO-DO Launch remove
-      return {
-        items: [],
-        nextPage: 'end'
-      };
-    }
-
     var youtubeResults, twitchResults;
     if (!page) {
       page = {};
     }
-    page.ustream = page.ustream || 0;
-    page.bambuser = page.bambuser || 0;
+    page.es = page.es || 0;
 
     if (page.youtube !== 'end'){
       youtubeResults = searchYouTube.call(this, query, 'live', page.youtube || null);
@@ -576,107 +575,76 @@ Meteor.methods({
       }
     }
 
-    var ustreams;
-
-    if(page.ustream !== 'end'){
-
-      // ustream
-      var limit = 50;
-      var options = {
-        limit: limit,
-        sort: {
-          currentViewers: -1
-        },
-        skip: page.ustream * limit
-      };
-
-      function buildRegExp(query) {
-        // this is a dumb implementation
-        var parts = query.trim().split(/[ \-\:]+/);
-        return new RegExp("(" + parts.join('|') + ")", "ig");
+    var esQuery = {
+      index: ES_CONSTANTS.index,
+      type: "stream",
+      size: ES_CONSTANTS.pageSize * 2, // get twice as many as needed in case of duplicates
+      body: {
+        "min_score": 0.1,
+        query: {
+          multi_match: {
+            query: query,
+            fields: ["title", "broadcaster", "tags", "description"],
+          }
+        }
       }
+    };
 
-      var regExp = buildRegExp(query);
-      var selector = {$or: [
-        {title: regExp},
-        {description: regExp},
-        {username: regExp}
-        //{ $text: { $search: query, $language: 'en' } }
-      ], _streamSource: 'ustream'};
-      ustreams = Streams.find(selector, options).fetch();
+    var nextESPage;
+
+    var esItems;
+
+    if (page.es !== 'end') {
+      esQuery.from = ES_CONSTANTS.pageSize * page.es;
+      var results = searchES(esQuery);
+      var idsInResults = [];
+
+      esItems = _.chain(results.hits.hits)
+        .pluck("_source")
+        .pluck("doc")
+        .reject(function (item) {
+          var id = item.id;
+          if (_.contains(idsInResults, id)){
+            return true
+          } else {
+            idsInResults.push(id);
+          }
+        })
+        .first(ES_CONSTANTS.pageSize)
+        .value();
+
+      if (esItems.length === ES_CONSTANTS.pageSize)
+        nextESPage = page.es + 1;
+      else
+        nextESPage = 'end';
     } else {
-      ustreams = [];
-    }
-
-    var bambuserStreams;
-
-    if(page.bambuser !== 'end'){
-
-      // bambuser
-      var limit = 50;
-      var options = {
-        limit: limit,
-        sort: {
-          totalViews: -1
-        },
-        skip: page.bambuser * limit
-      };
-
-      var buildRegExp = function(query) {
-        // this is a dumb implementation
-        var parts = query.trim().split(/[ \-\:]+/);
-        return new RegExp("(" + parts.join('|') + ")", "ig");
-      }
-
-      var regExp = buildRegExp(query);
-      var selector = {$or: [
-        {title: regExp},
-        {tags: regExp},
-        {username: regExp}
-        //{ $text: { $search: query, $language: 'en' } }
-      ], _streamSource: 'bambuser'};
-      bambuserStreams = Streams.find(selector, options).fetch();
-    } else {
-      bambuserStreams = [];
+      esItems = [];
+      nextESPage = 'end'
     }
 
 
 
-    // compile nextPage for each source
 
     var nextPage = {
+      es: nextESPage,
+      twitch: twitchResults.nextPage,
       youtube: youtubeResults.nextPage
     };
 
-    if(ustreams.length){
-      nextPage.ustream = page.ustream + 1;
-    } else {
-      nextPage.ustream = 'end';
-    }
-
-    if(bambuserStreams.length){
-      nextPage.bambuser = page.bambuser + 1;
-    } else {
-      nextPage.bambuser = 'end';
-    }
-
     var allSourcesExhausted = _.chain(nextPage)
-        .values()
-        .uniq()
-        .every(function(v){
-          return v === 'end'
-        })
-        .value();
+      .values()
+      .uniq()
+      .every(function(v){
+        return v === 'end'
+      })
+      .value();
 
     if(allSourcesExhausted){
       nextPage = 'end';
     }
 
-    // mix streams from various sources
-
     var items = _.chain(youtubeResults.items)
-      .zip(bambuserStreams)
-      .zip(ustreams)
+      .zip(esItems)
       .zip(twitchResults.items)
       .flatten()
       .compact()
