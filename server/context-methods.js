@@ -546,11 +546,34 @@ Meteor.methods({
   },
   streamSearchList (query, option, page){
 
-    if (!this.userId) { // TO-DO Launch remove
-      return {
+    var youtubeResults, twitchResults;
+    if (!page) {
+      page = {};
+    }
+    page.es = page.es || 0;
+
+    if (page.youtube !== 'end'){
+      youtubeResults = searchYouTube.call(this, query, 'live', page.youtube || null);
+      _.each(youtubeResults.items, function(item){
+        _.extend(item, { _streamSource: 'youtube'})
+      });
+    } else { // youtube results are over
+      youtubeResults = {
         items: [],
         nextPage: 'end'
-      };
+      }
+    }
+
+    if (page.twitch !== 'end'){
+      twitchResults = searchTwitch.call(this, query, page.twitch || null);
+      _.each(twitchResults.items, function(item){
+        _.extend(item, { _streamSource: 'twitch'})
+      });
+    } else { // twitch results are over
+      twitchResults = {
+        items: [],
+        nextPage: 'end'
+      }
     }
 
     var esQuery = {
@@ -568,36 +591,64 @@ Meteor.methods({
       }
     };
 
-    if (!page) {
+    var nextESPage;
+
+    var esItems;
+
+    if (page.es !== 'end') {
+      esQuery.from = ES_CONSTANTS.pageSize * page.es;
       var results = searchES(esQuery);
-      page = {es: 1};
+      var idsInResults = [];
+
+      esItems = _.chain(results.hits.hits)
+        .pluck("_source")
+        .pluck("doc")
+        .reject(function (item) {
+          var id = item.id;
+          if (_.contains(idsInResults, id)){
+            return true
+          } else {
+            idsInResults.push(id);
+          }
+        })
+        .first(ES_CONSTANTS.pageSize)
+        .value();
+
+      if (esItems.length > ES_CONSTANTS.pageSize)
+        nextESPage = page.es + 1;
+      else
+        nextESPage = 'end';
     } else {
-      if (page.es != 'end') {
-        esQuery.from = ES_CONSTANTS.pageSize * page.es;
-        var results = searchES(esQuery);
-        if (results.hits.total > esQuery.from)
-          page.es++;
-        else
-          page.es = 'end';
-      }
+      esItems = [];
+      nextESPage = 'end'
     }
 
-    var idsInResults = [];
 
-    var nextPage = page;
 
-    var items = _.chain(results.hits.hits)
-      .pluck("_source")
-      .pluck("doc")
-      .reject(function (item) {
-        var id = item.id;
-        if (_.contains(idsInResults, id)){
-          return true
-        } else {
-          idsInResults.push(id);
-        }
+
+    var nextPage = {
+      es: nextESPage,
+      twitch: twitchResults.nextPage,
+      youtube: youtubeResults.nextPage
+    };
+
+    var allSourcesExhausted = _.chain(nextPage)
+      .values()
+      .uniq()
+      .every(function(v){
+        return v === 'end'
       })
-      .first(ES_CONSTANTS.pageSize)
+      .value();
+
+    if(allSourcesExhausted){
+      nextPage = 'end';
+    }
+
+    var items = _.chain(youtubeResults.items)
+      .zip(esItems)
+      .zip(twitchResults.items)
+      .flatten()
+      .compact()
       .value();
 
     return {
