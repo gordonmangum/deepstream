@@ -90,6 +90,9 @@ var createBlockEvents = {
 
   "submit form" (d, template) {
     d.preventDefault();
+
+    SearchResults.remove({type: 'stream'}); // TO-DO, only do this on stream searches
+
     if(!template.loadingResults.get()){
       if (!template.existingSearchResults || !template.existingSearchResults({reactive: false}).count()) {  // confirm there are no results yet
         template.search();

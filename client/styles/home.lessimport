@@ -3,7 +3,7 @@ div.home-top {
   &.not-sticky{
     position: absolute;
   }
-  height: 145px;
+  height: 120px;
   @media @mobile{
     img{
       vertical-align: middle;
@@ -199,7 +199,7 @@ div.logo-title {
 }
 
 .deepstream-preview{
-  @width: 500px;
+  @width: 570px;
   @stream-image-width: 290px;
   @padding: 12px;
   @content-section-width: @width - @stream-image-width - 2 * @padding;
@@ -250,7 +250,6 @@ div.logo-title {
       }
       padding-left: 10px;
       padding-right: 10px;
-      background-color: @homepage-shade-5;
       top: 0;
       right: 0;
       position: absolute;
@@ -269,7 +268,7 @@ div.logo-title {
   }
   .title{
     .ellipsis-text;
-    font-size: 18px;
+    font-size: 20px;
   }
   .small-stream-info, .views{
     color: @deemphasized-light-text-color;
@@ -277,13 +276,15 @@ div.logo-title {
   }
   .small-stream-info{
     width: 100%;
+  }
+  .favorited{
     svg{
-      .fg{
-        fill: @favorite-color;
-      }
       margin-bottom: -2px;
       margin-left: 1px;
       .size(14px);
+    }
+    .fg{
+      fill: @favorite-color;
     }
   }
   .views, .curator-name, .favorited{
@@ -315,16 +316,23 @@ div.logo-title {
 }
 
 .homepage-content-preview{
-  overflow-y: scroll;
-  height: 100%;
-}
-
-.homepage-preview-news-section{
-  @heading-size: 20px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  .news-source{
+  @gap: 6px;
+  overflow-y: hidden;
+  font-size: 16px;
+  line-height: normal;
+  height: calc(50% ~"-" @gap / 2);
+  position: relative;
+  background-color: @homepage-shade-5;
+  padding: 10px;
+  &:first-child{
+    margin-bottom: @gap;
+  }
+  @heading-size: 12px;
+  .news-source, .provider-source{
     font-size: @heading-size;
+    height: @heading-size;
+    line-height: @heading-size;
+    margin-bottom: 5px;
   }
   .provider-image{
     .size(@heading-size);
@@ -333,8 +341,14 @@ div.logo-title {
 }
 
 .homepage-preview-text-section{
-  padding-top: 6px;
-  padding-bottom: 6px;
+    @lineHeight: 20px;
+    line-height: @lineHeight;
+    height: @lineHeight * 4 - 0px;
+    display: -webkit-box;
+    //-webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    //text-overflow: ellipsis;
 }
 
 .homepage-preview-twitter-section{
@@ -446,7 +460,7 @@ div.logo-title {
 
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    .transform(translate(-50%, -50%));
 
     .main-stream{
       height: 100%;
@@ -642,6 +656,12 @@ div.action-items {
       height: 100%;
       background-color: inherit;
       color: @light-text-color;
+      // fix autofill behavior of inputs
+      &:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 1000px @homepage-shade-3 inset;
+        -webkit-text-fill-color: @light-text-color !important;
+        color: @light-text-color !important;
+      }
     }
   }
 
@@ -699,7 +719,7 @@ div.action-items {
 
 }
 
-.mailchimp-signup-form-on-homepage, .mailchimp-signup-form-on-signin{
+.mailchimp-signup-form-on-homepage, .mailchimp-signup-form-on-signin, .mailchimp-signup-form-on-mobile{
   position: absolute;
   .center-over-parent-div;
   //top: 200px;
@@ -730,6 +750,14 @@ div.action-items {
       height: 30px;
       font-size: 14px;
     }
+  }
+}
+
+.mailchimp-signup-form-on-mobile{
+  padding: 20px;
+  width: 80%;
+  input[type=email]{
+    margin-top: 20px;
   }
 }
 

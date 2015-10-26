@@ -253,12 +253,22 @@ window.formatDateNice = function (date) {
 
 };
 
-window.updateActiveContext = function(){
+unthrottledUpdateActiveContext = function(){
 
+  if($('.context-browser').hasClass('hide')){
+    return;
+  }
 
   var container = $('.context-area.list-mode');
-  var containerOffset = container.offset().top;
-  var lastActivationBias = 0;
+
+  var containerOffset = container.offset();
+
+  if (!containerOffset){
+    return
+  }
+
+  var containerOffsetTop = containerOffset.top;
+  var lastActivationBias = 10;
   var currentActivationBias = 30;
   var activeId;
 
@@ -270,13 +280,17 @@ window.updateActiveContext = function(){
   } else {
     var contextOffsetObjects = _.map(orderedContextIds, (id) => {
         var e = $('.list-item-context-plus-annotation[data-context-id=' + id + ']');
-        return {id: id, offset: e.offset().top, height: e.outerHeight()};
+        var offset = e.offset();
+        if (offset){
+          return {id: id, offset: offset.top, height: e.outerHeight()};
+        }
       }
     );
 
     activeId = _.chain(contextOffsetObjects)
+      //.compact()
       .filter((obj) => {
-        return obj.offset + obj.height / 2 > containerOffset + currentActivationBias;
+        return obj.offset + obj.height / 2 > containerOffsetTop + currentActivationBias;
       })
       .pluck('id')
       .first()
@@ -284,4 +298,11 @@ window.updateActiveContext = function(){
   }
 
   Session.set('activeContextId', activeId);
+};
+
+
+window.updateActiveContext = _.throttle(unthrottledUpdateActiveContext, 50, {leading: false});
+
+window.isMobile = function(){
+  return (Meteor.Device.isPhone()) && !Meteor.Device.isBot()
 };

@@ -23,7 +23,7 @@ Meteor.startup(function(){
     windowSizeDep.changed();
   };
 
-  throttledResize = _.throttle(windowResize, 20);
+  throttledResize = _.throttle(windowResize, 20, {leading: false});
 
   $(window).resize(throttledResize);
 });
@@ -185,48 +185,10 @@ Template.preview_text_section.helpers(horizontalBlockHelpers);
 Template.homepage_preview_text_section.helpers(horizontalBlockHelpers);
 Template.display_text_section.events(editableTextEventsBoilerplate('editTextSection'));
 
-//
-//Template.share_button.events({
-//  'click' (e, t) {
-//    t.tooltipShown.set(!t.tooltipShown.get());
-//  },
-//  'click .share-facebook' (e, t) {
-//    var width  = 575;
-//    var height = 400;
-//    var left   = ($(window).width()  - width)  / 2;
-//    var top    = ($(window).height() - height) / 2;
-//    var url    = "//facebook.com/sharer/sharer.php?u=" + encodeURIComponent(location.href);
-//    var opts   = 'status=1' +
-//      ',width='  + width  +
-//      ',height=' + height +
-//      ',top='    + top    +
-//      ',left='   + left
-//    window.open(url, 'facebook', opts);
-//    Meteor.call('countStoryShare', this._id, 'facebook');
-//    analytics.track('Share on Facebook');
-//  },
-//  'click .share-twitter' (e, t) {
-//    var title = $(".story-title").text();
-//    var width  = 575;
-//    var height = 400;
-//    var left   = ($(window).width()  - width)  / 2;
-//    var top    = ($(window).height() - height) / 2;
-//    var url    = '//twitter.com/intent/tweet?text=Read "' + title + '" on @readFOLD&url=' + encodeURIComponent(location.href);
-//    var opts   = 'status=1' +
-//      ',width='  + width  +
-//      ',height=' + height +
-//      ',top='    + top    +
-//      ',left='   + left
-//    window.open(url, 'twitter', opts);
-//    Meteor.call('countStoryShare', this._id, 'twitter');
-//    analytics.track('Share on Twitter');
-//  }
-//});
-
 
 Template.favorite_button.helpers({
   userFavorited () {
-    return Meteor.user() && _.contains(Meteor.user().profile.favorites, this._id);
+    return Meteor.user() && _.contains(Meteor.user().profile.favorites, this.shortId);
   }
 });
 
@@ -235,7 +197,7 @@ Template.favorite_button.events({
     if(!Meteor.user()){
       return notifyInfo('Please sign up or log in to favorite stories');
     }
-    return Meteor.call('favoriteStory', this._id, function(err) {
+    return Meteor.call('favoriteDeepstream', this.shortId, function(err) {
       if (err) {
         notifyError(err);
         throw(err);
@@ -246,7 +208,7 @@ Template.favorite_button.events({
     });
   },
   "click .unfavorite" () {
-    return Meteor.call('unfavoriteStory', this._id, function(err) {
+    return Meteor.call('unfavoriteDeepstream', this.shortId, function(err) {
       if (err) {
         notifyError(err);
         throw(err);
@@ -259,7 +221,7 @@ Template.favorite_button.events({
 
 Template.editors_pick_button.events({
   "click .pick" () {
-    return Meteor.call('designateEditorsPick', this._id, function(err) {
+    return Meteor.call('designateEditorsPick', this.shortId, function(err) {
       if (err) {
         notifyError(err);
         throw(err);
@@ -267,7 +229,7 @@ Template.editors_pick_button.events({
     });
   },
   "click .unpick" () {
-    return Meteor.call('stripEditorsPick', this._id, function(err) {
+    return Meteor.call('stripEditorsPick', this.shortId, function(err) {
       if (err) {
         notifyError(err);
         throw(err);
@@ -296,7 +258,7 @@ Template.create_deepstream.events({
             notifyError(err);
             throw(err);
           }
-          analytics.track('User clicked create and created story');
+          analytics.track('User clicked create and created deepstream');
 
         })
       } else {
@@ -305,15 +267,28 @@ Template.create_deepstream.events({
     } else {
       Session.set('signingIn', true);
       Session.set('signingInFrom', setSigningInFrom());
-      analytics.track('User clicked curate on homepage and needs to sign in');
+      analytics.track('User clicked create and needs to sign in');
     }
   }
 });
 
-//
-//var storyViewed = '';
-//Template.read.onCreated(function(){
-//
+
+Meteor.startup(function(){
+  $( window ).konami({
+    code : [38,38,40,40,37,39,37,39, 66, 65], // you know...
+    cheat: function() {
+      Session.set('showEditorsPickButton', true); // we still check for admin
+    }
+  });
+
+  $( window ).konami({
+    code : [68,69,69,80], //deep
+    cheat: function() {
+      Session.set('showEditorsPickButton', true); // we still check for admin
+    }
+  });
+});
+
 //  // analytics autorun
 //  this.autorun(function(){
 //    if (!Session.equals("currentY", null)){
@@ -329,15 +304,3 @@ Template.create_deepstream.events({
 //    }
 //  });
 //
-//  var id = this.data._id;
-//  if (storyViewed !== id){
-//    storyViewed = id;
-//    Meteor.call('countStoryView', id);
-//    analytics.track('View story', trackingInfoFromStory(this.data));
-//  }
-//});
-//
-//
-//Template.read.onRendered(function(){
-//  $(window).scrollTop(Session.get('scrollTop'));
-//});

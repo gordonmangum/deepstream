@@ -367,7 +367,8 @@ Stream = (function (_super) {
       //} else {
         return '//embed.bambuser.com/channel/' + this.reference.username + '?chat=0';
       //}
-    } else if (this.source === 'twitch') {
+    } else if (this.source === 'twitch'){
+
       return '//www.twitch.tv/' + this.reference.channelName + '/embed?';
     }
   };
@@ -379,6 +380,32 @@ Stream = (function (_super) {
     } else if (this.source === 'twitch') {
       return 'channel=' + this.reference.channelName + '&auto_play=true&start_volume=25';
     }
+  };
+
+  Stream.prototype.hasPreviewImage = function(){
+    switch (this.source){
+      case 'youtube':
+        if(this.noPreview){
+          return false;
+        }
+        break;
+      case 'ustream':
+        if(this.reference.previewUrl.indexOf('/images/defaults') !== -1){
+          return false;
+        }
+        break;
+      case 'bambuser':
+        if(!this.reference.previewUrl){
+          return false;
+        }
+        break;
+      case 'twitch':
+        if(!this.live){
+          return false;
+        }
+        break;
+    }
+    return true;
   };
 
   Stream.prototype.previewUrl = function () {
@@ -528,7 +555,7 @@ VideoBlock = (function (_super) {
   VideoBlock.prototype.searchListTemplate = 'create_video_section';
   VideoBlock.prototype.searchSoloTemplate = 'create_video_section';
   VideoBlock.prototype.homepagePreview = false;
-  VideoBlock.prototype.homepagePreviewTemplate = null;
+  VideoBlock.prototype.homepagePreviewTemplate  = 'homepage_preview_video_section';
 
   return VideoBlock;
 
@@ -870,6 +897,8 @@ ImageBlock = (function (_super) {
         return 'https://s.yimg.com/pw/favicon.ico';
       case 'imgur':
         return '//s.imgur.com/images/favicon-32x32.png';
+      default:
+        return '/images/image_icon.svg'
     }
   };
 

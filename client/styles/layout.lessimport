@@ -151,7 +151,7 @@ html {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  .transform(translate(-50%, -50%));
 }
 
 .action-button{
@@ -443,8 +443,6 @@ body {
   margin: 0;
   color: @light-text-color;
   background-color: @background-color;
-  transition: color 0.25s ease;
-  transition: background-color 0.25s ease;
 
   line-height: 23px;
   font-size: 15px;
@@ -796,7 +794,7 @@ textarea.text-content {
 
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    .transform(translate(-50%, -50%));
 
     li{
       .action-button;
@@ -854,7 +852,7 @@ textarea.text-content {
 
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -100%);
+    .transform(translate(-50%, -100%));
   }
 }
 
@@ -907,4 +905,16 @@ div.loading-container {
     .size-to-fit;
     text-align: center;
   }
+}
+
+.mobile-progress-overlay{
+  position: fixed;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(50,50,50,1);
+  color: @medium-color;
+  z-index: 9999999;
+  top: 0;
+  left: 0;
 }

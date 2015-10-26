@@ -84,13 +84,30 @@ Deepstream = (function() {
   };
 
   Deepstream.prototype.mostRecentContextOfTypes = function(types) {
+    this.mostRecentContextsOfTypes(types, 1);
+  };
+
+  Deepstream.prototype.mostRecentContextsOfTypes = function(types, number) {
     return _.chain(this.internalContextOfTypes(types))
       .sortBy('addedAt')
       .map(function(internalCBlock){
         return ContextBlocks.findOne(internalCBlock._id)
       })
       .compact()
-      .last()
+      .last(number)
+      .value()
+  };
+
+  Deepstream.prototype.topContextsOfTypes = function(types, number) {
+    return _.chain(this.internalContextOfTypes(types))
+      .sortBy('addedAt')
+      .reverse()
+      .sortBy('rank')
+      .map(function(internalCBlock){
+        return ContextBlocks.findOne(internalCBlock._id)
+      })
+      .compact()
+      .first(number)
       .value()
   };
 
@@ -114,12 +131,20 @@ Deepstream = (function() {
     return '/curate/' + this.userPathSegment + '/' + this.streamPathSegment;
   };
 
+  Deepstream.prototype.defaultPreviewUrl = "http://res.cloudinary.com/deepstream/image/upload/v1445697869/Default_Thumbnail_xyoxwn.png";
+
   Deepstream.prototype.previewUrl = function(){
     var activeStream = this.activeStream();
-    return activeStream ? activeStream.previewUrl() : null;
+    return activeStream && activeStream.hasPreviewImage() ? activeStream.previewUrl() : this.defaultPreviewUrl;
   };
   Deepstream.prototype.userStreamSwitchAllowed = function(){
     return !this.directorMode;
+  };
+
+  Deepstream.prototype.viewCount = function(){
+    if(this.analytics){
+      return this.analytics.views.total;
+    }
   };
 
   return Deepstream;

@@ -81,7 +81,7 @@ var servicesToFetch = [
     initialPagesGuess: 3,
     guessBias: 0,
     maxPages: parseInt(process.env.MAX_BAMBUSER_PAGES) || parseInt(Meteor.settings.MAX_BAMBUSER_PAGES) || 1000,
-    asyncWaitTime: 50,
+    asyncWaitTime: 100,
     mapFn (doc) {
 
       _.extend(doc, {
@@ -148,7 +148,7 @@ var generateFetchFunction = function(serviceInfo){
     var currentPage;
 
     var streamInsertCallback = function (error, result, page, cb) {
-      console.log('Received ' + serviceName + ' response for page: ' + page);
+      //console.log('Received ' + serviceName + ' response for page: ' + page);
 
       if (error) {
         allStreamsLoaded = true;
@@ -184,7 +184,7 @@ var generateFetchFunction = function(serviceInfo){
 	});
 
 
-      console.log('Added ' + serviceName + ' streams to database for page: ' + page);
+      //console.log('Added ' + serviceName + ' streams to database for page: ' + page);
       return cb();
     };
 
@@ -193,7 +193,7 @@ var generateFetchFunction = function(serviceInfo){
     async.each(_.range(numAsyncPages), function (i, cb) {
         Meteor.setTimeout(function () {
           currentPage = i + startingPage;
-          console.log('Async ' + serviceName + ' call for page: ' + currentPage);
+          //console.log('Async ' + serviceName + ' call for page: ' + currentPage);
           var localCurrentPage = currentPage;
 
           Meteor.call(serviceInfo.methodName, undefined, undefined, currentPage, function (err, result) {
@@ -215,7 +215,7 @@ var generateFetchFunction = function(serviceInfo){
           currentPage += 1;
 
           while (!allStreamsLoaded && currentPage < maxPages + startingPage) {
-            console.log('Sync ' + serviceName + ' call for page: ' + currentPage);
+            //console.log('Sync ' + serviceName + ' call for page: ' + currentPage);
 
             Meteor.call(serviceInfo.methodName, undefined, undefined, currentPage, function (err, result) {
               streamInsertCallback(err, result, currentPage, function (err) {
@@ -252,7 +252,7 @@ var updateStreamStatus = function (deepstream) {
     var streamSourceChannelName = stream.reference.channelName;
     switch (stream.source) {
       case 'ustream':
-        console.log('check ustream');
+        //console.log('check ustream');
         if (stream = Streams.findOne({'id': streamSourceId})) {
           // TODO update views and such
           Deepstreams.update({
@@ -268,7 +268,7 @@ var updateStreamStatus = function (deepstream) {
         }
         break;
       case 'bambuser':
-        console.log('check bambuser');
+        //console.log('check bambuser');
         if (stream = Streams.findOne({'username': streamSourceUsername})) {
           // TODO update title and views and such. These might actually change...
           Deepstreams.update({
@@ -284,7 +284,7 @@ var updateStreamStatus = function (deepstream) {
         }
         break;
       case 'youtube':
-        console.log('check youtube');
+        //console.log('check youtube');
 
         // TODO maybe only if we think youtube video is live
         Meteor.call('youtubeVideoInfo', streamSourceId, function (err, data) { // TODO this request can be done in a batch for all youtube videos we have...
@@ -320,7 +320,7 @@ var updateStreamStatus = function (deepstream) {
         });
         break;
       case 'twitch':
-        console.log('check twitch');
+        //console.log('check twitch');
 
         Meteor.call('twitchChannelInfo', streamSourceChannelName, function (err, data) {
           if (err) {

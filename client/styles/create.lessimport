@@ -108,7 +108,7 @@ div.create-section.link-twitter{
 div.add-context {
   display: flex;
   flex-flow: column;
-  height: @mainStreamHeight + @context-browser-header-row-height - 10px;
+  //.watchHeightMixin(@context-browser-header-row-height - 10px);
   position: relative;
   section {
     padding: 0;
