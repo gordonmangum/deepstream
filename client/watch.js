@@ -379,7 +379,7 @@ Template.watch_page.helpers({
     return Template.instance().mainStreamFlashPlayerId;
   },
   mainStreamInIFrame (){
-    return _.contains(['ustream', 'youtube'], Template.instance().activeStream.get().source);
+    return _.contains(['ustream', 'youtube', 'ml30'], Template.instance().activeStream.get().source);
   },
   mainStreamInFlashPlayer (){
     return _.contains(['bambuser', 'twitch'], Template.instance().activeStream.get().source);
