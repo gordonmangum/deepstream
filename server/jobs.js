@@ -191,9 +191,11 @@ var generateFetchFunction = function(serviceInfo){
         .flatten(true)
         .value();
 
+      console.log('Adding ' + mapResults.length + ' streams to ES for ' + serviceName + ' page: ' + page);
+
+
       bulkES({body: esInput});
 
-      console.log('Added ' + mapResults.length + ' streams to ES for ' + serviceName + ' page: ' + page);
       //console.log('Added ' + serviceName + ' streams to database for page: ' + page);
       return cb();
     };
