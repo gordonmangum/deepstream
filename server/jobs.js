@@ -428,12 +428,13 @@ if (process.env.PROCESS_TYPE === 'stream_worker') { // if a worker process
     Meteor.setTimeout(function () {
       while (true) {
         runJobs();
-        Meteor._sleepForMs(jobWaitInSeconds * 1000)
+        Meteor._sleepForMs(jobWaitInSeconds * 1000);
       }
     });
   });
 } else if (process.env.NODE_ENV === 'development') { // however, in developement, run jobs on startup
   Meteor.startup(function () {
-    Meteor.setTimeout(runJobs)
+    resetES();
+    Meteor.setTimeout(runJobs);
   });
 }
