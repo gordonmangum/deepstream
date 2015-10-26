@@ -23,7 +23,7 @@ Meteor.startup(function(){
     windowSizeDep.changed();
   };
 
-  throttledResize = _.throttle(windowResize, 20);
+  throttledResize = _.throttle(windowResize, 20, {leading: false});
 
   $(window).resize(throttledResize);
 });
