@@ -179,7 +179,7 @@ var generateFetchFunction = function(serviceInfo){
               }
             },
             {
-              //doc: result,
+              doc: result,
               source: result._streamSource,
               broadcaster: result._es.broadcaster,
               description: result._es.description,
