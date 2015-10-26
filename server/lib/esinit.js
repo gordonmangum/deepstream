@@ -115,8 +115,7 @@ resetES = function () {
     "body": {
       "stream": {
         "_ttl": { // if ttl works we don't need timestamp because the documents will be deleted automatically
-          "enabled": true,
-          "default": "3m"
+          "enabled": true
         },
         "properties": {
           "title": {
