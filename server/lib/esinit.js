@@ -30,34 +30,15 @@ var deleteData = Meteor.wrapAsync(esClient.deleteByQuery, esClient);
 var deleteIndex = Meteor.wrapAsync(esClient.indices.delete, esClient);
 
 
-console.log(1);
-
-console.log(indexExists({index: ES_CONSTANTS.index}));
-console.log(2);
-
 resetES = function () {
+  console.log("indexExists function: going to delete index");
   deleteIndex({index: ES_CONSTANTS.index});
-  if (!indexExists({index: ES_CONSTANTS.index})) {
-    console.log("indexExists function: going to create");
-    createIndex({index: ES_CONSTANTS.index});
-    Meteor._sleepForMs(1000);
-  }
+  console.log("indexExists function: going to create");
+  createIndex({index: ES_CONSTANTS.index});
 
   console.log("Opening index");
 
   openIndex({index: ES_CONSTANTS.index});
-
-  //console.log("Going to cleanup ES");
-  //deleteData({
-  //  index: ES_CONSTANTS.index,
-  //  type: "stream",
-  //  body: {
-  //    "query":{
-  //      "match_all": {}
-  //    }
-  //  }
-  //});
-
 
   console.log("indexExists function: going to close index");
   closeIndex({index: ES_CONSTANTS.index});
@@ -120,7 +101,6 @@ resetES = function () {
     console.log("ElasticSearch: putSettings: Error");
   }
 
-  Meteor._sleepForMs(1000);
   console.log("indexExists function: going to apply mappings");
 
   var mappingSuccess = putMapping({

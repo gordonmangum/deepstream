@@ -432,9 +432,16 @@ if (process.env.PROCESS_TYPE === 'stream_worker') { // if a worker process
       }
     });
   });
-} else if (process.env.NODE_ENV === 'development') { // however, in developement, run jobs on startup
+} else if (process.env.PROCESS_TYPE === 'reset_es_worker') { // special worker that resets ES
   Meteor.startup(function () {
     resetES();
-    Meteor.setTimeout(runJobs);
+    process.exit();
+  });
+} else if (process.env.NODE_ENV === 'development') { // however, in developement, run jobs on startup
+  Meteor.startup(function () {
+    Meteor.setTimeout(function(){
+      resetES();
+      runJobs();
+    });
   });
 }
