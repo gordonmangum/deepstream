@@ -180,7 +180,7 @@ var generateFetchFunction = function(serviceInfo){
           tags: result._es.tags,
           title: result._es.title,
         },
-        ttl: parseInt(process.env.ELASTICSEARCH_TTL) || parseInt(Meteor.settings.ELASTICSEARCH_TTL) || '3m'
+        ttl: process.env.ELASTICSEARCH_TTL || Meteor.settings.ELASTICSEARCH_TTL || '3m'
       });
     });
 
