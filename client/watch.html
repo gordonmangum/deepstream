@@ -353,7 +353,7 @@
   <div class="title-description-overlay" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
     <button class="close">✕</button>
     <div class="title-description-inputs">
-      <form id="publish-with-title-description" action="action">
+      <form id="publish-with-title-description" action="action" autocomplete="off">
         <label for="title">Enter a title for your Deep Stream:</label>
         <input type="text" name="title" value="{{title}}" class="set-title" autofocus="autofocus">
 
@@ -503,7 +503,7 @@
 <template name="timeline_section">
     <div class="timeline-section {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -15}}px">
       {{#if curateMode}}
-        <form id="timeline-embed" action="">
+        <form id="timeline-embed" action="" autocomplete="off">
           <label for="timeline-embed-code-input"><a href="https://twitter.com/settings/widgets/new/search" target="_blank">Create a new Timeline widget</a> and enter the generated embed code or url here</label>
           <input id="timeline-embed-code-input" name="timeline-embed-code" type="text"/>
           <div class="button-container"><button type="submit" class="submit-timeline-embed-code">Update Timeline</button></div>
