@@ -194,7 +194,11 @@ var generateFetchFunction = function(serviceInfo){
       console.log('Adding ' + mapResults.length + ' streams to ES for ' + serviceName + ' page: ' + page);
 
 
-      bulkES({body: esInput});
+      bulkES({
+        body: esInput,
+        timeout: 90000,
+        requestTimeout: 90000
+      });
 
       //console.log('Added ' + serviceName + ' streams to database for page: ' + page);
       return cb();
