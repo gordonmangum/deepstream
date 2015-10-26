@@ -546,7 +546,7 @@ Meteor.methods({
   },
   streamSearchList (query, option, page){
 
-    if(!this.userId){ // TO-DO Launch remove
+    if (!this.userId) { // TO-DO Launch remove
       return {
         items: [],
         nextPage: 'end'
@@ -556,11 +556,11 @@ Meteor.methods({
     var esQuery = {
       index: ES_CONSTANTS.index,
       type: "stream",
-      size: ES_CONSTANTS.pageSize,
-      body:{
+      size: ES_CONSTANTS.pageSize * 2, // get twice as many as needed in case of duplicates
+      body: {
         "min_score": 0.1,
-        query:{
-          multi_match:{
+        query: {
+          multi_match: {
             query: query,
             fields: ["title", "broadcaster", "tags", "description"],
           }
@@ -568,27 +568,42 @@ Meteor.methods({
       }
     };
 
-  if (!page){
-    var  results = searchES(esQuery);
-    page = {num: 1};
-  }else{
-    if(page.num != 'end'){
-      esQuery.from = ES_CONSTANTS.pageSize * page.num;
-      var  results = searchES(esQuery);
-      if (results.hits.total > esQuery.from)
-        page.num++;
-      else
-        page.num = 'end';
+    if (!page) {
+      var results = searchES(esQuery);
+      page = {es: 1};
+    } else {
+      if (page.es != 'end') {
+        esQuery.from = ES_CONSTANTS.pageSize * page.es;
+        var results = searchES(esQuery);
+        if (results.hits.total > esQuery.from)
+          page.es++;
+        else
+          page.es = 'end';
       }
-  }
+    }
 
-  var nextPage = page;
-  var items = _.chain(results.hits.hits).pluck("_source").pluck("doc").value();
+    var idsInResults = [];
 
-return {
-  items: items,
-  nextPage: nextPage,
-}
+    var nextPage = page;
+
+    var items = _.chain(results.hits.hits)
+      .pluck("_source")
+      .pluck("doc")
+      .reject(function (item) {
+        var id = item.id;
+        if (_.contains(idsInResults, id)){
+          return true
+        } else {
+          idsInResults.push(id);
+        }
+      })
+      .first(ES_CONSTANTS.pageSize)
+      .value();
+
+    return {
+      items: items,
+      nextPage: nextPage
+    }
   },
   youtubeVideoSearchList: searchYouTube,
   bambuserVideoSearchList (query, option, page) {
