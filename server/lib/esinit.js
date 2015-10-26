@@ -1,7 +1,7 @@
 var ES = Meteor.npmRequire('elasticsearch');
 esClient = new ES.Client({
-                 host: process.env.ELASTICSEARCH_URL || Meteor.settings.ELASTICSEARCH_URL || "localhost:9200"
-  });
+  host: process.env.ELASTICSEARCH_URL || Meteor.settings.ELASTICSEARCH_URL || "localhost:9200"
+});
 
 
 var ping = Meteor.wrapAsync(esClient.ping, esClient);
@@ -35,7 +35,7 @@ console.log(1);
 console.log(indexExists({index: ES_CONSTANTS.index}));
 console.log(2);
 
-resetES = function(){
+resetES = function () {
   deleteIndex({index: ES_CONSTANTS.index});
   if (!indexExists({index: ES_CONSTANTS.index})) {
     console.log("indexExists function: going to create");
@@ -69,15 +69,15 @@ resetES = function(){
     index: ES_CONSTANTS.index,
     type: "stream",
     body: {
-      "analysis" : {
-        "analyzer" : {
-          "my_ngram_analyzer" : {
-            "tokenizer" : "my_ngram_tokenizer",
-            "filter" : ["standard", "lowercase",]// "synonym",]
+      "analysis": {
+        "analyzer": {
+          "my_ngram_analyzer": {
+            "tokenizer": "my_ngram_tokenizer",
+            "filter": ["standard", "lowercase",]// "synonym",]
           }
         },
         "tokenizer": {
-          "my_ngram_tokenizer":{
+          "my_ngram_tokenizer": {
             "type": "nGram",
             "min_gram": 2,
             "max_gram": 15,
@@ -127,11 +127,11 @@ resetES = function(){
     index: ES_CONSTANTS.index,
     type: "stream",
     requestTimeout: 90000,
-    "body":{
-      "stream":{
+    "body": {
+      "stream": {
         "_ttl": { // if ttl works we don't need timestamp because the documents will be deleted automatically
-          "enabled" : true,
-          "default" : "3m"
+          "enabled": true,
+          "default": "3m"
         },
         "properties": {
           "title": {
@@ -146,7 +146,7 @@ resetES = function(){
           "tags": {
             "type": "string",
           },
-          "description":{
+          "description": {
             "type": "string",
             "analyzer": "my_ngram_analyzer",
           },
@@ -158,7 +158,7 @@ resetES = function(){
     }
   });
 
-  if(mappingSuccess){
+  if (mappingSuccess) {
     console.log("ElasticSearch: putMapping: Success");
     console.log(mappingSuccess);
   } else {
