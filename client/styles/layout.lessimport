@@ -39,8 +39,8 @@
 @action-color: #F6C406;
 @hover-action-color: #dea406;
 @placeholder-color: #acacac;
-@favorite-color: #FFD600;
-@hover-favorite-color: #EFC820;
+@favorite-color: #C90523;
+@hover-favorite-color: #F70127;
 @active-pill-color: #663A80;
 @hover-pill-color: #5f2d72;
 @inactive-pill-color: #462859;

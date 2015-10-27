@@ -370,6 +370,8 @@ Stream = (function (_super) {
     } else if (this.source === 'twitch'){
 
       return '//www.twitch.tv/' + this.reference.channelName + '/embed?';
+    } else if (this.source === 'ml30'){
+      return 'https://civic.mit.edu/ml30-deepstream/?'
     }
   };
 
@@ -420,6 +422,8 @@ Stream = (function (_super) {
         return this.reference.previewUrl;
       case 'twitch':
         return "http://static-cdn.jtvnw.net/previews-ttv/live_user_" + this.reference.channelName + "-320x180.jpg";
+      case 'ml30':
+        return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/static/MIT_ML_Logo_white';
     }
   };
 
@@ -433,6 +437,8 @@ Stream = (function (_super) {
         return this.reference.previewUrl;
       case 'twitch':
         return "http://static-cdn.jtvnw.net/previews-ttv/live_user_" + this.reference.channelName + "-80x45.jpg";
+      case 'ml30':
+        return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/static/MIT_ML_Logo_white';
     }
   };
 

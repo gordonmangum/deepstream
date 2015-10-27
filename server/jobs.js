@@ -52,7 +52,7 @@ var servicesToFetch = [
     initialPagesGuess: 60,
     guessBias: 1,
     maxPages: parseInt(process.env.MAX_USTREAM_PAGES) || parseInt(Meteor.settings.MAX_USTREAM_PAGES) || 1000,
-    asyncWaitTime: 10,
+    asyncWaitTime: 20,
     mapFn (doc) {
       var username = doc.user.userName;
       _.extend(doc, {
@@ -148,6 +148,8 @@ var generateFetchFunction = function(serviceInfo){
 
     var currentPage;
 
+    var resultsForES = [];
+
     var streamInsertCallback = function (error, result, page, cb) {
       //console.log('Received ' + serviceName + ' response for page: ' + page);
 
@@ -191,7 +193,7 @@ var generateFetchFunction = function(serviceInfo){
         .flatten(true)
         .value();
 
-      bulkES({body: esInput});
+      resultsForES.push(esInput);
 
       //console.log('Added ' + serviceName + ' streams to database for page: ' + page);
       return cb();
@@ -216,9 +218,54 @@ var generateFetchFunction = function(serviceInfo){
           });
         }, waitBetweenAsyncCalls * i)
       }, function (err) {
+
+        var addESResults = function(){
+
+          try {
+            ping({
+            // ping usually has a 3000ms timeout
+            requestTimeout: 30000,
+            timeout: 30000,
+
+            // undocumented params are appended to the query string
+            hello: "elasticsearch!"
+            });
+            console.log('ELASTIC: All is well');
+          } catch (error) {
+            console.trace('ELASTIC: elasticsearch cluster is down!');
+            console.error(error);
+            return
+          }
+
+          resultsForES = _.flatten(resultsForES, true);
+
+          console.log('Adding ' + resultsForES.length / 2 + ' streams to ES for ' + serviceName);
+
+          try {
+            bulkES({
+              body: resultsForES,
+              timeout: 90000,
+              requestTimeout: 90000
+            });
+
+            console.log('ES streams added for ' + serviceName);
+
+          } catch (e) {
+            console.error('Failed to add streams to ES for ' + serviceName);
+            console.error(e);
+          }
+
+        };
+
         console.log('Finish async ' + serviceName + ' calls');
         if (err) {
-          finalCallback(err);
+          try{
+            addESResults();
+          } catch (e){
+            return finalCallback(e)
+          }
+
+          return finalCallback(err);
         } else {
           console.log('Begin sync ' + serviceName + ' calls');
           currentPage += 1;
@@ -235,6 +282,7 @@ var generateFetchFunction = function(serviceInfo){
             });
             currentPage += 1;
           }
+
           if (allStreamsLoaded) {
             numPagesGuess = _.min(numPagesGuesses)
           } else {
@@ -243,9 +291,14 @@ var generateFetchFunction = function(serviceInfo){
           console.log('Finish sync ' + serviceName + ' calls');
           console.log(serviceName + ' API calls complete!');
           console.log((currentPage - 1) + ' ' + serviceName + ' pages loaded');
+          console.log(serviceName + ' results loaded into Mongo');
 
+          try{
+            addESResults();
+          } catch (e){
+            return finalCallback(e)
+          }
 
-          console.log(serviceName + ' results loaded');
           return finalCallback();
         }
       }
@@ -434,12 +487,10 @@ var jobWaitInSeconds = parseInt(process.env.JOB_WAIT) || 5 * 60; // default is e
 
 if (process.env.PROCESS_TYPE === 'stream_worker') { // if a worker process
   Meteor.startup(function () {
-    Meteor.setTimeout(function () {
-      while (true) {
-        runJobs();
-        Meteor._sleepForMs(jobWaitInSeconds * 1000);
-      }
-    });
+    while (true) {
+      runJobs();
+      Meteor._sleepForMs(jobWaitInSeconds * 1000);
+    }
   });
 } else if (process.env.PROCESS_TYPE === 'reset_es_worker') { // special worker that resets ES
   Meteor.startup(function () {

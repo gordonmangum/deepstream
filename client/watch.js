@@ -379,7 +379,7 @@ Template.watch_page.helpers({
     return Template.instance().mainStreamFlashPlayerId;
   },
   mainStreamInIFrame (){
-    return _.contains(['ustream', 'youtube'], Template.instance().activeStream.get().source);
+    return _.contains(['ustream', 'youtube', 'ml30'], Template.instance().activeStream.get().source);
   },
   mainStreamInFlashPlayer (){
     return _.contains(['bambuser', 'twitch'], Template.instance().activeStream.get().source);
@@ -503,7 +503,7 @@ var basicErrorHandler = function(err){
 var saveStreamTitle = function(template){
   streamTitle = $.trim(template.$('div.stream-title').text());
   Session.set('saveState', 'saving');
-  return Meteor.call('updateStreamTitle', template.data.shortId(), streamTitle, basicErrorHandler)
+  return Meteor.call('updateStreamTitle', template.data.shortId(), streamTitle, basicErrorHandler);
 };
 
 Template.watch_page.events({
@@ -513,7 +513,7 @@ Template.watch_page.events({
     } else {
       t.userControlledActiveStreamId.set(this._id);
     }
-    analytics.track('Click mini-stream to set main stream');
+    analytics.track('Click mini-stream to set main stream', trackingInfoFromPage());
   },
   'click .delete-stream' (e, t){
     var streamElement = t.$('[data-stream-id=' + this._id + ']');
@@ -615,7 +615,7 @@ Template.watch_page.events({
       ',left=' + left;
     window.open(url, 'facebook', opts);
     Meteor.call('countDeepstreamShare', this.shortId, 'email');
-    analytics.track('Click email share');
+    analytics.track('Click email share', trackingInfoFromPage());
   },
   'click .twitter-share-button' (e, t){
     var width = 575;
@@ -630,7 +630,7 @@ Template.watch_page.events({
       ',left=' + left;
     window.open(url, 'twitter', opts);
     Meteor.call('countDeepstreamShare', this.shortId, 'twitter');
-    analytics.track('Click twitter share');
+    analytics.track('Click twitter share', trackingInfoFromPage());
   },
   'click .facebook-share-button' (e, t){
     var width = 575;
@@ -645,7 +645,7 @@ Template.watch_page.events({
       ',left=' + left;
     window.open(url, 'facebook', opts);
     Meteor.call('countDeepstreamShare', this.shortId, 'facebook');
-    analytics.track('Click facebook share');
+    analytics.track('Click facebook share', trackingInfoFromPage());
   },
   'click .PiP-overlay' (e, t){
     clearCurrentContext();
@@ -661,11 +661,7 @@ Template.watch_page.events({
       var container = $('.context-area');
       container.animate({scrollTop: (contextToScrollTo.offset().top - container.offset().top + container.scrollTop() - offset)});
     })
-    analytics.track('Click context mini preview', {
-      label: this.type,
-      contentType: this.type,
-      contentSource: this.source
-    });
+    analytics.track('Click context mini preview', trackingInfoFromContext(this));
   }
 });
 
@@ -684,13 +680,13 @@ Template.stream_li.helpers({
     return Template.instance().data.allowPreview;
   },
   disablePreviewButton (){
-    return this.source === 'twitch';
+    return this.source === 'twitch' || this.source === 'ml30';
   }
 });
 
 Template.stream_li.events({
   'click .preview-stream' (e, t){
-    analytics.track('Click preview mini-stream');
+    analytics.track('Click preview mini-stream', trackingInfoFromPage());
     return t.previewMode.set(true);
   }
 });
@@ -709,12 +705,12 @@ Template.context_browser_area.helpers({
 
 Template.context_browser_area.events({
   'click .show-timeline'(){
-    analytics.track('Click show timeline');
+    analytics.track('Click show timeline', trackingInfoFromPage());
     Session.set('showTimeline', true);
     Session.set('activeContextId', null);
   },
   'click .show-context-browser'(){
-    analytics.track('Click show context browser');
+    analytics.track('Click show context browser', trackingInfoFromPage());
     Session.set('showTimeline', false);
     setTimeout(() => { // need to wait till display has switched back to context
       updateActiveContext();
@@ -802,12 +798,7 @@ Template.context_browser.events({
     }
   },
   'click .list-item-context-section' (e, t) {
-    analytics.track('Click context section in list mode', {
-      label: this.type,
-      contentType: this.type,
-      contentSource: this.source,
-      id: this._id
-    });
+    analytics.track('Click context section in list mode', trackingInfoFromContext(this));
   },
   'click .context-section .clickable' (e, t){
 

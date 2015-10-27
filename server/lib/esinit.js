@@ -6,11 +6,11 @@ esClient = new ES.Client({
 });
 
 
-var ping = Meteor.wrapAsync(esClient.ping, esClient);
+ping = Meteor.wrapAsync(esClient.ping, esClient);
 
 ping({
   // ping usually has a 3000ms timeout
-  requestTimeout: Infinity,
+  requestTimeout: 30000,
 
   // undocumented params are appended to the query string
   hello: "elasticsearch!"
@@ -115,8 +115,7 @@ resetES = function () {
     "body": {
       "stream": {
         "_ttl": { // if ttl works we don't need timestamp because the documents will be deleted automatically
-          "enabled": true,
-          "default": "3m"
+          "enabled": true
         },
         "properties": {
           "title": {
