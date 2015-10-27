@@ -56,11 +56,7 @@
 
 
 .watch{
-<<<<<<< HEAD
   background-color: @watch-background-color;
-  height: 800px;
-=======
->>>>>>> master
   .stream-title{
     @height: 42px;
     display: inline-block;
