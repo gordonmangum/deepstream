@@ -218,9 +218,28 @@ var generateFetchFunction = function(serviceInfo){
           });
         }, waitBetweenAsyncCalls * i)
       }, function (err) {
+
+        var addESResults = function(){
+          resultsForES = _.flatten(resultsForES, true);
+
+          console.log('Adding ' + resultsForES.length / 2 + ' streams to ES for ' + serviceName);
+
+          bulkES({
+            body: resultsForES,
+            timeout: 90000,
+            requestTimeout: 90000
+          });
+        };
+
         console.log('Finish async ' + serviceName + ' calls');
         if (err) {
-          finalCallback(err);
+          try{
+            addESResults();
+          } catch (e){
+            return finalCallback(e)
+          }
+
+          return finalCallback(err);
         } else {
           console.log('Begin sync ' + serviceName + ' calls');
           currentPage += 1;
@@ -238,16 +257,6 @@ var generateFetchFunction = function(serviceInfo){
             currentPage += 1;
           }
 
-          resultsForES = _.flatten(resultsForES, true);
-
-          console.log('Adding ' + resultsForES.length / 2 + ' streams to ES for ' + serviceName);
-
-          bulkES({
-            body: resultsForES,
-            timeout: 90000,
-            requestTimeout: 90000
-          });
-
           if (allStreamsLoaded) {
             numPagesGuess = _.min(numPagesGuesses)
           } else {
@@ -256,9 +265,14 @@ var generateFetchFunction = function(serviceInfo){
           console.log('Finish sync ' + serviceName + ' calls');
           console.log(serviceName + ' API calls complete!');
           console.log((currentPage - 1) + ' ' + serviceName + ' pages loaded');
+          console.log(serviceName + ' results loaded into Mongo');
 
+          try{
+            addESResults();
+          } catch (e){
+            return finalCallback(e)
+          }
 
-          console.log(serviceName + ' results loaded');
           return finalCallback();
         }
       }
