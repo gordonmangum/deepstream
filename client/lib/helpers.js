@@ -306,3 +306,21 @@ window.updateActiveContext = _.throttle(unthrottledUpdateActiveContext, 50, {lea
 window.isMobile = function(){
   return (Meteor.Device.isPhone()) && !Meteor.Device.isBot()
 };
+
+window.trackingInfoFromPage = function () {
+  var currentRoute = FlowRouter.current();
+  return {
+    currentRouteName: currentRoute.route.name,
+    currentRoutePath: currentRoute.path
+  }
+};
+
+window.trackingInfoFromContext = function (context) {
+  return _.extend({
+    label: context.type,
+    contentType: context.type,
+    contentSource: context.source,
+    id: context._id,
+    streamShortId: context.streamShortId
+  }, trackingInfoFromPage())
+};
