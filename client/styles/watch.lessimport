@@ -238,7 +238,7 @@
 .left-section{
   height: 100%;
   float: left;
-  width: calc(100% ~"-" @right-section-width);
+  max-width: calc(100% ~"-" @right-section-width);
 
   .footer-section{
     padding-top: 10px;
