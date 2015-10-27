@@ -229,6 +229,8 @@ var generateFetchFunction = function(serviceInfo){
             timeout: 90000,
             requestTimeout: 90000
           });
+          console.log('ES streams added for ' + serviceName);
+
         };
 
         console.log('Finish async ' + serviceName + ' calls');
