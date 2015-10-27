@@ -680,7 +680,7 @@ Template.stream_li.helpers({
     return Template.instance().data.allowPreview;
   },
   disablePreviewButton (){
-    return this.source === 'twitch';
+    return this.source === 'twitch' || this.source === 'ml30';
   }
 });
 
