@@ -241,12 +241,19 @@ var generateFetchFunction = function(serviceInfo){
 
           console.log('Adding ' + resultsForES.length / 2 + ' streams to ES for ' + serviceName);
 
-          bulkES({
-            body: resultsForES,
-            timeout: 90000,
-            requestTimeout: 90000
-          });
-          console.log('ES streams added for ' + serviceName);
+          try {
+            bulkES({
+              body: resultsForES,
+              timeout: 90000,
+              requestTimeout: 90000
+            });
+
+            console.log('ES streams added for ' + serviceName);
+
+          } catch (e) {
+            console.error('Failed to add streams to ES for ' + serviceName);
+            console.error(error);
+          }
 
         };
 
