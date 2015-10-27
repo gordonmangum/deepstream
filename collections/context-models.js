@@ -423,7 +423,7 @@ Stream = (function (_super) {
       case 'twitch':
         return "http://static-cdn.jtvnw.net/previews-ttv/live_user_" + this.reference.channelName + "-320x180.jpg";
       case 'ml30':
-        return "http://www.media.mit.edu/themes/newmlx/images/media_lab_logo_website.jpg";
+        return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/static/MIT_ML_Logo_white';
     }
   };
 
@@ -438,7 +438,7 @@ Stream = (function (_super) {
       case 'twitch':
         return "http://static-cdn.jtvnw.net/previews-ttv/live_user_" + this.reference.channelName + "-80x45.jpg";
       case 'ml30':
-        return "http://www.media.mit.edu/themes/newmlx/images/media_lab_logo_website.jpg";
+        return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/static/MIT_ML_Logo_white';
     }
   };
 
