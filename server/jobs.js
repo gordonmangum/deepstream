@@ -252,7 +252,7 @@ var generateFetchFunction = function(serviceInfo){
 
           } catch (e) {
             console.error('Failed to add streams to ES for ' + serviceName);
-            console.error(error);
+            console.error(e);
           }
 
         };
