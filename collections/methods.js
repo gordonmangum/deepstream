@@ -301,6 +301,19 @@ Meteor.methods({
 
     if(!deepstream.firstOnAirAt){
       setObject.firstOnAirAt = new Date;
+      if(Meteor.isServer){
+        var sendEmail = process.env.SEND_PUBLISH_NOTICE_TO || Meteor.settings.SEND_PUBLISH_NOTICE_TO;
+        if (sendEmail){
+          var currentUser = Meteor.user();
+          Email.send({
+            to: sendEmail,
+            from: 'noreply@example.com',
+            subject: 'New DeepStream Published: ' + title,
+            text: '"' + title + '"' + ' published at ' + new Date + ' by user ' + currentUser.username + ' (' + currentUser.profile.name + ')'
+          })
+        }
+      }
+
     }
 
     if(title){ // if title, description included

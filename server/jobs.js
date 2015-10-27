@@ -25,6 +25,9 @@ var dstObject = {
 
 var defaultYear = 2018;
 
+var insertES = Meteor.wrapAsync(esClient.create, esClient);
+var bulkES = Meteor.wrapAsync(esClient.bulk, esClient);
+
 var convertUStreamDateToUTC = function(ustreamDateString){
   var proposedDate = new Date(ustreamDateString + ' PDT'); // assume PDT to start
   var year = proposedDate.getFullYear();
@@ -49,11 +52,12 @@ var servicesToFetch = [
     initialPagesGuess: 60,
     guessBias: 1,
     maxPages: parseInt(process.env.MAX_USTREAM_PAGES) || parseInt(Meteor.settings.MAX_USTREAM_PAGES) || 1000,
-    asyncWaitTime: 10,
+    asyncWaitTime: 20,
     mapFn (doc) {
+      var username = doc.user.userName;
       _.extend(doc, {
         _streamSource: 'ustream',
-        username: doc.user.userName,
+        username: username,
         creationDate: convertUStreamDateToUTC(doc.createdAt),
         lastStreamedAt: convertUStreamDateToUTC(doc.lastStreamedAt),
         currentViewers: parseInt(doc.viewersNow),
@@ -63,7 +67,7 @@ var servicesToFetch = [
         _es: {
           title: doc.title,
           description: cheerio.load('<body>' + doc.description + '</body>')('body').text(), // parse html and grab text
-          broadcaster: doc.username,
+          broadcaster: username,
           tags: []
         }
       });
@@ -80,6 +84,7 @@ var servicesToFetch = [
     maxPages: parseInt(process.env.MAX_BAMBUSER_PAGES) || parseInt(Meteor.settings.MAX_BAMBUSER_PAGES) || 1000,
     asyncWaitTime: 100,
     mapFn (doc) {
+
       _.extend(doc, {
         _streamSource: 'bambuser',
         id: doc.vid,
@@ -92,7 +97,7 @@ var servicesToFetch = [
           title: doc.title,
           description: null,
           broadcaster: doc.username,
-          keywords: doc.tags
+          tags: doc.tags
         }
       });
       delete doc.length; // this only causes problems
@@ -143,6 +148,8 @@ var generateFetchFunction = function(serviceInfo){
 
     var currentPage;
 
+    var resultsForES = [];
+
     var streamInsertCallback = function (error, result, page, cb) {
       //console.log('Received ' + serviceName + ' response for page: ' + page);
 
@@ -158,7 +165,35 @@ var generateFetchFunction = function(serviceInfo){
         numPagesGuesses.push(page - 1 + guessBias);
         return cb();
       }
-      Streams.batchInsert(_.map(result.items, serviceInfo.mapFn));
+      var mapResults = _.map(result.items, serviceInfo.mapFn);
+      Streams.batchInsert(mapResults);
+
+      //elasticsearch
+      
+      var esInput = _.chain(mapResults)
+        .map(function(result){
+          return [
+            {
+              create: {
+                _index: ES_CONSTANTS.index,
+                _type: "stream",
+                _ttl: process.env.ELASTICSEARCH_TTL || Meteor.settings.ELASTICSEARCH_TTL || '3m'
+              }
+            },
+            {
+              doc: result,
+              source: result._streamSource,
+              broadcaster: result._es.broadcaster,
+              description: result._es.description,
+              tags: result._es.tags,
+              title: result._es.title,
+            }
+            ]
+          })
+        .flatten(true)
+        .value();
+
+      resultsForES.push(esInput);
 
       //console.log('Added ' + serviceName + ' streams to database for page: ' + page);
       return cb();
@@ -183,9 +218,54 @@ var generateFetchFunction = function(serviceInfo){
           });
         }, waitBetweenAsyncCalls * i)
       }, function (err) {
+
+        var addESResults = function(){
+
+          try {
+            ping({
+            // ping usually has a 3000ms timeout
+            requestTimeout: 30000,
+            timeout: 30000,
+
+            // undocumented params are appended to the query string
+            hello: "elasticsearch!"
+            });
+            console.log('ELASTIC: All is well');
+          } catch (error) {
+            console.trace('ELASTIC: elasticsearch cluster is down!');
+            console.error(error);
+            return
+          }
+
+          resultsForES = _.flatten(resultsForES, true);
+
+          console.log('Adding ' + resultsForES.length / 2 + ' streams to ES for ' + serviceName);
+
+          try {
+            bulkES({
+              body: resultsForES,
+              timeout: 90000,
+              requestTimeout: 90000
+            });
+
+            console.log('ES streams added for ' + serviceName);
+
+          } catch (e) {
+            console.error('Failed to add streams to ES for ' + serviceName);
+            console.error(e);
+          }
+
+        };
+
         console.log('Finish async ' + serviceName + ' calls');
         if (err) {
-          finalCallback(err);
+          try{
+            addESResults();
+          } catch (e){
+            return finalCallback(e)
+          }
+
+          return finalCallback(err);
         } else {
           console.log('Begin sync ' + serviceName + ' calls');
           currentPage += 1;
@@ -202,6 +282,7 @@ var generateFetchFunction = function(serviceInfo){
             });
             currentPage += 1;
           }
+
           if (allStreamsLoaded) {
             numPagesGuess = _.min(numPagesGuesses)
           } else {
@@ -210,9 +291,14 @@ var generateFetchFunction = function(serviceInfo){
           console.log('Finish sync ' + serviceName + ' calls');
           console.log(serviceName + ' API calls complete!');
           console.log((currentPage - 1) + ' ' + serviceName + ' pages loaded');
+          console.log(serviceName + ' results loaded into Mongo');
 
+          try{
+            addESResults();
+          } catch (e){
+            return finalCallback(e)
+          }
 
-          console.log(serviceName + ' results loaded');
           return finalCallback();
         }
       }
@@ -324,6 +410,7 @@ var updateStreamStatus = function (deepstream) {
 var cycleStreamsCollection = function () {
   Streams.update({}, {$inc: {oneIfCurrent: 1}}, {multi: true}); // recent batch is now loaded
   Streams.remove({oneIfCurrent: {$gt: 1}}); // remove previous batch
+  //esClient.indices.flush({index: Meteor.settings.ELASTICSEARCH_INDEX});
 };
 
 var updateStreamStatuses = function () {
@@ -392,6 +479,7 @@ var runJobs = function () {
   });
 
   console.log('Total time to run jobs: ' + ((Date.now() - startTime) / 1000) + ' seconds');
+
 };
 
 var jobWaitInSeconds = parseInt(process.env.JOB_WAIT) || 5 * 60; // default is every 5 minutes
@@ -399,15 +487,21 @@ var jobWaitInSeconds = parseInt(process.env.JOB_WAIT) || 5 * 60; // default is e
 
 if (process.env.PROCESS_TYPE === 'stream_worker') { // if a worker process
   Meteor.startup(function () {
-    Meteor.setTimeout(function () {
-      while (true) {
-        runJobs();
-        Meteor._sleepForMs(jobWaitInSeconds * 1000)
-      }
-    });
+    while (true) {
+      runJobs();
+      Meteor._sleepForMs(jobWaitInSeconds * 1000);
+    }
+  });
+} else if (process.env.PROCESS_TYPE === 'reset_es_worker') { // special worker that resets ES
+  Meteor.startup(function () {
+    resetES();
+    process.exit();
   });
 } else if (process.env.NODE_ENV === 'development') { // however, in developement, run jobs on startup
   Meteor.startup(function () {
-    Meteor.setTimeout(runJobs)
+    Meteor.setTimeout(function(){
+      resetES();
+      runJobs();
+    });
   });
 }
