@@ -52,7 +52,7 @@ var servicesToFetch = [
     initialPagesGuess: 60,
     guessBias: 1,
     maxPages: parseInt(process.env.MAX_USTREAM_PAGES) || parseInt(Meteor.settings.MAX_USTREAM_PAGES) || 1000,
-    asyncWaitTime: 10,
+    asyncWaitTime: 20,
     mapFn (doc) {
       var username = doc.user.userName;
       _.extend(doc, {
