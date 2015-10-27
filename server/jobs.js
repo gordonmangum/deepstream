@@ -220,6 +220,23 @@ var generateFetchFunction = function(serviceInfo){
       }, function (err) {
 
         var addESResults = function(){
+
+          try {
+            ping({
+            // ping usually has a 3000ms timeout
+            requestTimeout: 30000,
+            timeout: 30000,
+
+            // undocumented params are appended to the query string
+            hello: "elasticsearch!"
+            });
+            console.log('ELASTIC: All is well');
+          } catch (error) {
+            console.trace('ELASTIC: elasticsearch cluster is down!');
+            console.error(error);
+            return
+          }
+
           resultsForES = _.flatten(resultsForES, true);
 
           console.log('Adding ' + resultsForES.length / 2 + ' streams to ES for ' + serviceName);

@@ -6,11 +6,11 @@ esClient = new ES.Client({
 });
 
 
-var ping = Meteor.wrapAsync(esClient.ping, esClient);
+ping = Meteor.wrapAsync(esClient.ping, esClient);
 
 ping({
   // ping usually has a 3000ms timeout
-  requestTimeout: Infinity,
+  requestTimeout: 30000,
 
   // undocumented params are appended to the query string
   hello: "elasticsearch!"
