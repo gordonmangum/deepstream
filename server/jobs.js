@@ -148,6 +148,8 @@ var generateFetchFunction = function(serviceInfo){
 
     var currentPage;
 
+    var resultsForES = [];
+
     var streamInsertCallback = function (error, result, page, cb) {
       //console.log('Received ' + serviceName + ' response for page: ' + page);
 
@@ -191,14 +193,7 @@ var generateFetchFunction = function(serviceInfo){
         .flatten(true)
         .value();
 
-      console.log('Adding ' + mapResults.length + ' streams to ES for ' + serviceName + ' page: ' + page);
-
-
-      bulkES({
-        body: esInput,
-        timeout: 90000,
-        requestTimeout: 90000
-      });
+      resultsForES.push(esInput);
 
       //console.log('Added ' + serviceName + ' streams to database for page: ' + page);
       return cb();
@@ -242,6 +237,17 @@ var generateFetchFunction = function(serviceInfo){
             });
             currentPage += 1;
           }
+
+          resultsForES = _.flatten(resultsForES, true);
+
+          console.log('Adding ' + resultsForES.length / 2 + ' streams to ES for ' + serviceName);
+
+          bulkES({
+            body: resultsForES,
+            timeout: 90000,
+            requestTimeout: 90000
+          });
+
           if (allStreamsLoaded) {
             numPagesGuess = _.min(numPagesGuesses)
           } else {
