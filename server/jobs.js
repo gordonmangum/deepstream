@@ -461,12 +461,10 @@ var jobWaitInSeconds = parseInt(process.env.JOB_WAIT) || 5 * 60; // default is e
 
 if (process.env.PROCESS_TYPE === 'stream_worker') { // if a worker process
   Meteor.startup(function () {
-    Meteor.setTimeout(function () {
-      while (true) {
-        runJobs();
-        Meteor._sleepForMs(jobWaitInSeconds * 1000);
-      }
-    });
+    while (true) {
+      runJobs();
+      Meteor._sleepForMs(jobWaitInSeconds * 1000);
+    }
   });
 } else if (process.env.PROCESS_TYPE === 'reset_es_worker') { // special worker that resets ES
   Meteor.startup(function () {
