@@ -248,8 +248,10 @@
     position: relative;
     overflow-y: hidden;
     height: @footer-section-height;
+    .transparency-mode-only(height, @footer-section-height - 25px);
     display: flex;
     flex-direction: row;
+
     .streams-list{
       flex: 1;
     }
@@ -272,6 +274,7 @@
         }
       }
     }
+
   }
 }
 
@@ -357,7 +360,7 @@
     height: @top-row-height + @second-row-height - @margin-top - @context-browser-header-row-height;
     margin-left: @card-column-width;
     &.visible{
-      background-color: @context-background-color;
+      .transparency-aware-fade(background-color, @context-background-color);
     }
     width: calc(100% ~'-' (@card-column-width + @contextAreaPadding*2));
 
@@ -365,7 +368,7 @@
   .context-timeline-switcher {
     height: @context-browser-header-row-height;
     margin-left: @card-column-width;
-    background-color: @context-background-color;
+    .transparency-aware-fade(background-color, @context-background-color);
     width: calc(100%~'-'(@card-column-width + @contextAreaPadding * 2));
     margin-bottom: 10px;
     display: flex;
@@ -648,7 +651,7 @@
   }
   .context-section{
     position: relative;
-    background-color: @context-background-color;
+    .transparency-aware-fade(background-color, @context-background-color);
     padding: 10px;
     &:hover{
       .delete-context, .hover-icon{
@@ -804,7 +807,7 @@
   .context-section{
     .padding-sides(10px);
     text-align: left;
-    background-color: @context-background-color;
+    .transparency-aware-fade(background-color, @context-background-color);
   }
 
   @topPaddingHeight: 36px;
@@ -874,7 +877,7 @@
 
 .add-new-context-row, .search-section-title{
   margin-right: @contextAreaPadding * 2;
-  background-color: @context-background-color;
+  .transparency-aware-fade(background-color, @context-background-color);
   margin-bottom: 15px;
   height: @context-browser-header-row-height;
   line-height: @context-browser-header-row-height;
@@ -1029,7 +1032,7 @@
   height: 135px;
   margin-bottom: 0px;
   margin-left: @card-column-width;
-  background-color: @context-background-color;
+  .transparency-aware-fade(background-color, @context-background-color);
   .curator-info{
     display: inline-block;
     font-weight: 500;
@@ -1087,6 +1090,22 @@
       }
     }
   }
+  .transparency-button{
+    width: 53px;
+    height: 45px;
+    text-align: center;
+    padding: 0;
+    background-color: @background-color;
+    .transparency-mode-only(background-color, @dark-transparent-color);
+    svg{
+      width: 44px;
+      height: 33px;
+    }
+    position: absolute;
+    left: -61px;
+    bottom: 76px;
+  }
+
 }
 
 .edit-menu{
@@ -1337,7 +1356,7 @@
 }
 
 .annotation-section{
-  background-color: @context-background-color;
+  .transparency-aware-fade(background-color, @context-background-color);
   position: relative;
   display: flex;
   flex-direction: row;

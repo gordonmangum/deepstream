@@ -61,7 +61,7 @@ i.loading-icon{
 
 .unfavorite {
   .fg {
-    fill: @favorite-color !important;;
+    fill: @favorite-color !important;
   }
 }
 

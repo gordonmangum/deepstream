@@ -13,7 +13,7 @@
 
 @background-color: @black-color;
 @alt-background-color: @black-color;
-@context-background-color: fade(@dark-medium-color, 80%);
+@context-background-color: @dark-medium-color;
 @watch-background-color: @black-color;
 
 @annotation-color: @context-background-color;
@@ -57,6 +57,13 @@ html {
   @{property}: @value;
   &.transparency-mode{
     @{property}: transparent;
+  }
+}
+
+.transparency-aware-fade(@property; @value){
+  @{property}: @value;
+  &.transparency-mode{
+    @{property}: fade(@value, 80%);
   }
 }
 

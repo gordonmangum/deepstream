@@ -28,9 +28,6 @@ Meteor.startup(function(){
   $(window).resize(throttledResize);
 });
 
-
-Session.set('transparencyMode', true);
-
 Meteor.startup(function(){
   Tracker.autorun(function(){
     if (Session.get('transparencyMode')){

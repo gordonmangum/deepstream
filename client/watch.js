@@ -679,6 +679,13 @@ Template.watch_page.events({
       container.animate({scrollTop: (contextToScrollTo.offset().top - container.offset().top + container.scrollTop() - offset)});
     })
     analytics.track('Click context mini preview', trackingInfoFromContext(this));
+  },
+  'click .transparency-button' (e, t){
+    if(Session.get('transparencyMode')){
+      Session.set('transparencyMode', false);
+    } else {
+      Session.set('transparencyMode', true);
+    }
   }
 });
 

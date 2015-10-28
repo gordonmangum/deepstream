@@ -158,7 +158,9 @@
         </div>
 
         <div class="curator-menu">
-            <div class="curator-info">
+          <button class="transparency-button">{{> transparency_icon}}</button>
+
+          <div class="curator-info">
               <div class="curator-pic">
                 {{> default_user_pic}}
               </div>
@@ -192,6 +194,7 @@
           {{/if}}
 
         </div>
+
       </div>
 
     </div>
@@ -371,7 +374,7 @@
 </template>
 
 <template name="context_browser_area">
-  {{ > context_card_column}}
+  {{> context_card_column}}
   <div class="context-timeline-switcher">
     <button class="show-context-browser {{#unless showTimeline}}active{{/unless}}">
       <div class="rectangles">
