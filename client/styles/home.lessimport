@@ -549,10 +549,6 @@ div.action-items {
     .action-button;
   }
 
-  .create-deepstream {
-    .action-button;
-  }
-
   li {
     height: @height;
     @media @not-mobile{

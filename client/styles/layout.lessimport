@@ -63,13 +63,19 @@ html {
 .transparency-aware-fade(@property; @value){
   @{property}: @value;
   &.transparency-mode{
-    @{property}: fade(@value, 80%);
+    @{property}: fade(@value, 70%);
   }
 }
 
 .transparency-mode-only(@property; @value){
   &.transparency-mode{
     @{property}: @value;
+  }
+}
+
+.transparency-rounded{
+  &.transparency-mode {
+    border-radius: 5px;
   }
 }
 

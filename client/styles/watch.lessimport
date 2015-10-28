@@ -361,6 +361,7 @@
     margin-left: @card-column-width;
     &.visible{
       .transparency-aware-fade(background-color, @context-background-color);
+      .transparency-rounded;
     }
     width: calc(100% ~'-' (@card-column-width + @contextAreaPadding*2));
 
@@ -369,6 +370,7 @@
     height: @context-browser-header-row-height;
     margin-left: @card-column-width;
     .transparency-aware-fade(background-color, @context-background-color);
+    .transparency-rounded;
     width: calc(100%~'-'(@card-column-width + @contextAreaPadding * 2));
     margin-bottom: 10px;
     display: flex;
@@ -652,6 +654,7 @@
   .context-section{
     position: relative;
     .transparency-aware-fade(background-color, @context-background-color);
+    .transparency-rounded;
     padding: 10px;
     &:hover{
       .delete-context, .hover-icon{
@@ -808,6 +811,7 @@
     .padding-sides(10px);
     text-align: left;
     .transparency-aware-fade(background-color, @context-background-color);
+    .transparency-rounded;
   }
 
   @topPaddingHeight: 36px;
@@ -878,6 +882,7 @@
 .add-new-context-row, .search-section-title{
   margin-right: @contextAreaPadding * 2;
   .transparency-aware-fade(background-color, @context-background-color);
+  .transparency-rounded;
   margin-bottom: 15px;
   height: @context-browser-header-row-height;
   line-height: @context-browser-header-row-height;
@@ -1033,6 +1038,7 @@
   margin-bottom: 0px;
   margin-left: @card-column-width;
   .transparency-aware-fade(background-color, @context-background-color);
+  .transparency-rounded;
   .curator-info{
     display: inline-block;
     font-weight: 500;
@@ -1095,7 +1101,9 @@
     height: 45px;
     text-align: center;
     padding: 0;
+    padding-top: 3px;
     background-color: @background-color;
+    .transparency-rounded;
     .transparency-mode-only(background-color, @dark-transparent-color);
     svg{
       width: 44px;
@@ -1222,6 +1230,9 @@
 .action-items{
   font-size: 14px;
   font-weight: normal;
+  button{
+    .transparency-rounded;
+  }
 }
 
 .bottom-overlay{
@@ -1357,6 +1368,7 @@
 
 .annotation-section{
   .transparency-aware-fade(background-color, @context-background-color);
+  .transparency-rounded;
   position: relative;
   display: flex;
   flex-direction: row;
