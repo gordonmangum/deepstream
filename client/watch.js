@@ -683,8 +683,10 @@ Template.watch_page.events({
   'click .transparency-button' (e, t){
     if(Session.get('transparencyMode')){
       Session.set('transparencyMode', false);
+      analytics.track('Click transparency off button', trackingInfoFromPage());
     } else {
       Session.set('transparencyMode', true);
+      analytics.track('Click transparency on button', trackingInfoFromPage());
     }
   }
 });
