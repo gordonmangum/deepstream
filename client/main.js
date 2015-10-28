@@ -28,6 +28,16 @@ Meteor.startup(function(){
   $(window).resize(throttledResize);
 });
 
+Meteor.startup(function(){
+  Tracker.autorun(function(){
+    if (Session.get('transparencyMode')){
+      $("body").addClass("transparency-mode")
+    } else {
+      $("body").removeClass("transparency-mode")
+    }
+  })
+})
+
 //window.trackingInfoFromStory = function(story){
 //  return _.chain(story)
 //    .pick([

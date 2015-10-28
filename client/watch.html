@@ -5,11 +5,11 @@
 
   {{#with thisDeepstream}}
 
-    <div class="watch {{#if onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}}" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
+    <div class="watch {{#if onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}} {{#if transparencyMode}}transparency-mode{{/if}}" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
       <div class="left-section" style="width: {{mainStreamMaxWidth 20}}px;">
 
         <div class="header-section">
-          <div class="top-row">
+          <div class="top-row" style="{{#if transparencyMode}} width: {{windowWidth}}px;{{/if}}">
             {{> logo_title}}
           </div>
           <div class="second-row" style="max-width: {{mainStreamMaxWidth}}px;">
@@ -30,13 +30,13 @@
             {{#if streamUrl}}
               <div class="main-stream-container {{#if PiP}}PiP{{/if}}">
                 <iframe id="{{mainStreamIFrameId}}"
-                        class="main-stream-iframe {{#unless mainStreamInIFrame}}hide{{/unless}}"
+                        class="main-stream-iframe {{#unless mainStreamInIFrame}}hide{{/unless}} {{#if PiP}}PiP{{/if}}"
                         src="{{#if mainStreamInIFrame}}{{streamUrl}}{{/if}}" frameborder="0"
                         allowfullscreen></iframe>
                 {{#if mainStreamInFlashPlayer}}
                   {{#if bambuserPlayer}}
                     <object id="{{mainStreamFlashPlayerId}}" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-                            class="main-stream-flash-object">
+                            class="main-stream-flash-object {{#if PiP}}PiP{{/if}}">
                       <embed name="{{mainStreamFlashPlayerId}}" src="//static.bambuser.com/r/player.swf"
                              type="application/x-shockwave-flash" flashvars="{{mainStreamFlashVars}}" allowfullscreen="true"
                              allowscriptaccess="always" wmode="opaque"/>
@@ -158,7 +158,9 @@
         </div>
 
         <div class="curator-menu">
-            <div class="curator-info">
+          <button class="transparency-button">{{> transparency_icon}}</button>
+
+          <div class="curator-info">
               <div class="curator-pic">
                 {{> default_user_pic}}
               </div>
@@ -192,6 +194,7 @@
           {{/if}}
 
         </div>
+
       </div>
 
     </div>
@@ -371,7 +374,7 @@
 </template>
 
 <template name="context_browser_area">
-  {{ > context_card_column}}
+  {{> context_card_column}}
   <div class="context-timeline-switcher">
     <button class="show-context-browser {{#unless showTimeline}}active{{/unless}}">
       <div class="rectangles">

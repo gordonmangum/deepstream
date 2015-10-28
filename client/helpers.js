@@ -66,12 +66,16 @@ Handlebars.registerHelper("isMobile", function() {
   return window.isMobile();
 });
 
+Handlebars.registerHelper("transparencyMode", function() {
+  return Session.get('transparencyMode');
+});
+
 getMainStreamHeight = function(offset){
   return Session.get("windowHeight") - 60 - 65 - 130 - 20 + (offset || 0);
 };
 
 getMainStreamMaxWidth = function(offset){
-  return getMainStreamHeight() * 16 / 9 + (offset || 0);
+  return Session.get("transparencyMode") ?  Session.get("windowWidth") - 400 : getMainStreamHeight() * 16 / 9 + (offset || 0);
 };
 
 Handlebars.registerHelper("mainStreamMaxWidth", function(offset) {
