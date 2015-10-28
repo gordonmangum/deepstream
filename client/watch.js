@@ -288,8 +288,6 @@ _.each(_.keys(Template), function(templateKey) {
 });
 
 Template.watch_page.onRendered(function(){
-
-  console.log('lalalalalalal')
   var that = this;
 
   this.mainPlayerYTApiActivated = false;
