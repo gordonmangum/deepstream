@@ -75,7 +75,7 @@ getMainStreamHeight = function(offset){
 };
 
 getMainStreamMaxWidth = function(offset){
-  return getMainStreamHeight() * 16 / 9 + (offset || 0);
+  return Session.get("transparencyMode") ?  Session.get("windowWidth") - 400 : getMainStreamHeight() * 16 / 9 + (offset || 0);
 };
 
 Handlebars.registerHelper("mainStreamMaxWidth", function(offset) {

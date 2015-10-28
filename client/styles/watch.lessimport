@@ -67,6 +67,7 @@
     width: calc(100% ~"-" (@left-margin + @live-indicator-width));
     max-width: calc(100% ~"-" ( @left-margin + @live-indicator-width));
     overflow: hidden;
+    .transparency-mode-only(text-shadow, 2px 2px 2px darken(@light-text-color,60%));
   }
   .streams-list{
     white-space: nowrap;
@@ -183,6 +184,7 @@
         }
         position: relative;
         padding: 0;
+        .transparency-mode-only(background-color, @black-color);
 
       }
       &:not(.placeholder){
@@ -252,8 +254,10 @@
       flex: 1;
     }
 
+
     .stream-stats-and-share{
       padding-left: 30px;
+      .transparency-mode-only(text-shadow, 1px 1px 1px darken(@light-text-color,60%));
       .inverted-icon-colors;
       .stream-stats{
         margin-top: 20px;
@@ -280,7 +284,8 @@
   }
   position: relative;
   display: inline-block;
-  //z-index: 1;
+  z-index: 1;
+  .transparency-mode-only(z-index, auto);
   &.PiP{
     z-index: inherit;
   }
@@ -324,7 +329,9 @@
   .opacity-transition;
   height: 100%;
   float: left;
+
   .transparency-aware(background-color, @alt-background-color);
+  .transparency-mode-only(float, right);
 
   display: inline-block;
   z-index: 10;
@@ -1246,6 +1253,7 @@
   font-weight: bold;
   position: relative;
   height: @second-row-height;
+  .transparency-mode-only(z-index, 1);
 }
 
 
@@ -1256,6 +1264,8 @@
   top: 95px;
   position: absolute;
   width: calc(100% ~"-" (32px));
+  .transparency-mode-only(text-shadow, 1px 1px 1px darken(@light-text-color,60%));
+
   .icon{
     position: absolute;
     //top: 15px;

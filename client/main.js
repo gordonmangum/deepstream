@@ -28,16 +28,16 @@ Meteor.startup(function(){
   $(window).resize(throttledResize);
 });
 
+
+Session.set('transparencyMode', true);
+
 Meteor.startup(function(){
   Tracker.autorun(function(){
     if (Session.get('transparencyMode')){
       $("body").addClass("transparency-mode")
-      $("body *").addClass("transparency-mode")
     } else {
       $("body").removeClass("transparency-mode")
-      $("body *").removeClass("transparency-mode")
     }
-
   })
 })
 

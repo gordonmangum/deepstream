@@ -272,6 +272,21 @@ Template.watch_page.onCreated(function () {
 
 });
 
+// add transparency-mode class to everything quick and dirtily
+_.each(_.keys(Template), function(templateKey) {
+  if(Blaze.isTemplate(Template[templateKey])){
+    Template[templateKey].onRendered(function(){
+      Tracker.autorun(() => {
+        if (Session.get('transparencyMode')){
+          $("*").addClass("transparency-mode")
+        } else {
+          $("*").removeClass("transparency-mode")
+        }
+      })
+    })
+  }
+});
+
 Template.watch_page.onRendered(function(){
 
   console.log('lalalalalalal')
