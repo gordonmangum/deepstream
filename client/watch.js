@@ -451,7 +451,7 @@ Template.watch_page.helpers({
     return this.creationStep == 'title_description';
   },
   showTutorial (){
-    return _.contains(['find_stream', 'add_cards', 'go_on_air'], this.creationStep)
+    return _.contains(['find_stream', 'add_cards', 'go_on_air'], this.creationStep) && Session.get('curateMode');
   },
   showRightSection (){
     return !soloOverlayContextModeActive() && (Session.get("curateMode") || !Session.get('reducedView'));
