@@ -11,8 +11,8 @@
 
 @top-row-color: @black-color;
 
-@background-color: transparent;//@black-color;
-@alt-background-color: transparent;//@black-color;
+@background-color: @black-color;
+@alt-background-color: @black-color;
 @context-background-color: fade(@dark-medium-color, 80%);
 @watch-background-color: @black-color;
 
@@ -45,14 +45,19 @@
 @hover-pill-color: #5f2d72;
 @inactive-pill-color: #462859;
 
-
-
 @horizontal-content-height: 300px;
 
 
 html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
+}
+
+.transparency-aware(@property; @value){
+  @{property}: @value;
+  &.transparency-mode{
+    @{property}: transparent;
+  }
 }
 
 .standard-icon-colors {
@@ -445,7 +450,7 @@ body {
   // font-family: 'Alegreya Sans' , sans-serif;
   margin: 0;
   color: @light-text-color;
-  background-color: @background-color;
+  .transparency-aware(background-color, @background-color);
 
   line-height: 23px;
   font-size: 15px;
@@ -637,7 +642,7 @@ div.twitter-section{
     background-color: inherit;
   }
   div.twitter-text-section {
-    background-color: @background-color;
+    .transparency-aware(background-color, @background-color);
     a {
       &:hover {
         color: @action-color;
@@ -738,6 +743,7 @@ div.text-content {
 
 .text-content{
   color: @light-text-color;
+  background-color: transparent;
   line-height: 20px;
 }
 

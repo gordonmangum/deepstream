@@ -56,7 +56,7 @@
 
 
 .watch{
-  background-color: @watch-background-color;
+  .transparency-aware(background-color, @watch-background-color);
   .stream-title{
     @height: 42px;
     display: inline-block;
@@ -307,11 +307,13 @@
 
 .main-stream-iframe, .main-stream-flash-object{
   .size-to-fit;
-  z-index: 0;
-  position: fixed;
-  top:@top-row-height;
-  left:0;
-  height: calc(100% ~'-' @top-row-height);
+  &.transparent-mode{
+    z-index: 0;
+    position: fixed;
+    top:@top-row-height;
+    left:0;
+    height: calc(100% ~'-' @top-row-height);
+  }
 }
 
 @contentIconWidth: 50px;
@@ -322,7 +324,8 @@
   .opacity-transition;
   height: 100%;
   float: left;
-  background-color: @alt-background-color;
+  .transparency-aware(background-color, @alt-background-color);
+
   display: inline-block;
   z-index: 10;
   width: @right-section-width;
@@ -484,7 +487,7 @@
     background-color: inherit;
     &.active, &:hover{
       &:not(:disabled){
-        background-color: @alt-background-color;
+        .transparency-aware(background-color, @alt-background-color);
         &:not(.stream-button) {
           .bg {
             stroke: @light-icon-color;
@@ -720,7 +723,9 @@
         text-align: right;
       }
       .annotation-section{
-        border-top: 5px solid @background-color;
+
+        .transparency-aware(background-color, 5px solid @background-color);
+
         width: calc(100% ~"+" 2 * @contextAreaPadding);
         margin-left: -@contextAreaPadding;
         margin-bottom: -@contextAreaPadding;

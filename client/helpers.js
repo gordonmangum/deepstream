@@ -66,6 +66,10 @@ Handlebars.registerHelper("isMobile", function() {
   return window.isMobile();
 });
 
+Handlebars.registerHelper("transparencyMode", function() {
+  return Session.get('transparencyMode');
+});
+
 getMainStreamHeight = function(offset){
   return Session.get("windowHeight") - 60 - 65 - 130 - 20 + (offset || 0);
 };
