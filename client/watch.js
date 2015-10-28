@@ -273,6 +273,8 @@ Template.watch_page.onCreated(function () {
 });
 
 Template.watch_page.onRendered(function(){
+
+  console.log('lalalalalalal')
   var that = this;
 
   this.mainPlayerYTApiActivated = false;

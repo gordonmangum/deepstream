@@ -307,7 +307,7 @@
 
 .main-stream-iframe, .main-stream-flash-object{
   .size-to-fit;
-  &.transparent-mode{
+  &.transparency-mode{
     z-index: 0;
     position: fixed;
     top:@top-row-height;
@@ -609,6 +609,7 @@
     background-color: transparent;
     z-index: 9999;
     position: absolute;
+    .transparency-mode-only(display, none);
   }
   .top-bar{
     .box-shadow(-4px 4px 12px 0px rgba(0,0,0,0.75));
