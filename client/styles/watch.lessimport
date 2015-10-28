@@ -56,7 +56,7 @@
 
 
 .watch{
-  .transparency-aware(background-color, @watch-background-color);
+  background-color: @watch-background-color;
   .stream-title{
     @height: 42px;
     display: inline-block;
@@ -315,7 +315,7 @@
 
 .main-stream-iframe, .main-stream-flash-object{
   .size-to-fit;
-  &.transparency-mode{
+  &.transparency-mode:not(.PiP){
     z-index: 0;
     position: fixed;
     top:@top-row-height;
