@@ -88,7 +88,7 @@ div.create-section.link-twitter{
 
 .create-section .text-result-container {
   textarea{
-    max-height: 350px;
+    height: 100%;
   }
   padding: 1px; // so textarea outline can be seen
 }
@@ -245,7 +245,7 @@ div.add-context {
 
   div.text-result-container {
     background-color: @medium-color;
-    max-height: calc(100% ~"-" @searchFormHeight ~"-" 40px);
+    height: calc(100% ~"-" @searchFormHeight ~"-" 40px);
     overflow-y: scroll;
   }
 
