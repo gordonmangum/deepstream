@@ -1083,6 +1083,9 @@
     .action-button;
     right: 5px;
   }
+  .return-to-curate{
+    animation: glow-action 1.6s ease infinite;
+  }
   .report-inappropriate-content{
     position: absolute;
     bottom: 5px;
