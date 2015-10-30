@@ -20,6 +20,8 @@ window.mainPlayer = {
       case 'twitch':
         this._twitchPlayer.playVideo();
         break;
+      case 'ml30':
+        break;
       default:
         throw new Meteor.Error('main player has no active stream source')
     }
@@ -37,6 +39,8 @@ window.mainPlayer = {
         break;
       case 'twitch':
         this._twitchPlayer.pauseVideo();
+        break;
+      case 'ml30':
         break;
       default:
         throw new Meteor.Error('main player has no active stream source')
@@ -56,6 +60,8 @@ window.mainPlayer = {
       case 'twitch':
         this._twitchPlayer.pauseVideo();
         break;
+      case 'ml30':
+        break;
       default:
         throw new Meteor.Error('main player has no active stream source')
     }
@@ -73,6 +79,9 @@ window.mainPlayer = {
         break;
       case 'twitch':
         this._twitchPlayer.mute();
+        break;
+      case 'ml30':
+        document.getElementById(Session.get('mainStreamIFrameId')).contentWindow.postMessage('mute', 'https://civic.mit.edu');
         break;
       default:
         throw new Meteor.Error('main player has no active stream source')
@@ -92,6 +101,9 @@ window.mainPlayer = {
       case 'twitch':
         this._twitchPlayer.unmute();
         break;
+      case 'ml30':
+        document.getElementById(Session.get('mainStreamIFrameId')).contentWindow.postMessage('unmute', 'https://civic.mit.edu');
+        break;
       default:
         throw new Meteor.Error('main player has no active stream source')
     }
@@ -109,6 +121,8 @@ window.mainPlayer = {
         break;
       case 'twitch':
         this._twitchPlayer.mute();
+        break;
+      case 'ml30':
         break;
       default:
         throw new Meteor.Error('main player has no active stream source')
@@ -137,6 +151,7 @@ Template.watch_page.onCreated(function () {
   }
 
   this.mainStreamIFrameId = Random.id(8);
+  Session.set('mainStreamIFrameId', this.mainStreamIFrameId);
   this.mainStreamFlashPlayerId = Random.id(8);
 
 
@@ -333,6 +348,8 @@ Template.watch_page.onRendered(function(){
           mainPlayer.activeStreamSource = 'bambuser';
         case 'twitch':
           mainPlayer.activeStreamSource = 'twitch';
+        case 'ml30':
+          mainPlayer.activeStreamSource = 'ml30';
       }
 
     }
