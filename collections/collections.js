@@ -430,7 +430,8 @@ Schema.Streams = new SimpleSchema({
         optional: true
       },
       tags: {
-        type: [String],
+        type: [Object],
+        blackbox: true,
         optional: true
       },
       username: {
