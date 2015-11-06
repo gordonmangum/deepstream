@@ -322,6 +322,9 @@
     left:0;
     height: calc(100% ~'-' @top-row-height);
   }
+  embed{
+    .size-to-fit;
+  }
 }
 
 @contentIconWidth: 50px;
