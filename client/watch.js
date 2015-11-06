@@ -259,15 +259,29 @@ Template.watch_page.onCreated(function () {
 
   // switch between streams
   this.autorun(function(){ // TO-DO Performance, don't rerun on every stream switch, only get fields needed
-    if(FlowRouter.subsReady()) {
+    if (FlowRouter.subsReady()) {
       var userControlledActiveStreamId = that.userControlledActiveStreamId.get();
       var deepstream = Deepstreams.findOne({shortId: that.data.shortId()});
+      var newActiveStream;
 
-      if(!Session.get('curateMode') && userControlledActiveStreamId && deepstream.userStreamSwitchAllowed()){
-        that.activeStream.set(deepstream.getStream(userControlledActiveStreamId));
-      } else{
-        that.activeStream.set(deepstream.activeStream());
+      if (!Session.get('curateMode') && userControlledActiveStreamId && deepstream.userStreamSwitchAllowed()) {
+        newActiveStream = deepstream.getStream(userControlledActiveStreamId);
+      } else {
+        newActiveStream = deepstream.activeStream();
       }
+
+
+      var activeStream;
+      Tracker.nonreactive(function(){
+        activeStream = that.activeStream.get();
+      });
+
+      if(activeStream && activeStream.source === newActiveStream.source && activeStream._id !== newActiveStream._id){
+        Session.set('removeMainStream', true);
+        Meteor.setTimeout(() => Session.set('removeMainStream', false), 0);
+      }
+
+      that.activeStream.set(newActiveStream);
     }
   });
 
@@ -346,10 +360,13 @@ Template.watch_page.onRendered(function(){
           break;
         case 'bambuser':
           mainPlayer.activeStreamSource = 'bambuser';
+          break;
         case 'twitch':
           mainPlayer.activeStreamSource = 'twitch';
+          break;
         case 'ml30':
           mainPlayer.activeStreamSource = 'ml30';
+          break;
       }
 
     }
@@ -463,6 +480,9 @@ Template.watch_page.helpers({
   },
   twitchPlayer (){
     return Template.instance().activeStream.get().source === 'twitch'
+  },
+  removeMainStream (){
+    return Session.get('removeMainStream');
   },
   showTitleDescriptionEditOverlay (){
     return this.creationStep == 'title_description';
