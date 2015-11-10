@@ -112,3 +112,4 @@ Handlebars.registerHelper("formatNumber", function(num){
 
 Handlebars.registerHelper("formatDate", window.formatDate);
 Handlebars.registerHelper("formatDateNice", window.formatDateNice);
+Handlebars.registerHelper("formatDateCompact", window.formatDateCompact);

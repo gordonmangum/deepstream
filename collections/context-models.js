@@ -26,6 +26,10 @@ ContextBlock = (function () {
     return formatDateNice(this.reference.creationDate);
   };
 
+  ContextBlock.prototype.creationDateCompactString = function () {
+    return formatDateCompact(this.reference.creationDate);
+  };
+
 
   ContextBlock.prototype.providerName = function() {
     return this.source.toUpperCase().replace(/\_/, ' ');

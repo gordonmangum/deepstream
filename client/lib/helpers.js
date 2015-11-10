@@ -246,9 +246,15 @@ window.formatDate = function (date) {
 // February 7th, 2015
 window.formatDateNice = function (date) {
   if (date){
-    var hms;
-    hms = date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
     return monthNames[(date.getMonth())] + " " + date.getDate() + ", " + date.getFullYear();
+  }
+
+};
+
+// 2/7/2015
+window.formatDateCompact = function (date) {
+  if (date){
+    return date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear();
   }
 
 };
