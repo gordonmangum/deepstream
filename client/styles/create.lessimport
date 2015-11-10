@@ -245,7 +245,6 @@ div.add-context {
   }
 
   div.text-result-container {
-    background-color: @medium-color;
     height: calc(100% ~"-" @searchFormHeight ~"-" 40px);
     overflow-y: scroll;
   }
