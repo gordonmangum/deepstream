@@ -502,7 +502,7 @@
     background-color: inherit;
     &.active, &:hover{
       &:not(:disabled){
-        .transparency-aware(background-color, @alt-background-color);
+        .transparency-aware(background-color, @dark-medium-color);
         &:not(.stream-button) {
           .bg {
             stroke: @light-icon-color;
