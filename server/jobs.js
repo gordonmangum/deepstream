@@ -417,37 +417,6 @@ var updateStreamStatuses = function () {
   Deepstreams.find({}, {fields: {streams: 1}}).forEach(updateStreamStatus); // TO-DO perf. Only get necessary fields for live checking
 };
 
-var updateDeepstreamStatuses = function () {
-
-  // TODO only check active stream when in director mode
-  // TO-DO performance. restrict to published?
-
-
-  var dsLive = 0;
-  var dsDead = 0;
-  // director mode with some streams live may or may not be live
-  Deepstreams.find({'streams.live': true, directorMode: true}, {fields: {'streams.live': 1, 'streams._id': 1, activeStreamId: 1}} ).forEach(function(deepstream){
-    var live = deepstream.activeStream().live;
-
-    Deepstreams.update({_id: deepstream._id}, {$set: {live: live}});
-
-    if (live) {
-      dsLive +=1;
-    } else {
-      dsDead +=1;
-    }
-  });
-
-  // regular with some streams live are live
-  dsLive += Deepstreams.update({'streams.live': true, 'directorMode': false}, {$set: {live: true}}, {multi: true});
-
-  // all streams dead are dead
-  dsDead += Deepstreams.update({'streams': {$not: {$elemMatch: {live: true}}}}, {$set: {live: false}}, {multi: true});
-
-  console.log(dsLive + ' deepstreams are live');
-  console.log(dsDead + ' deepstreams are dead');
-
-};
 
 var runJobs = function () {
   console.log('Running jobs...');
@@ -470,7 +439,7 @@ var runJobs = function () {
   timeLogs.push('stream update time: ' + ((Date.now() - previousTimepoint) / 1000) + ' seconds');
   previousTimepoint = Date.now();
 
-  updateDeepstreamStatuses();
+  updateDeepstreamStatuses({logging: true});
   timeLogs.push('deepstream update time: ' + ((Date.now() - previousTimepoint) / 1000) + ' seconds');
   previousTimepoint = Date.now();
 
