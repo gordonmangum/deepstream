@@ -97,7 +97,7 @@ var servicesToFetch = [
           title: doc.title,
           description: null,
           broadcaster: doc.username,
-          tags: doc.tags
+          tags: _.pluck(doc.tags || [], 'tag')
         }
       });
       delete doc.length; // this only causes problems
