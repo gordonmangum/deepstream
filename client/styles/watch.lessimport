@@ -803,6 +803,7 @@
     margin-left: @PiP-width + 2 * @left-margin;
     margin-right: @left-margin;
     position: relative;
+    height: 100%;
     top: @top-row-height + @second-row-height;
     text-align: center;
     .count{
@@ -816,11 +817,7 @@
       width: 100%;
     }
   }
-
-  .context-area{
-    height: 100%;
-  }
-
+  
   .context-section{
     .padding-sides(10px);
     text-align: left;
