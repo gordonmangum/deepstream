@@ -86,6 +86,12 @@ Handlebars.registerHelper("mainStreamHeight", function(offset) {
   return getMainStreamHeight(offset);
 });
 
+Handlebars.registerHelper("overlayContentMaxWidth", function() {
+  return Session.get("windowWidth") - 285 - 3 * 20 - 2 * 10; // PiPWidth - 3 * leftMargin - padding
+});
+
+
+
 Handlebars.registerHelper("profileImage", function(user, size) {
   var diameter;
   if (size === 'large'){

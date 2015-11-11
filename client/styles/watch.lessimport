@@ -803,7 +803,7 @@
     margin-left: @PiP-width + 2 * @left-margin;
     margin-right: @left-margin;
     position: relative;
-    height: 100%;
+    display: flex;
     top: @top-row-height + @second-row-height;
     text-align: center;
     .count{
@@ -819,6 +819,9 @@
   }
   
   .context-section{
+    display: flex;
+    flex-direction: column;
+    position: relative;
     .padding-sides(10px);
     text-align: left;
     .transparency-aware-fade(background-color, @context-background-color);
@@ -836,6 +839,7 @@
   .video-section, .map-section, .image-section{
     background-color: @black-color;
     display: flex;
+    height: calc(100% ~"-" @topPaddingHeight);
     flex-direction: column;
     .image-container{
       flex: auto;
