@@ -458,6 +458,20 @@ Stream = (function (_super) {
     }
   };
 
+
+  Stream.prototype.providerIconUrl = function() {
+    switch (this.source) {
+      case 'youtube':
+        return 'https://s.ytimg.com/yts/img/favicon-vflz7uhzw.ico';
+      case 'ustream':
+        return 'http://static-cdn1.ustream.tv/images/favicon:1.ico';
+      case 'bambuser':
+        return 'http://static.bambuser.com/themes/b4/favicon.ico';
+      case 'twitch':
+        return 'http://www.twitch.tv/favicon.ico';
+    }
+  };
+
   Stream.prototype.searchList = true;
   Stream.prototype.searchListTemplate = 'create_stream_section';
   Stream.prototype.searchSoloTemplate = 'create_stream_section';

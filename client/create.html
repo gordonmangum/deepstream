@@ -497,7 +497,7 @@
                 <img src="{{thumbnailUrl}}">
               </div>
               <div class="info {{#if isFocused}}focused{{/if}}">
-                <div class="content-title">{{title}}</div>
+                <div class="content-title">{{#if providerIconUrl}}<img class="provider-image stream-provider-image" src="{{providerIconUrl}}"/>{{/if}}{{title}}</div>
                 <div class="descr">{{caption}}</div>
                 <div class="user">{{username}}</div>
                 <div class="date">LIVE NOW</div>

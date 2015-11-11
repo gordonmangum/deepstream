@@ -131,6 +131,10 @@ div.add-context {
     .hiding-div{
       height: 100%;
     }
+    .stream-provider-image{
+      float: left;
+      margin-right: 3px;
+    }
   }
 
   div.tabs {

@@ -316,6 +316,7 @@
   <div class="stream-preview">
     <button class="show-preview-overlay">
       <div class="stream">
+        <div class="provider-source">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}</div>
         <div class="stream-image">
           <img src="{{thumbnailUrl}}"/>
           {{> play_video_icon}}
