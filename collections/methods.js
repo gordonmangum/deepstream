@@ -85,13 +85,17 @@ var assertOwner = function(userId, doc) {
 
 Meteor.methods({
   addContextToStream: addContextToStream,
-  setActiveStream (streamShortId, streamId){
-    check(streamShortId, String);
+  setActiveStream (shortId, streamId){
+    check(shortId, String);
     check(streamId, String);
-    return updateDeepstream.call(this,{shortId: streamShortId}, {$set: {activeStreamId: streamId}});
+    var updated = updateDeepstream.call(this,{shortId: shortId}, {$set: {activeStreamId: streamId}});
+    if(updated){
+      updateDeepstreamStatuses({selector: {shortId: shortId}});
+    }
+    return updated
   },
-  addStreamToStream (streamShortId, stream){
-    check(streamShortId, String);
+  addStreamToStream (shortId, stream){
+    check(shortId, String);
     if (Meteor.isServer){
       check(stream, Object);
     } else {
@@ -111,7 +115,7 @@ Meteor.methods({
       '$addToSet' : pushObject
     };
 
-    deepstream = Deepstreams.findOne({shortId: streamShortId}, {fields:{'activeStreamId' : 1, 'creationStep': 1, 'streams': 1}});
+    deepstream = Deepstreams.findOne({shortId: shortId}, {fields:{'activeStreamId' : 1, 'creationStep': 1, 'streams': 1}});
 
     var numberOfStreamsBeforeAdd = deepstream.streams.length;
 
@@ -138,7 +142,7 @@ Meteor.methods({
     if(duplicateStream){
       success = true; // it's already done!
     } else {
-      success = updateDeepstream.call(this, { shortId: streamShortId }, modifierObject);
+      success = updateDeepstream.call(this, { shortId: shortId }, modifierObject);
     }
 
     if (success) {
@@ -160,6 +164,9 @@ Meteor.methods({
           }, 1300);
         }, 0);
       }
+
+      updateDeepstreamStatuses({selector: {shortId: shortId}});
+
     } else {
       throw new Meteor.Error('Stream not updated');
     }
@@ -206,7 +213,9 @@ Meteor.methods({
       shortId: shortId
     }, modifier);
 
-    if (!numUpdated){
+    if (numUpdated){
+      updateDeepstreamStatuses({selector: {shortId: shortId}});
+    } else {
       throw new Meteor.Error('Stream not updated')
     }
 
@@ -301,6 +310,19 @@ Meteor.methods({
 
     if(!deepstream.firstOnAirAt){
       setObject.firstOnAirAt = new Date;
+      if(Meteor.isServer){
+        var sendEmail = process.env.SEND_PUBLISH_NOTICE_TO || Meteor.settings.SEND_PUBLISH_NOTICE_TO;
+        if (sendEmail){
+          var currentUser = Meteor.user();
+          Email.send({
+            to: sendEmail,
+            from: 'noreply@example.com',
+            subject: 'New DeepStream Published: ' + title,
+            text: '"' + title + '"' + ' published at ' + new Date + ' by user ' + currentUser.username + ' (' + currentUser.profile.name + ')'
+          })
+        }
+      }
+
     }
 
     if(title){ // if title, description included
@@ -369,24 +391,34 @@ Meteor.methods({
   directorModeOff (shortId){
     check(shortId, String);
     this.unblock();
-    return updateDeepstream.call(this, {
+    var updated = updateDeepstream.call(this, {
       shortId: shortId
     }, {
       $set: {
         directorMode: false
       }
     });
+
+    if(updated){
+      updateDeepstreamStatuses({selector: {shortId: shortId}});
+    }
+    return updated
+
   },
   directorModeOn (shortId){
     check(shortId, String);
     this.unblock();
-    return updateDeepstream.call(this, {
+    var updated = updateDeepstream.call(this, {
       shortId: shortId
     }, {
       $set: {
         directorMode: true
       }
     });
+    if(updated){
+      updateDeepstreamStatuses({selector: {shortId: shortId}});
+    }
+    return updated
   },
   startCuratorWebcam (shortId, stream){
     check(shortId, String);

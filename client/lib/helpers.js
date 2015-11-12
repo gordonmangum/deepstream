@@ -246,9 +246,15 @@ window.formatDate = function (date) {
 // February 7th, 2015
 window.formatDateNice = function (date) {
   if (date){
-    var hms;
-    hms = date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
     return monthNames[(date.getMonth())] + " " + date.getDate() + ", " + date.getFullYear();
+  }
+
+};
+
+// 2/7/2015
+window.formatDateCompact = function (date) {
+  if (date){
+    return date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear();
   }
 
 };
@@ -305,4 +311,22 @@ window.updateActiveContext = _.throttle(unthrottledUpdateActiveContext, 50, {lea
 
 window.isMobile = function(){
   return (Meteor.Device.isPhone()) && !Meteor.Device.isBot()
+};
+
+window.trackingInfoFromPage = function () {
+  var currentRoute = FlowRouter.current();
+  return {
+    currentRouteName: currentRoute.route.name,
+    currentRoutePath: currentRoute.path
+  }
+};
+
+window.trackingInfoFromContext = function (context) {
+  return _.extend({
+    label: context.type,
+    contentType: context.type,
+    contentSource: context.source,
+    id: context._id,
+    streamShortId: context.streamShortId
+  }, trackingInfoFromPage())
 };

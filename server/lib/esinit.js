@@ -1,14 +1,16 @@
 var ES = Meteor.npmRequire('elasticsearch');
 esClient = new ES.Client({
-  host: process.env.ELASTICSEARCH_URL || Meteor.settings.ELASTICSEARCH_URL || "localhost:9200"
+  hosts: (process.env.ELASTICSEARCH_URL ? process.env.ELASTICSEARCH_URL.split(',') : null) ||
+  (Meteor.settings.ELASTICSEARCH_URL ? Meteor.settings.ELASTICSEARCH_URL.split(',') : null) ||
+  ["localhost:9200"]
 });
 
 
-var ping = Meteor.wrapAsync(esClient.ping, esClient);
+ping = Meteor.wrapAsync(esClient.ping, esClient);
 
 ping({
   // ping usually has a 3000ms timeout
-  requestTimeout: Infinity,
+  requestTimeout: 30000,
 
   // undocumented params are appended to the query string
   hello: "elasticsearch!"
@@ -31,8 +33,11 @@ var deleteIndex = Meteor.wrapAsync(esClient.indices.delete, esClient);
 
 
 resetES = function () {
-  console.log("indexExists function: going to delete index");
-  deleteIndex({index: ES_CONSTANTS.index});
+  if(indexExists({index: ES_CONSTANTS.index})){
+    console.log("indexExists function: going to delete index");
+    deleteIndex({index: ES_CONSTANTS.index});
+  }
+
   console.log("indexExists function: going to create");
   createIndex({index: ES_CONSTANTS.index});
 
@@ -110,8 +115,7 @@ resetES = function () {
     "body": {
       "stream": {
         "_ttl": { // if ttl works we don't need timestamp because the documents will be deleted automatically
-          "enabled": true,
-          "default": "3m"
+          "enabled": true
         },
         "properties": {
           "title": {

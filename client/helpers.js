@@ -66,12 +66,16 @@ Handlebars.registerHelper("isMobile", function() {
   return window.isMobile();
 });
 
+Handlebars.registerHelper("transparencyMode", function() {
+  return Session.get('transparencyMode');
+});
+
 getMainStreamHeight = function(offset){
   return Session.get("windowHeight") - 60 - 65 - 130 - 20 + (offset || 0);
 };
 
 getMainStreamMaxWidth = function(offset){
-  return getMainStreamHeight() * 16 / 9 + (offset || 0);
+  return Session.get("transparencyMode") ?  Session.get("windowWidth") - 400 : getMainStreamHeight() * 16 / 9 + (offset || 0);
 };
 
 Handlebars.registerHelper("mainStreamMaxWidth", function(offset) {
@@ -81,6 +85,12 @@ Handlebars.registerHelper("mainStreamMaxWidth", function(offset) {
 Handlebars.registerHelper("mainStreamHeight", function(offset) {
   return getMainStreamHeight(offset);
 });
+
+Handlebars.registerHelper("overlayContentMaxWidth", function() {
+  return Session.get("windowWidth") - 285 - 3 * 20 - 2 * 10; // PiPWidth - 3 * leftMargin - padding
+});
+
+
 
 Handlebars.registerHelper("profileImage", function(user, size) {
   var diameter;
@@ -108,3 +118,4 @@ Handlebars.registerHelper("formatNumber", function(num){
 
 Handlebars.registerHelper("formatDate", window.formatDate);
 Handlebars.registerHelper("formatDateNice", window.formatDateNice);
+Handlebars.registerHelper("formatDateCompact", window.formatDateCompact);

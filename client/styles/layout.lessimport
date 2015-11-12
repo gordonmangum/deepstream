@@ -10,11 +10,14 @@
 @light-transparent-color: rgba(244,244,244,0.75);
 
 @top-row-color: @black-color;
-@annotation-color: @dark-medium-color;
 
 @background-color: @black-color;
 @alt-background-color: @black-color;
 @context-background-color: @dark-medium-color;
+@watch-background-color: @black-color;
+
+@annotation-color: @context-background-color;
+
 
 @dark-text-color: @black-color;
 @light-text-color: @light-color;
@@ -36,13 +39,11 @@
 @action-color: #F6C406;
 @hover-action-color: #dea406;
 @placeholder-color: #acacac;
-@favorite-color: #FFD600;
-@hover-favorite-color: #EFC820;
+@favorite-color: #C90523;
+@hover-favorite-color: #F70127;
 @active-pill-color: #663A80;
 @hover-pill-color: #5f2d72;
 @inactive-pill-color: #462859;
-
-
 
 @horizontal-content-height: 300px;
 
@@ -50,6 +51,32 @@
 html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
+}
+
+.transparency-aware(@property; @value){
+  @{property}: @value;
+  &.transparency-mode{
+    @{property}: transparent;
+  }
+}
+
+.transparency-aware-fade(@property; @value){
+  @{property}: @value;
+  &.transparency-mode{
+    @{property}: fade(@value, 70%);
+  }
+}
+
+.transparency-mode-only(@property; @value){
+  &.transparency-mode{
+    @{property}: @value;
+  }
+}
+
+.transparency-rounded{
+  &.transparency-mode {
+    border-radius: 5px;
+  }
 }
 
 .standard-icon-colors {
@@ -443,6 +470,9 @@ body {
   margin: 0;
   color: @light-text-color;
   background-color: @background-color;
+  &.watch, &.curate{
+    .transparency-aware(background-color, @background-color);
+  }
 
   line-height: 23px;
   font-size: 15px;
@@ -634,7 +664,7 @@ div.twitter-section{
     background-color: inherit;
   }
   div.twitter-text-section {
-    background-color: @background-color;
+    .transparency-aware(background-color, @background-color);
     a {
       &:hover {
         color: @action-color;
@@ -735,7 +765,7 @@ div.text-content {
 
 .text-content{
   color: @light-text-color;
-  background-color: @annotation-color;
+  background-color: transparent;
   line-height: 20px;
 }
 

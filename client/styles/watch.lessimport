@@ -56,6 +56,7 @@
 
 
 .watch{
+  background-color: @watch-background-color;
   .stream-title{
     @height: 42px;
     display: inline-block;
@@ -66,6 +67,7 @@
     width: calc(100% ~"-" (@left-margin + @live-indicator-width));
     max-width: calc(100% ~"-" ( @left-margin + @live-indicator-width));
     overflow: hidden;
+    .transparency-mode-only(text-shadow, 2px 2px 2px darken(@light-text-color,60%));
   }
   .streams-list{
     white-space: nowrap;
@@ -161,7 +163,7 @@
     li{
       display: inline-block;
       &:not(:first-child){
-        margin-left: 20px;
+        margin-left: @left-margin;
       }
       line-height: 0;
       position: relative;
@@ -182,6 +184,7 @@
         }
         position: relative;
         padding: 0;
+        .transparency-mode-only(background-color, @black-color);
 
       }
       &:not(.placeholder){
@@ -238,21 +241,25 @@
 .left-section{
   height: 100%;
   float: left;
-  width: calc(100% ~"-" @right-section-width);
+  max-width: calc(100% ~"-" @right-section-width);
 
   .footer-section{
     padding-top: 10px;
     position: relative;
     overflow-y: hidden;
     height: @footer-section-height;
+    .transparency-mode-only(height, @footer-section-height - 25px);
     display: flex;
     flex-direction: row;
+
     .streams-list{
       flex: 1;
     }
 
+
     .stream-stats-and-share{
       padding-left: 30px;
+      .transparency-mode-only(text-shadow, 1px 1px 1px darken(@light-text-color,60%));
       .inverted-icon-colors;
       .stream-stats{
         margin-top: 20px;
@@ -267,6 +274,7 @@
         }
       }
     }
+
   }
 }
 
@@ -280,6 +288,7 @@
   position: relative;
   display: inline-block;
   z-index: 1;
+  .transparency-mode-only(z-index, auto);
   &.PiP{
     z-index: inherit;
   }
@@ -301,14 +310,18 @@
     float: none;
     left: @left-margin;
   }
+
 }
 
-.main-stream-iframe{
+.main-stream-iframe, .main-stream-flash-object{
   .size-to-fit;
-}
-
-.main-stream-flash-object{
-  .size-to-fit;
+  &.transparency-mode:not(.PiP){
+    z-index: 0;
+    position: fixed;
+    top:@top-row-height;
+    left:0;
+    height: calc(100% ~'-' @top-row-height);
+  }
   embed{
     .size-to-fit;
   }
@@ -322,7 +335,10 @@
   .opacity-transition;
   height: 100%;
   float: left;
-  background-color: @alt-background-color;
+
+  .transparency-aware(background-color, @alt-background-color);
+  .transparency-mode-only(float, right);
+
   display: inline-block;
   z-index: 10;
   width: @right-section-width;
@@ -347,7 +363,8 @@
     height: @top-row-height + @second-row-height - @margin-top - @context-browser-header-row-height;
     margin-left: @card-column-width;
     &.visible{
-      background-color: @context-background-color;
+      .transparency-aware-fade(background-color, @context-background-color);
+      .transparency-rounded;
     }
     width: calc(100% ~'-' (@card-column-width + @contextAreaPadding*2));
 
@@ -355,7 +372,8 @@
   .context-timeline-switcher {
     height: @context-browser-header-row-height;
     margin-left: @card-column-width;
-    background-color: @context-background-color;
+    .transparency-aware-fade(background-color, @context-background-color);
+    .transparency-rounded;
     width: calc(100%~'-'(@card-column-width + @contextAreaPadding * 2));
     margin-bottom: 10px;
     display: flex;
@@ -484,7 +502,7 @@
     background-color: inherit;
     &.active, &:hover{
       &:not(:disabled){
-        background-color: @alt-background-color;
+        .transparency-aware(background-color, @dark-medium-color);
         &:not(.stream-button) {
           .bg {
             stroke: @light-icon-color;
@@ -542,10 +560,13 @@
   font-size: 20pt;
   font-weight: bold;
   line-height: 25pt;
-  margin-top: 40px;
+  margin-top: 35px;
   word-wrap: break-word;
   &:not(.active){
     button{
+      visibility: hidden;
+    }
+    .divider{
       visibility: hidden;
     }
     .text {
@@ -573,7 +594,7 @@
     text-transform: uppercase;
   }
   &.go-on-air{
-    button{
+    button:not(.preview){
       .action-button;
       font-size: 20pt;
       margin-top: 20px;
@@ -581,6 +602,14 @@
       padding-bottom: 18px;
       padding-left: 14px;
       padding-right: 14px;
+      display: inline-block;
+    }
+    .divider{
+      margin-left: 8px;
+      margin-right: 8px;
+    }
+    button.preview{
+      display: inline-block;
     }
   }
 }
@@ -606,6 +635,7 @@
     background-color: transparent;
     z-index: 9999;
     position: absolute;
+    .transparency-mode-only(display, none);
   }
   .top-bar{
     .box-shadow(-4px 4px 12px 0px rgba(0,0,0,0.75));
@@ -637,7 +667,8 @@
   }
   .context-section{
     position: relative;
-    background-color: @context-background-color;
+    .transparency-aware-fade(background-color, @context-background-color);
+    .transparency-rounded;
     padding: 10px;
     &:hover{
       .delete-context, .hover-icon{
@@ -720,7 +751,9 @@
         text-align: right;
       }
       .annotation-section{
-        border-top: 5px solid @background-color;
+
+        .transparency-aware(background-color, 5px solid @background-color);
+
         width: calc(100% ~"+" 2 * @contextAreaPadding);
         margin-left: -@contextAreaPadding;
         margin-bottom: -@contextAreaPadding;
@@ -770,6 +803,7 @@
     margin-left: @PiP-width + 2 * @left-margin;
     margin-right: @left-margin;
     position: relative;
+    display: flex;
     top: @top-row-height + @second-row-height;
     text-align: center;
     .count{
@@ -783,15 +817,15 @@
       width: 100%;
     }
   }
-
-  .context-area{
-    height: 100%;
-  }
-
+  
   .context-section{
+    display: flex;
+    flex-direction: column;
+    position: relative;
     .padding-sides(10px);
     text-align: left;
-    background-color: @context-background-color;
+    .transparency-aware-fade(background-color, @context-background-color);
+    .transparency-rounded;
   }
 
   @topPaddingHeight: 36px;
@@ -805,6 +839,7 @@
   .video-section, .map-section, .image-section{
     background-color: @black-color;
     display: flex;
+    height: calc(100% ~"-" @topPaddingHeight);
     flex-direction: column;
     .image-container{
       flex: auto;
@@ -861,7 +896,8 @@
 
 .add-new-context-row, .search-section-title{
   margin-right: @contextAreaPadding * 2;
-  background-color: @context-background-color;
+  .transparency-aware-fade(background-color, @context-background-color);
+  .transparency-rounded;
   margin-bottom: 15px;
   height: @context-browser-header-row-height;
   line-height: @context-browser-header-row-height;
@@ -1016,7 +1052,8 @@
   height: 135px;
   margin-bottom: 0px;
   margin-left: @card-column-width;
-  background-color: @context-background-color;
+  .transparency-aware-fade(background-color, @context-background-color);
+  .transparency-rounded;
   .curator-info{
     display: inline-block;
     font-weight: 500;
@@ -1061,6 +1098,9 @@
     .action-button;
     right: 5px;
   }
+  .return-to-curate{
+    animation: glow-action 1.6s ease infinite;
+  }
   .report-inappropriate-content{
     position: absolute;
     bottom: 5px;
@@ -1074,6 +1114,24 @@
       }
     }
   }
+  .transparency-button{
+    width: 53px;
+    height: 45px;
+    text-align: center;
+    padding: 0;
+    padding-top: 3px;
+    background-color: @background-color;
+    .transparency-rounded;
+    .transparency-mode-only(background-color, @dark-transparent-color);
+    svg{
+      width: 44px;
+      height: 33px;
+    }
+    position: absolute;
+    left: -61px;
+    bottom: 76px;
+  }
+
 }
 
 .edit-menu{
@@ -1190,6 +1248,9 @@
 .action-items{
   font-size: 14px;
   font-weight: normal;
+  button{
+    .transparency-rounded;
+  }
 }
 
 .bottom-overlay{
@@ -1240,6 +1301,7 @@
   font-weight: bold;
   position: relative;
   height: @second-row-height;
+  .transparency-mode-only(z-index, 1);
 }
 
 
@@ -1250,6 +1312,8 @@
   top: 95px;
   position: absolute;
   width: calc(100% ~"-" (32px));
+  .transparency-mode-only(text-shadow, 1px 1px 1px darken(@light-text-color,60%));
+
   .icon{
     position: absolute;
     //top: 15px;
@@ -1321,7 +1385,8 @@
 }
 
 .annotation-section{
-  background-color: @context-background-color;
+  .transparency-aware-fade(background-color, @context-background-color);
+  .transparency-rounded;
   position: relative;
   display: flex;
   flex-direction: row;

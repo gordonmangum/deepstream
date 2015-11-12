@@ -578,7 +578,7 @@ Meteor.methods({
     var esQuery = {
       index: ES_CONSTANTS.index,
       type: "stream",
-      size: ES_CONSTANTS.pageSize * 2, // get twice as many as needed in case of duplicates
+      size: ES_CONSTANTS.pageSize * (parseInt(process.env.ELASTICSEARCH_PAGESIZE_MULTIPLIER) || parseInt(Meteor.settings.ELASTICSEARCH_PAGESIZE_MULTIPLIER) || 2), // get twice as many as needed in case of duplicates
       body: {
         "min_score": 0.1,
         query: {

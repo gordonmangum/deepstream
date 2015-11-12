@@ -26,6 +26,10 @@ ContextBlock = (function () {
     return formatDateNice(this.reference.creationDate);
   };
 
+  ContextBlock.prototype.creationDateCompactString = function () {
+    return formatDateCompact(this.reference.creationDate);
+  };
+
 
   ContextBlock.prototype.providerName = function() {
     return this.source.toUpperCase().replace(/\_/, ' ');
@@ -370,6 +374,8 @@ Stream = (function (_super) {
     } else if (this.source === 'twitch'){
 
       return '//www.twitch.tv/' + this.reference.channelName + '/embed?';
+    } else if (this.source === 'ml30'){
+      return 'https://civic.mit.edu/ml30-deepstream/?'
     }
   };
 
@@ -420,6 +426,8 @@ Stream = (function (_super) {
         return this.reference.previewUrl;
       case 'twitch':
         return "http://static-cdn.jtvnw.net/previews-ttv/live_user_" + this.reference.channelName + "-320x180.jpg";
+      case 'ml30':
+        return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/static/MIT_ML_Logo_white';
     }
   };
 
@@ -433,6 +441,8 @@ Stream = (function (_super) {
         return this.reference.previewUrl;
       case 'twitch':
         return "http://static-cdn.jtvnw.net/previews-ttv/live_user_" + this.reference.channelName + "-80x45.jpg";
+      case 'ml30':
+        return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/static/MIT_ML_Logo_white';
     }
   };
 
@@ -445,6 +455,20 @@ Stream = (function (_super) {
       return 'http://bambuser.com/channel/' + this.reference.username;
     } else if (this.source === 'twitch'){
       return 'http://www.twitch.tv/' + this.reference.channelName;
+    }
+  };
+
+
+  Stream.prototype.providerIconUrl = function() {
+    switch (this.source) {
+      case 'youtube':
+        return 'https://s.ytimg.com/yts/img/favicon-vflz7uhzw.ico';
+      case 'ustream':
+        return 'http://static-cdn1.ustream.tv/images/favicon:1.ico';
+      case 'bambuser':
+        return 'http://static.bambuser.com/themes/b4/favicon.ico';
+      case 'twitch':
+        return 'http://www.twitch.tv/favicon.ico';
     }
   };
 

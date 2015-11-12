@@ -430,7 +430,8 @@ Schema.Streams = new SimpleSchema({
         optional: true
       },
       tags: {
-        type: [String],
+        type: [Object],
+        blackbox: true,
         optional: true
       },
       username: {
@@ -667,17 +668,11 @@ Schema.Deepstreams = new SimpleSchema({
   },
   editorsPick: {
     type: Boolean,
-    optional: true,
-    defaultValue: true // TO-DO launch remove
+    optional: true
   },
   editorsPickAt: {
     type: Date,
-    optional: true,
-    autoValue () {
-      if (this.isInsert) {
-        return new Date;
-      }
-    }
+    optional: true
   }
 });
 

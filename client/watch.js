@@ -20,6 +20,8 @@ window.mainPlayer = {
       case 'twitch':
         this._twitchPlayer.playVideo();
         break;
+      case 'ml30':
+        break;
       default:
         throw new Meteor.Error('main player has no active stream source')
     }
@@ -37,6 +39,8 @@ window.mainPlayer = {
         break;
       case 'twitch':
         this._twitchPlayer.pauseVideo();
+        break;
+      case 'ml30':
         break;
       default:
         throw new Meteor.Error('main player has no active stream source')
@@ -56,6 +60,8 @@ window.mainPlayer = {
       case 'twitch':
         this._twitchPlayer.pauseVideo();
         break;
+      case 'ml30':
+        break;
       default:
         throw new Meteor.Error('main player has no active stream source')
     }
@@ -73,6 +79,9 @@ window.mainPlayer = {
         break;
       case 'twitch':
         this._twitchPlayer.mute();
+        break;
+      case 'ml30':
+        document.getElementById(Session.get('mainStreamIFrameId')).contentWindow.postMessage('mute', 'https://civic.mit.edu');
         break;
       default:
         throw new Meteor.Error('main player has no active stream source')
@@ -92,6 +101,9 @@ window.mainPlayer = {
       case 'twitch':
         this._twitchPlayer.unmute();
         break;
+      case 'ml30':
+        document.getElementById(Session.get('mainStreamIFrameId')).contentWindow.postMessage('unmute', 'https://civic.mit.edu');
+        break;
       default:
         throw new Meteor.Error('main player has no active stream source')
     }
@@ -109,6 +121,8 @@ window.mainPlayer = {
         break;
       case 'twitch':
         this._twitchPlayer.mute();
+        break;
+      case 'ml30':
         break;
       default:
         throw new Meteor.Error('main player has no active stream source')
@@ -137,6 +151,7 @@ Template.watch_page.onCreated(function () {
   }
 
   this.mainStreamIFrameId = Random.id(8);
+  Session.set('mainStreamIFrameId', this.mainStreamIFrameId);
   this.mainStreamFlashPlayerId = Random.id(8);
 
 
@@ -244,15 +259,29 @@ Template.watch_page.onCreated(function () {
 
   // switch between streams
   this.autorun(function(){ // TO-DO Performance, don't rerun on every stream switch, only get fields needed
-    if(FlowRouter.subsReady()) {
+    if (FlowRouter.subsReady()) {
       var userControlledActiveStreamId = that.userControlledActiveStreamId.get();
       var deepstream = Deepstreams.findOne({shortId: that.data.shortId()});
+      var newActiveStream;
 
-      if(!Session.get('curateMode') && userControlledActiveStreamId && deepstream.userStreamSwitchAllowed()){
-        that.activeStream.set(deepstream.getStream(userControlledActiveStreamId));
-      } else{
-        that.activeStream.set(deepstream.activeStream());
+      if (!Session.get('curateMode') && userControlledActiveStreamId && deepstream.userStreamSwitchAllowed()) {
+        newActiveStream = deepstream.getStream(userControlledActiveStreamId);
+      } else {
+        newActiveStream = deepstream.activeStream();
       }
+
+
+      var activeStream;
+      Tracker.nonreactive(function(){
+        activeStream = that.activeStream.get();
+      });
+
+      if(activeStream && activeStream.source === newActiveStream.source && activeStream._id !== newActiveStream._id){
+        Session.set('removeMainStream', true);
+        Meteor.setTimeout(() => Session.set('removeMainStream', false), 0);
+      }
+
+      that.activeStream.set(newActiveStream);
     }
   });
 
@@ -270,6 +299,21 @@ Template.watch_page.onCreated(function () {
     });
   }
 
+});
+
+// add transparency-mode class to everything quick and dirtily
+_.each(_.keys(Template), function(templateKey) {
+  if(Blaze.isTemplate(Template[templateKey])){
+    Template[templateKey].onRendered(function(){
+      Tracker.autorun(() => {
+        if (Session.get('transparencyMode')){
+          $("*").addClass("transparency-mode")
+        } else {
+          $("*").removeClass("transparency-mode")
+        }
+      })
+    })
+  }
 });
 
 Template.watch_page.onRendered(function(){
@@ -316,8 +360,13 @@ Template.watch_page.onRendered(function(){
           break;
         case 'bambuser':
           mainPlayer.activeStreamSource = 'bambuser';
+          break;
         case 'twitch':
           mainPlayer.activeStreamSource = 'twitch';
+          break;
+        case 'ml30':
+          mainPlayer.activeStreamSource = 'ml30';
+          break;
       }
 
     }
@@ -379,7 +428,7 @@ Template.watch_page.helpers({
     return Template.instance().mainStreamFlashPlayerId;
   },
   mainStreamInIFrame (){
-    return _.contains(['ustream', 'youtube'], Template.instance().activeStream.get().source);
+    return _.contains(['ustream', 'youtube', 'ml30'], Template.instance().activeStream.get().source);
   },
   mainStreamInFlashPlayer (){
     return _.contains(['bambuser', 'twitch'], Template.instance().activeStream.get().source);
@@ -432,11 +481,14 @@ Template.watch_page.helpers({
   twitchPlayer (){
     return Template.instance().activeStream.get().source === 'twitch'
   },
+  removeMainStream (){
+    return Session.get('removeMainStream');
+  },
   showTitleDescriptionEditOverlay (){
     return this.creationStep == 'title_description';
   },
   showTutorial (){
-    return _.contains(['find_stream', 'add_cards', 'go_on_air'], this.creationStep)
+    return _.contains(['find_stream', 'add_cards', 'go_on_air'], this.creationStep) && Session.get('curateMode');
   },
   showRightSection (){
     return !soloOverlayContextModeActive() && (Session.get("curateMode") || !Session.get('reducedView'));
@@ -503,7 +555,7 @@ var basicErrorHandler = function(err){
 var saveStreamTitle = function(template){
   streamTitle = $.trim(template.$('div.stream-title').text());
   Session.set('saveState', 'saving');
-  return Meteor.call('updateStreamTitle', template.data.shortId(), streamTitle, basicErrorHandler)
+  return Meteor.call('updateStreamTitle', template.data.shortId(), streamTitle, basicErrorHandler);
 };
 
 Template.watch_page.events({
@@ -513,7 +565,7 @@ Template.watch_page.events({
     } else {
       t.userControlledActiveStreamId.set(this._id);
     }
-    analytics.track('Click mini-stream to set main stream');
+    analytics.track('Click mini-stream to set main stream', trackingInfoFromPage());
   },
   'click .delete-stream' (e, t){
     var streamElement = t.$('[data-stream-id=' + this._id + ']');
@@ -615,7 +667,7 @@ Template.watch_page.events({
       ',left=' + left;
     window.open(url, 'facebook', opts);
     Meteor.call('countDeepstreamShare', this.shortId, 'email');
-    analytics.track('Click email share');
+    analytics.track('Click email share', trackingInfoFromPage());
   },
   'click .twitter-share-button' (e, t){
     var width = 575;
@@ -630,7 +682,7 @@ Template.watch_page.events({
       ',left=' + left;
     window.open(url, 'twitter', opts);
     Meteor.call('countDeepstreamShare', this.shortId, 'twitter');
-    analytics.track('Click twitter share');
+    analytics.track('Click twitter share', trackingInfoFromPage());
   },
   'click .facebook-share-button' (e, t){
     var width = 575;
@@ -645,7 +697,7 @@ Template.watch_page.events({
       ',left=' + left;
     window.open(url, 'facebook', opts);
     Meteor.call('countDeepstreamShare', this.shortId, 'facebook');
-    analytics.track('Click facebook share');
+    analytics.track('Click facebook share', trackingInfoFromPage());
   },
   'click .PiP-overlay' (e, t){
     clearCurrentContext();
@@ -661,11 +713,16 @@ Template.watch_page.events({
       var container = $('.context-area');
       container.animate({scrollTop: (contextToScrollTo.offset().top - container.offset().top + container.scrollTop() - offset)});
     })
-    analytics.track('Click context mini preview', {
-      label: this.type,
-      contentType: this.type,
-      contentSource: this.source
-    });
+    analytics.track('Click context mini preview', trackingInfoFromContext(this));
+  },
+  'click .transparency-button' (e, t){
+    if(Session.get('transparencyMode')){
+      Session.set('transparencyMode', false);
+      analytics.track('Click transparency off button', trackingInfoFromPage());
+    } else {
+      Session.set('transparencyMode', true);
+      analytics.track('Click transparency on button', trackingInfoFromPage());
+    }
   }
 });
 
@@ -684,13 +741,13 @@ Template.stream_li.helpers({
     return Template.instance().data.allowPreview;
   },
   disablePreviewButton (){
-    return this.source === 'twitch';
+    return this.source === 'twitch' || this.source === 'ml30';
   }
 });
 
 Template.stream_li.events({
   'click .preview-stream' (e, t){
-    analytics.track('Click preview mini-stream');
+    analytics.track('Click preview mini-stream', trackingInfoFromPage());
     return t.previewMode.set(true);
   }
 });
@@ -709,12 +766,12 @@ Template.context_browser_area.helpers({
 
 Template.context_browser_area.events({
   'click .show-timeline'(){
-    analytics.track('Click show timeline');
+    analytics.track('Click show timeline', trackingInfoFromPage());
     Session.set('showTimeline', true);
     Session.set('activeContextId', null);
   },
   'click .show-context-browser'(){
-    analytics.track('Click show context browser');
+    analytics.track('Click show context browser', trackingInfoFromPage());
     Session.set('showTimeline', false);
     setTimeout(() => { // need to wait till display has switched back to context
       updateActiveContext();
@@ -802,12 +859,7 @@ Template.context_browser.events({
     }
   },
   'click .list-item-context-section' (e, t) {
-    analytics.track('Click context section in list mode', {
-      label: this.type,
-      contentType: this.type,
-      contentSource: this.source,
-      id: this._id
-    });
+    analytics.track('Click context section in list mode', trackingInfoFromContext(this));
   },
   'click .context-section .clickable' (e, t){
 

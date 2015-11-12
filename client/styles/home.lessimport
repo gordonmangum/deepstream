@@ -223,6 +223,7 @@ div.logo-title {
     .stream-image{
       height: 200px;
       width: @stream-image-width;
+      background-color: @black-color;
       position: relative;
       svg{
         opacity: 0.7;
@@ -407,6 +408,14 @@ div.logo-title {
   margin-bottom: 50px;
   position: relative;
   .preview-hover;
+  .provider-source{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    img{
+      .size(15px);
+    }
+  }
   .stream-image{
     height: @image-height;
     width: 172px;
@@ -545,10 +554,6 @@ div.action-items {
   a {
     min-width: 100px;
     .size-to-fit;
-    .action-button;
-  }
-
-  .create-deepstream {
     .action-button;
   }
 

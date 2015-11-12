@@ -28,6 +28,16 @@ Meteor.startup(function(){
   $(window).resize(throttledResize);
 });
 
+Meteor.startup(function(){
+  Tracker.autorun(function(){
+    if (Session.get('transparencyMode')){
+      $("body").addClass("transparency-mode")
+    } else {
+      $("body").removeClass("transparency-mode")
+    }
+  })
+})
+
 //window.trackingInfoFromStory = function(story){
 //  return _.chain(story)
 //    .pick([
@@ -170,11 +180,11 @@ Template.display_link_section.events(editableTextEventsBoilerplate('editContextB
 Template.display_link_section.events({
   'click a' (e, t) {
     var url = e.currentTarget.href;
-    analytics.track('Click external link in link card', {
+    analytics.track('Click external link in link card', _.extend({
       label: url,
       url: url,
       targetClassName: e.target.className
-    })
+    }, trackingInfoFromContext(this)))
   }
 });
 
@@ -202,7 +212,7 @@ Template.favorite_button.events({
         notifyError(err);
         throw(err);
       } else {
-        analytics.track('Favorite story');
+        analytics.track('Favorite story', trackingInfoFromPage());
       }
 
     });
@@ -213,7 +223,7 @@ Template.favorite_button.events({
         notifyError(err);
         throw(err);
       } else {
-        analytics.track('Unfavorite story');
+        analytics.track('Unfavorite story', trackingInfoFromPage());
       }
     });
   }
@@ -267,7 +277,7 @@ Template.create_deepstream.events({
     } else {
       Session.set('signingIn', true);
       Session.set('signingInFrom', setSigningInFrom());
-      analytics.track('User clicked create and needs to sign in');
+      analytics.track('User clicked create and needs to sign in', trackingInfoFromPage());
     }
   }
 });
