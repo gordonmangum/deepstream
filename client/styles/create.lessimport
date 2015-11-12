@@ -134,6 +134,7 @@ div.add-context {
     .stream-provider-image{
       float: left;
       margin-right: 3px;
+      height: 15px;
     }
   }
 
