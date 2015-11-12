@@ -126,6 +126,7 @@ resetES = function () {
           "broadcaster": {
             "type": "string",
             "_boost": 10,
+            "analyzer": "my_ngram_analyzer", //"analyzers" English and more
           },
           "tags": {
             "type": "string",
