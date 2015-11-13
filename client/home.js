@@ -132,6 +132,13 @@ Template.home.onCreated(function () {
   this.noMoreStreamResults = new ReactiveVar();
   this.loadingStreamResults = new ReactiveVar();
 
+  this.autorun(() => {
+    if(Session.get('homeStreamListMode') !== 'search'){
+      that.noMoreStreamResults.set(null);
+      that.loadingStreamResults.set(null);
+    }
+  });
+
   this.streamSearch = function(query){
     that.loadingStreamResults.set(true);
     that.noMoreStreamResults.set(null);
