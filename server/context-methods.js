@@ -622,9 +622,8 @@ Meteor.methods({
                 var results = searchES(esQuery);
                 var idsInResults = [];
 
-                esResults.items = _.chain(results.hits.hits)
+                esItemIds = _.chain(results.hits.hits) // get ids from elasticsearch
                   .pluck("_source")
-                  .pluck("doc")
                   .reject(function (item) {
                     var id = item.id;
                     if (_.contains(idsInResults, id)){
@@ -634,7 +633,18 @@ Meteor.methods({
                     }
                   })
                   .first(ES_CONSTANTS.pageSize)
+                  .pluck('id')
                   .value();
+
+                var mongoResults = Streams.find({id: {$in: esItemIds}}).fetch(); // get full documents from mongo
+
+                esResults.items = _.chain(esItemIds) // sort results by elasticsearch order
+                  .map(function(id){
+                    return _.findWhere(mongoResults, {id: id})
+                  })
+                  .compact()
+                  .value();
+
 
                 if (esResults.items.length === ES_CONSTANTS.pageSize)
                   esResults.nextPage = page.es + 1;

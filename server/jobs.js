@@ -166,7 +166,7 @@ var generateFetchFunction = function(serviceInfo){
         return cb();
       }
       var mapResults = _.map(result.items, serviceInfo.mapFn);
-      Streams.batchInsert(mapResults);
+      Streams.batchInsert(mapResults); // TODO remove the es field first to prevent duplicates
 
       //elasticsearch
       
@@ -181,8 +181,9 @@ var generateFetchFunction = function(serviceInfo){
               }
             },
             {
-              doc: result,
+              //doc: result,
               source: result._streamSource,
+              id: result.id,
               broadcaster: result._es.broadcaster,
               description: result._es.description,
               tags: result._es.tags,
