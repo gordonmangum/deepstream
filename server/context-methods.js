@@ -554,6 +554,7 @@ Meteor.methods({
       async.parallel({
         youtubeResults: (cb) => {
           Meteor.setTimeout(() => {
+            var now = Date.now();
             var youtubeResults = { // default
               items: [],
               nextPage: 'end'
@@ -566,6 +567,7 @@ Meteor.methods({
                   _.extend(item, { _streamSource: 'youtube'})
                 });
               }
+              console.log('YouTube time: ' + (Date.now() - now))
               cb(null, youtubeResults);
             } catch (err){
               console.error('Error in streamSearchList: YouTube');
@@ -576,6 +578,7 @@ Meteor.methods({
         },
         twitchResults: (cb) => {
           Meteor.setTimeout(() => {
+            var now = Date.now();
             var twitchResults = { // default
               items: [],
               nextPage: 'end'
@@ -587,6 +590,7 @@ Meteor.methods({
                   _.extend(item, { _streamSource: 'twitch'})
                 });
               }
+              console.log('Twitch time: ' + (Date.now() - now))
               cb(null, twitchResults)
             } catch (err) {
               console.error('Error in streamSearchList: Twitch');
@@ -597,6 +601,7 @@ Meteor.methods({
         },
         esResults: (cb) => {
           Meteor.setTimeout(() => {
+            var now = Date.now();
             var esResults = { // default
               items: [],
               nextPage: 'end'
@@ -636,7 +641,11 @@ Meteor.methods({
                   .pluck('id')
                   .value();
 
+                console.log('Elasticsearch time: ' + (Date.now() - now))
+
                 var mongoResults = Streams.find({id: {$in: esItemIds}}).fetch(); // get full documents from mongo
+
+                console.log('Elasticsearch plus Mongo time: ' + (Date.now() - now))
 
                 esResults.items = _.chain(esItemIds) // sort results by elasticsearch order
                   .map(function(id){
