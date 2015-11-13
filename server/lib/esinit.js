@@ -130,6 +130,7 @@ resetES = function () {
           },
           "tags": {
             "type": "string",
+            "analyzer": "my_ngram_analyzer", //"analyzers" English and more
           },
           "description": {
             "type": "string",
