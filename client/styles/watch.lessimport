@@ -1127,6 +1127,14 @@
       width: 44px;
       height: 33px;
     }
+    .fg{
+      fill: @action-color;
+    }
+    &:hover{
+      .fg{
+        fill: @hover-action-color;
+      }
+    }
     position: absolute;
     left: -61px;
     bottom: 76px;
