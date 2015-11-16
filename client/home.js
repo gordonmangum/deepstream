@@ -78,7 +78,7 @@ Template.signin_overlay.onCreated(function() {
 
 Template.signin_overlay.helpers({
   showLoginForm (){
-    return Template.instance().showLoginForm.get();
+    return true; //Template.instance().showLoginForm.get();
   }
 });
 

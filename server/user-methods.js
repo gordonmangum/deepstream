@@ -45,7 +45,7 @@ Meteor.methods({
 
 
     checkUserSignup(username, email);
-    checkSignupCode(userInfo.signupCode);
+    //checkSignupCode(userInfo.signupCode);
 
     //get twitter info
     var res;
