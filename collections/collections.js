@@ -138,6 +138,10 @@ Schema.ContextReferenceProfile = new SimpleSchema({
   // Image
 
 
+  flickrOwnerId: {
+    type: String,
+    optional: true
+  },
   flickrFarm: {
     type: String,
     optional: true
