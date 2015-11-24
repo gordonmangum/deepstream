@@ -295,7 +295,8 @@ Template.watch_page.onCreated(function () {
       label: shortId,
       onCuratePage: this.data.onCuratePage(),
       userPathSegment: this.data.userPathSegment(),
-      streamPathSegment: this.data.streamPathSegment()
+      streamPathSegment: this.data.streamPathSegment(),
+      nonInteraction: 1
     });
   }
 
