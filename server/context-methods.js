@@ -458,13 +458,13 @@ Meteor.methods({
 
     return searchResults;
   },
-  embedlyEmbedResult (query) {
+  embedlyEmbedResult (url) {
     var res, requestParams;
-    check(query, String);
+    check(url, String);
     this.unblock();
 
     requestParams = {
-      url: query,
+      url: url.trim(),
       key: EMBEDLY_KEY,
       maxheight: 300,
       maxwidth: CONTEXT_WIDTH
@@ -475,13 +475,13 @@ Meteor.methods({
     });
     return res.data;
   },
-  embedlyExtractResult (query) {
+  embedlyExtractResult (url) {
     var res, requestParams;
-    check(query, String);
+    check(url, String);
     this.unblock();
 
     requestParams = {
-      url: query,
+      url: url.trim(),
       key: EMBEDLY_KEY,
       maxheight: 300,
       maxwidth: CONTEXT_WIDTH
