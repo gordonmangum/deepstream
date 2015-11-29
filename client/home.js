@@ -78,7 +78,7 @@ Template.signin_overlay.onCreated(function() {
 
 Template.signin_overlay.helpers({
   showLoginForm (){
-    return Template.instance().showLoginForm.get();
+    return true; //Template.instance().showLoginForm.get();
   }
 });
 
@@ -131,6 +131,13 @@ Template.home.onCreated(function () {
 
   this.noMoreStreamResults = new ReactiveVar();
   this.loadingStreamResults = new ReactiveVar();
+
+  this.autorun(() => {
+    if(Session.get('homeStreamListMode') !== 'search'){
+      that.noMoreStreamResults.set(null);
+      that.loadingStreamResults.set(null);
+    }
+  });
 
   this.streamSearch = function(query){
     that.loadingStreamResults.set(true);

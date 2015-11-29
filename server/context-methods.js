@@ -458,13 +458,13 @@ Meteor.methods({
 
     return searchResults;
   },
-  embedlyEmbedResult (query) {
+  embedlyEmbedResult (url) {
     var res, requestParams;
-    check(query, String);
+    check(url, String);
     this.unblock();
 
     requestParams = {
-      url: query,
+      url: url.trim(),
       key: EMBEDLY_KEY,
       maxheight: 300,
       maxwidth: CONTEXT_WIDTH
@@ -475,13 +475,13 @@ Meteor.methods({
     });
     return res.data;
   },
-  embedlyExtractResult (query) {
+  embedlyExtractResult (url) {
     var res, requestParams;
-    check(query, String);
+    check(url, String);
     this.unblock();
 
     requestParams = {
-      url: query,
+      url: url.trim(),
       key: EMBEDLY_KEY,
       maxheight: 300,
       maxwidth: CONTEXT_WIDTH
@@ -545,88 +545,146 @@ Meteor.methods({
     };
   },
   streamSearchList (query, option, page){
-    var youtubeResults, twitchResults;
     if (!page) {
       page = {};
     }
     page.es = page.es || 0;
 
-    if (page.youtube !== 'end'){
-      youtubeResults = searchYouTube.call(this, query, 'live', page.youtube || null);
-      _.each(youtubeResults.items, function(item){
-        _.extend(item, { _streamSource: 'youtube'})
-      });
-    } else { // youtube results are over
-      youtubeResults = {
-        items: [],
-        nextPage: 'end'
-      }
-    }
+    var searchResults = Meteor.wrapAsync(function(callback){
+      async.parallel({
+        youtubeResults: (cb) => {
+          Meteor.setTimeout(() => {
+            var now = Date.now();
+            var youtubeResults = { // default
+              items: [],
+              nextPage: 'end'
+            };
+            try{
+              if (page.youtube !== 'end'){
+                youtubeResults = searchYouTube.call(this, query, 'live', page.youtube || null);
 
-    if (page.twitch !== 'end'){
-      twitchResults = searchTwitch.call(this, query, page.twitch || null);
-      _.each(twitchResults.items, function(item){
-        _.extend(item, { _streamSource: 'twitch'})
-      });
-    } else { // twitch results are over
-      twitchResults = {
-        items: [],
-        nextPage: 'end'
-      }
-    }
+                _.each(youtubeResults.items, function(item){
+                  _.extend(item, { _streamSource: 'youtube'})
+                });
+              }
+              console.log('YouTube time: ' + (Date.now() - now))
+              cb(null, youtubeResults);
+            } catch (err){
+              console.error('Error in streamSearchList: YouTube');
+              console.error(err);
+              cb(null, youtubeResults); // swallow error and get other results
+            }
+          });
+        },
+        twitchResults: (cb) => {
+          Meteor.setTimeout(() => {
+            var now = Date.now();
+            var twitchResults = { // default
+              items: [],
+              nextPage: 'end'
+            };
+            try{
+              if (page.twitch !== 'end'){
+                twitchResults = searchTwitch.call(this, query, page.twitch || null);
+                _.each(twitchResults.items, function(item){
+                  _.extend(item, { _streamSource: 'twitch'})
+                });
+              }
+              console.log('Twitch time: ' + (Date.now() - now))
+              cb(null, twitchResults)
+            } catch (err) {
+              console.error('Error in streamSearchList: Twitch');
+              console.error(err);
+              cb(null, twitchResults); // swallow error and get other results
+            }
+          })
+        },
+        esResults: (cb) => {
+          Meteor.setTimeout(() => {
+            var now = Date.now();
+            var esResults = { // default
+              items: [],
+              nextPage: 'end'
+            };
+            try {
+              var esQuery = {
+                index: ES_CONSTANTS.index,
+                type: "stream",
+                size: ES_CONSTANTS.pageSize * (parseInt(process.env.ELASTICSEARCH_PAGESIZE_MULTIPLIER) || parseInt(Meteor.settings.ELASTICSEARCH_PAGESIZE_MULTIPLIER) || 2), // get twice as many as needed in case of duplicates
+                body: {
+                  "min_score": 0.1,
+                  query: {
+                    multi_match: {
+                      query: query,
+                      fields: ["title", "broadcaster", "tags", "description"],
+                    }
+                  }
+                }
+              };
 
-    var esQuery = {
-      index: ES_CONSTANTS.index,
-      type: "stream",
-      size: ES_CONSTANTS.pageSize * (parseInt(process.env.ELASTICSEARCH_PAGESIZE_MULTIPLIER) || parseInt(Meteor.settings.ELASTICSEARCH_PAGESIZE_MULTIPLIER) || 2), // get twice as many as needed in case of duplicates
-      body: {
-        "min_score": 0.1,
-        query: {
-          multi_match: {
-            query: query,
-            fields: ["title", "broadcaster", "tags", "description"],
-          }
+              if (page.es !== 'end') {
+                esQuery.from = ES_CONSTANTS.pageSize * page.es;
+                var results = searchES(esQuery);
+                var idsInResults = [];
+
+                esItemIds = _.chain(results.hits.hits) // get ids from elasticsearch
+                  .pluck("_source")
+                  .reject(function (item) {
+                    var id = item.id;
+                    if (_.contains(idsInResults, id)){
+                      return true
+                    } else {
+                      idsInResults.push(id);
+                    }
+                  })
+                  .first(ES_CONSTANTS.pageSize)
+                  .pluck('id')
+                  .value();
+
+                console.log('Elasticsearch time: ' + (Date.now() - now))
+
+                var mongoResults = Streams.find({id: {$in: esItemIds}}).fetch(); // get full documents from mongo
+
+                console.log('Elasticsearch plus Mongo time: ' + (Date.now() - now))
+
+                esResults.items = _.chain(esItemIds) // sort results by elasticsearch order
+                  .map(function(id){
+                    return _.findWhere(mongoResults, {id: id})
+                  })
+                  .compact()
+                  .value();
+
+
+                if (esResults.items.length === ES_CONSTANTS.pageSize)
+                  esResults.nextPage = page.es + 1;
+                else
+                  esResults.nextPage = 'end';
+              }
+              cb(null, esResults);
+            } catch (err) {
+              console.error('Error in streamSearchList: ElasticSearch');
+              console.error(err);
+              cb(null, esResults);
+            }
+          });
+
         }
-      }
-    };
+      }, function(error, results){
+        if(error){
+          console.error(error);
+          callback(error, results)
+        } else {
+          callback(null, results)
+        }
+      });
+    }, this)();
 
-    var nextESPage;
-
-    var esItems;
-
-    if (page.es !== 'end') {
-      esQuery.from = ES_CONSTANTS.pageSize * page.es;
-      var results = searchES(esQuery);
-      var idsInResults = [];
-
-      esItems = _.chain(results.hits.hits)
-        .pluck("_source")
-        .pluck("doc")
-        .reject(function (item) {
-          var id = item.id;
-          if (_.contains(idsInResults, id)){
-            return true
-          } else {
-            idsInResults.push(id);
-          }
-        })
-        .first(ES_CONSTANTS.pageSize)
-        .value();
-
-      if (esItems.length === ES_CONSTANTS.pageSize)
-        nextESPage = page.es + 1;
-      else
-        nextESPage = 'end';
-    } else {
-      esItems = [];
-      nextESPage = 'end'
-    }
-
-
-
+    esResults = searchResults.esResults;
+    twitchResults = searchResults.twitchResults;
+    youtubeResults = searchResults.youtubeResults;
 
     var nextPage = {
-      es: nextESPage,
+      es: esResults.nextPage,
       twitch: twitchResults.nextPage,
       youtube: youtubeResults.nextPage
     };
@@ -644,7 +702,7 @@ Meteor.methods({
     }
 
     var items = _.chain(youtubeResults.items)
-      .zip(esItems)
+      .zip(esResults.items)
       .zip(twitchResults.items)
       .flatten()
       .compact()
