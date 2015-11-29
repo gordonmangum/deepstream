@@ -484,6 +484,91 @@ Meteor.methods({
       }
     });
   },
+  suggestContext (shortId, contextBlock){
+    check(shortId, String);
+    check(contextBlock, Object);
+
+    var deepstream = Deepstreams.findOne({shortId: streamShortId}, {fields: {'onAir': 1}});
+
+    if(!deepstream || !deepstream.onAir){
+      throw new Meteor.Error('Deepstream not on air');
+    }
+
+    var user = Meteor.user();
+
+    if(!user){
+      throw new Meteor.Error('Must be logged in to suggest content');
+    }
+
+    var contextBlockToInsert = _.extend({}, _.omit(contextBlock, '_id'), {
+      streamShortId: streamShortId,
+      //authorId: this.userId,
+      //addedAt: new Date,
+      savedAt: new Date,
+      suggestedAt: new Date,
+      suggestedBy: this.userId,
+      suggestedByUsername: user.username,
+      suggestionStatus: 'pending'
+    });
+
+    return SuggestedContextBlocks.insert(contextBlockToInsert);
+  },
+  approveContext (contextBlockId){
+    check(contextBlockId, string);
+
+    var user = Meteor.user();
+
+    if(!user){
+      throw new Meteor.Error('Must be logged in to approve content');
+    }
+
+    var contextBlock = SuggestedContextBlocks.findOne(contextBlockId);
+
+    if(!contextBlock){
+      throw new Meteor.Error('Context block not found');
+    }
+
+    var contextBlockAddendum = {
+      suggestionStatus: 'approved',
+      moderatedAt: new Date,
+      moderatedBy: this.userId,
+      moderatedByUsername: user.username
+    };
+
+    var contextBlockAddedId = addContextToStream(contextBlock.streamShortId, _.extend({}, contextBlock, contextBlockAddendum));
+
+    if(!contextBlockAddedId){
+      throw new Meteor.Error('Failed to add context');
+    }
+
+    return SuggestedContextBlocks.update(contextBlockId, {$set: _.extend({}, contextBlockAddendum, {
+      idInDeepstream: contextBlockAddedId
+    })});
+  },
+  rejectContext (contextBlockId){
+    check(contextBlockId, string);
+
+    var user = Meteor.user();
+
+    if(!user){
+      throw new Meteor.Error('Must be logged in to reject content');
+    }
+
+    var contextBlock = SuggestedContextBlocks.findOne(contextBlockId);
+
+    if(!contextBlock){
+      throw new Meteor.Error('Context block not found');
+    }
+
+    var contextBlockAddendum = {
+      suggestionStatus: 'rejected',
+      moderatedAt: new Date,
+      moderatedBy: this.userId,
+      moderatedByUsername: user.username
+    };
+
+    return SuggestedContextBlocks.update(contextBlockId, {$set: contextBlockAddendum});
+  },
   favoriteDeepstream (streamShortId) {
     check(streamShortId, String);
     return changeFavorite.call(this, streamShortId, true);

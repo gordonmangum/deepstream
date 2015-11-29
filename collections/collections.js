@@ -380,6 +380,14 @@ this.ContextBlocks = new Mongo.Collection("context_blocks", {
 
 this.ContextBlocks.attachSchema(Schema.ContextBlocks);
 
+this.SuggestedContextBlocks = new Mongo.Collection("suggested_context_blocks", {
+  transform (doc) {
+    return newTypeSpecificContextBlock(doc);
+  }
+});
+
+this.SuggestedContextBlocks.attachSchema(Schema.ContextBlocks);
+
 
 
 this.Streams = new Mongo.Collection("streams");
