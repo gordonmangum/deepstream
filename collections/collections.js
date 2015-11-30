@@ -369,7 +369,37 @@ Schema.ContextBlocks = new SimpleSchema({
   searchOption: {
     type: String,
     optional:true
-  }
+  },
+  // suggested context
+  suggestionStatus: {
+    type: String,
+    allowedValues: ['pending', 'approved', 'rejected'],
+    optional:true
+  },
+  suggestedAt: {
+    type: Date,
+    optional:true
+  },
+  suggestedBy: {
+    type: String,
+    optional:true
+  },
+  suggestedByUsername: {
+    type: String,
+    optional:true
+  },
+  moderatedAt: {
+    type: Date,
+    optional:true
+  },
+  moderatedBy: {
+    type: String,
+    optional:true
+  },
+  moderatedByUsername: {
+    type: String,
+    optional:true
+  },
 });
 
 this.ContextBlocks = new Mongo.Collection("context_blocks", {

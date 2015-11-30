@@ -502,8 +502,8 @@ Meteor.methods({
 
     var contextBlockToInsert = _.extend({}, _.omit(contextBlock, '_id'), {
       streamShortId: streamShortId,
-      //authorId: this.userId,
-      //addedAt: new Date,
+      authorId: this.userId,
+      addedAt: new Date,
       savedAt: new Date,
       suggestedAt: new Date,
       suggestedBy: this.userId,

@@ -21,6 +21,15 @@ ContextBlocks._ensureIndex({
   deleted: 1
 });
 
+SuggestedContextBlocks._ensureIndex({
+  streamShortId: 1
+});
+
+SuggestedContextBlocks._ensureIndex({
+  suggestionStatus: 1
+});
+
+
 Meteor.users._ensureIndex({
   username: 1
 });
