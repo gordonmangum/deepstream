@@ -171,6 +171,13 @@ Meteor.publish("deepstreamContext", function(streamShortId) {
   });
 });
 
+Meteor.publish("deepstreamSuggestedContext", function(streamShortId) {
+  check(streamShortId, String);
+  return SuggestedContextBlocks.find({streamShortId: streamShortId, suggestionStatus: 'pending'},{
+    fields: contextFields
+  });
+});
+
 Meteor.publish("deepstreamPreviewContext", function(streamShortId) {
   check(streamShortId, String);
   return ContextBlocks.find({streamShortId: streamShortId, deleted: {$ne: true}, type: {$in: HOMEPAGE_PREVIEW_CONTEXT_TYPES}},{

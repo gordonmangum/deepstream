@@ -265,7 +265,7 @@ unthrottledUpdateActiveContext = function(){
     return;
   }
 
-  var container = $('.context-area.list-mode');
+  var container = $('.context-browser .context-area.list-mode');
 
   var containerOffset = container.offset();
 
@@ -285,7 +285,7 @@ unthrottledUpdateActiveContext = function(){
     activeId =  _.last(orderedContextIds);
   } else {
     var contextOffsetObjects = _.map(orderedContextIds, (id) => {
-        var e = $('.list-item-context-plus-annotation[data-context-id=' + id + ']');
+        var e = $('.context-browser .list-item-context-plus-annotation[data-context-id=' + id + ']');
         var offset = e.offset();
         if (offset){
           return {id: id, offset: offset.top, height: e.outerHeight()};

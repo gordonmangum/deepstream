@@ -524,7 +524,7 @@ Meteor.methods({
     return success
   },
   approveContext (contextBlockId){
-    check(contextBlockId, string);
+    check(contextBlockId, String);
 
     var user = Meteor.user();
 
@@ -532,7 +532,7 @@ Meteor.methods({
       throw new Meteor.Error('Must be logged in to approve content');
     }
 
-    var contextBlock = SuggestedContextBlocks.findOne(contextBlockId);
+    var contextBlock = SuggestedContextBlocks.findOne(contextBlockId, {transform: null});
 
     if(!contextBlock){
       throw new Meteor.Error('Context block not found');
@@ -545,7 +545,7 @@ Meteor.methods({
       moderatedByUsername: user.username
     };
 
-    var contextBlockAddedId = addContextToStream(contextBlock.streamShortId, _.extend({}, contextBlock, contextBlockAddendum));
+    var contextBlockAddedId = addContextToStream.call(this, contextBlock.streamShortId, _.extend({}, contextBlock, contextBlockAddendum));
 
     if(!contextBlockAddedId){
       throw new Meteor.Error('Failed to add context');
@@ -556,7 +556,7 @@ Meteor.methods({
     })});
   },
   rejectContext (contextBlockId){
-    check(contextBlockId, string);
+    check(contextBlockId, String);
 
     var user = Meteor.user();
 

@@ -386,7 +386,12 @@
 <template name="context_browser_area">
   {{> context_card_column}}
   <div class="context-timeline-switcher">
-    <button class="show-context-browser {{#unless showTimeline}}active{{/unless}}">
+    {{#if curateMode}}
+      <button class="show-suggestions {{#if showSuggestions}}active{{/if}}" disabled='{{#unless showShowSuggestionsButton}}disabled{{/unless}}'>
+        S
+      </button>
+    {{/if}}
+    <button class="show-context-browser {{#if showContextBrowser}}active{{/if}}">
       <div class="rectangles">
         <div class="rectangle"></div>
         <div class="rectangle"></div>
@@ -399,10 +404,12 @@
   {{#if showChat}}
     {{> unimplemented_chat_section}}
   {{else}}
-      {{> timeline_section show=showTimeline}}
-      {{> context_browser show=showContextBrowser deepstream=this}}
+    {{> context_browser show=showSuggestions contextBlocks=pendingSuggestions}}
+    {{> timeline_section show=showTimeline}}
+    {{> context_browser show=showContextBrowser contextBlocks=orderedContext}}
   {{/if}}
 </template>
+
 
 <template name="context_card_column">
   <div class="card-column">
@@ -415,12 +422,13 @@
 </template>
 
 <template name="context_browser">
-  <div class="context-browser {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -20}}px">
-    {{#with deepstream}}
+  <div class="{{#if suggestionMode}}suggestion-browser{{else}}context-browser{{/if}} {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -20}}px">
       {{#if curateMode}}
-        <div class="add-new-context-row">
-          <button class="add-new-context">{{> add_icon}}</button>
-        </div>
+        {{#unless suggestionMode}}
+          <div class="add-new-context-row">
+            <button class="add-new-context">{{> add_icon}}</button>
+          </div>
+        {{/unless}}
       {{/if}}
 
       {{#if soloSidebarContextMode}}
@@ -438,7 +446,6 @@
         {{/each}}
         <div class="bottom-bar"></div>
       </div>
-    {{/with}}
   </div>
 </template>
 
@@ -479,6 +486,12 @@
     </div>
     {{#if showAnnotationSection}}
       {{> annotation_section}}
+    {{/if}}
+    {{#if suggestionMode}}
+      <div class="moderation-buttons">
+        <button class="approve-suggestion">Approve</button>
+        <button class="reject-suggestion">Reject</button>
+      </div>
     {{/if}}
   </div>
 </template>

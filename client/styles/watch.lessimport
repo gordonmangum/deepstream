@@ -389,10 +389,10 @@
       }
     }
 
-    .show-timeline {
+    .show-timeline, .show-suggestions {
       color: @medium-color;
 
-      &:hover, .active {
+      &:hover, &.active {
         color: @white-icon-color;
       }
     }
@@ -580,7 +580,7 @@
 
 @contextAreaPadding: 10px;
 
-.context-browser{
+.context-browser, .suggestion-browser{
   overflow: hidden;
   display: flex;
   flex-flow: column;
@@ -1445,7 +1445,7 @@
 }
 
 
-.context-browser {
+.context-browser, .suggestion-browser {
   &.hide {
     display: none;
   }
