@@ -484,8 +484,8 @@ Meteor.methods({
       }
     });
   },
-  suggestContext (shortId, contextBlock){
-    check(shortId, String);
+  suggestContext (streamShortId, contextBlock){
+    check(streamShortId, String);
     check(contextBlock, Object);
 
     var deepstream = Deepstreams.findOne({shortId: streamShortId}, {fields: {'onAir': 1}});
@@ -511,7 +511,17 @@ Meteor.methods({
       suggestionStatus: 'pending'
     });
 
-    return SuggestedContextBlocks.insert(contextBlockToInsert);
+
+
+    var success = SuggestedContextBlocks.insert(contextBlockToInsert);
+
+    if (Meteor.isClient && success) {
+      Session.set("previousMediaDataType", Session.get('mediaDataType'));
+      Session.set("mediaDataType", null); // leave search mode
+      notifySuccess("Thanks for suggesting some great content!");
+    }
+
+    return success
   },
   approveContext (contextBlockId){
     check(contextBlockId, string);
@@ -558,6 +568,12 @@ Meteor.methods({
 
     if(!contextBlock){
       throw new Meteor.Error('Context block not found');
+    }
+
+    var deepstream = Deepstreams.findOne({shortId: contextBlock.streamShortId}, {fields: {'curatorIds': 1}});
+
+    if(!_.contains(deepstream.curatorIds, this.userId)){
+      throw new Meteor.Error('Only curators can moderate suggestions');
     }
 
     var contextBlockAddendum = {

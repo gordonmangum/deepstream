@@ -193,7 +193,9 @@
           {{else}}
             <a class="report-inappropriate-content" href="mailto:deepstream@media.mit.edu?subject=Inappropriate Content in DeepStream '{{title}}' - {{shortId}}
             &body=(Please let us know which content on this page is inappropriate and we'll get right on it!)" target="_blank">{{> inappropriate_content_icon}}</a>
-            <button class="suggest-content">Suggest Content</button>
+            {{#unless showContextSearch}}
+              <button class="suggest-content">Suggest Content</button>
+            {{/unless}}
 
           {{/if}}
 
@@ -273,11 +275,13 @@
 <template name="content_icons">
   <div class="content-icons">
     <ol>
-      <li>
-        <button class='stream-button {{#if stream}}active{{/if}}'>
-          {{> stream_icon }}
-        </button>
-      </li>
+      {{#if isCurator}}
+        <li>
+          <button class='stream-button {{#if stream}}active{{/if}}'>
+            {{> stream_icon }}
+          </button>
+        </li>
+      {{/if}}
       <li>
         <button class='news-button {{#if news}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> news_icon }}

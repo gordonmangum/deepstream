@@ -108,25 +108,45 @@ window.addStream = function(stream, template) {
   });
 };
 
-window.addContext = function(contextBlock) {
-  Session.set('saveState', 'saving');
+window.addContext = function(contextBlock) { // add or suggest
+  var user;
 
-  contextBlock.rank = 0; // places above existing ranked context
+  if (user = Meteor.user()) {
+    contextBlock.authorId = user._id;
+    contextBlock.rank = 0; // places above existing ranked context
+  } else {
+    notifyInfo('Please log in to suggest content');
+    Session.set('signingIn', true);
+    return;
+  }
 
-  Meteor.setTimeout(function(){ // scroll to top and focus annotation box
-    $('.context-area').scrollTop(0);
-    $('.context-section[data-context-id=' + contextBlock._id + '] textarea').focus();
-  });
+  if (Session.get('curateMode')) {
+    Session.set('saveState', 'saving');
 
-  Meteor.call('addContextToStream', Session.get("streamShortId"), contextBlock, function(err, contextId){
-    saveCallback(err, contextId);
-  });
+    Meteor.setTimeout(function () { // scroll to top and focus annotation box
+      $('.context-area').scrollTop(0);
+      $('.context-section[data-context-id=' + contextBlock._id + '] textarea').focus();
+    });
+
+    Meteor.call('addContextToStream', Session.get("streamShortId"), contextBlock, function (err, contextId) {
+      saveCallback(err, contextId);
+    });
+  } else { // suggest content
+    Meteor.call('suggestContext', Session.get("streamShortId"), contextBlock, function (err, contextId) {
+      saveCallback(err, contextId);
+    });
+  }
 };
 
 
 
 Template.link_twitter.events({
   "click button" () {
+    if (!Meteor.user()){
+      notifyInfo('Please log in to link your twitter account');
+      return
+    }
+
     Meteor.linkWithTwitter({
       requestPermissions: ['user']
     }, function (err) {

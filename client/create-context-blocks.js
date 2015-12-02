@@ -217,7 +217,6 @@ var searchAPI = function(query) {
       .each(function(item, i) {
         _.extend(item, {
           type : type,
-          authorId : Meteor.user()._id,
           searchQuery : query,
           searchOption : option,
           nextPage: nextPage,
@@ -366,7 +365,6 @@ Template.create_image_section.onCreated(function(){
             height: doc.height
           },
           source: Session.get('newHorizontalDataSource'),
-          authorId : Meteor.user()._id,
           fullDetails: doc
         }));
       }
@@ -472,7 +470,6 @@ Template.create_news_section.onCreated(function() {
 
       that.focusResult.set(new NewsBlock({
         fullDetails: result,
-        authorId : Meteor.user()._id,
         searchQuery: url,
         fromEmbedly: true,
         version: 'em1',
@@ -524,7 +521,6 @@ Template.create_link_section.onCreated(function() {
       var addPropertiesToBaseline = function(obj){
         var newObj = _.extend({}, obj, {
           fullDetails: result,
-          authorId : Meteor.user()._id,
           searchQuery: url,
           fromEmbedly: true,
           version: 'em1'
@@ -697,8 +693,7 @@ Template.create_map_section.onCreated(function() {
       reference: {
         mapQuery: inputs.query,
         mapType: inputs.option
-      },
-      authorId : Meteor.user()._id
+      }
     }))
   };
 });
@@ -744,7 +739,6 @@ Template.create_text_section.events({
     e.preventDefault()
     addContext(new TextBlock({
       content: template.$('textarea[name=content]').val(),
-      authorId: Meteor.user()._id,
       source: 'plaintext'
     }));
   },

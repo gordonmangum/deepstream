@@ -230,12 +230,6 @@ Template.watch_page.onCreated(function () {
   });
 
   this.autorun(function(){
-    if (!Meteor.user() && !Meteor.loggingIn() && Session.get('mediaDataType')) { // if no user
-      Session.set('mediaDataType', null); // there can be no search data type
-    }
-  });
-
-  this.autorun(function(){
     Session.set("streamShortId", that.data.shortId());
   });
 
@@ -593,12 +587,7 @@ Template.watch_page.events({
     Session.set('curateMode', true);
   },
   'click .suggest-content' (){
-    if(Meteor.user()){
-      Session.set('mediaDataType', Session.get('previousMediaDataType') || 'image');
-    } else {
-      notifyInfo('You must be logged in to suggest content');
-
-    }
+    Session.set('mediaDataType', Session.get('previousMediaDataType') || 'image');
   },
   'click .publish' (e, t){
     if (this.creationStep === 'go_on_air') {
