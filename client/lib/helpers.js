@@ -187,7 +187,7 @@ window.horizontalBlockHelpers = _.extend({}, {
   },
   annotation: textContentHelper,
   showAnnotationSection () {
-    return this.annotationAllowed && (Session.get('curateMode') || this.annotation);
+    return this.annotationAllowed && (Session.get('curateMode') || this.annotation) && !window.suggestionMode();
   }
 });
 
@@ -201,7 +201,7 @@ window.count = function(){
 window.getCurrentContext = function(){
   var currentContextId = Session.get("currentContextId");
   if (currentContextId){
-    return ContextBlocks.findOne(currentContextId);
+    return ContextBlocks.findOne(currentContextId) || SuggestedContextBlocks.findOne(currentContextId) ;
   }
 };
 
@@ -308,6 +308,10 @@ unthrottledUpdateActiveContext = function(){
 
 
 window.updateActiveContext = _.throttle(unthrottledUpdateActiveContext, 50, {leading: false});
+
+window.suggestionMode = function(){
+  return Session.equals('contextMode', 'suggestions')
+};
 
 window.isMobile = function(){
   return (Meteor.Device.isPhone()) && !Meteor.Device.isBot()
