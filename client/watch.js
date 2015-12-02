@@ -230,6 +230,12 @@ Template.watch_page.onCreated(function () {
   });
 
   this.autorun(function(){
+    if (!Meteor.user() && !Meteor.loggingIn() && Session.get('mediaDataType')) { // if no user
+      Session.set('mediaDataType', null); // there can be no search data type
+    }
+  });
+
+  this.autorun(function(){
     Session.set("streamShortId", that.data.shortId());
   });
 
@@ -504,7 +510,7 @@ Template.watch_page.helpers({
     return Session.get('showChat', true); // TODO this is probably not what we want
   },
   showContextSearch (){
-    return Session.get('mediaDataType') && Session.get("curateMode") && Session.get('mediaDataType') !=='webcam';
+    return Session.get('mediaDataType') && Session.get('mediaDataType') !=='webcam';
   },
   showPreviewEditButton (){
     return !this.creationStep || this.creationStep === 'go_on_air';
@@ -585,6 +591,14 @@ Template.watch_page.events({
   },
   'click .return-to-curate' (){
     Session.set('curateMode', true);
+  },
+  'click .suggest-content' (){
+    if(Meteor.user()){
+      Session.set('mediaDataType', Session.get('previousMediaDataType') || 'image');
+    } else {
+      notifyInfo('You must be logged in to suggest content');
+
+    }
   },
   'click .publish' (e, t){
     if (this.creationStep === 'go_on_air') {
