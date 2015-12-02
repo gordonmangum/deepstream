@@ -400,6 +400,10 @@ Schema.ContextBlocks = new SimpleSchema({
     type: String,
     optional:true
   },
+  idInDeepstream: {
+    type: String,
+    optional:true
+  },
 });
 
 this.ContextBlocks = new Mongo.Collection("context_blocks", {
