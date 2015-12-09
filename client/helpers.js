@@ -10,8 +10,8 @@ Handlebars.registerHelper("curateMode", function() {
   return Session.get("curateMode");
 });
 
-Handlebars.registerHelper("suggestionMode", function() {
-  return suggestionMode();
+Handlebars.registerHelper("browseSuggestionsMode", function() {
+  return browseSuggestionsMode();
 });
 
 Handlebars.registerHelper("dateInPast", function(date) {

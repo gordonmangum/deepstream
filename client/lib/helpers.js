@@ -187,7 +187,7 @@ window.horizontalBlockHelpers = _.extend({}, {
   },
   annotation: textContentHelper,
   showAnnotationSection () {
-    return this.annotationAllowed && (Session.get('curateMode') || this.annotation) && !window.suggestionMode();
+    return this.annotationAllowed && (Session.get('curateMode') || this.annotation) && !window.browseSuggestionsMode();
   }
 });
 
@@ -309,7 +309,7 @@ unthrottledUpdateActiveContext = function(){
 
 window.updateActiveContext = _.throttle(unthrottledUpdateActiveContext, 50, {leading: false});
 
-window.suggestionMode = function(){
+window.browseSuggestionsMode = function(){
   return Session.equals('contextMode', 'suggestions')
 };
 

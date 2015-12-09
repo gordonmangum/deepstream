@@ -748,7 +748,7 @@ Template.create_text_section.events({
 Template.create_twitter_section.helpers({
   twitterUser () {
     var user = Meteor.user();
-    return user.services && user.services.twitter && user.services.twitter.id;
+    return user && user.services && user.services.twitter && user.services.twitter.id;
   }
 });
 

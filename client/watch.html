@@ -277,53 +277,53 @@
     <ol>
       {{#if isCurator}}
         <li>
-          <button title="Add livestreams" class='stream-button {{#if stream}}active{{/if}}'>
+          <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} livestreams" class='stream-button {{#if stream}}active{{/if}}'>
             {{> stream_icon }}
           </button>
         </li>
       {{/if}}
       <li>
-        <button title="Add news stories" class='news-button {{#if news}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} news stories" class='news-button {{#if news}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> news_icon }}
         </button>
       </li>
       <li>
-        <button title="Add text" class='text-button {{#if text}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} text" class='text-button {{#if text}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> text_icon }}
         </button>
       </li>
       <li>
-        <button title="Add maps" class='map-button {{#if map}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} maps" class='map-button {{#if map}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> map_icon }}
         </button>
       </li>
       <li>
-        <button title="Add images" class='image-button {{#if image}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} images" class='image-button {{#if image}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> image_icon }}
         </button>
       </li>
       <!--<li>-->
-      <!--<button title="" class='wikipedia-button {{#if wikipedia}}active{{/if}}' disabled='{{disableAllButStream}}'>-->
+      <!--<button title="{{#unless isCurator}}Suggest{{else}}"{{/unless}} class='wikipedia-button {{#if wikipedia}}active{{/if}}' disabled='{{disableAllButStream}}'>-->
       <!--{{> wikipedia_icon }}-->
       <!--</button>-->
       <!--</li>-->
       <li>
-        <button title="Add videos" class='video-button {{#if video}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} videos" class='video-button {{#if video}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> video_icon }}
         </button>
       </li>
       <li>
-        <button title="Add tweets" class='twitter-button {{#if twitter}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} tweets" class='twitter-button {{#if twitter}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> twitter_icon }}
         </button>
       </li>
       <li>
-        <button title="Add audio" class='audio-button {{#if audio}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} audio" class='audio-button {{#if audio}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> audio_icon }}
         </button>
       </li>
       <li>
-        <button title="Add links" class='link-button {{#if link}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} links" class='link-button {{#if link}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> link_icon }}
         </button>
       </li>
@@ -422,9 +422,9 @@
 </template>
 
 <template name="context_browser">
-  <div class="{{#if suggestionMode}}suggestion-browser{{else}}context-browser{{/if}} {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -20}}px">
+  <div class="{{#if browseSuggestionsMode}}suggestion-browser{{else}}context-browser{{/if}} {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -20}}px">
       {{#if curateMode}}
-        {{#unless suggestionMode}}
+        {{#unless browseSuggestionsMode}}
           <div class="add-new-context-row">
             <button class="add-new-context">{{> add_icon}}</button>
           </div>
@@ -487,7 +487,7 @@
     {{#if showAnnotationSection}}
       {{> annotation_section}}
     {{/if}}
-    {{#if suggestionMode}}
+    {{#if browseSuggestionsMode}}
       <div class="moderation-buttons">
         <button class="approve-suggestion">Approve</button>
         <button class="reject-suggestion">Reject</button>
