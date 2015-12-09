@@ -232,7 +232,7 @@
 <template name="stream_li">
   {{#with stream}}
     <li data-stream-reference-id="{{reference.id}}" data-stream-id="{{_id}}" class="stream {{#if active}}active{{/if}}">
-      <button class="set-main-stream {{#if active}}active{{else}}inactive{{/if}} {{#if previewMode}}preview-mode{{/if}}">
+      <button title="{{title}} by {{username}}" class="set-main-stream {{#if active}}active{{else}}inactive{{/if}} {{#if previewMode}}preview-mode{{/if}}">
         {{#if live}}
           <div class="mini-live-indicator">
             LIVE
