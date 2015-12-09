@@ -387,6 +387,9 @@ Template.stream_preview.events({
 Template.stream_preview.helpers({
   'showPreviewOverlay' (){
     return Session.equals('showPreviewOverlayForStreamId', this._id);
+  },
+  'showViews' (){
+    return (typeof this.totalViews()) !== "undefined"
   }
 });
 
