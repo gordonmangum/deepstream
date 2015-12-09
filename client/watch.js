@@ -173,7 +173,7 @@ Template.watch_page.onCreated(function () {
 
   window.bambuserCuratorWebcamPlayerReady = function(){
     console.log('Bambuser curator webcam player ready');
-    $('.curator-webcam-stream-container').addClass('ready'); // TODO, do this correctly
+    $('.curator-webcam-stream-container').addClass('ready'); // TO-DO use reactive / session vars
   };
 
   window.twitchPlayerEventCallback = function(events){
