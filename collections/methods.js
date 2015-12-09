@@ -518,7 +518,7 @@ Meteor.methods({
     if (Meteor.isClient && success) {
       Session.set("previousMediaDataType", Session.get('mediaDataType'));
       Session.set("mediaDataType", null); // leave search mode
-      notifySuccess("Thanks for suggesting some great content!");
+      notifySuccess("Thanks for suggesting some great content! We'll let you know when it gets approved!");
     }
 
     return success

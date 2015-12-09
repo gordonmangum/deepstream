@@ -387,17 +387,17 @@
   {{> context_card_column}}
   <div class="context-timeline-switcher">
     {{#if curateMode}}
-      <button class="show-suggestions {{#if showSuggestions}}active{{/if}}" disabled='{{#unless showShowSuggestionsButton}}disabled{{/unless}}'>
+      <button title="User suggestions" class="show-suggestions {{#if showSuggestions}}active{{/if}}" disabled='{{#unless showShowSuggestionsButton}}disabled{{/unless}}'>
         S
       </button>
     {{/if}}
-    <button class="show-context-browser {{#if showContextBrowser}}active{{/if}}">
+    <button title="Context" class="show-context-browser {{#if showContextBrowser}}active{{/if}}">
       <div class="rectangles">
         <div class="rectangle"></div>
         <div class="rectangle"></div>
       </div>
     </button>
-    <button class="show-timeline {{#if showTimeline}}active{{/if}}" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>
+    <button title="Twitter timeline" class="show-timeline {{#if showTimeline}}active{{/if}}" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>
       #
     </button>
   </div>
@@ -481,7 +481,9 @@
         {{/unless}}
       </div>
       {{#if curateMode}}
-        <button title="delete" class="delete-context">{{> close_circle}}</button>
+        {{#unless browseSuggestionsMode}}
+          <button title="delete" class="delete-context">{{> close_circle}}</button>
+        {{/unless}}
       {{/if}}
     </div>
     {{#if showAnnotationSection}}
