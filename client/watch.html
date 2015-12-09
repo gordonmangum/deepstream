@@ -160,7 +160,7 @@
         </div>
 
         <div class="curator-menu">
-          <button class="transparency-button">{{> transparency_icon}}</button>
+          <button title="{{#if transparencyMode}}Switch to inset mode{{else}}Switch to transparency mode{{/if}}" class="transparency-button">{{> transparency_icon}}</button>
 
           <div class="curator-info">
               <div class="curator-pic">
@@ -174,7 +174,7 @@
 
           {{#if curateMode}}
             <div class="webcam-button-container">
-              <button class="webcam">{{> webcam_icon}}</button>
+              <button title="Set up webcam narration" class="webcam">{{> webcam_icon}}</button>
             </div>
           {{/if}}
 
@@ -191,7 +191,7 @@
               {{/if}}
             {{/if}}
           {{else}}
-            <a class="report-inappropriate-content" href="mailto:deepstream@media.mit.edu?subject=Inappropriate Content in DeepStream '{{title}}' - {{shortId}}
+            <a title="Report inappropriate content" class="report-inappropriate-content" href="mailto:deepstream@media.mit.edu?subject=Inappropriate Content in DeepStream '{{title}}' - {{shortId}}
             &body=(Please let us know which content on this page is inappropriate and we'll get right on it!)" target="_blank">{{> inappropriate_content_icon}}</a>
             {{#unless showContextSearch}}
               <button class="suggest-content">Suggest Content</button>
@@ -277,53 +277,53 @@
     <ol>
       {{#if isCurator}}
         <li>
-          <button class='stream-button {{#if stream}}active{{/if}}'>
+          <button title="Add livestreams" class='stream-button {{#if stream}}active{{/if}}'>
             {{> stream_icon }}
           </button>
         </li>
       {{/if}}
       <li>
-        <button class='news-button {{#if news}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="Add news stories" class='news-button {{#if news}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> news_icon }}
         </button>
       </li>
       <li>
-        <button class='text-button {{#if text}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="Add text" class='text-button {{#if text}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> text_icon }}
         </button>
       </li>
       <li>
-        <button class='map-button {{#if map}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="Add maps" class='map-button {{#if map}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> map_icon }}
         </button>
       </li>
       <li>
-        <button class='image-button {{#if image}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="Add images" class='image-button {{#if image}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> image_icon }}
         </button>
       </li>
       <!--<li>-->
-      <!--<button class='wikipedia-button {{#if wikipedia}}active{{/if}}' disabled='{{disableAllButStream}}'>-->
+      <!--<button title="" class='wikipedia-button {{#if wikipedia}}active{{/if}}' disabled='{{disableAllButStream}}'>-->
       <!--{{> wikipedia_icon }}-->
       <!--</button>-->
       <!--</li>-->
       <li>
-        <button class='video-button {{#if video}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="Add videos" class='video-button {{#if video}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> video_icon }}
         </button>
       </li>
       <li>
-        <button class='twitter-button {{#if twitter}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="Add tweets" class='twitter-button {{#if twitter}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> twitter_icon }}
         </button>
       </li>
       <li>
-        <button class='audio-button {{#if audio}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="Add audio" class='audio-button {{#if audio}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> audio_icon }}
         </button>
       </li>
       <li>
-        <button class='link-button {{#if link}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="Add links" class='link-button {{#if link}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> link_icon }}
         </button>
       </li>
@@ -462,7 +462,7 @@
 
 <template name="solo_context_section">
   <div class="narrative-section context-section solo-context-section {{#if type}}{{type}}-card{{/if}}" data-context-id="{{_id}}">
-    <button class="close">{{> close_circle}}</button>
+    <button title="close" class="close">{{> close_circle}}</button>
     {{#if showProvider}}
       <div class="provider">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}{{providerName}}</div>
     {{/if}}
@@ -481,7 +481,7 @@
         {{/unless}}
       </div>
       {{#if curateMode}}
-        <button class="delete-context">{{> close_circle}}</button>
+        <button title="delete" class="delete-context">{{> close_circle}}</button>
       {{/if}}
     </div>
     {{#if showAnnotationSection}}
