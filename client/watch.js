@@ -876,12 +876,22 @@ Template.context_browser.events({
   },
   'click .approve-suggestion' (e, t) {
     analytics.track('Click approve suggestion', trackingInfoFromContext(this));
-    Meteor.call('approveContext', this._id, basicErrorHandler);
+    Meteor.call('approveContext', this._id, function(err, success){
+      if(t.data.contextBlocks.count() === 0){ // if this was the last suggestion
+        Session.set('contextMode', 'context');
+      }
+      return basicErrorHandler(err, success)
+    });
   },
   'click .reject-suggestion' (e, t) {
     analytics.track('Click reject suggestion', trackingInfoFromContext(this));
     t.$('.list-item-context-plus-annotation[data-context-id=' + this._id + ']').fadeOut(500, () => {
-      Meteor.call('rejectContext', this._id, basicErrorHandler);
+      Meteor.call('rejectContext', this._id, function(err, success){
+        if(t.data.contextBlocks.count() === 0){ // if this was the last suggestion
+          Session.set('contextMode', 'context');
+        }
+        return basicErrorHandler(err, success)
+      });
     });
   },
   'click .context-section .clickable' (e, t){
