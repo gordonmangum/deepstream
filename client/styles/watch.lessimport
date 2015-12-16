@@ -911,12 +911,14 @@
   &:not(:first-child){
     margin-top: 15px;
   }
+  .annotation-section{
+    margin-top: 1px;
+  }
 }
 
 .list-item-context-section{
   line-height: 0;
 
-  margin-bottom: 1px;
   .video-preview{
     @playIconSize: 60px;
     position: relative;
@@ -988,9 +990,16 @@
   .annotation{
     border-top: 3px solid @dark-color;
   }
+
 }
 
-
+.suggested-by{
+  font-style: italic;
+  font-size: 11px;
+  text-align: right;
+  .padding-sides(6px);
+  background-color: @context-background-color;
+}
 
 
 .link-section{

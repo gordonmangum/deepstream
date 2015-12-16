@@ -489,6 +489,9 @@
     {{#if showAnnotationSection}}
       {{> annotation_section}}
     {{/if}}
+    {{#if suggestedByUsername}}
+      <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
+    {{/if}}
     {{#if browseSuggestionsMode}}
       <div class="moderation-buttons">
         <button class="approve-suggestion">Approve</button>
