@@ -404,7 +404,7 @@
   {{#if showChat}}
     {{> unimplemented_chat_section}}
   {{else}}
-    {{> context_browser show=showSuggestions contextBlocks=pendingSuggestions}}
+    {{> context_browser show=showSuggestions suggestions=true contextBlocks=pendingSuggestions}}
     {{> timeline_section show=showTimeline}}
     {{> context_browser show=showContextBrowser contextBlocks=orderedContext}}
   {{/if}}
@@ -422,7 +422,7 @@
 </template>
 
 <template name="context_browser">
-  <div class="{{#if browseSuggestionsMode}}suggestion-browser{{else}}context-browser{{/if}} {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -20}}px">
+  <div class="{{#if suggestions}}suggestion-browser{{else}}context-browser{{/if}} {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -20}}px">
       {{#if curateMode}}
         {{#unless browseSuggestionsMode}}
           <div class="add-new-context-row">
