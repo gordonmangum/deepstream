@@ -838,7 +838,6 @@ Template.context_browser_area.onRendered(function(){
 
 Template.context_browser.onRendered(function() {
   Tracker.autorun(() => {
-    console.log(this.data.contextBlocks)
     this.data.contextBlocks;
     updateActiveContext();
   });

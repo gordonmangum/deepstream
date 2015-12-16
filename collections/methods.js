@@ -488,7 +488,7 @@ Meteor.methods({
     check(streamShortId, String);
     check(contextBlock, Object);
 
-    var deepstream = Deepstreams.findOne({shortId: streamShortId}, {fields: {'onAir': 1}});
+    var deepstream = Deepstreams.findOne({shortId: streamShortId}, {fields: {'onAir': 1, curatorIds: 1, title:1, userPathSegment: 1, streamPathSegment: 1}});
 
     if(!deepstream || !deepstream.onAir){
       throw new Meteor.Error('Deepstream not on air');
@@ -515,10 +515,28 @@ Meteor.methods({
 
     var success = SuggestedContextBlocks.insert(contextBlockToInsert);
 
-    if (Meteor.isClient && success) {
-      Session.set("previousMediaDataType", Session.get('mediaDataType'));
-      Session.set("mediaDataType", null); // leave search mode
-      notifySuccess("Thanks for suggesting some great content! We'll let you know when it gets approved!");
+    if(success){
+      if (Meteor.isClient) {
+        Session.set("previousMediaDataType", Session.get('mediaDataType'));
+        Session.set("mediaDataType", null); // leave search mode
+        notifySuccess("Thanks for suggesting some great content! We'll let you know when it gets approved!");
+      }
+
+      if (Meteor.isServer) {
+        var curatorIds = deepstream.curatorIds;
+        Meteor.users.find({_id: {$in: curatorIds}}, {fields:{'emails.address':1}}).forEach(function(curator){
+          var email = curator.emails[0].address;
+          if (email){
+            Email.send({
+              to: email,
+              from: 'noreply@example.com',
+              subject: 'New content suggested for your DeepStream: ' + deepstream.title,
+              html: user.username + ' just suggested some new content for ' + deepstream.title +
+                '. You can check it out and decide whether or not to include it at: ' + Meteor.absoluteUrl('curate/' + deepstream.userPathSegment + '/' + deepstream.streamPathSegment)
+            })
+          }
+        })
+      }
     }
 
     return success
@@ -551,9 +569,28 @@ Meteor.methods({
       throw new Meteor.Error('Failed to add context');
     }
 
-    return SuggestedContextBlocks.update(contextBlockId, {$set: _.extend({}, contextBlockAddendum, {
+    var success = SuggestedContextBlocks.update(contextBlockId, {$set: _.extend({}, contextBlockAddendum, {
       idInDeepstream: contextBlockAddedId
     })});
+
+    if(success){
+      if (Meteor.isServer) {
+        var suggester = Meteor.users.findOne(contextBlock.suggestedBy, {fields:{'emails.address':1}});
+        var email = suggester.emails[0].address;
+        if (email){
+          var deepstream = Deepstreams.findOne({shortId: contextBlock.streamShortId}, {fields: {title:1, userPathSegment: 1, streamPathSegment: 1}});
+          Email.send({
+            to: email,
+            from: 'noreply@example.com',
+            subject: 'Your suggested content has been approved!',
+            html: user.username + ' just approved the content you suggested for ' + deepstream.title +
+            '! You can check it out at: ' + Meteor.absoluteUrl('watch/' + deepstream.userPathSegment + '/' + deepstream.streamPathSegment)
+          })
+        }
+      }
+    }
+
+    return success;
   },
   rejectContext (contextBlockId){
     check(contextBlockId, String);
