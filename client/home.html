@@ -23,9 +23,47 @@
             </label>
 
             <input id="stream-search-input" type="search"/>
+
+            <div id="checkboxes" hidden="hidden">
+              <div id="div-deepstream">
+                <input id="deepstream-checkbox" type="checkbox" checked="true">
+                <label for="deepstream-checkbox">Search DeepStreams</label>
+              </div>
+
+              <div  id="div-youtube">
+                <input id="youtube-checkbox" type="checkbox" checked="true"/>
+                <label for="youtube-checkbox">Search YouTube</label>
+              </div>
+
+              <div id="div-twitch" >
+                <input id="twitch-checkbox" type="checkbox"/>
+                <label for="twitch-checkbox" >Search Twitch</label>
+              </div>
+
+              <div id="div-ustream" >
+                <input id="ustream-checkbox" type="checkbox" checked="true"/>
+                <label for="ustream-checkbox">Search uStream</label>
+              </div>
+
+              <div  id="div-bambuser">
+                <input id="bambuser-checkbox" type="checkbox" checked="true"/>
+                <label for="bambuser-checkbox">Search Bambuser</label>
+              </div>
+            </div>
+
           </form>
         </div>
       </div>
+      <script>
+  (function() {
+    $('#stream-search-input').on('focus', function(e){
+      var checkboxes = document.getElementById('checkboxes');
+      if(checkboxes.hasAttribute("hidden")){
+        checkboxes.removeAttribute("hidden");
+      }
+    });
+  })();
+</script>
     {{/if}}
     {{> banner_buttons}}
   </div>
@@ -367,4 +405,3 @@
     <span class="text">Create</span>
   </button>
 </template>
-

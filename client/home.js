@@ -200,9 +200,28 @@ Template.home.helpers({
 });
 
 var getHomepageStreamSearchResults = function() {
+  var boxes = [
+    "deepstream",
+    "youtube",
+    "bambuser",
+    "ustream",
+    "twitch"
+  ];
+
+  var checked  = boxes.filter(function(elem){
+    return document.getElementById(elem + '-checkbox').checked;
+  });
+
+  console.log(checked);
+  if(checked.length == 0){
+    console.log("No boxes were selected");
+    return;
+  }
+
   return SearchResults.find({
     searchQuery: Session.get('homeStreamListQuery'),
-    searchOption: "homepage_search"
+    searchOption: "homepage_search",
+    source: {$in: checked}
   });
 };
 
