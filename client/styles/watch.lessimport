@@ -998,7 +998,24 @@
   font-size: 11px;
   text-align: right;
   .padding-sides(6px);
-  background-color: @context-background-color;
+  .transparency-aware(background-color, @context-background-color);
+}
+
+.moderation-buttons{
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  .padding-sides(55px);
+
+  button{
+    .transparency-aware(background-color, @context-background-color);
+    text-transform: uppercase;
+  }
+  svg{
+    margin-bottom: -2px;
+    margin-right: 3px;
+  }
 }
 
 
