@@ -1,4 +1,4 @@
-
+var boxesDep = new Tracker.Dependency();
 
 loginWithTwitter = function () {
   Session.set('signingInWithTwitter', true);
@@ -199,7 +199,7 @@ Template.home.helpers({
   }
 });
 
-var getHomepageStreamSearchResults = function() {
+var getcheckBoxes = function(){
   var boxes = [
     "deepstream",
     "youtube",
@@ -209,24 +209,51 @@ var getHomepageStreamSearchResults = function() {
   ];
 
   var checked  = boxes.filter(function(elem){
-    return document.getElementById(elem + '-checkbox').checked;
+    var id = elem + "-checkbox";
+    document.getElementById(id).onchange = getcheckBoxes;
+    return document.getElementById(id).checked;
   });
 
-  console.log(checked);
   if(checked.length == 0){
     console.log("No boxes were selected");
     return;
   }
+  boxesDep.changed();
+  Session.set("checkedBoxes", checked);
+};
 
+var getHomepageStreamSearchResults = function() {
+  boxesDep.depend();
+  console.log(Session.get("checkedBoxes"));
   return SearchResults.find({
     searchQuery: Session.get('homeStreamListQuery'),
     searchOption: "homepage_search",
-    source: {$in: checked}
+    source: {$in: Session.get("checkedBoxes")}
   });
 };
 
 Template.home.events({
-  "submit .stream-search-form" (e, t) {
+  "focus .stream-search-form" (e,t){
+    getcheckBoxes();
+    var checkboxes = document.getElementById('checkboxes');
+    if(checkboxes.hasAttribute("hidden")){
+      checkboxes.removeAttribute("hidden");
+    }
+
+}, "focusout .stream-search-form" (e, t){
+
+      if( typeof InstallTrigger !== 'undefined') // checking for Firefox
+      {
+        // Firefox doesn't bubble all the elements inside a form
+        // Check out for more details https://bugzilla.mozilla.org/show_bug.cgi?id=687787
+        return ;
+      }
+      var checkboxes = document.getElementById('checkboxes');
+      if(!checkboxes.hasAttribute("hidden")){
+        checkboxes.setAttribute("hidden" ,"");
+      }
+
+}, "submit .stream-search-form" (e, t) {
     e.preventDefault();
     var query = t.$('#stream-search-input').val();
 

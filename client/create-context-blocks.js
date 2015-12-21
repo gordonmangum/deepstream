@@ -212,17 +212,6 @@ var searchAPI = function(query) {
       that.noMoreResults.set('No results found');
       return;
     }
-
-    var youtubeResults = _.chain(items).map(function(item){ return item._streamSource === 'youtube'; });
-    var twitchResults = _.chain(items).map(function(item){ return item._streamSource === 'twitch'; });
-    var ustreamResults = _.chain(items).map(function(item){ return item._streamSource === 'ustream' ;});
-    var bambuserResults = _.chain(items).map(function(item){ return item._streamSource === 'bambuser'; });
-
-    sessionStorage.setItem('youtube', JSON.stringify(youtubeResults));
-    sessionStorage.setItem('twitch', JSON.stringify(twitchResults));
-    sessionStorage.setItem('ustream', JSON.stringify(ustreamResults));
-    sessionStorage.setItem('bambuser', JSON.stringify(bambuserResults));
-
     _.chain(items)
       .map(integrationDetails.mapFn || _.identity)
       .each(function(item, i) {
