@@ -45,6 +45,8 @@ resetES = function () {
 
   openIndex({index: ES_CONSTANTS.index});
 
+  //Meteor._sleepForMs(1000); // if Meteor is crashing here (possible IndexPrimaryShardNotAllocatedException error), uncomment this line until it boots successfully, then comment it back out
+
   console.log("indexExists function: going to close index");
   closeIndex({index: ES_CONSTANTS.index});
 
