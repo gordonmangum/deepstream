@@ -66,6 +66,10 @@ Handlebars.registerHelper("CONTEXT_WIDTH", function() {
   return window.CONTEXT_WIDTH;
 });
 
+Handlebars.registerHelper("embedMode", function() {
+  return window.embedMode();
+});
+
 Handlebars.registerHelper("isMobile", function() {
   return window.isMobile();
 });

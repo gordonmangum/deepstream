@@ -313,6 +313,10 @@ window.browseSuggestionsMode = function(){
   return Session.equals('contextMode', 'suggestions')
 };
 
+window.embedMode = function(){
+  return Session.equals('embedMode', true);
+};
+
 window.isMobile = function(){
   return (Meteor.Device.isPhone()) && !Meteor.Device.isBot()
 };
