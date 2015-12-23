@@ -13,27 +13,8 @@ else
 		exit 1
 	else
 		echo "You don't have ElasticSearch installed on your system"
-		echo "Do you want me to install it for you?[y/N]"
-		read answer
-		if [ "${answer,,}" == 'y' ]
-			then
-			esfilename=elasticsearch-1.7.3.tar.gz
-			curl -O "https://download.elastic.co/elasticsearch/elasticsearch/$esfilename"
-			tar xf $esfilename
-			sleep 2
-			if "${esfilename/.tar.gz/}"/bin/elasticsearch & espid=$!
-			then
-				echo "ElasticSearch is working on localhost:9200/"
-				echo $espid > .espid
-				sleep 1
-			else
-				echo "We encountered an error please run the following command and check the ElasticSeach logs"
-				exit 1
-			fi
-		else
-			echo "please run ElasticSearch and rerun the startup script"
-			exit 1
-		fi
+		echo "For best results on a Mac you can install it yourself using homebrew. First run `brew update`, then `brew doctor`, then `brew install elasticsearch17`"
+		exit 1
 	fi
 fi
 
