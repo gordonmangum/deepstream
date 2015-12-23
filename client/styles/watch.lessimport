@@ -9,50 +9,7 @@
 @top-row-height: 60px;
 @second-row-height: 65px;
 
-
-@mainStreamHeight0: 945px;
-@mainStreamHeight1: 745px;
-@mainStreamHeight2: 535px;
-@mainStreamHeight3: 425px;
-@mainStreamHeight4: 320px;
 @mainStreamExpandedHeight: 645px;
-@mainStreamMaxWidth0: (@mainStreamHeight0) * 16 / 9;
-@mainStreamMaxWidth1: (@mainStreamHeight1) * 16 / 9;
-@mainStreamMaxWidth2: (@mainStreamHeight2) * 16 / 9;
-@mainStreamMaxWidth3: (@mainStreamHeight3) * 16 / 9;
-@mainStreamMaxWidth4: (@mainStreamHeight4) * 16 / 9;
-
-.watchHeightMixin(@offset){
-  height: @mainStreamHeight0 + @offset;
-  @media (max-height: 1200px) {
-    height: @mainStreamHeight1 + @offset;
-  }
-  @media (max-height: 1000px) {
-    height: @mainStreamHeight2 + @offset;
-  }
-  @media (max-height: 700px) {
-    height: @mainStreamHeight3 + @offset;
-  }
-  @media (max-height: 600px) {
-    height: @mainStreamHeight4 + @offset;
-  }
-}
-
-.watchMaxWidthMixin(@offset){
-  max-width: @mainStreamMaxWidth0 + @offset;
-  @media (max-height: 1200px) {
-    max-width: @mainStreamMaxWidth1 + @offset;
-  }
-  @media (max-height: 1000px) {
-    max-width: @mainStreamMaxWidth2 + @offset;
-  }
-  @media (max-height: 700px) {
-    max-width: @mainStreamMaxWidth3 + @offset;
-  }
-  @media (max-height: 600px) {
-    max-width: @mainStreamMaxWidth4 + @offset;
-  }
-}
 
 
 .watch{
@@ -230,7 +187,6 @@
 .main-section{
   width: calc(100% ~'-' @left-margin);
   margin-left: @left-margin;
-  //.watchMaxWidthMixin(0);
 
   .height-transition;
   &.expanded{
@@ -280,7 +236,6 @@
 
 .main-stream{
   width: 100%;
-  //.watchHeightMixin(0);
 
   &.expanded{
     width: 100%;
@@ -434,10 +389,10 @@
       }
     }
 
-    .show-timeline {
+    .show-timeline, .show-suggestions {
       color: @medium-color;
 
-      &:hover, .active {
+      &:hover, &.active {
         color: @white-icon-color;
       }
     }
@@ -625,8 +580,7 @@
 
 @contextAreaPadding: 10px;
 
-.context-browser{
-  //.watchHeightMixin(-15px);
+.context-browser, .suggestion-browser{
   overflow: hidden;
   display: flex;
   flex-flow: column;
@@ -957,12 +911,14 @@
   &:not(:first-child){
     margin-top: 15px;
   }
+  .annotation-section{
+    margin-top: 1px;
+  }
 }
 
 .list-item-context-section{
   line-height: 0;
 
-  margin-bottom: 1px;
   .video-preview{
     @playIconSize: 60px;
     position: relative;
@@ -1034,9 +990,33 @@
   .annotation{
     border-top: 3px solid @dark-color;
   }
+
 }
 
+.suggested-by{
+  font-style: italic;
+  font-size: 11px;
+  text-align: right;
+  .padding-sides(6px);
+  .transparency-aware(background-color, @context-background-color);
+}
 
+.moderation-buttons{
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  .padding-sides(55px);
+
+  button{
+    .transparency-aware(background-color, @context-background-color);
+    text-transform: uppercase;
+  }
+  svg{
+    margin-bottom: -2px;
+    margin-right: 3px;
+  }
+}
 
 
 .link-section{
@@ -1090,20 +1070,24 @@
 
   @button-width: 75px;
 
-  .preview, .return-to-curate{
-    width: @button-width;
+  .preview, .return-to-curate, .suggest-content{
     position: absolute;
     text-transform: uppercase;
     bottom: 5px;
     .action-button;
     right: 5px;
   }
-  .return-to-curate{
+
+  .preview, .return-to-curate {
+    width: @button-width;
+  }
+    .return-to-curate{
     animation: glow-action 1.6s ease infinite;
   }
+
   .report-inappropriate-content{
     position: absolute;
-    bottom: 5px;
+    top: 5px;
     right: 7px;
     svg{
       .size(20px);
@@ -1487,7 +1471,7 @@
 }
 
 
-.context-browser {
+.context-browser, .suggestion-browser {
   &.hide {
     display: none;
   }
@@ -1499,7 +1483,6 @@
   }
   display: flex;
   flex-flow: column;
-  //.watchHeightMixin(-15px);
   width: @right-section-width - @card-column-width - @contextAreaPadding * 2;
   form{
     margin-bottom: 15px;

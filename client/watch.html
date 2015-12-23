@@ -193,6 +193,10 @@
           {{else}}
             <a title="Report inappropriate content" class="report-inappropriate-content" href="mailto:deepstream@media.mit.edu?subject=Inappropriate Content in DeepStream '{{title}}' - {{shortId}}
             &body=(Please let us know which content on this page is inappropriate and we'll get right on it!)" target="_blank">{{> inappropriate_content_icon}}</a>
+            {{#unless showContextSearch}}
+              <button class="suggest-content">Suggest Content</button>
+            {{/unless}}
+
           {{/if}}
 
         </div>
@@ -271,53 +275,55 @@
 <template name="content_icons">
   <div class="content-icons">
     <ol>
+      {{#if isCurator}}
+        <li>
+          <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} livestreams" class='stream-button {{#if stream}}active{{/if}}'>
+            {{> stream_icon }}
+          </button>
+        </li>
+      {{/if}}
       <li>
-        <button  title="Add livestreams" class='stream-button {{#if stream}}active{{/if}}'>
-          {{> stream_icon }}
-        </button>
-      </li>
-      <li>
-        <button title="Add news stories" class='news-button {{#if news}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} news stories" class='news-button {{#if news}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> news_icon }}
         </button>
       </li>
       <li>
-        <button title="Add text" class='text-button {{#if text}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} text" class='text-button {{#if text}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> text_icon }}
         </button>
       </li>
       <li>
-        <button title="Add maps" class='map-button {{#if map}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} maps" class='map-button {{#if map}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> map_icon }}
         </button>
       </li>
       <li>
-        <button title="Add images" class='image-button {{#if image}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} images" class='image-button {{#if image}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> image_icon }}
         </button>
       </li>
       <!--<li>-->
-      <!--<button title="" class='wikipedia-button {{#if wikipedia}}active{{/if}}' disabled='{{disableAllButStream}}'>-->
+      <!--<button title="{{#unless isCurator}}Suggest{{else}}"{{/unless}} class='wikipedia-button {{#if wikipedia}}active{{/if}}' disabled='{{disableAllButStream}}'>-->
       <!--{{> wikipedia_icon }}-->
       <!--</button>-->
       <!--</li>-->
       <li>
-        <button title="Add videos" class='video-button {{#if video}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} videos" class='video-button {{#if video}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> video_icon }}
         </button>
       </li>
       <li>
-        <button title="Add tweets" class='twitter-button {{#if twitter}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} tweets" class='twitter-button {{#if twitter}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> twitter_icon }}
         </button>
       </li>
       <li>
-        <button title="Add audio" class='audio-button {{#if audio}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} audio" class='audio-button {{#if audio}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> audio_icon }}
         </button>
       </li>
       <li>
-        <button title="Add links" class='link-button {{#if link}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} links" class='link-button {{#if link}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> link_icon }}
         </button>
       </li>
@@ -380,23 +386,30 @@
 <template name="context_browser_area">
   {{> context_card_column}}
   <div class="context-timeline-switcher">
-    <button class="show-context-browser {{#unless showTimeline}}active{{/unless}}">
+    {{#if curateMode}}
+      <button title="User suggestions" class="show-suggestions {{#if showSuggestions}}active{{/if}}" disabled='{{#unless showShowSuggestionsButton}}disabled{{/unless}}'>
+        S
+      </button>
+    {{/if}}
+    <button title="Context" class="show-context-browser {{#if showContextBrowser}}active{{/if}}">
       <div class="rectangles">
         <div class="rectangle"></div>
         <div class="rectangle"></div>
       </div>
     </button>
-    <button class="show-timeline {{#if showTimeline}}active{{/if}}" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>
+    <button title="Twitter timeline" class="show-timeline {{#if showTimeline}}active{{/if}}" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>
       #
     </button>
   </div>
   {{#if showChat}}
     {{> unimplemented_chat_section}}
   {{else}}
-      {{> timeline_section show=showTimeline}}
-      {{> context_browser show=showContextBrowser deepstream=this}}
+    {{> context_browser show=showSuggestions suggestions=true contextBlocks=pendingSuggestions}}
+    {{> timeline_section show=showTimeline}}
+    {{> context_browser show=showContextBrowser contextBlocks=orderedContext}}
   {{/if}}
 </template>
+
 
 <template name="context_card_column">
   <div class="card-column">
@@ -409,12 +422,13 @@
 </template>
 
 <template name="context_browser">
-  <div class="context-browser {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -20}}px">
-    {{#with deepstream}}
+  <div class="{{#if suggestions}}suggestion-browser{{else}}context-browser{{/if}} {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -20}}px">
       {{#if curateMode}}
-        <div class="add-new-context-row">
-          <button class="add-new-context">{{> add_icon}}</button>
-        </div>
+        {{#unless browseSuggestionsMode}}
+          <div class="add-new-context-row">
+            <button class="add-new-context">{{> add_icon}}</button>
+          </div>
+        {{/unless}}
       {{/if}}
 
       {{#if soloSidebarContextMode}}
@@ -432,7 +446,6 @@
         {{/each}}
         <div class="bottom-bar"></div>
       </div>
-    {{/with}}
   </div>
 </template>
 
@@ -468,11 +481,22 @@
         {{/unless}}
       </div>
       {{#if curateMode}}
-        <button title="delete" class="delete-context">{{> close_circle}}</button>
+        {{#unless browseSuggestionsMode}}
+          <button title="delete" class="delete-context">{{> close_circle}}</button>
+        {{/unless}}
       {{/if}}
     </div>
     {{#if showAnnotationSection}}
       {{> annotation_section}}
+    {{/if}}
+    {{#if suggestedByUsername}}
+      <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
+    {{/if}}
+    {{#if browseSuggestionsMode}}
+      <div class="moderation-buttons">
+        <button class="approve-suggestion">{{> approve_icon}}Approve</button>
+        <button class="reject-suggestion">{{> reject_icon}}Reject</button>
+      </div>
     {{/if}}
   </div>
 </template>

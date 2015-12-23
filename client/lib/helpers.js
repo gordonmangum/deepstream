@@ -187,7 +187,7 @@ window.horizontalBlockHelpers = _.extend({}, {
   },
   annotation: textContentHelper,
   showAnnotationSection () {
-    return this.annotationAllowed && (Session.get('curateMode') || this.annotation);
+    return this.annotationAllowed && (Session.get('curateMode') || this.annotation) && !window.browseSuggestionsMode();
   }
 });
 
@@ -201,7 +201,7 @@ window.count = function(){
 window.getCurrentContext = function(){
   var currentContextId = Session.get("currentContextId");
   if (currentContextId){
-    return ContextBlocks.findOne(currentContextId);
+    return ContextBlocks.findOne(currentContextId) || SuggestedContextBlocks.findOne(currentContextId) ;
   }
 };
 
@@ -265,7 +265,7 @@ unthrottledUpdateActiveContext = function(){
     return;
   }
 
-  var container = $('.context-area.list-mode');
+  var container = $('.context-browser .context-area.list-mode');
 
   var containerOffset = container.offset();
 
@@ -285,7 +285,7 @@ unthrottledUpdateActiveContext = function(){
     activeId =  _.last(orderedContextIds);
   } else {
     var contextOffsetObjects = _.map(orderedContextIds, (id) => {
-        var e = $('.list-item-context-plus-annotation[data-context-id=' + id + ']');
+        var e = $('.context-browser .list-item-context-plus-annotation[data-context-id=' + id + ']');
         var offset = e.offset();
         if (offset){
           return {id: id, offset: offset.top, height: e.outerHeight()};
@@ -308,6 +308,10 @@ unthrottledUpdateActiveContext = function(){
 
 
 window.updateActiveContext = _.throttle(unthrottledUpdateActiveContext, 50, {leading: false});
+
+window.browseSuggestionsMode = function(){
+  return Session.equals('contextMode', 'suggestions')
+};
 
 window.isMobile = function(){
   return (Meteor.Device.isPhone()) && !Meteor.Device.isBot()

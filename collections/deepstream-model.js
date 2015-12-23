@@ -147,6 +147,14 @@ Deepstream = (function() {
     }
   };
 
+  Deepstream.prototype.pendingSuggestions = function(){
+    return SuggestedContextBlocks.find({streamShortId: this.shortId, suggestionStatus: 'pending'});
+  };
+
+  Deepstream.prototype.hasPendingSuggestions = function(){
+    return this.pendingSuggestions().count() ? true : false;
+  };
+
   return Deepstream;
 
 })();

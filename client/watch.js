@@ -233,7 +233,7 @@ Template.watch_page.onCreated(function () {
     Session.set("streamShortId", that.data.shortId());
   });
 
-  Session.set('showTimeline', null);
+  Session.set('contextMode', 'context');
 
   // march through creation steps, or setup most recent context type to display when arrive on page if past curation
   this.autorun(function(){
@@ -504,7 +504,7 @@ Template.watch_page.helpers({
     return Session.get('showChat', true); // TODO this is probably not what we want
   },
   showContextSearch (){
-    return Session.get('mediaDataType') && Session.get("curateMode") && Session.get('mediaDataType') !=='webcam';
+    return Session.get('mediaDataType') && Session.get('mediaDataType') !=='webcam';
   },
   showPreviewEditButton (){
     return !this.creationStep || this.creationStep === 'go_on_air';
@@ -586,6 +586,9 @@ Template.watch_page.events({
   'click .return-to-curate' (){
     Session.set('curateMode', true);
   },
+  'click .suggest-content' (){
+    Session.set('mediaDataType', Session.get('previousMediaDataType') || 'image');
+  },
   'click .publish' (e, t){
     if (this.creationStep === 'go_on_air') {
       if (!this.streams.length) {
@@ -602,7 +605,7 @@ Template.watch_page.events({
           notifySuccess("Congratulations! Your Deep Stream is now on air!");
         }
       });
-    } // TODO handle if in the middle of creation (or just disable button or something)
+    }
   },
   'click .unpublish' (e, t){
     Meteor.call('unpublishStream', t.data.shortId(), basicErrorHandler);
@@ -707,7 +710,7 @@ Template.watch_page.events({
 
     clearCurrentContext();
     Session.set('mediaDataType', null);
-    Session.set('showTimeline', null);
+    Session.set('contextMode', 'context');
     Meteor.setTimeout(() => {
       var offset = 130;
       var contextToScrollTo = $('.context-section[data-context-id=' + this._id + ']');
@@ -754,29 +757,40 @@ Template.stream_li.events({
 });
 
 Template.context_browser_area.helpers({
+  showShowSuggestionsButton (){
+    return Session.get('curateMode') && this.hasPendingSuggestions();
+  },
   showShowTimelineButton (){
     return Session.get('curateMode') || Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
   },
+  showSuggestions (){
+    return Session.equals('contextMode', 'suggestions');
+  },
   showTimeline (){
-    return Session.get('showTimeline');
+    return Session.equals('contextMode', 'timeline');
   },
   showContextBrowser (){
-    return !Session.get('showTimeline');
+    return Session.equals('contextMode', 'context');
   }
 });
 
 Template.context_browser_area.events({
   'click .show-timeline'(){
     analytics.track('Click show timeline', trackingInfoFromPage());
-    Session.set('showTimeline', true);
+    Session.set('contextMode', 'timeline');
     Session.set('activeContextId', null);
   },
   'click .show-context-browser'(){
     analytics.track('Click show context browser', trackingInfoFromPage());
-    Session.set('showTimeline', false);
+    Session.set('contextMode', 'context');
     setTimeout(() => { // need to wait till display has switched back to context
       updateActiveContext();
     })
+  },
+  'click .show-suggestions'(){
+    analytics.track('Click show suggestions browser', trackingInfoFromPage());
+    Session.set('contextMode', 'suggestions');
+    Session.set('activeContextId', null);
   }
 });
 
@@ -824,7 +838,7 @@ Template.context_browser_area.onRendered(function(){
 
 Template.context_browser.onRendered(function() {
   Tracker.autorun(() => {
-    this.contextBlocks;
+    this.data.contextBlocks;
     updateActiveContext();
   });
 });
@@ -832,9 +846,6 @@ Template.context_browser.onRendered(function() {
 Template.context_browser.helpers({
   mediaTypeForDisplay (){
     return pluralizeMediaType(Session.get('mediaDataType') || Session.get('previousMediaDataType')).toUpperCase();
-  },
-  contextBlocks (){
-    return this.orderedContext();
   },
   soloSidebarContextMode (){
     var currentContext = getCurrentContext();
@@ -862,11 +873,32 @@ Template.context_browser.events({
   'click .list-item-context-section' (e, t) {
     analytics.track('Click context section in list mode', trackingInfoFromContext(this));
   },
+  'click .approve-suggestion' (e, t) {
+    analytics.track('Click approve suggestion', trackingInfoFromContext(this));
+    Meteor.call('approveContext', this._id, function(err, success){
+      if(t.data.contextBlocks.count() === 0){ // if this was the last suggestion
+        Session.set('contextMode', 'context');
+      }
+      return basicErrorHandler(err, success)
+    });
+  },
+  'click .reject-suggestion' (e, t) {
+    analytics.track('Click reject suggestion', trackingInfoFromContext(this));
+    t.$('.list-item-context-plus-annotation[data-context-id=' + this._id + ']').fadeOut(500, () => {
+      Meteor.call('rejectContext', this._id, function(err, success){
+        if(t.data.contextBlocks.count() === 0){ // if this was the last suggestion
+          Session.set('contextMode', 'context');
+        }
+        return basicErrorHandler(err, success)
+      });
+    });
+  },
   'click .context-section .clickable' (e, t){
 
     if ($(e.target).is('textarea')) { // don't go to big browser when its time to edit context
       return
     }
+
     if(this.hasSoloMode()){
       setCurrentContext(this);
     }

@@ -26,6 +26,16 @@ Meteor.startup(function(){
   throttledResize = _.throttle(windowResize, 20, {leading: false});
 
   $(window).resize(throttledResize);
+
+  var justReloaded = window.codeReloaded;
+
+  Tracker.autorun(function(){
+    if (Session.get('signingIn') && !justReloaded){
+      setSigningInFrom();
+      analytics.track('Opened sign-in overlay', {nonInteraction: 1});
+    }
+    justReloaded = false;
+  })
 });
 
 Meteor.startup(function(){
@@ -276,7 +286,6 @@ Template.create_deepstream.events({
       }
     } else {
       Session.set('signingIn', true);
-      Session.set('signingInFrom', setSigningInFrom());
       analytics.track('User clicked create and needs to sign in', trackingInfoFromPage());
     }
   }
