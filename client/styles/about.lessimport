@@ -51,7 +51,7 @@ div.about {
       margin-top: 30px;
       height: 100px;
       width: auto;
-      margin-right: 25px;
+      margin-right: 35px;
     }
   }
 
