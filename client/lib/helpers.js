@@ -317,6 +317,10 @@ window.embedMode = function(){
   return Session.equals('embedMode', true);
 };
 
+window.activateEmbedMode = function(){
+  return Session.set('embedMode', true);
+};
+
 window.isMobile = function(){
   return (Meteor.Device.isPhone()) && !Meteor.Device.isBot()
 };

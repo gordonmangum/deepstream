@@ -220,7 +220,7 @@ Template.watch_page.onCreated(function () {
             FlowRouter.go(stream.watchPath());
           });
         }
-      } else if (user && _.contains(stream.curatorIds, user._id)){
+      } else if (user && _.contains(stream.curatorIds, user._id) && (!embedMode())){
         FlowRouter.withReplaceState(function(){
           FlowRouter.go(stream.curatePath());
         });
