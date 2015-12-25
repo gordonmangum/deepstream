@@ -160,8 +160,9 @@
         </div>
 
         <div class="curator-menu">
-          <button title="{{#if transparencyMode}}Switch to inset mode{{else}}Switch to transparency mode{{/if}}" class="transparency-button">{{> transparency_icon}}</button>
-
+          {{#unless embedMode}}
+            <button title="{{#if transparencyMode}}Switch to inset mode{{else}}Switch to transparency mode{{/if}}" class="transparency-button">{{> transparency_icon}}</button>
+          {{/unless}}
           <div class="curator-info">
               <div class="curator-pic">
                 {{> default_user_pic}}
@@ -194,7 +195,9 @@
             <a title="Report inappropriate content" class="report-inappropriate-content" href="mailto:deepstream@media.mit.edu?subject=Inappropriate Content in DeepStream '{{title}}' - {{shortId}}
             &body=(Please let us know which content on this page is inappropriate and we'll get right on it!)" target="_blank">{{> inappropriate_content_icon}}</a>
             {{#unless showContextSearch}}
-              <button class="suggest-content">Suggest Content</button>
+              {{#unless embedMode}}
+                <button class="suggest-content">Suggest Content</button>
+              {{/unless}}
             {{/unless}}
 
           {{/if}}
