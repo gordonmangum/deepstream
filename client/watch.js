@@ -220,7 +220,7 @@ Template.watch_page.onCreated(function () {
             FlowRouter.go(stream.watchPath());
           });
         }
-      } else if (user && _.contains(stream.curatorIds, user._id)){
+      } else if (user && _.contains(stream.curatorIds, user._id) && (!embedMode())){
         FlowRouter.withReplaceState(function(){
           FlowRouter.go(stream.curatePath());
         });
@@ -727,6 +727,13 @@ Template.watch_page.events({
       Session.set('transparencyMode', true);
       analytics.track('Click transparency on button', trackingInfoFromPage());
     }
+  },
+  'click .about-deepstream-embed, click .deepstream-logo-embed' (e, t){
+    console.log('Show About Modal!')
+    Session.set('showDeepstreamAboutOverlay', true);
+  },
+  'click .close-about-deepstream-overlay' (e, t){
+    Session.set('showDeepstreamAboutOverlay', false);
   }
 });
 

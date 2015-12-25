@@ -66,6 +66,14 @@ Handlebars.registerHelper("CONTEXT_WIDTH", function() {
   return window.CONTEXT_WIDTH;
 });
 
+Handlebars.registerHelper('showDeepstreamAboutOverlay', function() {
+  return Session.get('showDeepstreamAboutOverlay');
+});
+
+Handlebars.registerHelper("embedMode", function() {
+  return window.embedMode();
+});
+
 Handlebars.registerHelper("isMobile", function() {
   return window.isMobile();
 });
