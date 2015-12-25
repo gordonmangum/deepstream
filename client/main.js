@@ -46,7 +46,20 @@ Meteor.startup(function(){
       $("body").removeClass("transparency-mode")
     }
   })
-})
+
+
+  var inIFrame = function(){
+    try {
+      return window.self !== window.top;
+    } catch (e) {
+      return true;
+    }
+  };
+
+  if (inIFrame()){
+    activateEmbedMode();
+  }
+});
 
 //window.trackingInfoFromStory = function(story){
 //  return _.chain(story)
