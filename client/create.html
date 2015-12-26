@@ -258,16 +258,14 @@
 
     </div>
     {{#unless uploadMode}}
-      {{#with focusResult}}
-        {{#if showAddButton}}
-          <div class="single-result">
-            <img src="{{url}}">
-            <button type="submit" class="add-button">
-              {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
-            </button>
-          </div>
-        {{/if}}
-      {{/with}}
+      {{#if focusResult}}
+        <div class="single-result">
+          <img src="{{focusResult.url}}">
+          <button type="submit" class="add-button">
+            {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
+          </button>
+        </div>
+      {{/if}}
     {{/unless}}
   </div>
 </template>
@@ -404,10 +402,12 @@
 
 
         </div>
+      {{/with}}
+      {{#if showAddButton}}
         <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
           {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
         </button>
-      {{/with}}
+      {{/if}}
     </div>
   {{else}}
     <div class="create-section link-twitter">
@@ -459,8 +459,9 @@
         </li>
       </ol>
     </div>
-    {{#with focusResult}}
-      <div class="single-result">
+    <div class="single-result">
+      {{#with focusResult}}
+
         <iframe class="video" width="100%" height="200" src="{{url}}"></iframe>
         <div class="info">
           <div class="content-title">{{title}}</div>
@@ -468,11 +469,13 @@
           <div class="user">{{username}}</div>
           <div class="date">{{creationDateCompactString}}</div>
         </div>
+      {{/with}}
+      {{#if showAddButton}}
         <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
           {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
         </button>
-      </div>
-    {{/with}}
+      {{/if}}
+    </div>
   </div>
 </template>
 
@@ -515,8 +518,9 @@
         </li>
       </ol>
     </div>
-    {{#with focusResult}}
-      <div class="single-result">
+    <div class="single-result">
+      {{#with focusResult}}
+
         <iframe class="video" width="100%" height="200" src="{{url}}"></iframe>
         <div class="info">
           <div class="content-title">{{title}}</div>
@@ -524,11 +528,13 @@
           <div class="user">{{username}}</div>
           <div class="date">LIVE NOW</div>
         </div>
+      {{/with}}
+      {{#if showAddButton}}
         <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
           {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
         </button>
-      </div>
-    {{/with}}
+      {{/if}}
+    </div>
   </div>
 </template>
 
@@ -581,20 +587,24 @@
         </li>
       </ol>
     </div>
+    <div class="single-result">
       {{#with focusResult}}
-        <div class="single-result">
-          <iframe class="audio" width="100%" src="{{url}}"></iframe>
-          <div class="info">
-            <div class="content-title">{{reference.title}}</div>
-            <div class="descr">{{reference.description}}</div>
-            <div class="user">{{reference.username}}</div>
-            <div class="date">{{creationDateCompactString}}</div>
-          </div>
-          <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
-            {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
-          </button>
+
+        <iframe class="audio" width="100%" src="{{url}}"></iframe>
+        <div class="info">
+          <div class="content-title">{{reference.title}}</div>
+          <div class="descr">{{reference.description}}</div>
+          <div class="user">{{reference.username}}</div>
+          <div class="date">{{creationDateCompactString}}</div>
         </div>
       {{/with}}
+      {{#if showAddButton}}
+
+        <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
+          {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
+        </button>
+      {{/if}}
+    </div>
   </div>
 </template>
 
