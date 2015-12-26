@@ -124,7 +124,7 @@ window.addContext = function(contextBlock) { // add or suggest
     Session.set('saveState', 'saving');
 
     Meteor.setTimeout(function () { // scroll to top and focus annotation box
-      $('.context-area').scrollTop(0);
+      $('.context-browser>.context-area').scrollTop(0);
       $('.context-section[data-context-id=' + contextBlock._id + '] textarea').focus();
     });
 

@@ -265,7 +265,7 @@ unthrottledUpdateActiveContext = function(){
     return;
   }
 
-  var container = $('.context-browser .context-area.list-mode');
+  var container = $('.context-browser>.context-area.list-mode');
 
   var containerOffset = container.offset();
 

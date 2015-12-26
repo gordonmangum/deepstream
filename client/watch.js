@@ -714,7 +714,7 @@ Template.watch_page.events({
     Meteor.setTimeout(() => {
       var offset = 130;
       var contextToScrollTo = $('.context-section[data-context-id=' + this._id + ']');
-      var container = $('.context-area');
+      var container = $('.context-browser>.context-area');
       container.animate({scrollTop: (contextToScrollTo.offset().top - container.offset().top + container.scrollTop() - offset)});
     })
     analytics.track('Click context mini preview', trackingInfoFromContext(this));
@@ -810,7 +810,7 @@ Template.context_browser_area.onRendered(function(){
   // make context sortable
   var sortableSets = [
     {
-      outerDiv: '.context-area',
+      outerDiv: '.context-browser>.context-area',
       listItem: '.list-item-context-plus-annotation'
     },{
       outerDiv: '.previews-container',
@@ -912,7 +912,7 @@ Template.context_browser.events({
   'click .switch-to-list-mode' (){
     clearCurrentContext();
   },
-  'scroll .context-area.list-mode': updateActiveContext
+  'scroll .context-browser>.context-area.list-mode': updateActiveContext
 });
 
 Template.overlay_context_browser.onRendered(function(){
