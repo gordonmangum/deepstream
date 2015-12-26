@@ -442,6 +442,12 @@ Template.watch_page.helpers({
       return Deepstreams.findOne({shortId: Template.instance().data.shortId()});
     }
   },
+  deepstreamForContext () {
+    if (FlowRouter.subsReady()) {
+      return Deepstreams.findOne({shortId: Template.instance().data.shortId()}, {reactive: Template.instance().data.onCuratePage()});
+    }
+  },
+
   streamUrl (){
     var activeStream = Template.instance().activeStream.get();
     if(activeStream){

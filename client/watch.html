@@ -6,10 +6,11 @@
     {{> deepstream_about_overlay}}
   {{/if}}
 
-  {{#with thisDeepstream}}
 
-    <div class="watch {{#if onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}} {{#if transparencyMode}}transparency-mode{{/if}}" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
-      <div class="left-section" style="width: {{mainStreamMaxWidth 20}}px;">
+  <div class="watch {{#if thisDeepstream.onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}} {{#if transparencyMode}}transparency-mode{{/if}}" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
+    {{#with thisDeepstream}}
+
+    <div class="left-section" style="width: {{mainStreamMaxWidth 20}}px;">
 
         <div class="header-section">
           <div class="top-row" style="{{#if transparencyMode}} width: {{windowWidth}}px;{{/if}}">
@@ -136,33 +137,44 @@
 
         </div>
       </div>
+    {{/with}}
 
 
-      <div class="right-section {{#unless showRightSection}}collapsed{{/unless}}">
+
+    <div class="right-section {{#unless showRightSection}}collapsed{{/unless}}">
         <div class="top-part">
-          <div class="settings-menu-container {{#if curateMode}}visible{{/if}}">
-            {{#if curateMode}}
-              <div class="settings-button-and-menu">
-                <button class="settings-menu-button">{{> setting_icon}}</button>
-                {{#if settingsMenuOpen}}
-                  {{> settings_menu}}
-                {{/if}}
-              </div>
-            {{/if}}
-          </div>
-          {{#if showContextSearch}}
-            {{> content_icons}}
-            {{> add_context}}
-          {{else}}
-              {{#if showWebcamSetup}}
-                {{> webcam_setup}}
-              {{else}}
-                {{> context_browser_area}}
+          {{#with thisDeepstream}}
+            <div class="settings-menu-container {{#if curateMode}}visible{{/if}}">
+              {{#if curateMode}}
+                <div class="settings-button-and-menu">
+                  <button class="settings-menu-button">{{> setting_icon}}</button>
+                  {{#if settingsMenuOpen}}
+                    {{> settings_menu}}
+                  {{/if}}
+                </div>
               {{/if}}
-          {{/if}}
-        </div>
+            </div>
+          {{/with}}
+          {{debugContext}}
+          {{#with deepstreamForContext}}
 
-        <div class="curator-menu">
+            {{#if showContextSearch}}
+              {{> content_icons}}
+              {{> add_context}}
+            {{else}}
+                {{#if showWebcamSetup}}
+                  {{> webcam_setup}}
+                {{else}}
+                    {{> context_browser_area}}
+                {{/if}}
+            {{/if}}
+          {{/with}}
+
+        </div>
+        {{#with thisDeepstream}}
+
+
+         <div class="curator-menu">
           {{#unless embedMode}}
             <button title="{{#if transparencyMode}}Switch to inset mode{{else}}Switch to transparency mode{{/if}}" class="transparency-button">{{> transparency_icon}}</button>
           {{/unless}}
@@ -206,10 +218,14 @@
           {{/if}}
 
         </div>
+      {{/with}}
 
       </div>
 
     </div>
+
+  {{#with thisDeepstream}}
+
 
     <!--Fixed sections-->
     {{#if showTitleDescriptionEditOverlay}}
