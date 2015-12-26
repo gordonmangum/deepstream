@@ -729,10 +729,9 @@ Template.watch_page.events({
     }
   },
   'click .about-deepstream-embed, click .deepstream-logo-embed' (e, t){
-    console.log('Show About Modal!')
     Session.set('showDeepstreamAboutOverlay', true);
   },
-  'click .close-about-deepstream-overlay' (e, t){
+  'click .close-deepstream-about-overlay' (e, t){
     Session.set('showDeepstreamAboutOverlay', false);
   }
 });
