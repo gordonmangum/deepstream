@@ -78,6 +78,10 @@ Handlebars.registerHelper("isMobile", function() {
   return window.isMobile();
 });
 
+Handlebars.registerHelper("newContextAvailable", function() {
+  return Session.get('newContextAvailable');
+});
+
 Handlebars.registerHelper("transparencyMode", function() {
   return Session.get('transparencyMode');
 });

@@ -253,6 +253,25 @@ Template.watch_page.onCreated(function () {
     }
   });
 
+  var numContextBlocks;
+
+  Session.set('newContextAvailable', false);
+
+  this.autorun(function(){
+    if(FlowRouter.subsReady()){
+      var deepstream = Deepstreams.findOne({shortId: that.data.shortId()}, {fields: {contextBlocks: 1}});
+      var newNumContextBlocks = deepstream.contextBlocks.length;
+      if(typeof numContextBlocks === 'number'){
+        if(newNumContextBlocks > numContextBlocks){
+          if(!that.data.onCuratePage()){
+            Session.set('newContextAvailable', true);
+          }
+        }
+      }
+      numContextBlocks = newNumContextBlocks;
+    }
+  })
+
 
   this.activeStream = new ReactiveVar();
   this.userControlledActiveStreamId = new ReactiveVar();
