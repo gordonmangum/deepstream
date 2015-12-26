@@ -2,6 +2,8 @@ var ytScriptLoaded = false;
 
 var ytApiReady = new ReactiveVar(false);
 
+var newContextDep = new Tracker.Dependency;
+
 window.mainPlayer = {
   activated(){
     return this.activeStreamSource ? true : false;
@@ -462,6 +464,7 @@ Template.watch_page.helpers({
     }
   },
   deepstreamForContext () {
+    newContextDep.depend();
     if (FlowRouter.subsReady()) {
       return Deepstreams.findOne({shortId: Template.instance().data.shortId()}, {reactive: Template.instance().data.onCuratePage()});
     }
@@ -758,6 +761,14 @@ Template.watch_page.events({
   },
   'click .close-deepstream-about-overlay' (e, t){
     Session.set('showDeepstreamAboutOverlay', false);
+  },
+  'click .update-with-new-context' (e, t){
+    Session.set('newContextAvailable', false);
+    newContextDep.changed();
+    Meteor.setTimeout(function(){
+      $('.context-browser>.context-area').scrollTop(0);
+    });
+
   }
 });
 

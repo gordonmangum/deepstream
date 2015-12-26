@@ -591,6 +591,17 @@
     position: absolute;
     .transparency-mode-only(display, none);
   }
+  .new-context-available-message{
+    background-color: @context-background-color;
+    width: calc(100% ~"-" 2 * @contextAreaPadding);
+    margin-bottom: 15px;
+
+    button{
+      padding: 8px;
+      .size-to-fit;
+      font-weight: bold;
+    }
+  }
   .top-bar{
     .box-shadow(-4px 4px 12px 0px rgba(0,0,0,0.75));
     margin-top: -11px;
