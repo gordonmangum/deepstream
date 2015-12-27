@@ -235,7 +235,7 @@ Template.favorite_button.events({
         notifyError(err);
         throw(err);
       } else {
-        analytics.track('Favorite story', trackingInfoFromPage());
+        analytics.track('Favorite deepstream', trackingInfoFromPage());
       }
 
     });
@@ -246,7 +246,7 @@ Template.favorite_button.events({
         notifyError(err);
         throw(err);
       } else {
-        analytics.track('Unfavorite story', trackingInfoFromPage());
+        analytics.track('Unfavorite deepstream', trackingInfoFromPage());
       }
     });
   }

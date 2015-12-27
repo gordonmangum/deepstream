@@ -13,7 +13,7 @@ changeFavorite = function(shortId, toFavorite) {
 
   this.unblock();
   if (!this.userId) {
-    throw new Meteor.Error('not-logged-in', 'Sorry, you must be logged in to favorite a story');
+    throw new Meteor.Error('not-logged-in', 'Sorry, you must be logged in to favorite a DeepStream');
   }
 
   var deepstream = Deepstreams.findOne({
