@@ -313,6 +313,18 @@ unthrottledUpdateActiveContext = function(){
 
 window.updateActiveContext = _.throttle(unthrottledUpdateActiveContext, 50, {leading: false});
 
+window.scrollToContext = function(id){
+  clearCurrentContext();
+  Session.set('mediaDataType', null);
+  Session.set('contextMode', 'context');
+  Meteor.setTimeout(() => {
+    var offset = 130;
+    var contextToScrollTo = $('.context-section[data-context-id=' + id + ']');
+    var container = $('.context-browser>.context-area');
+    container.animate({scrollTop: (contextToScrollTo.offset().top - container.offset().top + container.scrollTop() - offset)});
+  })
+}
+
 window.browseSuggestionsMode = function(){
   return Session.equals('contextMode', 'suggestions')
 };

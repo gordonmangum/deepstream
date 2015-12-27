@@ -98,6 +98,13 @@ Deepstream = (function() {
       .value()
   };
 
+  Deepstream.prototype.mostRecentContextId = function() {
+    if (this.contextBlocks) {
+      let id = (this.contextBlocks ? _.last(_.sortBy(this.contextBlocks, 'addedAt')) : {})._id;
+      return id
+    }
+  }
+
   Deepstream.prototype.topContextsOfTypes = function(types, number) {
     return _.chain(this.internalContextOfTypes(types))
       .sortBy('addedAt')

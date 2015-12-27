@@ -735,16 +735,7 @@ Template.watch_page.events({
     clearCurrentContext();
   },
   'click .context-mini-preview' (e, t){
-
-    clearCurrentContext();
-    Session.set('mediaDataType', null);
-    Session.set('contextMode', 'context');
-    Meteor.setTimeout(() => {
-      var offset = 130;
-      var contextToScrollTo = $('.context-section[data-context-id=' + this._id + ']');
-      var container = $('.context-browser>.context-area');
-      container.animate({scrollTop: (contextToScrollTo.offset().top - container.offset().top + container.scrollTop() - offset)});
-    })
+    scrollToContext(this._id);
     analytics.track('Click context mini preview', trackingInfoFromContext(this));
   },
   'click .transparency-button' (e, t){
@@ -765,9 +756,10 @@ Template.watch_page.events({
   'click .update-with-new-context' (e, t){
     Session.set('newContextAvailable', false);
     newContextDep.changed();
-    Meteor.setTimeout(function(){
-      $('.context-browser>.context-area').scrollTop(0);
-    });
+    var mostRecentContextId = Deepstreams.findOne({shortId: Template.instance().data.shortId()}).mostRecentContextId();
+    if(mostRecentContextId){
+      scrollToContext(mostRecentContextId);
+    }
 
   }
 });
