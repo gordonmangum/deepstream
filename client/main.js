@@ -117,7 +117,7 @@ editableTextCreatedBoilerplate = function() {
 
 
 editableTextEventsBoilerplate = function(meteorMethod) {
-  return { 
+  return {
     "blur .text-content.editable" (d, template) {
       var that = this;
       if (Session.get('curateMode')) {
@@ -228,7 +228,7 @@ Template.favorite_button.helpers({
 Template.favorite_button.events({
   "click .favorite" () {
     if(!Meteor.user()){
-      return notifyInfo('Please sign up or log in to favorite stories');
+      return notifyInfo('Please sign up or log in to favorite DeepStreams');
     }
     return Meteor.call('favoriteDeepstream', this.shortId, function(err) {
       if (err) {
