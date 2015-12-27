@@ -278,17 +278,21 @@ unthrottledUpdateActiveContext = function(){
   var currentActivationBias = 30;
   var activeId;
 
-  var orderedContextIds = Deepstreams.findOne({shortId: Session.get('streamShortId')}).orderedContextIds();
+  var orderedContextElements = $('.context-browser .list-item-context-plus-annotation');
+
+  var orderedContextIds = orderedContextElements.map(function(i,e){ // get from DOM in case user hasn't updated to the latest context
+    return $(e).data('context-id');
+  });
 
 
   if (container[0].scrollHeight - container.scrollTop() - container.outerHeight() - lastActivationBias <= 0 ){
     activeId =  _.last(orderedContextIds);
   } else {
-    var contextOffsetObjects = _.map(orderedContextIds, (id) => {
-        var e = $('.context-browser .list-item-context-plus-annotation[data-context-id=' + id + ']');
+    var contextOffsetObjects = _.map(orderedContextElements, (e) => {
+        e = $(e); // jquerify
         var offset = e.offset();
         if (offset){
-          return {id: id, offset: offset.top, height: e.outerHeight()};
+          return {id: e.data('context-id'), offset: offset.top, height: e.outerHeight()};
         }
       }
     );
