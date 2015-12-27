@@ -195,7 +195,7 @@ Template.watch_page.onCreated(function () {
 
       if(!stream){
         setStatusCode(404);
-        return FlowLayout.render("stream_not_found");
+        return BlazeLayout.render("stream_not_found");
       }
 
       setTitle(stream.title);
@@ -206,7 +206,7 @@ Template.watch_page.onCreated(function () {
         if ((user = Meteor.user())) { // if there is a user
           if (!_.contains(stream.curatorIds, user._id)) { // if they don't own the stream take them to stream not found
             setStatusCode(404);
-            return FlowLayout.render("stream_not_found");
+            return BlazeLayout.render("stream_not_found");
           }
           var accessPriority = Meteor.user().accessPriority;
           if (!accessPriority || accessPriority > window.createAccessLevel){
