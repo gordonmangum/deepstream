@@ -291,7 +291,7 @@ Template.watch_page.onCreated(function () {
               notifyError(err);
             }
             if(success){
-              notifySuccess('You are now curating this DeepStream. Welcome!');
+              notifySuccess("You are now curating this DeepStream. Have fun and don't let the power go to your head!");
               delete that.data.curatorSignupCode;
               analytics.track('Additional curator added', trackingInfoFromPage());
               FlowRouter.withReplaceState(function(){
