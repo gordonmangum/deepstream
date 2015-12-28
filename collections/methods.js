@@ -655,7 +655,7 @@ Meteor.methods({
         to: email,
         from: 'noreply@example.com',
         subject: "You've been invited to help curate " + deepstream.title,
-        html: currentUser.username + ' just invited you to help curate their DeepStream "' + deepstream.title +
+        html: currentUser.profile.name + ' (' + currentUser.username  + ') just invited you to help curate their DeepStream "' + deepstream.title +
         '". To join in, click: ' + Meteor.absoluteUrl('watch/' + deepstream.userPathSegment + '/' + deepstream.streamPathSegment + '?curator_invite_code=' + inviteCode) + '<br><br><a href=' + Meteor.absoluteUrl('about') + '>What is DeepStream?</a>'
       })
     }
