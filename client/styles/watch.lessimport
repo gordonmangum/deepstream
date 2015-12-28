@@ -1526,3 +1526,8 @@
     flex: auto;
   }
 }
+.manage-curators-section{
+  button{
+    .action-button;
+  }
+}

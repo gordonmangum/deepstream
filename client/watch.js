@@ -707,6 +707,8 @@ Template.watch_page.events({
     return Meteor.call('directorModeOn', t.data.shortId(), basicErrorHandler)
   },
   'click .show-manage-curators-menu' (e, t){
+    Session.set('previousMediaDataType', Session.get('mediaDataType'));
+    Session.set('mediaDataType', null);
     return Session.set("showManageCuratorsMenu", true);
   },
   'mouseenter .settings-button-and-menu' (e, template){
@@ -1166,7 +1168,7 @@ Template.timeline_section.events({
     e.preventDefault();
     var timelineWidgetCode = t.$('input[name=timeline-embed-code]').val();
     if(!timelineWidgetCode){
-      return notifyError('Please enter your timeline widget code')
+      return notifyError('Please enter your timeline widget code');
     }
     Meteor.call('addTimelineWidget', Session.get("streamShortId"), timelineWidgetCode, function(err, result){
       if(err){
@@ -1176,9 +1178,35 @@ Template.timeline_section.events({
   }
 });
 
+var disableInviteForm;
+
 Template.manage_curators_menu.events({
   'click .go-back-button': function(){
-    return Session.set('showManageCuratorsMenu', false)
+    return Session.set('showManageCuratorsMenu', false);
+  },
+  'submit #invite-curator' (e, t){
+    e.preventDefault();
+    if(disableInviteForm){
+      return
+    }
+    disableInviteForm = true;
+
+    var newCuratorEmail = t.$('input[name=new-curator-email]').val();
+    if(!newCuratorEmail){
+      disableInviteForm = false;
+      return notifyError('Please enter the email of the person you\'d like to invite');
+    }
+    Meteor.call('inviteCurator', Session.get("streamShortId"), newCuratorEmail, function(err, result){
+      t.$('input[name=new-curator-email]').val('');
+      disableInviteForm = false;
+      if(err){
+        return basicErrorHandler(err);
+      }
+      if(result){
+        notifySuccess('You have successfully invited ' + newCuratorEmail + ' to help curate this DeepStream!');
+        Session.set('showManageCuratorsMenu', false);
+      }
+    });
   }
 });
 

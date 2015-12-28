@@ -820,6 +820,6 @@ Template.search_form.helpers({
 
 Template.webcam_setup.events({
   'click .go-back-button': function(){
-    return Session.set('mediaDataType', null)
+    return Session.set('mediaDataType', null);
   }
 });
