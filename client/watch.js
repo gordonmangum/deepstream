@@ -236,6 +236,7 @@ Template.watch_page.onCreated(function () {
   });
 
   Session.set('contextMode', 'context');
+  Session.set('showManageCuratorsMenu', false);
 
   // march through creation steps, or setup most recent context type to display when arrive on page if past curation
   this.autorun(function(){
@@ -353,7 +354,6 @@ Template.watch_page.onCreated(function () {
       nonInteraction: 1
     });
   }
-
 });
 
 // add transparency-mode class to everything quick and dirtily
@@ -561,6 +561,9 @@ Template.watch_page.helpers({
   showWebcamSetup (){
     return Session.get("curateMode") && Session.get('mediaDataType') === 'webcam'; // always setup on webcam
   },
+  showManageCuratorsMenu (){
+    return Session.get("curateMode") && Session.get("showManageCuratorsMenu");
+  },
   showChat (){
     return Session.get('showChat', true); // TODO this is probably not what we want
   },
@@ -702,6 +705,9 @@ Template.watch_page.events({
   },
   'click .director-mode-on' (e, t){
     return Meteor.call('directorModeOn', t.data.shortId(), basicErrorHandler)
+  },
+  'click .show-manage-curators-menu' (e, t){
+    return Session.set("showManageCuratorsMenu", true);
   },
   'mouseenter .settings-button-and-menu' (e, template){
     template.settingsMenuOpen.set(true);
@@ -1116,7 +1122,6 @@ Template.annotation_section.helpers({
 
 Template.webcam_setup.events({
   'submit #bambuser-webcam' (e, t){
-    console.log('cloocik')
     e.preventDefault();
     var bambuserUsername = t.$('input[name=bambuser-username]').val();
     if(!bambuserUsername){
@@ -1168,6 +1173,12 @@ Template.timeline_section.events({
         return basicErrorHandler(err);
       }
     });
+  }
+});
+
+Template.manage_curators_menu.events({
+  'click .go-back-button': function(){
+    return Session.set('showManageCuratorsMenu', false)
   }
 });
 
