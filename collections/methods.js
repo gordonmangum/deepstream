@@ -629,7 +629,7 @@ Meteor.methods({
       throw new Meteor.Error('Please enter a valid email to invite a curator');
     }
 
-    var deepstream = Deepstreams.findOne({shortId: shortId}, {fields: {'mainCuratorId': 1}});
+    var deepstream = Deepstreams.findOne({shortId: shortId}, {fields: {'mainCuratorId': 1, title: 1, streamPathSegment:1, userPathSegment: 1}});
     if(this.userId !== deepstream.mainCuratorId){
       throw new Meteor.Error('Only the primary curator may invite another curator');
     }
@@ -640,14 +640,14 @@ Meteor.methods({
 
 
     if (Meteor.isServer){
+      var currentUser = Meteor.user();
       var internalEmail = process.env.SEND_PUBLISH_NOTICE_TO || Meteor.settings.SEND_PUBLISH_NOTICE_TO;
       if (internalEmail){
-        var currentUser = Meteor.user();
         Email.send({
           to: internalEmail,
           from: 'noreply@example.com',
-          subject: 'New Curator Invite Sent for Deepstream: ' + title,
-          text: 'In DeepStream "' + title + '"' + ' at ' + new Date + ', user ' + currentUser.username + ' (' + currentUser.profile.name + ') invited ' + email + ' to be a curator'
+          subject: 'New Curator Invite Sent for Deepstream: ' + deepstream.title,
+          text: 'In DeepStream "' + deepstream.title + '"' + ' at ' + new Date + ', user ' + currentUser.username + ' (' + currentUser.profile.name + ') invited ' + email + ' to be a curator'
         })
       }
 
