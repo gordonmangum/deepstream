@@ -281,9 +281,8 @@ Template.watch_page.onCreated(function () {
     if(inviteCode = that.data.curatorInviteCode()){
       if(FlowRouter.subsReady()){
         if(user = Meteor.user()){
-          var deepstream = Deepstreams.findOne({shortId: that.data.shortId()}, {fields: {curatorIds: 1}, reactive: false});
+          var deepstream = Deepstreams.findOne({shortId: that.data.shortId()}, {reactive: false});
           if(_.contains(deepstream.curatorIds, user._id)){ // if this user is already a curator
-            notifyInfo('You are already a curator of this DeepStream');
             delete that.data.curatorSignupCode;
             return
           }
@@ -293,6 +292,7 @@ Template.watch_page.onCreated(function () {
             }
             if(success){
               notifySuccess('You are now curating this DeepStream. Welcome!');
+              delete that.data.curatorSignupCode;
               analytics.track('Additional curator added', trackingInfoFromPage());
               FlowRouter.withReplaceState(function(){
                 FlowRouter.go(deepstream.curatePath());
