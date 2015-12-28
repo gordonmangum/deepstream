@@ -1178,6 +1178,16 @@ Template.timeline_section.events({
   }
 });
 
+Template.manage_curators_menu.onCreated(function() {
+  this.subscribe('minimalUsersPub', this.data.curatorIds);
+});
+
+Template.manage_curators_menu.helpers({
+  'additionalCurators' (){
+    return Meteor.users.find({_id: {$in: _.without(this.curatorIds, this.mainCuratorId)}});
+  }
+});
+
 var disableInviteForm;
 
 Template.manage_curators_menu.events({
@@ -1205,6 +1215,14 @@ Template.manage_curators_menu.events({
       if(result){
         notifySuccess('You have successfully invited ' + newCuratorEmail + ' to help curate this DeepStream!');
         Session.set('showManageCuratorsMenu', false);
+      }
+    });
+  },
+  'click .remove-curator' (e, t){
+    Meteor.call('removeCurator', Session.get("streamShortId"), this._id, function(err, result){
+
+      if(err){
+        return basicErrorHandler(err);
       }
     });
   }

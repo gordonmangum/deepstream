@@ -52,8 +52,16 @@
         <div class="button-container"><button type="submit" class="invite-curator">INVITE</button></div>
       </form>
       <h4 class="">Current Curators</h4>
-      <!--MAIN CURATOR HERE-->
-      <!--EACH CURATORS HERE-->
+      <ol class="current-curators-list">
+        <li class="main-curator">
+          <span class="name">{{currentUser.profile.name}}</span><span class="this-is-you">This is you</span>
+        </li>
+        {{#each additionalCurators}}
+          <li class="additional-curator">
+            <span class="name">{{profile.name}}</span><button class="remove-curator">REMOVE</button>
+          </li>
+        {{/each}}
+      </ol>
     </div>
   </div>
 </template>

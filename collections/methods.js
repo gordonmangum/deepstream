@@ -687,7 +687,7 @@ Meteor.methods({
       throw new Meteor.Error('The primary curator may not be removed');
     }
 
-    return updateDeepstream.call(this, {shortId: shortId}, {pull: { curatorIds: curatorId}});
+    return updateDeepstream.call(this, {shortId: shortId}, {$pull: { curatorIds: curatorId}});
   },
   favoriteDeepstream (streamShortId) {
     check(streamShortId, String);
