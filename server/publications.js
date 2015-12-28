@@ -50,7 +50,8 @@ var deepstreamFields = {
   'analytics.shares': 0,
   'analytics.views.byConnection': 0,
   'analytics.views.byIP': 0,
-  'analytics.views.byId': 0
+  'analytics.views.byId': 0,
+  'curatorSignupCodes': 0
 };
 
 var contextFields = {

@@ -240,7 +240,6 @@ Template.watch_page.onCreated(function () {
   // march through creation steps, or setup most recent context type to display when arrive on page if past curation
   this.autorun(function(){
     if(FlowRouter.subsReady()){
-      var deepstream = Deepstreams.findOne({shortId: that.data.shortId()}, {reactive: false});
       var reactiveDeepstream = Deepstreams.findOne({shortId: that.data.shortId()}, {fields: {creationStep: 1}});
 
       if(that.data.onCuratePage()){
@@ -255,8 +254,9 @@ Template.watch_page.onCreated(function () {
     }
   });
 
-  var numContextBlocks;
 
+  // for viewers, to keep track of when new context has been added
+  var numContextBlocks;
   Session.set('newContextAvailable', false);
 
   this.autorun(function(){
@@ -272,7 +272,40 @@ Template.watch_page.onCreated(function () {
       }
       numContextBlocks = newNumContextBlocks;
     }
-  })
+  });
+
+  // for adding curators who have arrived via an invite to curator
+  this.autorun(function(){
+    var inviteCode, user;
+    if(inviteCode = that.data.curatorInviteCode()){
+      if(FlowRouter.subsReady()){
+        if(user = Meteor.user()){
+          var deepstream = Deepstreams.findOne({shortId: that.data.shortId()}, {fields: {curatorIds: 1}, reactive: false});
+          if(_.contains(deepstream.curatorIds, user._id)){ // if this user is already a curator
+            notifyInfo('You are already a curator of this DeepStream');
+            delete that.data.curatorSignupCode;
+            return
+          }
+          Meteor.call('becomeCurator', that.data.shortId(), inviteCode, function(err, success){
+            if(err){
+              notifyError(err);
+            }
+            if(success){
+              notifySuccess('You are now curating this DeepStream. Welcome!');
+              analytics.track('Additional curator added', trackingInfoFromPage());
+              FlowRouter.withReplaceState(function(){
+                FlowRouter.go(deepstream.curatePath());
+              });
+            }
+          });
+        } else {
+          Session.set('signingIn', true);
+        }
+      }
+    }
+
+  });
+
 
 
   this.activeStream = new ReactiveVar();
