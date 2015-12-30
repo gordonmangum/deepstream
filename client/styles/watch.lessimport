@@ -275,6 +275,7 @@
     z-index: 9999999999999;
     height: @PiP-height;
     width: @PiP-width;
+    top: @top-row-height + @second-row-height;
     float: none;
     left: @left-margin;
   }
@@ -803,7 +804,11 @@
     .padding-sides(10px);
     text-align: left;
     .transparency-rounded;
-    .transparency-fade(background-color, @context-background-color);
+    background-color: @context-background-color;
+  }
+  .annotation-section{
+    border-radius: 0;
+    background-color: @context-background-color;
   }
 
   @topPaddingHeight: 36px;
@@ -1442,6 +1447,7 @@
     flex: auto;
   }
 }
+
 
 .curator-webcam-stream-container{
   .opacity-transition;
