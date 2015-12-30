@@ -10,13 +10,13 @@
   <div class="watch {{#if thisDeepstream.onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}}" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
     {{#with thisDeepstream}}
 
-    <div class="left-section" style="width: {{mainStreamMaxWidth 20}}px;">
+    <div class="left-section" style="width: {{leftSectionWidth}}px;">
 
         <div class="header-section">
           <div class="top-row" style="width: {{windowWidth}}px;">
             {{> logo_title}}
           </div>
-          <div class="second-row" style="max-width: {{mainStreamMaxWidth}}px;">
+          <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
             {{#if activeStream.live}}
               <div class="live-indicator">
                 LIVE
@@ -25,9 +25,9 @@
             {{{streamTitleElement}}}
           </div>
         </div>
-        <div class="main-section {{#if expandMainSection}}expanded{{/if}}" style="max-width: {{mainStreamMaxWidth}}px;">
+        <div class="main-section {{#if expandMainSection}}expanded{{/if}}">
 
-          <div class="main-stream {{#if expandMainSection}}expanded{{/if}} {{#if PiP}}PiP{{/if}}" style="height: {{mainStreamHeight}}px;">
+          <div class="main-stream {{#if expandMainSection}}expanded{{/if}} {{#if PiP}}PiP{{/if}}">
             {{#if showTutorial}}
               {{> creation_tutorial}}
             {{/if}}
@@ -89,7 +89,7 @@
               <!--{{/unless}}-->
             {{/if}}
           </div>
-          <div class="footer-section">
+          <div class="footer-section" style="width: {{leftSectionWidth -40}}px;">
             {{#if showStreamSwitcher}}
               <div class="streams-list">
                 {{#each livestreams}}

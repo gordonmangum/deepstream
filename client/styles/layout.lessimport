@@ -248,6 +248,14 @@ html {
   .transition(left 0.2s ease-in);
 }
 
+.right-transition{
+  .transition(right 0.2s ease-in);
+}
+
+.bottom-transition{
+  .transition(bottom 0.2s ease-in);
+}
+
 .width-transition{
   .transition(width 0.2s ease-in);
 }

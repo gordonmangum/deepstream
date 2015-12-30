@@ -90,12 +90,12 @@ getMainStreamHeight = function(offset){
   return Session.get("windowHeight") - 60 - 65 - 130 - 20 + (offset || 0);
 };
 
-getMainStreamMaxWidth = function(offset){
-  return Session.get("windowWidth") - 400;
+getLeftSectionWidth = function(offset){
+  return Session.get("windowWidth") - 400 + (offset || 0);
 };
 
-Handlebars.registerHelper("mainStreamMaxWidth", function(offset) {
-  return getMainStreamMaxWidth(offset);
+Handlebars.registerHelper("leftSectionWidth", function(offset) {
+  return getLeftSectionWidth(offset);
 });
 
 Handlebars.registerHelper("mainStreamHeight", function(offset) {

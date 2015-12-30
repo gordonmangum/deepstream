@@ -8,6 +8,7 @@
 @card-column-width: 70px;
 @top-row-height: 60px;
 @second-row-height: 65px;
+@drawer-bottom: 60px;
 
 @mainStreamExpandedHeight: 645px;
 
@@ -194,18 +195,33 @@
   }
 }
 
+
 .left-section{
   height: 100%;
   float: left;
   max-width: calc(100% ~"-" @right-section-width);
 
+  .header-section{
+    position: fixed;
+    top:0;
+    left:0;
+    z-index: 1;
+  }
+
   .footer-section{
     padding-top: 10px;
-    position: relative;
+    .padding-sides(5px);
+    position: fixed;
+    bottom: @drawer-bottom;
+    .bottom-transition;
     overflow-y: hidden;
     height: @footer-section-height - 25px;
     display: flex;
     flex-direction: row;
+    .transparency-fade(background-color, @alt-background-color);
+    .transparency-rounded;
+    width: inherit;
+
 
     .streams-list{
       flex: 1;
@@ -270,9 +286,10 @@
   &:not(.PiP){
     z-index: 0;
     position: fixed;
-    top:@top-row-height;
+    top:0;
     left:0;
-    height: calc(100% ~'-' @top-row-height);
+    bottom:0;
+    right:0;
   }
   embed{
     .size-to-fit;
@@ -283,13 +300,12 @@
 
 
 .right-section{
-
-  .opacity-transition;
-  height: 100%;
-
   .transparency-fade(background-color, @alt-background-color);
-  position: absolute; // this is so the background shows up above the main stream iframe on Chrome
-  float: right;
+  .right-transition;
+  position: fixed;
+  bottom: @drawer-bottom;
+  right: 0;
+  top: 55px;
 
   display: inline-block;
   z-index: 10;
@@ -496,6 +512,7 @@
 
 .tutorial{
   position: absolute;
+  z-index: 1;
   top: 0;
   bottom: 0;
   left: 0;
@@ -1286,9 +1303,7 @@
 }
 
 .top-row{
-  background-color: @top-row-color;
   height: @top-row-height;
-  .box-shadow(0px 2px 12px 0px rgba(0,0,0,0.75));
   position: relative;
   z-index: 10;
 }
