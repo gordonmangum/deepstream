@@ -37,6 +37,7 @@
 
 @live-color: #C90523;
 @action-color: #F6C406;
+@dark-action-color: @context-background-color;
 @hover-action-color: #dea406;
 @placeholder-color: #acacac;
 @favorite-color: #C90523;
@@ -176,6 +177,14 @@ html {
   background-color: @action-color;
   &:hover {
     background-color: @hover-action-color;
+  }
+}
+.dark-action-button{
+  color: @light-text-color;
+  background-color: @dark-action-color;
+  &:hover, .active {
+    background-color: @action-color;
+    color: @dark-text-color;
   }
 }
 

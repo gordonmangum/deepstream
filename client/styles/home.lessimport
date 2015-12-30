@@ -524,9 +524,7 @@ div.logo-title {
   }
 }
 
-
-
-div.action-items {
+.action-items {
   z-index: 15;
   @height: 30px;
   position: absolute;

@@ -13,8 +13,9 @@
     <div class="left-section" style="width: {{leftSectionWidth}}px;">
 
         <div class="header-section">
-          <div class="top-row" style="width: {{windowWidth}}px;">
-            {{> logo_title}}
+          <div class="top-row">
+            {{> banner_buttons}}
+            {{> logo_only}}
           </div>
           <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
             {{#if activeStream.live}}
@@ -235,7 +236,6 @@
       {{> overlay_context_browser}}
     {{/if}}
     {{> signin_overlay}}
-    {{> banner_buttons}}
     {{#if curatorWebcamActive}}
       {{#with getCuratorWebcamStream}}
 

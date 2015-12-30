@@ -99,37 +99,35 @@
 </template>
 
 <template name="banner_buttons">
-  <div class="right">
-    <div class="action-items">
-      <ol>
-        {{#if embedMode}}
-          <li class="about-deepstream-embed">
-            <button>
-              <span class="text">About</span>
-            </button>
+  <div class="action-items">
+    <ol>
+      {{#if embedMode}}
+        <li class="about-deepstream-embed">
+          <button>
+            <span class="text">About</span>
+          </button>
+        </li>
+      {{else}}
+        {{#unless isPhone}}
+          <li class="about-deepstream">
+            <a href="/about">
+              <button>
+                <span class="text">About</span>
+
+              </button>
+            </a>
           </li>
-        {{else}}
-          {{#unless isPhone}}
-            <li class="about-deepstream">
-              <a href="/about">
-                <button>
-                  <span class="text">About</span>
-
-                </button>
-              </a>
-            </li>
-          {{/unless}}
-          {{> login_buttons }}
-          {{#unless isPhone}}
-            <li class="create-deepstream">
-              {{> create_deepstream}}
-            </li>
-          {{/unless}}
-        {{/if}}
-      </ol>
-    </div>
-
+        {{/unless}}
+        {{> login_buttons }}
+        {{#unless isPhone}}
+          <li class="create-deepstream">
+            {{> create_deepstream}}
+          </li>
+        {{/unless}}
+      {{/if}}
+    </ol>
   </div>
+
 </template>
 
 <template name="login_buttons">
@@ -236,6 +234,24 @@
         <div class="title">
           <div class="name">  <img src="/images/logo.png" /></div>
           <div class="slogan">Turn livestreams into something deeper</div>
+        </div>
+      </a>
+    {{/if}}
+  </div>
+</template>
+
+<template name="logo_only">
+  <div class="logo-only">
+    {{#if embedMode}}
+      <button class="deepstream-logo-embed">
+        <div class="title">
+          <div class="name">  <img src="http://res.cloudinary.com/deepstream/image/upload/v1/static/logo_transparent.png" /></div>
+        </div>
+      </button>
+    {{else}}
+      <a href="/">
+        <div class="title">
+          <div class="name">  <img src="http://res.cloudinary.com/deepstream/image/upload/v1/static/logo_transparent.png" /></div>
         </div>
       </a>
     {{/if}}
