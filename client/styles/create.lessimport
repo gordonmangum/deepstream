@@ -122,8 +122,8 @@ div.add-context {
     height: calc(100% ~'-' @context-browser-header-row-height);
     flex: auto;
     margin-right: 20px;
-    .transparency-aware-fade(background-color, @context-background-color);
     .transparency-rounded;
+    .transparency-fade(background-color, @context-background-color);
     .search-section {
       height: 100%;
     }

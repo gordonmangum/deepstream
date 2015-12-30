@@ -7,13 +7,13 @@
   {{/if}}
 
 
-  <div class="watch {{#if thisDeepstream.onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}} {{#if transparencyMode}}transparency-mode{{/if}}" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
+  <div class="watch {{#if thisDeepstream.onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}}" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
     {{#with thisDeepstream}}
 
     <div class="left-section" style="width: {{mainStreamMaxWidth 20}}px;">
 
         <div class="header-section">
-          <div class="top-row" style="{{#if transparencyMode}} width: {{windowWidth}}px;{{/if}}">
+          <div class="top-row" style="width: {{windowWidth}}px;">
             {{> logo_title}}
           </div>
           <div class="second-row" style="max-width: {{mainStreamMaxWidth}}px;">
@@ -178,9 +178,6 @@
 
 
          <div class="curator-menu">
-          {{#unless embedMode}}
-            <button title="{{#if transparencyMode}}Switch to inset mode{{else}}Switch to transparency mode{{/if}}" class="transparency-button">{{> transparency_icon}}</button>
-          {{/unless}}
           <div class="curator-info">
               <div class="curator-pic">
                 {{> default_user_pic}}
@@ -473,13 +470,13 @@
           {{/with}}
         </div>
       {{else}}
-        <div class="top-bar"></div>
+        <!--<div class="top-bar"></div>-->
       {{/if}}
       <div class="context-area list-mode {{#if soloSidebarContextMode}}hide{{/if}}">
         {{#each contextBlocks}}
           {{> list_item_context_section}}
         {{/each}}
-        <div class="bottom-bar"></div>
+        <!--<div class="bottom-bar"></div>-->
       </div>
   </div>
 </template>

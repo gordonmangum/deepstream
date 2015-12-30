@@ -24,7 +24,7 @@
     width: calc(100% ~"-" (@left-margin + @live-indicator-width));
     max-width: calc(100% ~"-" ( @left-margin + @live-indicator-width));
     overflow: hidden;
-    .transparency-mode-only(text-shadow, 2px 2px 2px darken(@light-text-color,60%));
+    text-shadow: 2px 2px 2px darken(@light-text-color,60%);
   }
   .streams-list{
     white-space: nowrap;
@@ -141,7 +141,7 @@
         }
         position: relative;
         padding: 0;
-        .transparency-mode-only(background-color, @black-color);
+        background-color: @black-color;
 
       }
       &:not(.placeholder){
@@ -203,8 +203,7 @@
     padding-top: 10px;
     position: relative;
     overflow-y: hidden;
-    height: @footer-section-height;
-    .transparency-mode-only(height, @footer-section-height - 25px);
+    height: @footer-section-height - 25px;
     display: flex;
     flex-direction: row;
 
@@ -215,7 +214,7 @@
 
     .stream-stats-and-share{
       padding-left: 30px;
-      .transparency-mode-only(text-shadow, 1px 1px 1px darken(@light-text-color,60%));
+      text-shadow: 1px 1px 1px darken(@light-text-color,60%);
       .inverted-icon-colors;
       .stream-stats{
         margin-top: 20px;
@@ -242,8 +241,6 @@
   }
   position: relative;
   display: inline-block;
-  z-index: 1;
-  .transparency-mode-only(z-index, auto);
   &.PiP{
     z-index: inherit;
   }
@@ -270,7 +267,7 @@
 
 .main-stream-iframe, .main-stream-flash-object{
   .size-to-fit;
-  &.transparency-mode:not(.PiP){
+  &:not(.PiP){
     z-index: 0;
     position: fixed;
     top:@top-row-height;
@@ -289,10 +286,10 @@
 
   .opacity-transition;
   height: 100%;
-  float: left;
 
-  .transparency-aware(background-color, @alt-background-color);
-  .transparency-mode-only(float, right);
+  .transparency-fade(background-color, @alt-background-color);
+  position: absolute; // this is so the background shows up above the main stream iframe on Chrome
+  float: right;
 
   display: inline-block;
   z-index: 10;
@@ -318,8 +315,8 @@
     height: @top-row-height + @second-row-height - @margin-top - @context-browser-header-row-height;
     margin-left: @card-column-width;
     &.visible{
-      .transparency-aware-fade(background-color, @context-background-color);
       .transparency-rounded;
+      .transparency-fade(background-color, @context-background-color);
     }
     width: calc(100% ~'-' (@card-column-width + @contextAreaPadding*2));
 
@@ -327,8 +324,8 @@
   .context-timeline-switcher {
     height: @context-browser-header-row-height;
     margin-left: @card-column-width;
-    .transparency-aware-fade(background-color, @context-background-color);
     .transparency-rounded;
+    .transparency-fade(background-color, @context-background-color);
     width: calc(100%~'-'(@card-column-width + @contextAreaPadding * 2));
     margin-bottom: 10px;
     display: flex;
@@ -589,7 +586,6 @@
     background-color: transparent;
     z-index: 9999;
     position: absolute;
-    .transparency-mode-only(display, none);
   }
   .new-context-available-message{
     background-color: @context-background-color;
@@ -632,8 +628,8 @@
   }
   .context-section{
     position: relative;
-    .transparency-aware-fade(background-color, @context-background-color);
     .transparency-rounded;
+    .transparency-fade(background-color, @context-background-color);
     padding: 10px;
     &:hover{
       .delete-context, .hover-icon{
@@ -789,8 +785,8 @@
     position: relative;
     .padding-sides(10px);
     text-align: left;
-    .transparency-aware-fade(background-color, @context-background-color);
     .transparency-rounded;
+    .transparency-fade(background-color, @context-background-color);
   }
 
   @topPaddingHeight: 36px;
@@ -861,8 +857,8 @@
 
 .add-new-context-row, .search-section-title{
   margin-right: @contextAreaPadding * 2;
-  .transparency-aware-fade(background-color, @context-background-color);
   .transparency-rounded;
+  .transparency-fade(background-color, @context-background-color);
   margin-bottom: 15px;
   height: @context-browser-header-row-height;
   line-height: @context-browser-header-row-height;
@@ -1043,8 +1039,8 @@
   height: 135px;
   margin-bottom: 0px;
   margin-left: @card-column-width;
-  .transparency-aware-fade(background-color, @context-background-color);
   .transparency-rounded;
+  .transparency-fade(background-color, @context-background-color);
   .curator-info{
     display: inline-block;
     font-weight: 500;
@@ -1117,7 +1113,7 @@
     padding-top: 3px;
     background-color: @background-color;
     .transparency-rounded;
-    .transparency-mode-only(background-color, @dark-transparent-color);
+    background-color: @dark-transparent-color;
     svg{
       width: 44px;
       height: 33px;
@@ -1304,7 +1300,7 @@
   font-weight: bold;
   position: relative;
   height: @second-row-height;
-  .transparency-mode-only(z-index, 1);
+  z-index: 1;
 }
 
 
@@ -1315,7 +1311,7 @@
   top: 95px;
   position: absolute;
   width: calc(100% ~"-" (32px));
-  .transparency-mode-only(text-shadow, 1px 1px 1px darken(@light-text-color,60%));
+  text-shadow: 1px 1px 1px darken(@light-text-color,60%);
 
   .icon{
     position: absolute;
@@ -1388,8 +1384,8 @@
 }
 
 .annotation-section{
-  .transparency-aware-fade(background-color, @context-background-color);
-  .transparency-rounded;
+  .transparency-fade(background-color, @context-background-color);
+  border-radius: 5px;
   position: relative;
   display: flex;
   flex-direction: row;

@@ -39,15 +39,6 @@ Meteor.startup(function(){
 });
 
 Meteor.startup(function(){
-  Tracker.autorun(function(){
-    if (Session.get('transparencyMode')){
-      $("body").addClass("transparency-mode")
-    } else {
-      $("body").removeClass("transparency-mode")
-    }
-  })
-
-
   var inIFrame = function(){
     try {
       return window.self !== window.top;

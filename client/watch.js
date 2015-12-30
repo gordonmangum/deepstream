@@ -356,20 +356,6 @@ Template.watch_page.onCreated(function () {
   }
 });
 
-// add transparency-mode class to everything quick and dirtily
-_.each(_.keys(Template), function(templateKey) {
-  if(Blaze.isTemplate(Template[templateKey])){
-    Template[templateKey].onRendered(function(){
-      Tracker.autorun(() => {
-        if (Session.get('transparencyMode')){
-          $("*").addClass("transparency-mode")
-        } else {
-          $("*").removeClass("transparency-mode")
-        }
-      })
-    })
-  }
-});
 
 Template.watch_page.onRendered(function(){
   var that = this;
@@ -778,15 +764,6 @@ Template.watch_page.events({
   'click .context-mini-preview' (e, t){
     scrollToContext(this._id);
     analytics.track('Click context mini preview', trackingInfoFromContext(this));
-  },
-  'click .transparency-button' (e, t){
-    if(Session.get('transparencyMode')){
-      Session.set('transparencyMode', false);
-      analytics.track('Click transparency off button', trackingInfoFromPage());
-    } else {
-      Session.set('transparencyMode', true);
-      analytics.track('Click transparency on button', trackingInfoFromPage());
-    }
   },
   'click .about-deepstream-embed, click .deepstream-logo-embed' (e, t){
     Session.set('showDeepstreamAboutOverlay', true);
