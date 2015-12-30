@@ -6,7 +6,7 @@
 @live-indicator-width: 88px;
 @context-browser-header-row-height: 51px;
 @card-column-width: 70px;
-@top-row-height: 60px;
+@top-row-height: 50px;
 @second-row-height: 65px;
 @drawer-bottom: 60px;
 
@@ -1327,7 +1327,7 @@
   .logo-only{
     position: fixed;
     img{
-      height: 50px;
+      height: @top-row-height;
     }
     left: 50%;
     .transform(translate(-50%, 0%));

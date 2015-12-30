@@ -524,6 +524,12 @@ div.logo-title {
   }
 }
 
+.home{
+  .top-row{
+    background-color: @top-row-color;
+  }
+}
+
 .action-items {
   z-index: 15;
   @height: 30px;
