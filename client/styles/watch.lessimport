@@ -1,14 +1,14 @@
 @footer-section-height: 140px;
-@right-section-width: 400px;
+@right-section-width: 395px;
 @PiP-width: 285px;
 @PiP-height: 160px;
 @left-margin: 20px;
 @live-indicator-width: 88px;
 @context-browser-header-row-height: 51px;
-@card-column-width: 70px;
+@card-column-width: 60px;
 @top-row-height: 50px;
-@second-row-height: 65px;
-@drawer-bottom: 60px;
+@second-row-height: 60px;
+@drawer-bottom: 55px;
 
 @mainStreamExpandedHeight: 645px;
 
@@ -209,9 +209,12 @@
   }
 
   .footer-section{
-    padding-top: 10px;
-    .padding-sides(5px);
+    padding-top: 15px;
+    @padding-left: 25px;
+    padding-left: @padding-left;
+    padding-right: 5px;
     position: fixed;
+    left: 50px;
     bottom: @drawer-bottom;
     .bottom-transition;
     overflow-y: hidden;
@@ -221,6 +224,34 @@
     .transparency-fade(background-color, @alt-background-color);
     .transparency-rounded;
     width: inherit;
+
+
+    .about-stream{
+      display: inline-block;
+
+      left: @padding-left;
+      top: 95px;
+      position: absolute;
+      width: calc(100% ~"-" (32px));
+      text-shadow: 1px 1px 1px darken(@light-text-color,60%);
+
+      .icon{
+        position: absolute;
+        //top: 15px;
+      }
+      .stream-description{
+
+        @lineHeight: 18px;
+        line-height: @lineHeight;
+        min-height: @lineHeight;
+        font-size: 14px;
+        font-weight: normal;
+        position: absolute;
+        left: 30px;
+        padding-right: 10px;
+        width: calc(100% ~'-' @padding-left);
+      }
+    }
 
 
     .streams-list{
@@ -251,6 +282,7 @@
 
 .main-stream{
   width: 100%;
+  top: @top-row-height + @second-row-height;
 
   &.expanded{
     width: 100%;
@@ -302,6 +334,7 @@
 
 .right-section{
   .transparency-fade(background-color, @alt-background-color);
+  .transparency-rounded;
   .right-transition;
   position: fixed;
   bottom: @drawer-bottom;
@@ -311,10 +344,9 @@
   display: inline-block;
   z-index: 10;
   width: @right-section-width;
-  padding-bottom: 15px;
   .top-part{
-    position: relative;
-    height: calc(100% ~"-" @footer-section-height);
+    position: absolute;
+    height: 100%;
   }
   .content-icons {
     float: left;
@@ -324,20 +356,6 @@
     opacity: 0;
   }
 
-
-  .settings-menu-container{
-    @margin-top: 3px;
-    margin-top: @margin-top;
-    position: relative;
-    height: @top-row-height + @second-row-height - @margin-top - @context-browser-header-row-height;
-    margin-left: @card-column-width;
-    &.visible{
-      .transparency-rounded;
-      .transparency-fade(background-color, @context-background-color);
-    }
-    width: calc(100% ~'-' (@card-column-width + @contextAreaPadding*2));
-
-  }
   .context-timeline-switcher {
     height: @context-browser-header-row-height;
     margin-left: @card-column-width;
@@ -455,8 +473,8 @@
 }
 
 .content-icons {
-  width: @card-column-width;
-  .padding-sides(10px);
+  width: 60px;
+  .padding-sides(5px);
   //width: @contentIconWidth;
   margin-top: @context-browser-header-row-height;
   li{
@@ -648,7 +666,8 @@
     position: relative;
     .transparency-rounded;
     .transparency-fade(background-color, @context-background-color);
-    padding: 10px;
+    @padding: 10px;
+    padding: @padding;
     &:hover{
       .delete-context, .hover-icon{
         display: inline-block;
@@ -941,7 +960,6 @@
     margin-top: 15px;
   }
   .annotation-section{
-    margin-top: 1px;
   }
 }
 
@@ -1058,11 +1076,10 @@
   padding-top: 10px;
   .padding-sides(17px);
   width: calc(100% ~'-' (@card-column-width + @contextAreaPadding*2));
-  height: 135px;
+  height: 105px;
   margin-bottom: 0px;
   margin-left: @card-column-width;
   .transparency-rounded;
-  .transparency-fade(background-color, @context-background-color);
   .curator-info{
     display: inline-block;
     font-weight: 500;
@@ -1227,17 +1244,22 @@
   }
 }
 
-.settings-button-and-menu{
+.settings-menu-container{
   position: absolute;
   top: 7px;
   right: 10px;
+  padding-bottom: 10px;
+
   button{
-    .dark-action-button;
+    .action-button;
     height: 30px;
     width: 100px;
     .fg{
       fill: @black-color;
     }
+  }
+  .settings-menu-button{
+    .dark-action-button;
   }
 }
 
@@ -1277,8 +1299,9 @@
 .watch{
   .action-items{
     position: fixed;
-    left: 0;
+    left: @left-margin;
     top: auto;
+    padding-top: 10px; // to center in top row
     button, a{
       .dark-action-button;
     }
@@ -1340,7 +1363,7 @@
 }
 
 .second-row{
-  padding-top: 10px;
+  padding-top: 3px;
   padding-left: @left-margin;
   font-size: 20px;
   font-weight: bold;
@@ -1350,32 +1373,6 @@
 }
 
 
-.about-stream{
-  display: inline-block;
-
-  left: 0;
-  top: 95px;
-  position: absolute;
-  width: calc(100% ~"-" (32px));
-  text-shadow: 1px 1px 1px darken(@light-text-color,60%);
-
-  .icon{
-    position: absolute;
-    //top: 15px;
-  }
-  .stream-description{
-
-    @lineHeight: 18px;
-    line-height: @lineHeight;
-    min-height: @lineHeight;
-    font-size: 14px;
-    font-weight: normal;
-    position: absolute;
-    left: 30px;
-    padding-right: 10px;
-    width: 100%;
-  }
-}
 
 
 .live-indicator{
@@ -1389,6 +1386,12 @@
   line-height: 42px;
   width: @live-indicator-width;
   text-align: center;
+}
+
+.watch{
+  .live-indicator{
+    border-radius: 2px;
+  }
 }
 
 .news-section{

@@ -28,7 +28,7 @@
         </div>
         <div class="main-section {{#if expandMainSection}}expanded{{/if}}">
 
-          <div class="main-stream {{#if expandMainSection}}expanded{{/if}} {{#if PiP}}PiP{{/if}}">
+          <div class="main-stream {{#if expandMainSection}}expanded{{/if}} {{#if PiP}}PiP{{/if}}" style="height: {{mainStreamHeight}}px">
             {{#if showTutorial}}
               {{> creation_tutorial}}
             {{/if}}
@@ -90,7 +90,7 @@
               <!--{{/unless}}-->
             {{/if}}
           </div>
-          <div class="footer-section" style="width: {{leftSectionWidth -40}}px;">
+          <div class="footer-section" style="width: {{leftSectionWidth -60}}px;">
             {{#if showStreamSwitcher}}
               <div class="streams-list">
                 {{#each livestreams}}
@@ -143,38 +143,26 @@
 
 
     <div class="right-section {{#unless showRightSection}}collapsed{{/unless}}">
-        <div class="top-part">
-          {{#with thisDeepstream}}
-            <div class="settings-menu-container {{#if curateMode}}visible{{/if}}">
-              {{#if curateMode}}
-                <div class="settings-button-and-menu">
-                  <button class="settings-menu-button">{{> setting_icon}}</button>
-                  {{#if settingsMenuOpen}}
-                    {{> settings_menu}}
-                  {{/if}}
-                </div>
-              {{/if}}
-            </div>
-          {{/with}}
-          {{#with deepstreamForContext}}
 
-            {{#if showContextSearch}}
-              {{> content_icons}}
-              {{> add_context}}
+
+        {{#with deepstreamForContext}}
+
+          {{#if showContextSearch}}
+            {{> content_icons}}
+            {{> add_context}}
+          {{else}}
+            {{#if showWebcamSetup}}
+              {{> webcam_setup}}
             {{else}}
-              {{#if showWebcamSetup}}
-                {{> webcam_setup}}
+              {{#if showManageCuratorsMenu}}
+                {{> manage_curators_menu}}
               {{else}}
-                {{#if showManageCuratorsMenu}}
-                  {{> manage_curators_menu}}
-                {{else}}
-                  {{> context_browser_area}}
-                {{/if}}
+                {{> context_browser_area}}
               {{/if}}
             {{/if}}
-          {{/with}}
+          {{/if}}
+        {{/with}}
 
-        </div>
         {{#with thisDeepstream}}
 
 
@@ -220,10 +208,9 @@
 
         </div>
       {{/with}}
-
-      </div>
-
     </div>
+
+  </div>
 
   {{#with thisDeepstream}}
 
@@ -236,6 +223,18 @@
       {{> overlay_context_browser}}
     {{/if}}
     {{> signin_overlay}}
+    {{#with thisDeepstream}}
+      <div class="settings-menu-container {{#if curateMode}}visible{{/if}}">
+        {{#if curateMode}}
+          <div class="settings-button-and-menu">
+            <button class="settings-menu-button {{#if settingsMenuOpen}}active{{/if}}">{{> setting_icon}}</button>
+            {{#if settingsMenuOpen}}
+              {{> settings_menu}}
+            {{/if}}
+          </div>
+        {{/if}}
+      </div>
+    {{/with}}
     {{#if curatorWebcamActive}}
       {{#with getCuratorWebcamStream}}
 
@@ -444,7 +443,7 @@
 </template>
 
 <template name="context_browser">
-  <div class="{{#if suggestions}}suggestion-browser{{else}}context-browser{{/if}} {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -20}}px">
+  <div class="{{#if suggestions}}suggestion-browser{{else}}context-browser{{/if}} {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight}}px">
       {{#if curateMode}}
         {{#unless browseSuggestionsMode}}
           <div class="add-new-context-row">

@@ -46,8 +46,6 @@
 @hover-pill-color: #5f2d72;
 @inactive-pill-color: #462859;
 
-@horizontal-content-height: 300px;
-
 
 html {
   -webkit-text-size-adjust: 100%;
@@ -62,7 +60,7 @@ html {
 }
 
 .transparency-fade(@property; @value){
-  @{property}: fade(@value, 70%);
+  @{property}: fade(@value, 50%);
 }
 
 
@@ -180,11 +178,18 @@ html {
   }
 }
 .dark-action-button{
+  .transparency-rounded;
   color: @light-text-color;
+  .fg{
+    fill: @light-icon-color;
+  }
   background-color: @dark-action-color;
-  &:hover, .active {
+  &:hover, &.active {
     background-color: @action-color;
     color: @dark-text-color;
+    .fg{
+      fill: @light-icon-color;
+    }
   }
 }
 
@@ -780,19 +785,19 @@ textarea.text-content {
   padding: 8px;
   display: block;
   &::-webkit-input-placeholder {
-    color: @dark-medium-color;
+    color: @light-text-color;
   }
 
   &:-moz-placeholder { /* Firefox 18- */
-    color: @dark-medium-color;
+    color: @light-text-color;
   }
 
   &::-moz-placeholder {  /* Firefox 19+ */
-    color: @dark-medium-color;
+    color: @light-text-color;
   }
 
   &:-ms-input-placeholder {
-    color: @dark-medium-color;
+    color: @light-text-color;
   }
 }
 
