@@ -611,11 +611,13 @@
 
 @contextAreaPadding: 10px;
 
+.context-browser, .suggestion-browser, .timeline-section{
+  padding-top: 15px;
+}
 .context-browser, .suggestion-browser{
   overflow: hidden;
   display: flex;
   flex-flow: column;
-  padding-top: 15px;
   .top-bar, .bottom-bar{
     width: 100%;
     background-color: transparent;
