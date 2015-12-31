@@ -527,10 +527,10 @@ Template.watch_page.helpers({
     return _.contains(['find_stream', 'add_cards', 'go_on_air'], this.creationStep) && Session.get('curateMode');
   },
   showRightSection (){
-    return !soloOverlayContextModeActive() && (Session.get("curateMode") || !Session.get('reducedRightView'));
+    return !soloOverlayContextModeActive() && !Session.get('reducedRightView');
   },
   showBottomSection (){
-    return !soloOverlayContextModeActive() && (Session.get("curateMode") || !Session.get('reducedBottomView'));
+    return !soloOverlayContextModeActive() && !Session.get('reducedBottomView');
   },
   expandMainSection (){
     return !Session.get("curateMode") && Session.get('reducedRightView');
