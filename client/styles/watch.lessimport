@@ -204,12 +204,15 @@
     @padding-left: 25px;
     padding-left: @padding-left;
     padding-right: 5px;
+    @height: @footer-section-height - 25px;
     position: fixed;
     left: 50px;
     bottom: @drawer-bottom;
     .bottom-transition;
-    overflow-y: hidden;
-    height: @footer-section-height - 25px;
+    &.collapsed{
+      bottom: -@height;
+    }
+    height: @height;
     display: flex;
     flex-direction: row;
     .transparency-fade(background-color, @alt-background-color);
@@ -234,7 +237,8 @@
 
         @lineHeight: 18px;
         line-height: @lineHeight;
-        min-height: @lineHeight;
+        height: @lineHeight;
+        overflow-y: hidden;
         font-size: 14px;
         font-weight: normal;
         position: absolute;
@@ -484,7 +488,7 @@
 }
 
 
-.sidebar-open-close{
+.bar-open-close{
   button{
     .size-to-fit;
     position: relative;
@@ -497,18 +501,30 @@
   }
 
   background-color: inherit;
-  .transform(translate(0, -50%));
-  .transparency-rounded-left;
 }
 .right-section{
-  .sidebar-open-close{
+  .bar-open-close{
     position: absolute;
     top: 50%;
     left: -30px;
     width: 30px;
     height: 130px;
+    .transform(translate(0, -50%));
+    .transparency-rounded-left;
+
   }
 
+}
+.footer-section{
+  .bar-open-close{
+    position: absolute;
+    left: 50%;
+    top: -30px;
+    width: 130px;
+    height: 30px;
+    .transform(translate(-50%, 0));
+    .transparency-rounded-top;
+  }
 }
 
 

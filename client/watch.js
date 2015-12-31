@@ -541,6 +541,9 @@ Template.watch_page.helpers({
   showRightSection (){
     return !soloOverlayContextModeActive() && (Session.get("curateMode") || !Session.get('reducedRightView'));
   },
+  showBottomSection (){
+    return !soloOverlayContextModeActive() && (Session.get("curateMode") || !Session.get('reducedBottomView'));
+  },
   expandMainSection (){
     return !Session.get("curateMode") && Session.get('reducedRightView');
   },
@@ -599,6 +602,12 @@ Template.watch_page.helpers({
   },
   showOpenSidebarIcon (){
     return Session.get('reducedRightView') && !soloOverlayContextModeActive();
+  },
+  showCloseBottombarIcon (){
+    return !Session.get('reducedBottomView') && !soloOverlayContextModeActive();
+  },
+  showOpenBottombarIcon (){
+    return Session.get('reducedBottomView') && !soloOverlayContextModeActive();
   }
 });
 
@@ -790,6 +799,12 @@ Template.watch_page.events({
   },
   'click .open-sidebar' (){
     return Session.set('reducedRightView', false);
+  },
+  'click .close-bottombar' (){
+    return Session.set('reducedBottomView', true);
+  },
+  'click .open-bottombar' (){
+    return Session.set('reducedBottomView', false);
   },
 
 });

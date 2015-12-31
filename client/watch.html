@@ -90,7 +90,22 @@
               <!--{{/unless}}-->
             {{/if}}
           </div>
-          <div class="footer-section" style="width: {{leftSectionWidth -60}}px;">
+          <div class="footer-section {{#unless showBottomSection}}collapsed{{/unless}}" style="width: {{leftSectionWidth -60}}px;">
+            {{#if showOpenBottombarIcon}}
+              <div class="bar-open-close">
+                <button class="open-bottombar">
+                  {{> drawer_down_icon}}
+                </button>
+              </div>
+            {{else}}
+              {{#if showCloseBottombarIcon}}
+                <div class="bar-open-close">
+                  <button class="close-bottombar">
+                    {{> drawer_up_icon}}
+                  </button>
+                </div>
+              {{/if}}
+            {{/if}}
             {{#if showStreamSwitcher}}
               <div class="streams-list">
                 {{#each livestreams}}
@@ -144,14 +159,14 @@
 
     <div class="right-section {{#unless showRightSection}}collapsed{{/unless}}">
         {{#if showOpenSidebarIcon}}
-          <div class="sidebar-open-close">
+          <div class="bar-open-close">
             <button class="open-sidebar">
               {{> drawer_left_icon}}
             </button>
           </div>
         {{else}}
           {{#if showCloseSidebarIcon}}
-            <div class="sidebar-open-close">
+            <div class="bar-open-close">
               <button class="close-sidebar">
                 {{> drawer_right_icon}}
               </button>
