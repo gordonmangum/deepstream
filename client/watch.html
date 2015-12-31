@@ -57,7 +57,7 @@
                       <object id="{{mainStreamFlashPlayerId}}"
                               bgcolor='#000000'
                               data='//www-cdn.jtvnw.net/swflibs/TwitchPlayer.swf'
-                              class="main-stream-flash-object"
+                              class="main-stream-flash-object {{#if PiP}}PiP{{/if}}"
                               type='application/x-shockwave-flash'>
 
                         <param name="allowFullScreen"
@@ -408,19 +408,24 @@
   {{> context_card_column}}
   <div class="context-timeline-switcher">
     {{#if curateMode}}
+      <div class="button-container {{#if showSuggestions}}active{{/if}}">
       <button title="User suggestions" class="show-suggestions {{#if showSuggestions}}active{{/if}}" disabled='{{#unless showShowSuggestionsButton}}disabled{{/unless}}'>
-        S
+        Suggest
       </button>
-    {{/if}}
-    <button title="Context" class="show-context-browser {{#if showContextBrowser}}active{{/if}}">
-      <div class="rectangles">
-        <div class="rectangle"></div>
-        <div class="rectangle"></div>
       </div>
-    </button>
-    <button title="Twitter timeline" class="show-timeline {{#if showTimeline}}active{{/if}}" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>
-      #
-    </button>
+    {{/if}}
+    <div class="button-container {{#if showContextBrowser}}active{{/if}}">
+      <button title="Context" class="show-context-browser {{#if showContextBrowser}}active{{/if}}">
+        Context
+      </button>
+    </div>
+
+    <div class="button-container {{#if showTimeline}}active{{/if}}">
+      <button title="Twitter timeline" class="show-timeline {{#if showTimeline}}active{{/if}}" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>
+        Twitter
+      </button>
+    </div>
+
   </div>
   {{#if showChat}}
     {{> unimplemented_chat_section}}

@@ -171,17 +171,8 @@
         width: 0;
         border-left: 2px solid @action-color;
       }
-
     }
-
-
-
-
-
   }
-
-
-
 }
 
 
@@ -253,11 +244,9 @@
       }
     }
 
-
     .streams-list{
       flex: 1;
     }
-
 
     .stream-stats-and-share{
       padding-left: 30px;
@@ -276,7 +265,6 @@
         }
       }
     }
-
   }
 }
 
@@ -339,7 +327,7 @@
   position: fixed;
   bottom: @drawer-bottom;
   right: 0;
-  top: 55px;
+  top: 55px + @context-browser-header-row-height;
 
   display: inline-block;
   z-index: 10;
@@ -358,74 +346,40 @@
 
   .context-timeline-switcher {
     height: @context-browser-header-row-height;
+    position: absolute;
+    top: -@context-browser-header-row-height;
     margin-left: @card-column-width;
     .transparency-rounded;
-    .transparency-fade(background-color, @context-background-color);
     width: calc(100%~'-'(@card-column-width + @contextAreaPadding * 2));
-    margin-bottom: 10px;
     display: flex;
     flex-direction: row;
     flex-flow: row;
     align-items: flex-end;
     justify-content: flex-end;
-    button {
+    .button-container{
+      &.active {
+        .transparency-fade(background-color, @alt-background-color);
+        .transparency-rounded-top;
+      }
       width: 30%;
+      height: 100%;
+      position: relative;
+      margin-left: 1.67%;
+      margin-right: 1.67%;
+    }
+    button {
+      .center-over-parent-div;
+      text-transform: uppercase;
       padding-top: 8px;
       padding-bottom: 5px;
       margin-bottom: 3px;
       text-align: center;
-      font-size: 26px;
       line-height: 100%;
-      font-weight: bold;
-      margin-left: 1.67%;
-      margin-right: 1.67%;
-      &.active {
-        border-bottom: 3px solid @blue-color;
-      }
+
+      .dark-action-button;
+
       &:disabled{
         visibility: hidden;
-      }
-    }
-
-    .show-context-browser {
-      display: inline-flex;
-      flex-flow: column;
-      align-items: center;
-      -webkit-align-items: center;
-      flex-direction: column;
-      justify-content: center;
-      height: 100%;
-      text-align: center;
-      .padding-sides(10px);
-      @rectangle-width: 20px;
-      .rectangles{
-        display: inline-block;
-        margin-left: auto;
-        margin-right: auto;
-        width: @rectangle-width;
-      }
-      .rectangle {
-        height: 13px;
-        width: @rectangle-width;
-        &:not(:first-child) {
-          margin-top: 4px;
-        }
-        line-height: 0;
-        background-color: @medium-color;
-      }
-
-      &:hover, &.active {
-        .rectangle {
-          background-color: @white-icon-color;
-        }
-      }
-    }
-
-    .show-timeline, .show-suggestions {
-      color: @medium-color;
-
-      &:hover, &.active {
-        color: @white-icon-color;
       }
     }
   }
@@ -489,7 +443,7 @@
     background-color: inherit;
     &.active, &:hover{
       &:not(:disabled){
-        .transparency-aware(background-color, @dark-medium-color);
+        .transparency-fade(background-color, @dark-medium-color);
         &:not(.stream-button) {
           .bg {
             stroke: @light-icon-color;
@@ -525,7 +479,6 @@
       }
     }
   }
-
 }
 
 
@@ -537,7 +490,6 @@
   left: 0;
   right: 0;
   background-color: @dark-transparent-color;
-
   padding-top: 70px;
   padding-left: 170px;
   padding-right: 100px;
@@ -617,6 +569,7 @@
   overflow: hidden;
   display: flex;
   flex-flow: column;
+  padding-top: 15px;
   .top-bar, .bottom-bar{
     width: 100%;
     background-color: transparent;
@@ -624,7 +577,7 @@
     position: absolute;
   }
   .new-context-available-message{
-    background-color: @context-background-color;
+    .transparency-fade(background-color, @context-background-color);
     width: calc(100% ~"-" 2 * @contextAreaPadding);
     margin-bottom: 15px;
 
@@ -750,7 +703,8 @@
       }
       .annotation-section{
 
-        .transparency-aware(background-color, 5px solid @background-color);
+        .transparency-fade(background-color, @background-color);
+        //.transparency-fade(background-color, 5px solid @background-color);
 
         width: calc(100% ~"+" 2 * @contextAreaPadding);
         margin-left: -@contextAreaPadding;
@@ -898,8 +852,6 @@
 
 .add-new-context-row, .search-section-title{
   margin-right: @contextAreaPadding * 2;
-  .transparency-rounded;
-  .transparency-fade(background-color, @context-background-color);
   margin-bottom: 15px;
   height: @context-browser-header-row-height;
   line-height: @context-browser-header-row-height;
@@ -908,6 +860,9 @@
 .add-new-context-row{
   cursor: pointer;
   position: relative;
+  .transparency-fade(background-color, @context-background-color);
+  .transparency-rounded;
+
   button{
     .size(38px);
     padding: 0;
@@ -938,12 +893,19 @@
   font-size: 20px;
   font-weight: bold;
   text-transform: uppercase;
+  position: absolute;
+  top: -@context-browser-header-row-height;
+  .transparency-fade(background-color, @alt-background-color);
+  .transparency-rounded-top;
+  width: 100%;
 }
 
 .go-back-button{
   .size(24px);
   padding: 0;
-  top: 12px;
+
+  top: 12px - @context-browser-header-row-height;
+
   left: 13px;
   position: absolute;
   .fg{
@@ -1045,7 +1007,8 @@
   font-size: 11px;
   text-align: right;
   .padding-sides(6px);
-  .transparency-aware(background-color, @context-background-color);
+  .transparency-fade(background-color, @context-background-color);
+  .transparency-rounded;
 }
 
 .moderation-buttons{
@@ -1056,7 +1019,7 @@
   .padding-sides(55px);
 
   button{
-    .transparency-aware(background-color, @context-background-color);
+    .transparency-fade(background-color, @context-background-color);
     text-transform: uppercase;
   }
   svg{
@@ -1128,7 +1091,7 @@
     width: @button-width;
   }
     .return-to-curate{
-    animation: glow-action 1.6s ease infinite;
+    animation: glow-dark-action 1.6s ease infinite;
   }
 
   .report-inappropriate-content{
@@ -1283,6 +1246,19 @@
 
     100% {
       background-color: @action-color;
+    }
+  }
+  @keyframes glow-dark-action {
+    0% {
+      background-color: @dark-action-color;
+    }
+
+    50% {
+      background-color: @hover-action-color;
+    }
+
+    100% {
+      background-color: @dark-action-color;
     }
   }
 }

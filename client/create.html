@@ -1,6 +1,6 @@
 <!--DEEPSTREAM-->
 <template name="add_context">
-  <div class="add-context narrative-section selected editing" style="height: {{mainStreamHeight 61}}px">
+  <div class="add-context narrative-section selected editing" style="height: {{mainStreamHeight}}px">
     {{#if listMode}}
       {{> Template.dynamic template=searchListTemplate}}
     {{else}}
@@ -10,14 +10,14 @@
 </template>
 
 <template name="stream_search">
-  <div class="add-context stream-search narrative-section selected editing" style="height: {{mainStreamHeight 41}}px">
+  <div class="add-context stream-search narrative-section selected editing" style="height: {{mainStreamHeight}}px">
     {{> create_stream_section}}
   </div>
 </template>
 
 <template name="webcam_setup">
   {{> context_card_column}}
-  <div class="add-context webcam-setup narrative-section selected editing" style="height: {{mainStreamHeight 41}}px">
+  <div class="add-context webcam-setup narrative-section selected editing" style="height: {{mainStreamHeight}}px">
     <div class="search-section-title">Webcam</div>
     <button class="go-back-button">{{> back_arrow_icon}}</button>
     <div class="create-section add-webcam-section">

@@ -52,12 +52,6 @@ html {
   -ms-text-size-adjust: 100%;
 }
 
-.transparency-aware(@property; @value){
-  @{property}: @value;
-  &.transparency-mode{
-    @{property}: transparent;
-  }
-}
 
 .transparency-fade(@property; @value){
   @{property}: fade(@value, 50%);
@@ -66,6 +60,10 @@ html {
 
 .transparency-rounded{
     border-radius: 5px;
+}
+.transparency-rounded-top{
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .standard-icon-colors {
@@ -482,9 +480,6 @@ body {
   margin: 0;
   color: @light-text-color;
   background-color: @background-color;
-  &.watch, &.curate{
-    .transparency-aware(background-color, @background-color);
-  }
 
   line-height: 23px;
   font-size: 15px;
@@ -676,7 +671,7 @@ div.twitter-section{
     background-color: inherit;
   }
   div.twitter-text-section {
-    .transparency-aware(background-color, @background-color);
+    .transparency-fade(background-color, @background-color);
     a {
       &:hover {
         color: @action-color;
