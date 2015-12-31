@@ -138,6 +138,10 @@ Schema.ContextReferenceProfile = new SimpleSchema({
   // Image
 
 
+  flickrOwnerId: {
+    type: String,
+    optional: true
+  },
   flickrFarm: {
     type: String,
     optional: true
@@ -365,7 +369,41 @@ Schema.ContextBlocks = new SimpleSchema({
   searchOption: {
     type: String,
     optional:true
-  }
+  },
+  // suggested context
+  suggestionStatus: {
+    type: String,
+    allowedValues: ['pending', 'approved', 'rejected'],
+    optional:true
+  },
+  suggestedAt: {
+    type: Date,
+    optional:true
+  },
+  suggestedBy: {
+    type: String,
+    optional:true
+  },
+  suggestedByUsername: {
+    type: String,
+    optional:true
+  },
+  moderatedAt: {
+    type: Date,
+    optional:true
+  },
+  moderatedBy: {
+    type: String,
+    optional:true
+  },
+  moderatedByUsername: {
+    type: String,
+    optional:true
+  },
+  idInDeepstream: {
+    type: String,
+    optional:true
+  },
 });
 
 this.ContextBlocks = new Mongo.Collection("context_blocks", {
@@ -375,6 +413,14 @@ this.ContextBlocks = new Mongo.Collection("context_blocks", {
 });
 
 this.ContextBlocks.attachSchema(Schema.ContextBlocks);
+
+this.SuggestedContextBlocks = new Mongo.Collection("suggested_context_blocks", {
+  transform (doc) {
+    return newTypeSpecificContextBlock(doc);
+  }
+});
+
+this.SuggestedContextBlocks.attachSchema(Schema.ContextBlocks);
 
 
 

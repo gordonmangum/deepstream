@@ -166,7 +166,7 @@ var generateFetchFunction = function(serviceInfo){
         return cb();
       }
       var mapResults = _.map(result.items, serviceInfo.mapFn);
-      Streams.batchInsert(mapResults);
+      Streams.batchInsert(mapResults); // TODO remove the es field first to prevent duplicates
 
       //elasticsearch
       
@@ -181,8 +181,9 @@ var generateFetchFunction = function(serviceInfo){
               }
             },
             {
-              doc: result,
+              //doc: result,
               source: result._streamSource,
+              id: result.id,
               broadcaster: result._es.broadcaster,
               description: result._es.description,
               tags: result._es.tags,
@@ -241,18 +242,21 @@ var generateFetchFunction = function(serviceInfo){
 
           console.log('Adding ' + resultsForES.length / 2 + ' streams to ES for ' + serviceName);
 
-          try {
-            bulkES({
-              body: resultsForES,
-              timeout: 90000,
-              requestTimeout: 90000
-            });
+          if(resultsForES.length){
 
-            console.log('ES streams added for ' + serviceName);
+            try {
+              bulkES({
+                body: resultsForES,
+                timeout: 90000,
+                requestTimeout: 90000
+              });
 
-          } catch (e) {
-            console.error('Failed to add streams to ES for ' + serviceName);
-            console.error(e);
+              console.log('ES streams added for ' + serviceName);
+
+            } catch (e) {
+              console.error('Failed to add streams to ES for ' + serviceName);
+              console.error(e);
+            }
           }
 
         };

@@ -461,15 +461,12 @@ div.logo-title {
     margin:auto;
     display:block;
     text-align: center;
-    position: absolute;
     height: 510px;
     width: 80%;
 
     background-color: @homepage-shade-0;
 
-    top: 50%;
-    left: 50%;
-    .transform(translate(-50%, -50%));
+    .center-over-parent-div;
 
     .main-stream{
       height: 100%;
@@ -723,8 +720,26 @@ div.action-items {
   }
 
 }
+.deepstream-about-overlay{
+  z-index: 999999999999;
+  .full-overlay;
+  background-color: @dark-transparent-color;
+}
 
-.mailchimp-signup-form-on-homepage, .mailchimp-signup-form-on-signin, .mailchimp-signup-form-on-mobile{
+.deepstream-about-modal{
+  position: relative;
+  padding: 50px;
+  .close{
+    .size(36px);
+    padding: 0;
+    font-size: 22px;
+    right: 10px;
+    top: 10px;
+    position: absolute;
+  }
+}
+
+.mailchimp-signup-form-on-homepage, .mailchimp-signup-form-on-signin, .mailchimp-signup-form-on-mobile, .deepstream-about-modal{
   position: absolute;
   .center-over-parent-div;
   //top: 200px;
@@ -765,6 +780,7 @@ div.action-items {
     margin-top: 20px;
   }
 }
+
 
 .no-results{
   height: 100px;

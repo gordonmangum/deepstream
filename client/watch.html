@@ -2,11 +2,15 @@
   {{#if isMobile}}
     {{> mobile_progress_overlay}}
   {{/if}}
+  {{#if showDeepstreamAboutOverlay}}
+    {{> deepstream_about_overlay}}
+  {{/if}}
 
-  {{#with thisDeepstream}}
 
-    <div class="watch {{#if onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}} {{#if transparencyMode}}transparency-mode{{/if}}" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
-      <div class="left-section" style="width: {{mainStreamMaxWidth 20}}px;">
+  <div class="watch {{#if thisDeepstream.onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}} {{#if transparencyMode}}transparency-mode{{/if}}" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
+    {{#with thisDeepstream}}
+
+    <div class="left-section" style="width: {{mainStreamMaxWidth 20}}px;">
 
         <div class="header-section">
           <div class="top-row" style="{{#if transparencyMode}} width: {{windowWidth}}px;{{/if}}">
@@ -133,35 +137,46 @@
 
         </div>
       </div>
+    {{/with}}
 
 
-      <div class="right-section {{#unless showRightSection}}collapsed{{/unless}}">
+
+    <div class="right-section {{#unless showRightSection}}collapsed{{/unless}}">
         <div class="top-part">
-          <div class="settings-menu-container {{#if curateMode}}visible{{/if}}">
-            {{#if curateMode}}
-              <div class="settings-button-and-menu">
-                <button class="settings-menu-button">{{> setting_icon}}</button>
-                {{#if settingsMenuOpen}}
-                  {{> settings_menu}}
-                {{/if}}
-              </div>
-            {{/if}}
-          </div>
-          {{#if showContextSearch}}
-            {{> content_icons}}
-            {{> add_context}}
-          {{else}}
-              {{#if showWebcamSetup}}
-                {{> webcam_setup}}
-              {{else}}
-                {{> context_browser_area}}
+          {{#with thisDeepstream}}
+            <div class="settings-menu-container {{#if curateMode}}visible{{/if}}">
+              {{#if curateMode}}
+                <div class="settings-button-and-menu">
+                  <button class="settings-menu-button">{{> setting_icon}}</button>
+                  {{#if settingsMenuOpen}}
+                    {{> settings_menu}}
+                  {{/if}}
+                </div>
               {{/if}}
-          {{/if}}
+            </div>
+          {{/with}}
+          {{#with deepstreamForContext}}
+
+            {{#if showContextSearch}}
+              {{> content_icons}}
+              {{> add_context}}
+            {{else}}
+                {{#if showWebcamSetup}}
+                  {{> webcam_setup}}
+                {{else}}
+                    {{> context_browser_area}}
+                {{/if}}
+            {{/if}}
+          {{/with}}
+
         </div>
+        {{#with thisDeepstream}}
 
-        <div class="curator-menu">
-          <button class="transparency-button">{{> transparency_icon}}</button>
 
+         <div class="curator-menu">
+          {{#unless embedMode}}
+            <button title="{{#if transparencyMode}}Switch to inset mode{{else}}Switch to transparency mode{{/if}}" class="transparency-button">{{> transparency_icon}}</button>
+          {{/unless}}
           <div class="curator-info">
               <div class="curator-pic">
                 {{> default_user_pic}}
@@ -174,7 +189,7 @@
 
           {{#if curateMode}}
             <div class="webcam-button-container">
-              <button class="webcam">{{> webcam_icon}}</button>
+              <button title="Set up webcam narration" class="webcam">{{> webcam_icon}}</button>
             </div>
           {{/if}}
 
@@ -191,15 +206,25 @@
               {{/if}}
             {{/if}}
           {{else}}
-            <a class="report-inappropriate-content" href="mailto:deepstream@media.mit.edu?subject=Inappropriate Content in DeepStream '{{title}}' - {{shortId}}
+            <a title="Report inappropriate content" class="report-inappropriate-content" href="mailto:deepstream@media.mit.edu?subject=Inappropriate Content in DeepStream '{{title}}' - {{shortId}}
             &body=(Please let us know which content on this page is inappropriate and we'll get right on it!)" target="_blank">{{> inappropriate_content_icon}}</a>
+            {{#unless showContextSearch}}
+              {{#unless embedMode}}
+                <button class="suggest-content">Suggest Content</button>
+              {{/unless}}
+            {{/unless}}
+
           {{/if}}
 
         </div>
+      {{/with}}
 
       </div>
 
     </div>
+
+  {{#with thisDeepstream}}
+
 
     <!--Fixed sections-->
     {{#if showTitleDescriptionEditOverlay}}
@@ -232,7 +257,7 @@
 <template name="stream_li">
   {{#with stream}}
     <li data-stream-reference-id="{{reference.id}}" data-stream-id="{{_id}}" class="stream {{#if active}}active{{/if}}">
-      <button class="set-main-stream {{#if active}}active{{else}}inactive{{/if}} {{#if previewMode}}preview-mode{{/if}}">
+      <button title="{{title}} by {{username}}" class="set-main-stream {{#if active}}active{{else}}inactive{{/if}} {{#if previewMode}}preview-mode{{/if}}">
         {{#if live}}
           <div class="mini-live-indicator">
             LIVE
@@ -271,53 +296,55 @@
 <template name="content_icons">
   <div class="content-icons">
     <ol>
+      {{#if isCurator}}
+        <li>
+          <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} livestreams" class='stream-button {{#if stream}}active{{/if}}'>
+            {{> stream_icon }}
+          </button>
+        </li>
+      {{/if}}
       <li>
-        <button class='stream-button {{#if stream}}active{{/if}}'>
-          {{> stream_icon }}
-        </button>
-      </li>
-      <li>
-        <button class='news-button {{#if news}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} news stories" class='news-button {{#if news}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> news_icon }}
         </button>
       </li>
       <li>
-        <button class='text-button {{#if text}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} text" class='text-button {{#if text}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> text_icon }}
         </button>
       </li>
       <li>
-        <button class='map-button {{#if map}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} maps" class='map-button {{#if map}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> map_icon }}
         </button>
       </li>
       <li>
-        <button class='image-button {{#if image}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} images" class='image-button {{#if image}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> image_icon }}
         </button>
       </li>
       <!--<li>-->
-      <!--<button class='wikipedia-button {{#if wikipedia}}active{{/if}}' disabled='{{disableAllButStream}}'>-->
+      <!--<button title="{{#unless isCurator}}Suggest{{else}}"{{/unless}} class='wikipedia-button {{#if wikipedia}}active{{/if}}' disabled='{{disableAllButStream}}'>-->
       <!--{{> wikipedia_icon }}-->
       <!--</button>-->
       <!--</li>-->
       <li>
-        <button class='video-button {{#if video}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} videos" class='video-button {{#if video}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> video_icon }}
         </button>
       </li>
       <li>
-        <button class='twitter-button {{#if twitter}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} tweets" class='twitter-button {{#if twitter}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> twitter_icon }}
         </button>
       </li>
       <li>
-        <button class='audio-button {{#if audio}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} audio" class='audio-button {{#if audio}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> audio_icon }}
         </button>
       </li>
       <li>
-        <button class='link-button {{#if link}}active{{/if}}' disabled='{{disableAllButStream}}'>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} links" class='link-button {{#if link}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> link_icon }}
         </button>
       </li>
@@ -380,23 +407,30 @@
 <template name="context_browser_area">
   {{> context_card_column}}
   <div class="context-timeline-switcher">
-    <button class="show-context-browser {{#unless showTimeline}}active{{/unless}}">
+    {{#if curateMode}}
+      <button title="User suggestions" class="show-suggestions {{#if showSuggestions}}active{{/if}}" disabled='{{#unless showShowSuggestionsButton}}disabled{{/unless}}'>
+        S
+      </button>
+    {{/if}}
+    <button title="Context" class="show-context-browser {{#if showContextBrowser}}active{{/if}}">
       <div class="rectangles">
         <div class="rectangle"></div>
         <div class="rectangle"></div>
       </div>
     </button>
-    <button class="show-timeline {{#if showTimeline}}active{{/if}}" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>
+    <button title="Twitter timeline" class="show-timeline {{#if showTimeline}}active{{/if}}" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>
       #
     </button>
   </div>
   {{#if showChat}}
     {{> unimplemented_chat_section}}
   {{else}}
-      {{> timeline_section show=showTimeline}}
-      {{> context_browser show=showContextBrowser deepstream=this}}
+    {{> context_browser show=showSuggestions suggestions=true contextBlocks=pendingSuggestions}}
+    {{> timeline_section show=showTimeline}}
+    {{> context_browser show=showContextBrowser contextBlocks=orderedContext}}
   {{/if}}
 </template>
+
 
 <template name="context_card_column">
   <div class="card-column">
@@ -409,13 +443,24 @@
 </template>
 
 <template name="context_browser">
-  <div class="context-browser {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -20}}px">
-    {{#with deepstream}}
+  <div class="{{#if suggestions}}suggestion-browser{{else}}context-browser{{/if}} {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -20}}px">
       {{#if curateMode}}
-        <div class="add-new-context-row">
-          <button class="add-new-context">{{> add_icon}}</button>
-        </div>
+        {{#unless browseSuggestionsMode}}
+          <div class="add-new-context-row">
+            <button class="add-new-context">{{> add_icon}}</button>
+          </div>
+        {{/unless}}
       {{/if}}
+      {{#unless browseSuggestionsMode}}
+        {{#if newContextAvailable}}
+          <div class="new-context-available-message">
+            <button class="update-with-new-context">
+              New content is available.<br>
+              Click to show!
+            </button>
+          </div>
+        {{/if}}
+      {{/unless}}
 
       {{#if soloSidebarContextMode}}
         <div class="context-area">
@@ -432,7 +477,6 @@
         {{/each}}
         <div class="bottom-bar"></div>
       </div>
-    {{/with}}
   </div>
 </template>
 
@@ -449,7 +493,7 @@
 
 <template name="solo_context_section">
   <div class="narrative-section context-section solo-context-section {{#if type}}{{type}}-card{{/if}}" data-context-id="{{_id}}">
-    <button class="close">{{> close_circle}}</button>
+    <button title="close" class="close">{{> close_circle}}</button>
     {{#if showProvider}}
       <div class="provider">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}{{providerName}}</div>
     {{/if}}
@@ -468,11 +512,22 @@
         {{/unless}}
       </div>
       {{#if curateMode}}
-        <button class="delete-context">{{> close_circle}}</button>
+        {{#unless browseSuggestionsMode}}
+          <button title="delete" class="delete-context">{{> close_circle}}</button>
+        {{/unless}}
       {{/if}}
     </div>
     {{#if showAnnotationSection}}
       {{> annotation_section}}
+    {{/if}}
+    {{#if suggestedByUsername}}
+      <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
+    {{/if}}
+    {{#if browseSuggestionsMode}}
+      <div class="moderation-buttons">
+        <button class="approve-suggestion">{{> approve_icon}}Approve</button>
+        <button class="reject-suggestion">{{> reject_icon}}Reject</button>
+      </div>
     {{/if}}
   </div>
 </template>
@@ -533,4 +588,30 @@
     <param name="allowscriptaccess" value="always"/>
     <param name="wmode" value="opaque"/>
   </object>
+</template>
+
+<template name="deepstream_about_overlay">
+  <div class="deepstream-about-overlay" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
+    <div class="deepstream-about-modal">
+      <button title="close" class="close close-deepstream-about-overlay">{{> close_circle}}</button>
+
+      <!-- Begin MailChimp Signup Form -->
+      <!--<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">-->
+      <div id="mc_embed_signup">
+        <form action="//deepstream.us11.list-manage.com/subscribe/post?u=c5bb61c940fb52c8906a972c7&amp;id=d1c5471edf" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+          <div id="mc_embed_signup_scroll">
+            <p>DeepStream is a project from The Center for Civic Media at MIT’s Media Lab. Our goal is to make live streaming videos more engaging by making them easier to find and letting people add interesting content.</p>
+            <label for="mce-EMAIL">
+              DeepStream is currently in Beta, but you can try it out today at <a class="green" href="http://deepstream.tv" target="_blank">www.deepstream.tv</a>. To receive occasional updates as we roll out new features please sign up below!
+            </label>
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px;"><input type="text" name="b_c5bb61c940fb52c8906a972c7_d1c5471edf" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
 </template>

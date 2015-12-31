@@ -26,6 +26,16 @@ Meteor.startup(function(){
   throttledResize = _.throttle(windowResize, 20, {leading: false});
 
   $(window).resize(throttledResize);
+
+  var justReloaded = window.codeReloaded;
+
+  Tracker.autorun(function(){
+    if (Session.get('signingIn') && !justReloaded){
+      setSigningInFrom();
+      analytics.track('Opened sign-in overlay', {nonInteraction: 1});
+    }
+    justReloaded = false;
+  })
 });
 
 Meteor.startup(function(){
@@ -36,7 +46,20 @@ Meteor.startup(function(){
       $("body").removeClass("transparency-mode")
     }
   })
-})
+
+
+  var inIFrame = function(){
+    try {
+      return window.self !== window.top;
+    } catch (e) {
+      return true;
+    }
+  };
+
+  if (inIFrame()){
+    activateEmbedMode();
+  }
+});
 
 //window.trackingInfoFromStory = function(story){
 //  return _.chain(story)
@@ -94,7 +117,7 @@ editableTextCreatedBoilerplate = function() {
 
 
 editableTextEventsBoilerplate = function(meteorMethod) {
-  return { 
+  return {
     "blur .text-content.editable" (d, template) {
       var that = this;
       if (Session.get('curateMode')) {
@@ -205,14 +228,14 @@ Template.favorite_button.helpers({
 Template.favorite_button.events({
   "click .favorite" () {
     if(!Meteor.user()){
-      return notifyInfo('Please sign up or log in to favorite stories');
+      return notifyInfo('Please sign up or log in to favorite DeepStreams');
     }
     return Meteor.call('favoriteDeepstream', this.shortId, function(err) {
       if (err) {
         notifyError(err);
         throw(err);
       } else {
-        analytics.track('Favorite story', trackingInfoFromPage());
+        analytics.track('Favorite deepstream', trackingInfoFromPage());
       }
 
     });
@@ -223,7 +246,7 @@ Template.favorite_button.events({
         notifyError(err);
         throw(err);
       } else {
-        analytics.track('Unfavorite story', trackingInfoFromPage());
+        analytics.track('Unfavorite deepstream', trackingInfoFromPage());
       }
     });
   }
@@ -276,7 +299,6 @@ Template.create_deepstream.events({
       }
     } else {
       Session.set('signingIn', true);
-      Session.set('signingInFrom', setSigningInFrom());
       analytics.track('User clicked create and needs to sign in', trackingInfoFromPage());
     }
   }

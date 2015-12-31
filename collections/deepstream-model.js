@@ -98,6 +98,13 @@ Deepstream = (function() {
       .value()
   };
 
+  Deepstream.prototype.mostRecentContextId = function() {
+    if (this.contextBlocks) {
+      let id = (this.contextBlocks ? _.last(_.sortBy(this.contextBlocks, 'addedAt')) : {})._id;
+      return id
+    }
+  }
+
   Deepstream.prototype.topContextsOfTypes = function(types, number) {
     return _.chain(this.internalContextOfTypes(types))
       .sortBy('addedAt')
@@ -145,6 +152,14 @@ Deepstream = (function() {
     if(this.analytics){
       return this.analytics.views.total;
     }
+  };
+
+  Deepstream.prototype.pendingSuggestions = function(){
+    return SuggestedContextBlocks.find({streamShortId: this.shortId, suggestionStatus: 'pending'});
+  };
+
+  Deepstream.prototype.hasPendingSuggestions = function(){
+    return this.pendingSuggestions().count() ? true : false;
   };
 
   return Deepstream;

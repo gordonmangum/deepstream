@@ -187,7 +187,7 @@ window.horizontalBlockHelpers = _.extend({}, {
   },
   annotation: textContentHelper,
   showAnnotationSection () {
-    return this.annotationAllowed && (Session.get('curateMode') || this.annotation);
+    return this.annotationAllowed && (Session.get('curateMode') || this.annotation) && !window.browseSuggestionsMode();
   }
 });
 
@@ -201,7 +201,7 @@ window.count = function(){
 window.getCurrentContext = function(){
   var currentContextId = Session.get("currentContextId");
   if (currentContextId){
-    return ContextBlocks.findOne(currentContextId);
+    return ContextBlocks.findOne(currentContextId) || SuggestedContextBlocks.findOne(currentContextId) ;
   }
 };
 
@@ -239,7 +239,7 @@ window.formatDate = function (date) {
   if (date) {
     var hms;
     hms = date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
-    return weekDays[date.getDay()] + " " + date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear() + " " + hms;
+    return weekDays[date.getDay()] + " " + (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear() + " " + hms;
   }
 };
 
@@ -254,7 +254,7 @@ window.formatDateNice = function (date) {
 // 2/7/2015
 window.formatDateCompact = function (date) {
   if (date){
-    return date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear();
+    return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
   }
 
 };
@@ -265,7 +265,7 @@ unthrottledUpdateActiveContext = function(){
     return;
   }
 
-  var container = $('.context-area.list-mode');
+  var container = $('.context-browser>.context-area.list-mode');
 
   var containerOffset = container.offset();
 
@@ -278,17 +278,21 @@ unthrottledUpdateActiveContext = function(){
   var currentActivationBias = 30;
   var activeId;
 
-  var orderedContextIds = Deepstreams.findOne({shortId: Session.get('streamShortId')}).orderedContextIds();
+  var orderedContextElements = $('.context-browser .list-item-context-plus-annotation');
+
+  var orderedContextIds = orderedContextElements.map(function(i,e){ // get from DOM in case user hasn't updated to the latest context
+    return $(e).data('context-id');
+  });
 
 
   if (container[0].scrollHeight - container.scrollTop() - container.outerHeight() - lastActivationBias <= 0 ){
     activeId =  _.last(orderedContextIds);
   } else {
-    var contextOffsetObjects = _.map(orderedContextIds, (id) => {
-        var e = $('.list-item-context-plus-annotation[data-context-id=' + id + ']');
+    var contextOffsetObjects = _.map(orderedContextElements, (e) => {
+        e = $(e); // jquerify
         var offset = e.offset();
         if (offset){
-          return {id: id, offset: offset.top, height: e.outerHeight()};
+          return {id: e.data('context-id'), offset: offset.top, height: e.outerHeight()};
         }
       }
     );
@@ -308,6 +312,30 @@ unthrottledUpdateActiveContext = function(){
 
 
 window.updateActiveContext = _.throttle(unthrottledUpdateActiveContext, 50, {leading: false});
+
+window.scrollToContext = function(id){
+  clearCurrentContext();
+  Session.set('mediaDataType', null);
+  Session.set('contextMode', 'context');
+  Meteor.setTimeout(() => {
+    var offset = 130;
+    var contextToScrollTo = $('.context-section[data-context-id=' + id + ']');
+    var container = $('.context-browser>.context-area');
+    container.animate({scrollTop: (contextToScrollTo.offset().top - container.offset().top + container.scrollTop() - offset)});
+  })
+}
+
+window.browseSuggestionsMode = function(){
+  return Session.equals('contextMode', 'suggestions')
+};
+
+window.embedMode = function(){
+  return Session.equals('embedMode', true);
+};
+
+window.activateEmbedMode = function(){
+  return Session.set('embedMode', true);
+};
 
 window.isMobile = function(){
   return (Meteor.Device.isPhone()) && !Meteor.Device.isBot()

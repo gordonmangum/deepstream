@@ -10,6 +10,10 @@ Handlebars.registerHelper("curateMode", function() {
   return Session.get("curateMode");
 });
 
+Handlebars.registerHelper("browseSuggestionsMode", function() {
+  return browseSuggestionsMode();
+});
+
 Handlebars.registerHelper("dateInPast", function(date) {
   if(!date){
     return null
@@ -62,8 +66,20 @@ Handlebars.registerHelper("CONTEXT_WIDTH", function() {
   return window.CONTEXT_WIDTH;
 });
 
+Handlebars.registerHelper('showDeepstreamAboutOverlay', function() {
+  return Session.get('showDeepstreamAboutOverlay');
+});
+
+Handlebars.registerHelper("embedMode", function() {
+  return window.embedMode();
+});
+
 Handlebars.registerHelper("isMobile", function() {
   return window.isMobile();
+});
+
+Handlebars.registerHelper("newContextAvailable", function() {
+  return Session.get('newContextAvailable');
 });
 
 Handlebars.registerHelper("transparencyMode", function() {

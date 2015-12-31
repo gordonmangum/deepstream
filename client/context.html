@@ -26,6 +26,9 @@
         </div>
       {{/if}}
     {{/if}}
+    {{#if suggestedByUsername}}
+      <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
+    {{/if}}
     {{> annotation_section }}
   </div>
 </template>
@@ -50,6 +53,9 @@
     <div class="active-display" style="height: {{mainStreamHeight}}px; width: {{mainStreamMaxWidth}}px; max-width: {{overlayContentMaxWidth}}px;">
       <iframe width="100%" height="100%" frameborder="0" style="border:0" src="{{url}}"></iframe>
     </div>
+    {{#if suggestedByUsername}}
+      <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
+    {{/if}}
     {{> annotation_section }}
   </div>
 </template>
@@ -76,6 +82,9 @@
     <div class="preview">
       <img src="{{previewUrl}}"/>
     </div>
+    {{#if suggestedByUsername}}
+      <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
+    {{/if}}
     {{> annotation_section }}
   </div>
 </template>
@@ -93,6 +102,9 @@
     <div class="news-html">{{{html}}}</div>
     <div class="news-link"><a class="read-more" href="{{url}}" target="_blank">Read more on {{providerTruncatedUrl}} ></a></div>
   </div>
+  {{#if suggestedByUsername}}
+    <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
+  {{/if}}
   {{#if showAnnotationSection}}
     {{> annotation_section}}
   {{/if}}
@@ -241,7 +253,7 @@
         {{#if isFlickr}}
           <div class="attribution">
             <i class="fa fa-flickr"></i>
-            {{#if ownerName}}<a href="//flickr.com/{{ownerName}}" target="_blank">{{ownerName}}</a><span class="separator">·</span>{{/if}}<a href="{{webUrl}}" target="_blank">{{#if uploadDate}}{{uploadDate}}{{else}}source{{/if}}</a>
+            {{#if ownerName}}<a href="{{ownerUrl}}" target="_blank">{{ownerName}}</a><span class="separator">·</span>{{/if}}<a href="{{webUrl}}" target="_blank">{{#if uploadDate}}{{uploadDate}}{{else}}source{{/if}}</a>
           </div>
         {{/if}}
       {{/if}}

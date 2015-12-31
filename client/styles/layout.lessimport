@@ -819,12 +819,9 @@ textarea.text-content {
     margin:auto;
     display:block;
     text-align: center;
-    position: absolute;
     height: 20%;
 
-    top: 50%;
-    left: 50%;
-    .transform(translate(-50%, -50%));
+    .center-over-parent-div;
 
     li{
       .action-button;

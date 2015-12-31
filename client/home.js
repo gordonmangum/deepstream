@@ -44,7 +44,6 @@ Template.login_buttons.events({
   },
   "click .signin" (d) {
     Session.set('signingIn', true);
-    setSigningInFrom();
     analytics.track('Click login signup button', trackingInfoFromPage());
   },
   "click .logout" (e, t) {
@@ -78,7 +77,7 @@ Template.signin_overlay.onCreated(function() {
 
 Template.signin_overlay.helpers({
   showLoginForm (){
-    return Template.instance().showLoginForm.get();
+    return true; //Template.instance().showLoginForm.get();
   }
 });
 
@@ -131,6 +130,13 @@ Template.home.onCreated(function () {
 
   this.noMoreStreamResults = new ReactiveVar();
   this.loadingStreamResults = new ReactiveVar();
+
+  this.autorun(() => {
+    if(Session.get('homeStreamListMode') !== 'search'){
+      that.noMoreStreamResults.set(null);
+      that.loadingStreamResults.set(null);
+    }
+  });
 
   this.streamSearch = function(query){
     that.loadingStreamResults.set(true);
@@ -427,6 +433,9 @@ Template.stream_preview.events({
 Template.stream_preview.helpers({
   'showPreviewOverlay' (){
     return Session.equals('showPreviewOverlayForStreamId', this._id);
+  },
+  'showViews' (){
+    return (typeof this.totalViews()) !== "undefined"
   }
 });
 

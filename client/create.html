@@ -78,7 +78,7 @@
 </template>
 
 <template name="create_text_section">
-  <div class="search-section-title">Add Text</div>
+  <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} Text</div>
   <button class="go-back-button">{{> back_arrow_icon}}</button>
   <div class="create-section">
     <div class="tabs">
@@ -92,13 +92,13 @@
       <textarea name="content" value={{content}} class="text-content editable" rows="40" dir="auto"></textarea>
     </div>
     <button class="add-button">
-      Add
+      {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
     </button>
   </div>
 </template>
 
 <template name="create_link_section">
-  <div class="search-section-title">Add a Link</div>
+  <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Link</div>
   <button class="go-back-button">{{> back_arrow_icon}}</button>
   <div class="create-section create-link-section">
     <div class="tabs">
@@ -158,14 +158,14 @@
     {{/if}}
     {{#if showAddButton}}
       <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
-        Add
+        {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
       </button>
     {{/if}}
   </div>
 </template>
 
 <template name="create_news_section">
-  <div class="search-section-title">Add a News Story</div>
+  <div class="search-section-title">{{#unless isCurator}}Suggest News{{else}}Add a News Story{{/unless}}</div>
   <button class="go-back-button">{{> back_arrow_icon}}</button>
   <div class="create-section create-news-section">
     <div class="tabs">
@@ -202,14 +202,14 @@
     {{/if}}
     {{#if showAddButton}}
       <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
-        Add
+        {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
       </button>
     {{/if}}
   </div>
 </template>
 
 <template name="create_image_section">
-  <div class="search-section-title">Add an Image</div>
+  <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} an Image</div>
   <button class="go-back-button">{{> back_arrow_icon}}</button>
   <div class="create-section create-image-section">
     <div class="search-section {{#unless uploadMode}}{{#if showSingleResult}}hide{{/if}}{{/unless}}">
@@ -236,7 +236,7 @@
         </div>
         {{#if showAddButton}}
           <button type="submit" class="add-button">
-            Add
+            {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
           </button>
         {{/if}}
       {{else}}
@@ -258,22 +258,20 @@
 
     </div>
     {{#unless uploadMode}}
-      {{#with focusResult}}
-        {{#if showAddButton}}
-          <div class="single-result">
-            <img src="{{url}}">
-            <button type="submit" class="add-button">
-              Add
-            </button>
-          </div>
-        {{/if}}
-      {{/with}}
+      {{#if focusResult}}
+        <div class="single-result">
+          <img src="{{focusResult.url}}">
+          <button type="submit" class="add-button">
+            {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
+          </button>
+        </div>
+      {{/if}}
     {{/unless}}
   </div>
 </template>
 
 <template name="create_map_section">
-  <div class="search-section-title">Add a Map</div>
+  <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Map</div>
   <button class="go-back-button">{{> back_arrow_icon}}</button>
   <div class="create-section create-map-section">
     <div class="tabs">
@@ -289,7 +287,7 @@
     </div>
     {{#if showAddButton}}
       <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
-        Add
+        {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
       </button>
     {{/if}}
   </div>
@@ -302,7 +300,7 @@
 
 
 <template name="create_twitter_section">
-  <div class="search-section-title">Add a Tweet</div>
+  <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Tweet</div>
   <button class="go-back-button">{{> back_arrow_icon}}</button>
   {{#if twitterUser}}
     <div class="create-section twitter">
@@ -404,10 +402,12 @@
 
 
         </div>
-        <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
-          Add
-        </button>
       {{/with}}
+      {{#if showAddButton}}
+        <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
+          {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
+        </button>
+      {{/if}}
     </div>
   {{else}}
     <div class="create-section link-twitter">
@@ -421,7 +421,7 @@
 </template>
 
 <template name="create_video_section">
-  <div class="search-section-title">Add a Video</div>
+  <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Video</div>
   <button class="go-back-button">{{> back_arrow_icon}}</button>
   <div class="create-section">
     <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
@@ -459,8 +459,9 @@
         </li>
       </ol>
     </div>
-    {{#with focusResult}}
-      <div class="single-result">
+    <div class="single-result">
+      {{#with focusResult}}
+
         <iframe class="video" width="100%" height="200" src="{{url}}"></iframe>
         <div class="info">
           <div class="content-title">{{title}}</div>
@@ -468,16 +469,18 @@
           <div class="user">{{username}}</div>
           <div class="date">{{creationDateCompactString}}</div>
         </div>
+      {{/with}}
+      {{#if showAddButton}}
         <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
-          Add
+          {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
         </button>
-      </div>
-    {{/with}}
+      {{/if}}
+    </div>
   </div>
 </template>
 
 <template name="create_stream_section">
-  <div class="search-section-title">Add Streams</div>
+  <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} Streams</div>
   {{#if showBackButton}}<button class="go-back-button">{{> back_arrow_icon}}</button>{{/if}}
   <div class="create-section add-stream-section">
     <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
@@ -515,8 +518,9 @@
         </li>
       </ol>
     </div>
-    {{#with focusResult}}
-      <div class="single-result">
+    <div class="single-result">
+      {{#with focusResult}}
+
         <iframe class="video" width="100%" height="200" src="{{url}}"></iframe>
         <div class="info">
           <div class="content-title">{{title}}</div>
@@ -524,16 +528,18 @@
           <div class="user">{{username}}</div>
           <div class="date">LIVE NOW</div>
         </div>
+      {{/with}}
+      {{#if showAddButton}}
         <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
-          Add
+          {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
         </button>
-      </div>
-    {{/with}}
+      {{/if}}
+    </div>
   </div>
 </template>
 
 <template name="create_audio_section">
-  <div class="search-section-title">Add an Audio Clip</div>
+  <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} an Audio Clip</div>
   <button class="go-back-button">{{> back_arrow_icon}}</button>
     <div class="create-section audio">
       <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
@@ -581,20 +587,24 @@
         </li>
       </ol>
     </div>
+    <div class="single-result">
       {{#with focusResult}}
-        <div class="single-result">
-          <iframe class="audio" width="100%" src="{{url}}"></iframe>
-          <div class="info">
-            <div class="content-title">{{reference.title}}</div>
-            <div class="descr">{{reference.description}}</div>
-            <div class="user">{{reference.username}}</div>
-            <div class="date">{{creationDateCompactString}}</div>
-          </div>
-          <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
-            Add
-          </button>
+
+        <iframe class="audio" width="100%" src="{{url}}"></iframe>
+        <div class="info">
+          <div class="content-title">{{reference.title}}</div>
+          <div class="descr">{{reference.description}}</div>
+          <div class="user">{{reference.username}}</div>
+          <div class="date">{{creationDateCompactString}}</div>
         </div>
       {{/with}}
+      {{#if showAddButton}}
+
+        <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
+          {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
+        </button>
+      {{/if}}
+    </div>
   </div>
 </template>
 

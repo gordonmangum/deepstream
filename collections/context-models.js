@@ -237,14 +237,16 @@ ContextBlock.searchMappings = {
   flickr: {
     methodName: 'flickrImageSearchList',
     mapFn (e) {
-      var username, uploadDate, title;
+      var username, uploadDate, title, flickrOwnerId;
       if (e.media) {
         //if single image result
+        flickrOwnerId = e.owner.nsid;
         ownername = e.owner.username;
         uploadDate = e.dateuploaded;
         title = e.title._content;
       } else {
         //if search result
+        flickrOwnerId = e.owner;
         ownername = e.ownername;
         uploadDate = e.dateupload;
         title = e.title;
@@ -252,6 +254,7 @@ ContextBlock.searchMappings = {
       return {
         reference: {
           ownerName: ownername,
+          flickrOwnerId: flickrOwnerId,
           uploadDate: new Date(parseInt(uploadDate) * 1000),
           flickrFarm: e.farm,
           flickrSecret: e.secret,
@@ -742,7 +745,7 @@ TwitterBlock = (function (_super) {
     var text = this.reference.text; // twttr seems to be escaping appropriately itself
 
     if (this.imgUrl()) {
-      var imgIndex = text.lastIndexOf("http://");
+      var imgIndex = text.lastIndexOf("https://") || text.lastIndexOf("http://");
       text = text.substring(0, imgIndex);
     }
 
@@ -828,13 +831,23 @@ ImageBlock = (function (_super) {
   ImageBlock.prototype.webUrl = function () {
     switch (this.source) {
       case 'flickr':
-        if (this.reference.ownerName) {
-          return '//www.flickr.com/photos/' + this.reference.ownerName + '/' + this.reference.id;
+        if (this.reference.flickrOwnerId) {
+          return '//www.flickr.com/photos/' + this.reference.flickrOwnerId + '/' + this.reference.id;
         } else {
           return encodeFlickrUrl(this.reference.id)
         }
     }
-  }
+  };
+
+  ImageBlock.prototype.ownerUrl = function () {
+    switch (this.source) {
+      case 'flickr':
+        if (this.reference.flickrOwnerId) {
+          return '//www.flickr.com/photos/' + this.reference.flickrOwnerId;
+        }
+    }
+  };
+
 
   ImageBlock.prototype.ownerName = function () {
     switch (this.source) {

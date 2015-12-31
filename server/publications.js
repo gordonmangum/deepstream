@@ -21,6 +21,15 @@ ContextBlocks._ensureIndex({
   deleted: 1
 });
 
+SuggestedContextBlocks._ensureIndex({
+  streamShortId: 1
+});
+
+SuggestedContextBlocks._ensureIndex({
+  suggestionStatus: 1
+});
+
+
 Meteor.users._ensureIndex({
   username: 1
 });
@@ -158,6 +167,13 @@ Meteor.publish("singleDeepstream", function(userPathSegment, shortId) {
 Meteor.publish("deepstreamContext", function(streamShortId) {
   check(streamShortId, String);
   return ContextBlocks.find({streamShortId: streamShortId, deleted: {$ne: true}},{
+    fields: contextFields
+  });
+});
+
+Meteor.publish("deepstreamSuggestedContext", function(streamShortId) {
+  check(streamShortId, String);
+  return SuggestedContextBlocks.find({streamShortId: streamShortId, suggestionStatus: 'pending'},{
     fields: contextFields
   });
 });

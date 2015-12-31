@@ -217,7 +217,6 @@ var searchAPI = function(query) {
       .each(function(item, i) {
         _.extend(item, {
           type : type,
-          authorId : Meteor.user()._id,
           searchQuery : query,
           searchOption : option,
           nextPage: nextPage,
@@ -472,7 +471,6 @@ Template.create_news_section.onCreated(function() {
 
       that.focusResult.set(new NewsBlock({
         fullDetails: result,
-        authorId : Meteor.user()._id,
         searchQuery: url,
         fromEmbedly: true,
         version: 'em1',
@@ -524,7 +522,6 @@ Template.create_link_section.onCreated(function() {
       var addPropertiesToBaseline = function(obj){
         var newObj = _.extend({}, obj, {
           fullDetails: result,
-          authorId : Meteor.user()._id,
           searchQuery: url,
           fromEmbedly: true,
           version: 'em1'
@@ -697,8 +694,7 @@ Template.create_map_section.onCreated(function() {
       reference: {
         mapQuery: inputs.query,
         mapType: inputs.option
-      },
-      authorId : Meteor.user()._id
+      }
     }))
   };
 });
@@ -744,7 +740,6 @@ Template.create_text_section.events({
     e.preventDefault()
     addContext(new TextBlock({
       content: template.$('textarea[name=content]').val(),
-      authorId: Meteor.user()._id,
       source: 'plaintext'
     }));
   },
@@ -754,7 +749,7 @@ Template.create_text_section.events({
 Template.create_twitter_section.helpers({
   twitterUser () {
     var user = Meteor.user();
-    return user.services && user.services.twitter && user.services.twitter.id;
+    return user && user.services && user.services.twitter && user.services.twitter.id;
   }
 });
 
@@ -826,7 +821,6 @@ Template.search_form.helpers({
 
 Template.webcam_setup.events({
   'click .go-back-button': function(){
-    Session.set('previousMediaDataType', Session.get('mediaDataType'));
     return Session.set('mediaDataType', null)
   }
 });

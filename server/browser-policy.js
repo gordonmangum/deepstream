@@ -1,6 +1,8 @@
-BrowserPolicy.framing.disallow(); // disallow iframe, for now
-//BrowserPolicy.content.disallowInlineScripts(); // this provides a backstop against XSS
-BrowserPolicy.content.allowInlineScripts(); // this provides a backstop against XSS
+BrowserPolicy.framing.allowAll(); // temporarily allow all sites to embed Deepstream
+//BrowserPolicy.framing.restrictToOrigin(origin) // could be used to restrict embedding to specific providers
+//BrowserPolicy.content.disallowInlineScripts(); // this would provide a backstop against XSS
+
+BrowserPolicy.content.allowInlineScripts(); // TODO this seemed needed to get various jsapi's working (Twitter?), but is really not the best. Should be reconfirmed that this is necessary.
 BrowserPolicy.content.allowEval(); // need to allow eval for YouTube iFrame API
 BrowserPolicy.content.allowInlineStyles(); // we use inline styles a fair bit
 BrowserPolicy.content.allowImageOrigin('*'); // allowing all images is easiest and seems safe
@@ -21,7 +23,7 @@ BrowserPolicy.content.allowFontOrigin('*.googleapis.com');
 BrowserPolicy.content.allowFontOrigin('*.bambuser.com');
 BrowserPolicy.content.allowStyleOrigin('*');
 
-// allow scripts from everywhere (we already don't allow inline above)
+// allow scripts from everywhere
 BrowserPolicy.content.allowScriptOrigin('*');
 
 // allow styles from specific sources only

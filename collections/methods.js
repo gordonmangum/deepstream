@@ -13,7 +13,7 @@ changeFavorite = function(shortId, toFavorite) {
 
   this.unblock();
   if (!this.userId) {
-    throw new Meteor.Error('not-logged-in', 'Sorry, you must be logged in to favorite a story');
+    throw new Meteor.Error('not-logged-in', 'Sorry, you must be logged in to favorite a DeepStream');
   }
 
   var deepstream = Deepstreams.findOne({
@@ -483,6 +483,144 @@ Meteor.methods({
         curatorWebcamActive: false
       }
     });
+  },
+  suggestContext (streamShortId, contextBlock){
+    check(streamShortId, String);
+    check(contextBlock, Object);
+
+    var deepstream = Deepstreams.findOne({shortId: streamShortId}, {fields: {'onAir': 1, curatorIds: 1, title:1, userPathSegment: 1, streamPathSegment: 1}});
+
+    if(!deepstream || !deepstream.onAir){
+      throw new Meteor.Error('Deepstream not on air');
+    }
+
+    var user = Meteor.user();
+
+    if(!user){
+      throw new Meteor.Error('Must be logged in to suggest content');
+    }
+
+    var contextBlockToInsert = _.extend({}, _.omit(contextBlock, '_id'), {
+      streamShortId: streamShortId,
+      authorId: this.userId,
+      addedAt: new Date,
+      savedAt: new Date,
+      suggestedAt: new Date,
+      suggestedBy: this.userId,
+      suggestedByUsername: user.username,
+      suggestionStatus: 'pending'
+    });
+
+
+
+    var success = SuggestedContextBlocks.insert(contextBlockToInsert);
+
+    if(success){
+      if (Meteor.isClient) {
+        Session.set("previousMediaDataType", Session.get('mediaDataType'));
+        Session.set("mediaDataType", null); // leave search mode
+        notifySuccess("Thanks for suggesting some great content! We'll let you know when it gets approved!");
+      }
+
+      if (Meteor.isServer) {
+        var curatorIds = deepstream.curatorIds;
+        Meteor.users.find({_id: {$in: curatorIds}}, {fields:{'emails.address':1}}).forEach(function(curator){
+          var email = curator.emails[0].address;
+          if (email){
+            Email.send({
+              to: email,
+              from: 'noreply@example.com',
+              subject: 'New content suggested for your DeepStream: ' + deepstream.title,
+              html: user.username + ' just suggested some new content for ' + deepstream.title +
+                '. You can check it out and decide whether or not to include it at: ' + Meteor.absoluteUrl('curate/' + deepstream.userPathSegment + '/' + deepstream.streamPathSegment)
+            })
+          }
+        })
+      }
+    }
+
+    return success
+  },
+  approveContext (contextBlockId){
+    check(contextBlockId, String);
+
+    var user = Meteor.user();
+
+    if(!user){
+      throw new Meteor.Error('Must be logged in to approve content');
+    }
+
+    var contextBlock = SuggestedContextBlocks.findOne(contextBlockId, {transform: null});
+
+    if(!contextBlock){
+      throw new Meteor.Error('Context block not found');
+    }
+
+    var contextBlockAddendum = {
+      suggestionStatus: 'approved',
+      moderatedAt: new Date,
+      moderatedBy: this.userId,
+      moderatedByUsername: user.username
+    };
+
+    var contextBlockAddedId = addContextToStream.call(this, contextBlock.streamShortId, _.extend({}, contextBlock, contextBlockAddendum));
+
+    if(!contextBlockAddedId){
+      throw new Meteor.Error('Failed to add context');
+    }
+
+    var success = SuggestedContextBlocks.update(contextBlockId, {$set: _.extend({}, contextBlockAddendum, {
+      idInDeepstream: contextBlockAddedId
+    })});
+
+    if(success){
+      if (Meteor.isServer) {
+        var suggester = Meteor.users.findOne(contextBlock.suggestedBy, {fields:{'emails.address':1}});
+        var email = suggester.emails[0].address;
+        if (email){
+          var deepstream = Deepstreams.findOne({shortId: contextBlock.streamShortId}, {fields: {title:1, userPathSegment: 1, streamPathSegment: 1}});
+          Email.send({
+            to: email,
+            from: 'noreply@example.com',
+            subject: 'Your suggested content has been approved!',
+            html: user.username + ' just approved the content you suggested for ' + deepstream.title +
+            '! You can check it out at: ' + Meteor.absoluteUrl('watch/' + deepstream.userPathSegment + '/' + deepstream.streamPathSegment)
+          })
+        }
+      }
+    }
+
+    return success;
+  },
+  rejectContext (contextBlockId){
+    check(contextBlockId, String);
+
+    var user = Meteor.user();
+
+    if(!user){
+      throw new Meteor.Error('Must be logged in to reject content');
+    }
+
+    var contextBlock = SuggestedContextBlocks.findOne(contextBlockId);
+
+    if(!contextBlock){
+      throw new Meteor.Error('Context block not found');
+    }
+
+    var deepstream = Deepstreams.findOne({shortId: contextBlock.streamShortId}, {fields: {'curatorIds': 1}});
+
+    if(!_.contains(deepstream.curatorIds, this.userId)){
+      throw new Meteor.Error('Only curators can moderate suggestions');
+    }
+
+    var contextBlockAddendum = {
+      suggestionStatus: 'rejected',
+      moderatedAt: new Date,
+      moderatedBy: this.userId,
+      moderatedByUsername: user.username
+    };
+
+    return SuggestedContextBlocks.update(contextBlockId, {$set: contextBlockAddendum});
   },
   favoriteDeepstream (streamShortId) {
     check(streamShortId, String);
