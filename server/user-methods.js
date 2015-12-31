@@ -98,5 +98,25 @@ Meteor.methods({
         });
       }
     }
+  },
+  unsubscribe (emailType){
+    check(emailType, String);
+    return Meteor.users.update({
+      _id: this.userId
+    }, {
+      $addToSet: {
+        "unsubscribes": emailType
+      }
+    });
+  },
+  resubscribe (emailType){
+    check(emailType, String);
+    return Meteor.users.update({
+      _id: this.userId
+    }, {
+      $pull: {
+        "unsubscribes": emailType
+      }
+    });
   }
 });

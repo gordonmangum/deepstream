@@ -1,0 +1,19 @@
+
+<template name="unsubscribe">
+  <div class="unsubscribe">
+    {{> top_banner}}
+    <div class="rest">
+      {{#if resubscribed}}
+        You have resubscribed to {{emailType}} emails.
+        {{else}}
+          {{#if unsubscribed}}
+          You have successfully unsubscribed from {{emailType}} emails.
+          If this was an accident, click <button class="resubscribe">resubscribe</button>
+          {{else}}
+            Currently unsubscribing you from {{emailType}} emails.
+          {{/if}}
+      {{/if}}
+    </div>
+  </div>
+</template>
+
