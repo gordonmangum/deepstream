@@ -117,6 +117,10 @@ Schema.User = new SimpleSchema({
     type: Object,
     optional: true,
     blackbox: true
+  },
+  unsubscribes: {
+    type: [String],
+    optional: true
   }
 });
 

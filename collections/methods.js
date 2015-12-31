@@ -524,7 +524,11 @@ Meteor.methods({
 
       if (Meteor.isServer) {
         var curatorIds = deepstream.curatorIds;
-        Meteor.users.find({_id: {$in: curatorIds}}, {fields:{'emails.address':1}}).forEach(function(curator){
+        var emailType = 'suggested_content_received'
+        Meteor.users.find({_id: {$in: curatorIds}}, {fields:{'emails.address':1, 'unsubscribes': 1}}).forEach(function(curator){
+          if(curator.unsubscribes && _.contains(curator.unsubscribes, emailType)){
+            return
+          }
           var email = curator.emails[0].address;
           if (email){
             Email.send({
@@ -532,7 +536,8 @@ Meteor.methods({
               from: 'noreply@example.com',
               subject: 'New content suggested for your DeepStream: ' + deepstream.title,
               html: user.username + ' just suggested some new content for ' + deepstream.title +
-                '. You can check it out and decide whether or not to include it at: ' + Meteor.absoluteUrl('curate/' + deepstream.userPathSegment + '/' + deepstream.streamPathSegment)
+                '. You can check it out and decide whether or not to include it at: ' + Meteor.absoluteUrl('curate/' + deepstream.userPathSegment + '/' + deepstream.streamPathSegment) + '<br><br><br><br>' +
+              'To unsubscribe from this type of email, <a href=' + Meteor.absoluteUrl('unsubscribe?email_type=' + emailType) + '>click here</a>'
             })
           }
         })
@@ -575,7 +580,12 @@ Meteor.methods({
 
     if(success){
       if (Meteor.isServer) {
-        var suggester = Meteor.users.findOne(contextBlock.suggestedBy, {fields:{'emails.address':1}});
+        var emailType = 'suggested_content_approved';
+
+        var suggester = Meteor.users.findOne(contextBlock.suggestedBy, {fields:{'emails.address':1, 'unsubscribes': 1}});
+        if(suggester.unsubscribes && _.contains(suggester.unsubscribes, emailType)){
+          return
+        }
         var email = suggester.emails[0].address;
         if (email){
           var deepstream = Deepstreams.findOne({shortId: contextBlock.streamShortId}, {fields: {title:1, userPathSegment: 1, streamPathSegment: 1}});
@@ -584,7 +594,8 @@ Meteor.methods({
             from: 'noreply@example.com',
             subject: 'Your suggested content has been approved!',
             html: user.username + ' just approved the content you suggested for ' + deepstream.title +
-            '! You can check it out at: ' + Meteor.absoluteUrl('watch/' + deepstream.userPathSegment + '/' + deepstream.streamPathSegment)
+            '! You can check it out at: ' + Meteor.absoluteUrl('watch/' + deepstream.userPathSegment + '/' + deepstream.streamPathSegment) + '<br><br><br><br>' +
+            'To unsubscribe from this type of email, <a href=' + Meteor.absoluteUrl('unsubscribe?email_type=' + emailType) + '>click here</a>'
           })
         }
       }
