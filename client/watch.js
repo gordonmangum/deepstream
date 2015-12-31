@@ -539,10 +539,10 @@ Template.watch_page.helpers({
     return _.contains(['find_stream', 'add_cards', 'go_on_air'], this.creationStep) && Session.get('curateMode');
   },
   showRightSection (){
-    return !soloOverlayContextModeActive() && (Session.get("curateMode") || !Session.get('reducedView'));
+    return !soloOverlayContextModeActive() && (Session.get("curateMode") || !Session.get('reducedRightView'));
   },
   expandMainSection (){
-    return !Session.get("curateMode") && Session.get('reducedView');
+    return !Session.get("curateMode") && Session.get('reducedRightView');
   },
   showWebcamSetup (){
     return Session.get("curateMode") && Session.get('mediaDataType') === 'webcam'; // always setup on webcam
@@ -593,6 +593,12 @@ Template.watch_page.helpers({
   },
   deadstreams (){
     return _.where(this.streams, { live: false });
+  },
+  showCloseSidebarIcon (){
+    return !Session.get('reducedRightView') && !soloOverlayContextModeActive();
+  },
+  showOpenSidebarIcon (){
+    return Session.get('reducedRightView') && !soloOverlayContextModeActive();
   }
 });
 
@@ -778,8 +784,14 @@ Template.watch_page.events({
     if(mostRecentContextId){
       scrollToContext(mostRecentContextId);
     }
+  },
+  'click .close-sidebar' (){
+    return Session.set('reducedRightView', true);
+  },
+  'click .open-sidebar' (){
+    return Session.set('reducedRightView', false);
+  },
 
-  }
 });
 
 Template.stream_li.onCreated(function(){
@@ -902,13 +914,8 @@ Template.context_browser.helpers({
   soloSidebarContextMode (){
     var currentContext = getCurrentContext();
     return currentContext && currentContext.soloModeLocation === 'sidebar';
-  },
-  showCloseSidebarIcon (){
-    return !Session.get('reducedView') && !soloOverlayContextModeActive();
-  },
-  showOpenSidebarIcon (){
-    return Session.get('reducedView') && !soloOverlayContextModeActive();
   }
+
 });
 
 Template.context_browser.events({

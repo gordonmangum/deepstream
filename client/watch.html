@@ -143,7 +143,21 @@
 
 
     <div class="right-section {{#unless showRightSection}}collapsed{{/unless}}">
-
+        {{#if showOpenSidebarIcon}}
+          <div class="sidebar-open-close">
+            <button class="open-sidebar">
+              {{> drawer_left_icon}}
+            </button>
+          </div>
+        {{else}}
+          {{#if showCloseSidebarIcon}}
+            <div class="sidebar-open-close">
+              <button class="close-sidebar">
+                {{> drawer_right_icon}}
+              </button>
+            </div>
+          {{/if}}
+        {{/if}}
 
         {{#with deepstreamForContext}}
 

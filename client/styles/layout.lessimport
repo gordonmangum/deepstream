@@ -66,6 +66,11 @@ html {
   border-top-right-radius: 5px;
 }
 
+.transparency-rounded-left{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
 .standard-icon-colors {
   .bg{
     fill: @dark-icon-color;

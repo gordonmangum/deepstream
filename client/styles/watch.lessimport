@@ -320,6 +320,8 @@
 @contentIconWidth: 50px;
 
 
+
+
 .right-section{
   .transparency-fade(background-color, @alt-background-color);
   .transparency-rounded;
@@ -341,7 +343,7 @@
   }
 
   &.collapsed{
-    opacity: 0;
+    right: -@right-section-width;
   }
 
   .context-timeline-switcher {
@@ -479,6 +481,34 @@
       }
     }
   }
+}
+
+
+.sidebar-open-close{
+  button{
+    .size-to-fit;
+    position: relative;
+    svg{
+      .fg{
+        fill: @action-color;
+      }
+      .center-over-parent-div;
+    }
+  }
+
+  background-color: inherit;
+  .transform(translate(0, -50%));
+  .transparency-rounded-left;
+}
+.right-section{
+  .sidebar-open-close{
+    position: absolute;
+    top: 50%;
+    left: -30px;
+    width: 30px;
+    height: 130px;
+  }
+
 }
 
 
