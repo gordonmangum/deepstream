@@ -511,18 +511,6 @@ Template.watch_page.helpers({
       return activeStream.flashVars() + addlParams;
     }
   },
-  curatorWebcamFlashVars (){
-
-    switch(this.source){
-      case 'bambuser':
-        addlParams='&callback=bambuserCuratorWebcamPlayerReady';
-        break;
-      //case 'twitch':
-      //  addlParams='&eventsCallback=twitchPlayerEventCallback';
-      //  break;
-    }
-    return this.flashVars() + addlParams;
-  },
   bambuserPlayer (){
     return Template.instance().activeStream.get().source === 'bambuser'
   },
@@ -1136,6 +1124,21 @@ Template.webcam_setup.events({
     });
   }
 });
+
+Template.curator_webcam_display.helpers({
+  curatorWebcamFlashVars (){
+
+    switch(this.source){
+      case 'bambuser':
+        addlParams='&callback=bambuserCuratorWebcamPlayerReady';
+        break;
+      //case 'twitch':
+      //  addlParams='&eventsCallback=twitchPlayerEventCallback';
+      //  break;
+    }
+    return this.flashVars() + addlParams;
+  }
+})
 
 Template.timeline_section.onRendered(function(){
   this.autorun(() => {
