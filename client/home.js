@@ -234,6 +234,27 @@ var getHomepageStreamSearchResults = function() {
 };
 
 Template.home.events({
+  "change #livestreams-checkbox"(e, t){
+    var boxes = [
+    "youtube",
+    "bambuser",
+    "ustream",
+    "twitch"
+  ];
+    if(document.getElementById("livestreams-checkbox").checked){
+      boxes.forEach(function(box){
+        document
+          .getElementById(box + "-checkbox")
+          .checked = true;
+      });
+    }else{
+      boxes.forEach(function(box){
+        document
+          .getElementById(box + "-checkbox")
+          .checked = false;
+      });
+    }
+  },
   "change #deepstream-checkbox,#youtube-checkbox,#bambuser-checkbox,#ustream-checkbox,#twitch-checkbox" (e,t ){
    getcheckBoxes();
   },
