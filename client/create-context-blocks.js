@@ -365,7 +365,6 @@ Template.create_image_section.onCreated(function(){
             height: doc.height
           },
           source: Session.get('newContextDataSource'),
-          authorId : Meteor.user()._id,
           fullDetails: doc
         }));
       }
