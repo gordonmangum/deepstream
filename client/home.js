@@ -1,4 +1,3 @@
-var boxesDep = new Tracker.Dependency();
 
 loginWithTwitter = function () {
   Session.set('signingInWithTwitter', true);
@@ -216,7 +215,6 @@ var getcheckBoxes = function(){
 
   var checked  = boxes.filter(function(elem){
     var id = elem + "-checkbox";
-    document.getElementById(id).onchange = getcheckBoxes;
     return document.getElementById(id).checked;
   });
 
@@ -224,13 +222,10 @@ var getcheckBoxes = function(){
     console.log("No boxes were selected");
     return;
   }
-  boxesDep.changed();
   Session.set("checkedBoxes", checked);
 };
 
 var getHomepageStreamSearchResults = function() {
-  boxesDep.depend();
-  console.log(Session.get("checkedBoxes"));
   return SearchResults.find({
     searchQuery: Session.get('homeStreamListQuery'),
     searchOption: "homepage_search",
@@ -239,27 +234,16 @@ var getHomepageStreamSearchResults = function() {
 };
 
 Template.home.events({
-  "focus .stream-search-form" (e,t){
-    getcheckBoxes();
-    var checkboxes = document.getElementById('checkboxes');
-    if(checkboxes.hasAttribute("hidden")){
-      checkboxes.removeAttribute("hidden");
-    }
-
-}, "focusout .stream-search-form" (e, t){
-
-      if( typeof InstallTrigger !== 'undefined') // checking for Firefox
-      {
-        // Firefox doesn't bubble all the elements inside a form
-        // Check out for more details https://bugzilla.mozilla.org/show_bug.cgi?id=687787
-        return ;
-      }
-      var checkboxes = document.getElementById('checkboxes');
-      if(!checkboxes.hasAttribute("hidden")){
-        checkboxes.setAttribute("hidden" ,"");
-      }
-
+  "change #deepstream-checkbox,#youtube-checkbox,#bambuser-checkbox,#ustream-checkbox,#twitch-checkbox" (e,t ){
+   getcheckBoxes();
+  },
+"focus .stream-search-form" (e,t){
+  getcheckBoxes();
+  if(checkboxes.hasAttribute("hidden")){
+    checkboxes.removeAttribute("hidden");
+  }
 }, "submit .stream-search-form" (e, t) {
+
     e.preventDefault();
     var query = t.$('#stream-search-input').val();
 
@@ -273,6 +257,11 @@ Template.home.events({
       t.noMoreStreamResults.set(null);
     }
     t.streamSearch(query);
+
+    var checkboxes = document.getElementById('checkboxes');
+      if(!checkboxes.hasAttribute("hidden")){
+        checkboxes.setAttribute("hidden" ,"");
+      }
 
     analytics.track('Search on homepage', {
       query: query,
