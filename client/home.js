@@ -206,7 +206,7 @@ Template.home.helpers({
 
 var getcheckBoxes = function(){
   var boxes = [
-    "deepstream",
+    //"deepstream",
     "youtube",
     "bambuser",
     "ustream",
