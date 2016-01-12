@@ -895,6 +895,17 @@ textarea.text-content {
   }
 }
 
+.unsubscribe{
+  .rest{
+    padding-top: 150px;
+    text-align: center;
+    button{
+      .action-button;
+    }
+    .padding-sides(20px);
+  }
+}
+
 .not_valid {background: #FBD8DB !important;
   color: #90111A !important;}
 
