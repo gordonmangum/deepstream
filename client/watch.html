@@ -161,11 +161,15 @@
               {{> content_icons}}
               {{> add_context}}
             {{else}}
-                {{#if showWebcamSetup}}
-                  {{> webcam_setup}}
+              {{#if showWebcamSetup}}
+                {{> webcam_setup}}
+              {{else}}
+                {{#if showManageCuratorsMenu}}
+                  {{> manage_curators_menu}}
                 {{else}}
-                    {{> context_browser_area}}
+                  {{> context_browser_area}}
                 {{/if}}
+              {{/if}}
             {{/if}}
           {{/with}}
 
@@ -551,6 +555,11 @@
           <button class="director-mode-on">Turn Director Mode On</button>
         {{/if}}
       </li>
+      {{#if isMainCurator}}
+        <li>
+          <button class="show-manage-curators-menu">Add/Remove Curators</button>
+        </li>
+      {{/if}}
       <li>
         {{#if onAir}}
           <button class="unpublish">Unpublish</button>

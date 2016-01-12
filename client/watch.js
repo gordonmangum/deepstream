@@ -195,7 +195,7 @@ Template.watch_page.onCreated(function () {
 
       if(!stream){
         setStatusCode(404);
-        return FlowLayout.render("stream_not_found");
+        return BlazeLayout.render("stream_not_found");
       }
 
       setTitle(stream.title);
@@ -206,7 +206,7 @@ Template.watch_page.onCreated(function () {
         if ((user = Meteor.user())) { // if there is a user
           if (!_.contains(stream.curatorIds, user._id)) { // if they don't own the stream take them to stream not found
             setStatusCode(404);
-            return FlowLayout.render("stream_not_found");
+            return BlazeLayout.render("stream_not_found");
           }
           var accessPriority = Meteor.user().accessPriority;
           if (!accessPriority || accessPriority > window.createAccessLevel){
@@ -236,11 +236,11 @@ Template.watch_page.onCreated(function () {
   });
 
   Session.set('contextMode', 'context');
+  Session.set('showManageCuratorsMenu', false);
 
   // march through creation steps, or setup most recent context type to display when arrive on page if past curation
   this.autorun(function(){
     if(FlowRouter.subsReady()){
-      var deepstream = Deepstreams.findOne({shortId: that.data.shortId()}, {reactive: false});
       var reactiveDeepstream = Deepstreams.findOne({shortId: that.data.shortId()}, {fields: {creationStep: 1}});
 
       if(that.data.onCuratePage()){
@@ -255,8 +255,9 @@ Template.watch_page.onCreated(function () {
     }
   });
 
-  var numContextBlocks;
 
+  // for viewers, to keep track of when new context has been added
+  var numContextBlocks;
   Session.set('newContextAvailable', false);
 
   this.autorun(function(){
@@ -272,7 +273,40 @@ Template.watch_page.onCreated(function () {
       }
       numContextBlocks = newNumContextBlocks;
     }
-  })
+  });
+
+  // for adding curators who have arrived via an invite to curator
+  this.autorun(function(){
+    var inviteCode, user;
+    if(inviteCode = that.data.curatorInviteCode()){
+      if(FlowRouter.subsReady()){
+        if(user = Meteor.user()){
+          var deepstream = Deepstreams.findOne({shortId: that.data.shortId()}, {reactive: false});
+          if(_.contains(deepstream.curatorIds, user._id)){ // if this user is already a curator
+            delete that.data.curatorSignupCode;
+            return
+          }
+          Meteor.call('becomeCurator', that.data.shortId(), inviteCode, function(err, success){
+            if(err){
+              notifyError(err);
+            }
+            if(success){
+              notifySuccess("You are now curating this DeepStream. Have fun and don't let the power go to your head!");
+              delete that.data.curatorSignupCode;
+              analytics.track('Additional curator added', trackingInfoFromPage());
+              FlowRouter.withReplaceState(function(){
+                FlowRouter.go(deepstream.curatePath());
+              });
+            }
+          });
+        } else {
+          Session.set('signingIn', true);
+        }
+      }
+    }
+
+  });
+
 
 
   this.activeStream = new ReactiveVar();
@@ -320,7 +354,6 @@ Template.watch_page.onCreated(function () {
       nonInteraction: 1
     });
   }
-
 });
 
 // add transparency-mode class to everything quick and dirtily
@@ -516,6 +549,9 @@ Template.watch_page.helpers({
   showWebcamSetup (){
     return Session.get("curateMode") && Session.get('mediaDataType') === 'webcam'; // always setup on webcam
   },
+  showManageCuratorsMenu (){
+    return Session.get("curateMode") && Session.get("showManageCuratorsMenu");
+  },
   showChat (){
     return Session.get('showChat', true); // TODO this is probably not what we want
   },
@@ -657,6 +693,11 @@ Template.watch_page.events({
   },
   'click .director-mode-on' (e, t){
     return Meteor.call('directorModeOn', t.data.shortId(), basicErrorHandler)
+  },
+  'click .show-manage-curators-menu' (e, t){
+    Session.set('previousMediaDataType', Session.get('mediaDataType'));
+    Session.set('mediaDataType', null);
+    return Session.set("showManageCuratorsMenu", true);
   },
   'mouseenter .settings-button-and-menu' (e, template){
     template.settingsMenuOpen.set(true);
@@ -1071,7 +1112,6 @@ Template.annotation_section.helpers({
 
 Template.webcam_setup.events({
   'submit #bambuser-webcam' (e, t){
-    console.log('cloocik')
     e.preventDefault();
     var bambuserUsername = t.$('input[name=bambuser-username]').val();
     if(!bambuserUsername){
@@ -1131,9 +1171,59 @@ Template.timeline_section.events({
     e.preventDefault();
     var timelineWidgetCode = t.$('input[name=timeline-embed-code]').val();
     if(!timelineWidgetCode){
-      return notifyError('Please enter your timeline widget code')
+      return notifyError('Please enter your timeline widget code');
     }
     Meteor.call('addTimelineWidget', Session.get("streamShortId"), timelineWidgetCode, function(err, result){
+      if(err){
+        return basicErrorHandler(err);
+      }
+    });
+  }
+});
+
+Template.manage_curators_menu.onCreated(function() {
+  this.subscribe('minimalUsersPub', this.data.curatorIds);
+});
+
+Template.manage_curators_menu.helpers({
+  'additionalCurators' (){
+    return Meteor.users.find({_id: {$in: _.without(this.curatorIds, this.mainCuratorId)}});
+  }
+});
+
+var disableInviteForm;
+
+Template.manage_curators_menu.events({
+  'click .go-back-button': function(){
+    return Session.set('showManageCuratorsMenu', false);
+  },
+  'submit #invite-curator' (e, t){
+    e.preventDefault();
+    if(disableInviteForm){
+      return
+    }
+    disableInviteForm = true;
+
+    var newCuratorEmail = t.$('input[name=new-curator-email]').val();
+    if(!newCuratorEmail){
+      disableInviteForm = false;
+      return notifyError('Please enter the email of the person you\'d like to invite');
+    }
+    Meteor.call('inviteCurator', Session.get("streamShortId"), newCuratorEmail, function(err, result){
+      t.$('input[name=new-curator-email]').val('');
+      disableInviteForm = false;
+      if(err){
+        return basicErrorHandler(err);
+      }
+      if(result){
+        notifySuccess('You have successfully invited ' + newCuratorEmail + ' to help curate this DeepStream!');
+        Session.set('showManageCuratorsMenu', false);
+      }
+    });
+  },
+  'click .remove-curator' (e, t){
+    Meteor.call('removeCurator', Session.get("streamShortId"), this._id, function(err, result){
+
       if(err){
         return basicErrorHandler(err);
       }

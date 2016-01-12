@@ -1526,3 +1526,42 @@
     flex: auto;
   }
 }
+
+.add-webcam-section{
+  overflow-y: scroll;
+  padding-bottom: 20px;
+}
+
+.manage-curators-section{
+  .button-container{
+    text-align: center;
+  }
+  button{
+    .action-button;
+  }
+  overflow-y: scroll;
+  padding-bottom: 20px;
+  li {
+    white-space: normal;
+    height: 45px;
+    line-height: 25px;
+    padding: 10px;
+
+    &:nth-child(even){
+      background: lighten(@black-color, 10%);
+    }
+    &:nth-child(odd){
+      background: lighten(@black-color, 5%);
+    }
+
+  }
+  .this-is-you{
+    float: right;
+    font-size: 12px;
+  }
+  ol{
+    button{
+      float: right;
+    }
+  }
+}

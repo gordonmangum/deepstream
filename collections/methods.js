@@ -633,6 +633,73 @@ Meteor.methods({
 
     return SuggestedContextBlocks.update(contextBlockId, {$set: contextBlockAddendum});
   },
+  inviteCurator (shortId, email) {
+    check(shortId, String);
+    check(email, String);
+    if(!SimpleSchema.RegEx.Email.test(email)) {
+      throw new Meteor.Error('Please enter a valid email to invite a curator');
+    }
+
+    var deepstream = Deepstreams.findOne({shortId: shortId}, {fields: {'mainCuratorId': 1, title: 1, streamPathSegment:1, userPathSegment: 1}});
+    if(this.userId !== deepstream.mainCuratorId){
+      throw new Meteor.Error('Only the primary curator may invite another curator');
+    }
+
+    var inviteCode = Random.id(16); // this could be Random.secret, but it's not clear that is actually more secure and this is more readable in the url
+
+    var success = updateDeepstream.call(this, {shortId: shortId}, {$addToSet: { curatorInviteCodes: inviteCode }});
+
+
+    if (Meteor.isServer){
+      var currentUser = Meteor.user();
+      var internalEmail = process.env.SEND_PUBLISH_NOTICE_TO || Meteor.settings.SEND_PUBLISH_NOTICE_TO;
+      if (internalEmail){
+        Email.send({
+          to: internalEmail,
+          from: 'noreply@example.com',
+          subject: 'New Curator Invite Sent for Deepstream: ' + deepstream.title,
+          text: 'In DeepStream "' + deepstream.title + '"' + ' at ' + new Date + ', user ' + currentUser.username + ' (' + currentUser.profile.name + ') invited ' + email + ' to be a curator'
+        })
+      }
+
+      Email.send({
+        to: email,
+        from: 'noreply@example.com',
+        subject: "You've been invited to help curate " + deepstream.title,
+        html: currentUser.profile.name + ' (' + currentUser.username  + ') just invited you to help curate their DeepStream "' + deepstream.title +
+        '". To join in, click: ' + Meteor.absoluteUrl('watch/' + deepstream.userPathSegment + '/' + deepstream.streamPathSegment + '?curator_invite_code=' + inviteCode) + '<br><br><a href=' + Meteor.absoluteUrl('about') + '>What is DeepStream?</a>'
+      })
+    }
+
+    return success
+  },
+  becomeCurator (shortId, code) {
+    check(shortId, String);
+    check(code, String);
+
+    var deepstream = Deepstreams.findOne({shortId: shortId}, {fields: {'curatorInviteCodes': 1}});
+    if(!deepstream.curatorInviteCodes || !_.contains(deepstream.curatorInviteCodes, code)){
+      throw new Meteor.Error('This code is invalid or has already been used');
+    }
+
+    return Deepstreams.update({shortId: shortId}, {$addToSet: { curatorIds: this.userId }, $pull: { curatorInviteCodes: code }});
+  },
+  removeCurator (shortId, curatorId) {
+    check(shortId, String);
+    check(curatorId, String);
+
+    var deepstream = Deepstreams.findOne({shortId: shortId}, {fields: {'mainCuratorId': 1}});
+
+    if (this.userId !== deepstream.mainCuratorId){
+      throw new Meteor.Error('Only the primary curator may remove another curator');
+    }
+
+    if (curatorId === deepstream.mainCuratorId){
+      throw new Meteor.Error('The primary curator may not be removed');
+    }
+
+    return updateDeepstream.call(this, {shortId: shortId}, {$pull: { curatorIds: curatorId}});
+  },
   favoriteDeepstream (streamShortId) {
     check(streamShortId, String);
     return changeFavorite.call(this, streamShortId, true);
