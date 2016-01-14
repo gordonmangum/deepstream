@@ -204,23 +204,23 @@ Template.home.helpers({
   }
 });
 
-var getcheckBoxes = function(){
-  var boxes = [
-    //"deepstream",
+var getCheckBoxesNames = [
     "youtube",
     "bambuser",
     "ustream",
     "twitch"
   ];
 
-  var checked  = boxes.filter(function(elem){
+
+var updateCheckBoxes = function(){
+
+  var checked  = getCheckBoxesNames.filter(function(elem){
     var id = elem + "-checkbox";
     return document.getElementById(id).checked;
   });
 
   if(checked.length == 0){
     console.log("No boxes were selected");
-    return;
   }
   Session.set("checkedBoxes", checked);
 };
@@ -234,14 +234,14 @@ var getHomepageStreamSearchResults = function() {
 };
 
 Template.home.events({
-  "change #livestreams-checkbox"(e, t){
-    var boxes = [
-    "youtube",
-    "bambuser",
-    "ustream",
-    "twitch"
-  ];
-    if(document.getElementById("livestreams-checkbox").checked){
+  "change #livestreams-checkbox,#deepstream-checkbox"(e, t){
+    var boxes = getCheckBoxesNames.filter(function (i) {
+      return i !== "deepstream";
+    });
+    var livestreams = document.getElementById("livestreams-checkbox");
+    var deepstreams = document.getElementById("deepstream-checkbox");
+
+    if(livestreams.checked){
       boxes.forEach(function(box){
         document
           .getElementById(box + "-checkbox")
@@ -254,12 +254,31 @@ Template.home.events({
           .checked = false;
       });
     }
+    updateCheckBoxes();
+    var mode;
+    //11
+    if(deepstreams.checked && livestreams.checked){
+      mode = 'both';
+    }
+    //10
+    else if(deepstreams.checked && !livestreams.checked){
+      mode = 'deepstreams';
+    }
+    //01
+    else if(!deepstreams.checked && livestreams.checked){
+      mode = 'livestreams';
+    }
+    //00
+    else {
+    // hide eveything?
+    }
+    Session.set('homeStreamListType', mode);
   },
   "change #deepstream-checkbox,#youtube-checkbox,#bambuser-checkbox,#ustream-checkbox,#twitch-checkbox" (e,t ){
-   getcheckBoxes();
+   updateCheckBoxes();
   },
 "focus .stream-search-form" (e,t){
-  getcheckBoxes();
+  updateCheckBoxes();
   if(checkboxes.hasAttribute("hidden")){
     checkboxes.removeAttribute("hidden");
   }
@@ -279,11 +298,6 @@ Template.home.events({
     }
     t.streamSearch(query);
 
-    var checkboxes = document.getElementById('checkboxes');
-      if(!checkboxes.hasAttribute("hidden")){
-        checkboxes.setAttribute("hidden" ,"");
-      }
-
     analytics.track('Search on homepage', {
       query: query,
       label: query
@@ -298,24 +312,6 @@ Template.home.events({
     t.$('#stream-search-input').val('');
     Session.set('homeStreamListMode', 'most_recent');
     analytics.track('Click most recent button on homepage');
-  },
-  "click .show-deepstreams-only" (e, t) {
-    Session.set('homeStreamListType', 'deepstreams');
-    analytics.track('Click purple pill on homepage', {
-      label: 'deepstreams'
-    });
-  },
-  "click .show-livestreams-only" (e, t) {
-    Session.set('homeStreamListType', 'livestreams');
-    analytics.track('Click purple pill on homepage', {
-      label: 'livestreams'
-    });
-  },
-  "click .show-deepstreams-and-livestreams" (e, t) {
-    Session.set('homeStreamListType', 'both');
-    analytics.track('Click purple pill on homepage', {
-      label: 'deepstream & livestreams'
-    });
   },
   "click .logo-title" (e, t){
     Session.set('homeStreamListType', 'both');

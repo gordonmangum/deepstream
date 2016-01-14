@@ -28,12 +28,12 @@
               <div>
                 <p>Filters</p>
               </div>
-							<!--
+
               <div>
                 <input id="deepstream-checkbox" type="checkbox" checked="true">
                 <label for="deepstream-checkbox">DeepStreams</label>
               </div>
-							-->
+
               <div id="livestreams">
                 <input id="livestreams-checkbox" type="checkbox" checked="true"/>
                 <label for="livestreams-checkbox">LiveStreams</label>
@@ -216,17 +216,6 @@
     {{> top_banner showFilters=true}}
     <div class="deepstreams-and-streams-and-selector">
       <div class="stream-type-selector-container">
-        <div class="stream-type-selector">
-            <ul>
-              <li class="{{#if showDeepstreamsOnly}}selected{{/if}}">
-                <button class="show-deepstreams-only">DEEPSTREAMS</button>
-              </li><li class="{{#if showDeepstreamsAndLivestreams}}selected{{/if}}">
-                <button class="show-deepstreams-and-livestreams">BOTH</button>
-              </li><li class="{{#if showLivestreamsOnly}}selected{{/if}}">
-                <button class="show-livestreams-only">LIVESTREAMS</button>
-              </li>
-            </ul>
-        </div>
       </div>
       <div class="deepstreams-and-streams">
         <ol>
