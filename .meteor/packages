@@ -28,8 +28,6 @@ email
 browser-policy
 reload
 meteorhacks:subs-manager
-meteorhacks:flow-router
-meteorhacks:flow-layout
 momentjs:moment
 meteorhacks:fast-render
 peerlibrary:async
@@ -57,3 +55,5 @@ meteorhacks:meteor-down
 meteorhacks:kadira-profiler
 bigdata:elasticsearch
 london:body-class
+kadira:flow-router
+kadira:blaze-layout

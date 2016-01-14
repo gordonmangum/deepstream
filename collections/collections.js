@@ -680,6 +680,12 @@ Schema.Deepstreams = new SimpleSchema({
     minCount: 0,
     maxCount: 100
   },
+  curatorInviteCodes: { // these should never be exposed to the client
+    type: [String],
+    defaultValue: [],
+    minCount: 0,
+    maxCount: 100
+  },
   deletedContent: {
     type: Object,
     optional: true
