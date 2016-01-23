@@ -789,16 +789,22 @@ div.action-items {
 #checkboxes{
   background-color: #181818;
   margin-top: -10px;
+  padding-bottom:15px;
+}
+#checkboxes > div > p {
+  padding-left: 10px;
 }
 
 input[type=checkbox] {
 	visibility: hidden;
 }
+
 .wrapper{
   position: relative;
   width: 40px;
-	height: 28px;
+  height: 28px;
   margin-top: 10px;
+  margin-left: 10px;
 }
 .wrapper > div{
   margin: -25px 30px;
