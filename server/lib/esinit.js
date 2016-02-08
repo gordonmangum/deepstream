@@ -49,7 +49,6 @@ resetES = function () {
 
   console.log("indexExists function: going to close index");
   closeIndex({index: ES_CONSTANTS.index});
-
   console.log("indexExists function: going to apply settings");
 
 
@@ -72,33 +71,8 @@ resetES = function () {
             "token_chars": ["letter", "digit"],
           }
         },
-        //"filter" : {
-        //  "synonym" : {
-        //    "type" : "synonym",
-        //    "synonyms_path" : "analysis/wn_s.pl"
-        //  }
-        //}
       }
     }
-
-    // "body":{
-    //     "analysis": {
-    //       "analyzer": {
-    //         "my_ngram_analyzer": {
-    //           "tokenizer": "my_ngram_tokenizer",
-    //           "filter": ["standard", "lowercase"]
-    //       }
-    //     },
-    //       "tokenizer": {
-    //         "my_ngram_tokenizer":{
-    //           "type": "nGram",
-    //           "min_gram": 2,
-    //           "max_gram": 15,
-    //           "token_chars": ["letter", "digit"]
-    //         }
-    //       }
-    //     }
-    //   }
   });
 
   if (putIndexSuccess) {
@@ -152,7 +126,5 @@ resetES = function () {
   } else {
     console.log("ElasticSearch: putMapping: Faild to map data");
   }
-
-
   openIndex({index: ES_CONSTANTS.index});
 };

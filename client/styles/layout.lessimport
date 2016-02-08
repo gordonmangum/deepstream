@@ -542,6 +542,7 @@ div.image-section, .image-preview {
     max-height: 30px;
     overflow: hidden;
     padding-right: 8px;
+    z-index: 1;
     text-shadow: 1px 1px @dark-color;
     text-align: right;
     color: white;

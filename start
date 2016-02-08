@@ -13,7 +13,7 @@ else
 		exit 1
 	else
 		echo "You don't have ElasticSearch installed on your system"
-		echo "For best results on a Mac you can install it yourself using homebrew. First run `brew update`, then `brew doctor`, then `brew install elasticsearch17`"
+		echo "For best results on a Mac you can install it yourself using homebrew. First run 'brew update', then 'brew doctor', then 'brew install elasticsearch17'"
 		exit 1
 	fi
 fi
