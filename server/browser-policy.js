@@ -3,7 +3,7 @@ BrowserPolicy.framing.allowAll(); // temporarily allow all sites to embed Deepst
 //BrowserPolicy.content.disallowInlineScripts(); // this would provide a backstop against XSS
 
 BrowserPolicy.content.allowInlineScripts(); // TODO this seemed needed to get various jsapi's working (Twitter?), but is really not the best. Should be reconfirmed that this is necessary.
-BrowserPolicy.content.allowEval(); // need to allow eval for YouTube iFrame API
+BrowserPolicy.content.allowEval(); // need to allow eval for YouTube iFrame API // TODO this might not be needed anymore https://code.google.com/p/gdata-issues/issues/detail?id=6566
 BrowserPolicy.content.allowInlineStyles(); // we use inline styles a fair bit
 BrowserPolicy.content.allowImageOrigin('*'); // allowing all images is easiest and seems safe
 
