@@ -22,7 +22,7 @@ var createBlockHelpers = {
     }
   },
   selected() {
-    return (this.source === Session.get('newHorizontalDataSource'));
+    return (this.source === Session.get('newContextDataSource'));
   },
   loading() {
     if (Template.instance().loadingResults)
@@ -85,7 +85,7 @@ var goBack = function(e, t) {
 var createBlockEvents = {
   "click .data-source" (d, template) {
     template.focusResult.set(null);
-    Session.set('newHorizontalDataSource', this.source);
+    Session.set('newContextDataSource', this.source);
   },
 
   "submit form" (d, template) {
@@ -145,11 +145,11 @@ var existingSearchResults = function(options){
     type: this.type
   }
 
-  var newHorizontalDataSource = Session.get('newHorizontalDataSource');
+  var newContextDataSource = Session.get('newContextDataSource');
 
-  if (newHorizontalDataSource.indexOf('all_') !== 0){ // naming convention...
+  if (newContextDataSource.indexOf('all_') !== 0){ // naming convention...
     _.extend(selector, {
-      source: Session.get('newHorizontalDataSource')
+      source: Session.get('newContextDataSource')
     });
   }
   return SearchResults.find(selector, _.extend({}, options, {sort: {ordinalId: 1} }));
@@ -158,7 +158,7 @@ var existingSearchResults = function(options){
 
 
 var searchAPI = function(query) {
-  var source = Session.get('newHorizontalDataSource');
+  var source = Session.get('newContextDataSource');
   var type = this.type;
   var page;
 
@@ -280,9 +280,9 @@ searchTemplateCreatedBoilerplate = function(type, defaultSource) {
     var that = this;
 
     this.type = type;
-    var previousSource = Session.get('newHorizontalDataSource');
+    var previousSource = Session.get('newContextDataSource');
     if (!_.contains(_.pluck(dataSourcesByType[type], 'source'), previousSource)){
-      Session.set('newHorizontalDataSource', defaultSource)
+      Session.set('newContextDataSource', defaultSource)
     }
 
     this.loadingResults = new ReactiveVar();
@@ -323,7 +323,7 @@ searchTemplateRenderedBoilerplate  = function() {
 
     // search when initially arrive and when source changes (if there aren't already results)
     this.autorun(function(){
-      Session.get('newHorizontalDataSource');
+      Session.get('newContextDataSource');
       if (that.getSearchInput().query && !that.existingSearchResults({reactive: false}).count()) {
         that.search();
       }
@@ -364,7 +364,7 @@ Template.create_image_section.onCreated(function(){
             width: doc.width,
             height: doc.height
           },
-          source: Session.get('newHorizontalDataSource'),
+          source: Session.get('newContextDataSource'),
           fullDetails: doc
         }));
       }
@@ -384,7 +384,7 @@ Template.create_image_section.onDestroyed(function(){
 
 Template.create_image_section.helpers({
   uploadMode (){
-    return Session.get('newHorizontalDataSource') === 'cloudinary';
+    return Session.get('newContextDataSource') === 'cloudinary';
   },
   uploadStatus (){
     return Template.instance().uploadStatus.get();
@@ -441,7 +441,7 @@ _.each(dataSourcesByType, function(dataSources, type){
 
 Template.create_news_section.onCreated(function() {
   this.type = 'link';
-  Session.set('newHorizontalDataSource', 'news');
+  Session.set('newContextDataSource', 'news');
   this.loadingResults = new ReactiveVar();
   this.noMoreResults = new ReactiveVar();
   this.focusResult = new ReactiveVar();
@@ -499,7 +499,7 @@ Template.create_news_section.onRendered(function() {
 
 Template.create_link_section.onCreated(function() {
   this.type = 'link';
-  Session.set('newHorizontalDataSource', 'link');
+  Session.set('newContextDataSource', 'link');
   this.loadingResults = new ReactiveVar();
   this.noMoreResults = new ReactiveVar();
   this.focusResult = new ReactiveVar();
@@ -677,7 +677,7 @@ Template.create_link_section.helpers({
 
 Template.create_map_section.onCreated(function() {
   this.type = 'map';
-  Session.set('newHorizontalDataSource', 'google_maps');
+  Session.set('newContextDataSource', 'google_maps');
   this.loadingResults = new ReactiveVar();
   this.focusResult = new ReactiveVar();
 
@@ -726,7 +726,7 @@ Template.create_map_section.helpers({
 Template.create_text_section.onCreated(function() {
   this.type = 'text';
   this.focusResult = new ReactiveVar(); // just as a stub
-  Session.set('newHorizontalDataSource', 'free_text');
+  Session.set('newContextDataSource', 'free_text');
 });
 
 Template.create_text_section.onRendered(function() {
