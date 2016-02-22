@@ -325,7 +325,7 @@ Template.watch_page.onCreated(function () {
         newActiveStream = deepstream.activeStream();
       }
 
-
+      // hack to remove and reinsert active main stream when the same service is used in old stream and new stream
       var activeStream;
       Tracker.nonreactive(function(){
         activeStream = that.activeStream.get();
