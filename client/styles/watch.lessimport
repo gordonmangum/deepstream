@@ -29,8 +29,10 @@
   }
   .streams-list{
     white-space: nowrap;
-    overflow-x: scroll;
-
+    min-width:115px;
+    li.add-stream{
+      background-color: rgba(0, 0, 0, 0.7);
+    }
     li.stream {
       .inactive {
         img{
@@ -58,7 +60,8 @@
         z-index: 10;
         .opacity-transition;
         opacity: 0;
-        top: 100%;
+        left: 115px;
+        top: 15px;
         padding-top: 5px;
         width: 100%;
         text-align: center;
@@ -90,7 +93,7 @@
 
       &:hover, &.to-delete {
         .delete-stream {
-          display: inline-block;
+          // display: inline-block;
           opacity: 1;
         }
       }
@@ -119,37 +122,38 @@
     @miniStreamWidth: @miniStreamHeight * 4/3;
     @miniStreamPreviewWidth: @miniStreamHeight * 16/9;
     li{
-      display: inline-block;
-      &:not(:first-child){
-        margin-left: @left-margin;
-      }
       line-height: 0;
       position: relative;
+      margin-bottom: 10px;
+      display:inline-block;
+      background-size: cover;
+      background-position: center;
       .set-main-stream, .show-stream-search{
-        background-color: inherit;
+        background-color: transparent;
         color: @light-text-color;
+        font-size: 14px;
+        height: @miniStreamHeight;
+        width: 100%;
+        position: relative;
+        padding: 0;
         img, iframe{
           .size-to-fit;
         }
         img.add-stream-text{
           width: 70px;
         }
-        font-size: 14px;
-        height: @miniStreamHeight;
-        width: @miniStreamWidth;
         &.preview-mode{
           width: @miniStreamPreviewWidth;
         }
-        position: relative;
-        padding: 0;
-        background-color: @black-color;
 
       }
       &:not(.placeholder){
         border: 1px solid @light-text-color;
         .hover-shadow;
       }
-
+      &:not(.preview-mode){
+        width:95%;
+      }
       .mini-live-indicator{
         background-color: @live-color;
         position: absolute;
@@ -165,11 +169,11 @@
       }
 
       &.live-dead-divider{
-        height: @miniStreamHeight * .8;
+        // height: @miniStreamHeight * .8;
         margin-top: @miniStreamHeight * .1;
         margin-bottom: @miniStreamHeight * .1;
-        width: 0;
-        border-left: 2px solid @action-color;
+        width: 100%;
+        border-bottom: 2px solid @action-color;
       }
     }
   }
@@ -206,7 +210,7 @@
     padding-right: 5px;
     @height: @footer-section-height - 25px;
     position: fixed;
-    left: 50px;
+    left: 0px;
     bottom: @drawer-bottom;
     .bottom-transition;
     &.collapsed{
@@ -215,16 +219,36 @@
     height: @height;
     display: flex;
     flex-direction: row;
-    .transparency-fade(background-color, @alt-background-color);
-    .transparency-rounded;
     width: inherit;
-
+    
+    .report-inappropriate-content{
+      margin-left:3px;
+      
+      svg{
+        stroke-width:4;
+        .size(16px);
+      }
+      &:hover{
+        .fg{
+          fill: @white-icon-color;
+        }
+      }
+    }
+    
+    .stream-views{
+      display: inline-block;
+      left: @padding-left;
+      top: 95px;
+      position: absolute;
+      width: calc(100% ~"-" (32px));
+      text-shadow: 1px 1px 1px darken(@light-text-color,60%);
+    }
 
     .about-stream{
       display: inline-block;
 
       left: @padding-left;
-      top: 95px;
+      top: 65px;
       position: absolute;
       width: calc(100% ~"-" (32px));
       text-shadow: 1px 1px 1px darken(@light-text-color,60%);
@@ -253,19 +277,22 @@
     }
 
     .stream-stats-and-share{
+      display:inline-block;
       padding-left: 30px;
       text-shadow: 1px 1px 1px darken(@light-text-color,60%);
-      .inverted-icon-colors;
       .stream-stats{
         margin-top: 20px;
+      }
+      .fg {
+        fill: @light-icon-color;
       }
       button{
         text-align: center;
         .size(20px);
         padding: 3px;
-        background: @light-icon-color;
+        color: @light-icon-color;
         &:hover {
-          background: @white-icon-color;
+          color: @white-icon-color;
         }
       }
     }
@@ -1142,19 +1169,6 @@
     animation: glow-dark-action 1.6s ease infinite;
   }
 
-  .report-inappropriate-content{
-    position: absolute;
-    top: 5px;
-    right: 7px;
-    svg{
-      .size(20px);
-    }
-    &:hover{
-      .fg{
-        fill: @white-icon-color;
-      }
-    }
-  }
   .transparency-button{
     width: 53px;
     height: 45px;
@@ -1392,7 +1406,7 @@
   font-size: 20px;
   font-weight: bold;
   position: relative;
-  height: @second-row-height;
+  // height: @second-row-height;
   z-index: 1;
 }
 

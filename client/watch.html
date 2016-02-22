@@ -17,13 +17,39 @@
             {{> banner_buttons}}
             {{> logo_only}}
           </div>
+          
+          
           <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
-            {{#if activeStream.live}}
-              <div class="live-indicator">
-                LIVE
+            <div class="streams-list">
+                {{#each livestreams}}
+                  {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}       
+                  <br/>
+                {{else}}
+                  {{#unless curateMode}}
+                    <li class="placeholder">
+                      <button>
+                        There are no live streams right now
+                      </button>
+                    </li>
+                  {{/unless}}
+                {{/each}}
+                {{#if curateMode}}
+                  <li class="add-stream">
+                    <button class="show-stream-search">
+                      {{> add_stream_text}}
+                    </button>
+                  </li>
+                  <br/>
+                {{/if}}
+                {{#if deadstreams.length}}
+                  <li class="live-dead-divider"></li>
+                  <br/>
+                {{/if}}
+                {{#each deadstreams}}
+                  {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}
+                  <br/>
+                {{/each}}
               </div>
-            {{/if}}
-            {{{streamTitleElement}}}
           </div>
         </div>
         <div class="main-section {{#if expandMainSection}}expanded{{/if}}">
@@ -91,6 +117,51 @@
             {{/if}}
           </div>
           <div class="footer-section {{#unless showBottomSection}}collapsed{{/unless}}" style="width: {{leftSectionWidth -60}}px;">
+               {{#if activeStream.live}}
+                <div class="live-indicator">
+                  LIVE
+                </div>
+              {{/if}}
+              {{{streamTitleElement}}}
+            <div class="about-stream">
+              <div class="icon"><i class="fa fa-info-circle"></i></div>
+              {{{streamDescriptionElement}}}
+            </div>
+            <div class="stream-views">
+              <div class="views">
+                Views: {{formatNumber viewCount}}
+                <div class="stream-stats-and-share">
+                  <div class="share-and-favorite">
+                    {{> favorite_button}}
+                    <button class="twitter-share-button">{{> twitter_share_icon}}</button>
+                    <button class="facebook-share-button">{{> facebook_share_icon}}</button>
+                    <button class="email-share-button">{{> email_share_icon}}</button>
+                  </div>
+                </div> 
+                {{#unless isCurator}}
+                  <a title="Report inappropriate content" class="report-inappropriate-content" href="mailto:deepstream@media.mit.edu?subject=Inappropriate Content in DeepStream '{{title}}' - {{shortId}}
+                &body=(Please let us know which content on this page is inappropriate and we'll get right on it!)" target="_blank">{{> inappropriate_content_icon}}</a>
+               {{/unless}}
+              </div>
+              
+            </div>
+          
+            <!-- to be removed
+            <div class="stream-stats-and-share">
+              <div class="share-and-favorite">
+                {{> favorite_button}}
+                <button class="twitter-share-button">{{> twitter_share_icon}}</button>
+                <button class="facebook-share-button">{{> facebook_share_icon}}</button>
+                <button class="email-share-button">{{> email_share_icon}}</button>
+              </div>
+              <div class="stream-stats">
+                <div class="views">Views: {{formatNumber viewCount}}</div>
+              </div>
+            </div>            
+
+
+
+
             {{#if showOpenBottombarIcon}}
               <div class="bar-open-close">
                 <button class="open-bottombar">
@@ -134,21 +205,8 @@
                 {{/each}}
               </div>
             {{/if}}
-            <div class="stream-stats-and-share">
-              <div class="share-and-favorite">
-                {{> favorite_button}}
-                <button class="twitter-share-button">{{> twitter_share_icon}}</button>
-                <button class="facebook-share-button">{{> facebook_share_icon}}</button>
-                <button class="email-share-button">{{> email_share_icon}}</button>
-              </div>
-              <div class="stream-stats">
-                <div class="views">Views: {{formatNumber viewCount}}</div>
-              </div>
-            </div>
-            <div class="about-stream">
-              <div class="icon"><i class="fa fa-info-circle"></i></div>
-              {{{streamDescriptionElement}}}
-            </div>
+            
+            -->
           </div>
 
         </div>
@@ -225,8 +283,6 @@
               {{/if}}
             {{/if}}
           {{else}}
-            <a title="Report inappropriate content" class="report-inappropriate-content" href="mailto:deepstream@media.mit.edu?subject=Inappropriate Content in DeepStream '{{title}}' - {{shortId}}
-            &body=(Please let us know which content on this page is inappropriate and we'll get right on it!)" target="_blank">{{> inappropriate_content_icon}}</a>
             {{#unless showContextSearch}}
               {{#unless embedMode}}
                 <button class="suggest-content">Suggest Content</button>
@@ -285,7 +341,7 @@
 
 <template name="stream_li">
   {{#with stream}}
-    <li data-stream-reference-id="{{reference.id}}" data-stream-id="{{_id}}" class="stream {{#if active}}active{{/if}}">
+    <li data-stream-reference-id="{{reference.id}}" data-stream-id="{{_id}}" class="stream {{#if active}}active{{/if}} {{#if previewMode}}preview-mode{{/if}}" style="background-image:url({{thumbnailUrl}}) ">
       <button title="{{title}} by {{username}}" class="set-main-stream {{#if active}}active{{else}}inactive{{/if}} {{#if previewMode}}preview-mode{{/if}}">
         {{#if live}}
           <div class="mini-live-indicator">
@@ -293,7 +349,7 @@
           </div>
         {{/if}}
 
-        <img src="{{thumbnailUrl}}">
+        <!--<img src="{{thumbnailUrl}}">-->
         {{#unless active}}
           <div class="inactive-overlay"></div>
         {{/unless}}
