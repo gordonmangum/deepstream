@@ -354,7 +354,8 @@
 
 
 .right-section{
-  .transparency-fade(background-color, @alt-background-color);
+  color: @black-color;
+  .transparency-fade-light(background-color, @light-background-color);
   .transparency-rounded;
   .right-transition;
   position: fixed;
@@ -693,7 +694,7 @@
   .context-section{
     position: relative;
     .transparency-rounded;
-    .transparency-fade(background-color, @context-background-color);
+    .transparency-fade-strong(background-color, @light-background-color);
     @padding: 10px;
     padding: @padding;
     &:hover{
@@ -1471,7 +1472,7 @@
 }
 
 .annotation-section{
-  .transparency-fade(background-color, @context-background-color);
+  .transparency-fade-strong(background-color, @light-background-color);
   border-radius: 5px;
   position: relative;
   display: flex;

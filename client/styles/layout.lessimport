@@ -13,6 +13,7 @@
 
 @background-color: @black-color;
 @alt-background-color: @black-color;
+@light-background-color: @white-color;
 @context-background-color: @dark-medium-color;
 @watch-background-color: @black-color;
 
@@ -57,6 +58,13 @@ html {
   @{property}: fade(@value, 50%);
 }
 
+.transparency-fade-light(@property; @value){
+  @{property}: fade(@value, 30%);
+}
+
+.transparency-fade-strong(@property; @value){
+  @{property}: fade(@value, 80%);
+}
 
 .transparency-rounded{
     border-radius: 5px;
@@ -777,7 +785,7 @@ div.text-content {
 }
 
 .text-content{
-  color: @light-text-color;
+  color: @dark-text-color;
   background-color: transparent;
   line-height: 20px;
 }

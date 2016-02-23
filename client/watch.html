@@ -490,7 +490,9 @@
 </template>
 
 <template name="context_browser_area">
-  {{> context_card_column}}
+  {{#if isCurator}}
+    {{> context_card_column}}
+  {{/if}}
   <div class="context-timeline-switcher">
     {{#if curateMode}}
       <div class="button-container {{#if showSuggestions}}active{{/if}}">
