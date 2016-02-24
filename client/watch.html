@@ -14,6 +14,23 @@
 
         <div class="header-section">
           <div class="top-row">
+            <div class="home-icons">
+              <ol>
+                <li class="home-icon-li">
+                  {{#if embedMode}}
+                    <button class="deepstream-logo-embed">
+                      <span class="icon">
+                        {{> home_icon}}
+                      </span>
+                    </button>
+                  {{else}}
+                    <a href="/" class="svg">
+                      <span class="icon">{{> home_icon}}</span>
+                    </a>
+                  {{/if}}
+                </li>
+              </ol>
+            </div>
             {{> banner_buttons}}
             <!-- {{> logo_only}} -->
           </div>
@@ -21,28 +38,6 @@
           
           <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
             <div class="streams-list">
-               <li class="home-icon-li">
-                  <div class="logo-only">
-                    {{#if embedMode}}
-                      <button class="deepstream-logo-embed">
-                        <div class="icon-home-contianer">
-                          <center>
-                            {{> home_icon}}
-                          </center>
-                        </div>
-                      </button>
-                    {{else}}
-                      <a href="/">
-                        <div class="icon-home-container">
-                          <center>
-                            {{> home_icon}}
-                          </center>
-                        </div>
-                      </a>
-                    {{/if}}
-                  </div>
-                </li>
-                <br/>
                 {{#each livestreams}}
                   {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}       
                   <br/>
@@ -139,11 +134,6 @@
             {{/if}}
           </div>
           <div class="footer-section {{#unless showBottomSection}}collapsed{{/unless}}" style="width: {{leftSectionWidth -60}}px;">
-               {{#if activeStream.live}}
-                <div class="live-indicator">
-                  LIVE
-                </div>
-              {{/if}}
               {{{streamTitleElement}}}
             <div class="about-stream">
               <div class="icon"><i class="fa fa-info-circle"></i></div>
@@ -151,6 +141,11 @@
             </div>
             <div class="stream-views">
               <div class="views">
+                {{#if activeStream.live}}
+                  <div class="live-indicator">
+                    LIVE
+                  </div>
+                {{/if}}
                 Views: {{formatNumber viewCount}}
                 <div class="stream-stats-and-share">
                   <div class="share-and-favorite">

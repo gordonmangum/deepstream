@@ -198,7 +198,7 @@
 
   .header-section{
     position: fixed;
-    top:60px;
+    top: 0;
     left:0;
     z-index: 1;
   }
@@ -334,11 +334,11 @@
 }
 
 .main-stream-iframe, .main-stream-flash-object{
-  .size-to-fit;
+  width:100%;
+  height: calc(100%~'-'50px);
   &:not(.PiP){
     z-index: 0;
     position: fixed;
-    top:0;
     left:0;
     bottom:0;
     right:0;
@@ -1335,14 +1335,41 @@
   }
 }
 
+//make svg's clickable in <a>
+a.svg {
+  position: relative;
+  display: inline-block; 
+  z-index: 16; //higher than .action-items
+}
+a.svg:after {
+  content: ""; 
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left:0;
+}
+
+
 .watch{
+  .home-icons{ 
+    .icon {
+      height: 50px;
+      padding: 10px;
+    }
+    svg {
+      width: 44px;
+    }
+  }
   .action-items{
     position: fixed;
-    left: @left-margin;
-    top: auto;
-    padding-top: 10px; // to center in top row
+    width:100%; 
+    left:0;
     button, a{
       .dark-action-button;
+    }
+    ol{
+      float:right;
     }
     ol.user-menu {
       li {
@@ -1396,12 +1423,12 @@
     img{
       height: @top-row-height;
     }
-    left: 50%;
     .transform(translate(-50%, 0%));
   }
 }
 
 .second-row {
+  margin-top: 60px;
   padding-top: 3px;
   padding-left: @left-margin;
   font-size: 20px;
@@ -1409,9 +1436,6 @@
   position: relative;
   // height: @second-row-height;
   z-index: 1;
-  .home-icon-li{
-    border-style: none;
-  }
   .logo-only{
     .transparency-fade-strong(background-color, @light-background-color);
     border-radius: 5px;
