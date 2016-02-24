@@ -3,7 +3,7 @@
 @PiP-width: 285px;
 @PiP-height: 160px;
 @left-margin: 20px;
-@live-indicator-width: 88px;
+@live-indicator-width: 52px;
 @context-browser-header-row-height: 51px;
 @card-column-width: 60px;
 @top-row-height: 50px;
@@ -242,6 +242,9 @@
       position: absolute;
       width: calc(100% ~"-" (32px));
       text-shadow: 1px 1px 1px darken(@light-text-color,60%);
+      .views {
+        line-height: 30px;
+      }
     }
 
     .about-stream{
@@ -680,8 +683,8 @@
   .context-area{
     overflow-y: scroll;
     flex: auto;
-    padding-left: 0;
-    padding-right: @contextAreaPadding * 2;
+    padding-left: @contextAreaPadding;
+    padding-right: @contextAreaPadding;
     padding-top: 0;
     //&:not(:last-child){
     //  padding-bottom: @contextAreaPadding * 2;
@@ -927,7 +930,8 @@
 }
 
 .add-new-context-row, .search-section-title{
-  margin-right: @contextAreaPadding * 2;
+  margin-right: @contextAreaPadding;
+  margin-left: @contextAreaPadding;
   margin-bottom: 15px;
   height: @context-browser-header-row-height;
   line-height: @context-browser-header-row-height;
@@ -1458,12 +1462,12 @@ a.svg:after {
 .live-indicator{
   background-color: @live-color;
   display: inline-block;
-  font-size: 28px;
-  margin-right: 20px;
+  font-size: 20px;
+  margin-right: 30px;
   font-weight: bold;
-  height: 42px;
+  height: 30px;
   float: left;
-  line-height: 42px;
+  line-height: 30px;
   width: @live-indicator-width;
   text-align: center;
 }
