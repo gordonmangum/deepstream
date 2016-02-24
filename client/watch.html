@@ -15,12 +15,34 @@
         <div class="header-section">
           <div class="top-row">
             {{> banner_buttons}}
-            {{> logo_only}}
+            <!-- {{> logo_only}} -->
           </div>
           
           
           <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
             <div class="streams-list">
+               <li class="home-icon-li">
+                  <div class="logo-only">
+                    {{#if embedMode}}
+                      <button class="deepstream-logo-embed">
+                        <div class="icon-home-contianer">
+                          <center>
+                            {{> home_icon}}
+                          </center>
+                        </div>
+                      </button>
+                    {{else}}
+                      <a href="/">
+                        <div class="icon-home-container">
+                          <center>
+                            {{> home_icon}}
+                          </center>
+                        </div>
+                      </a>
+                    {{/if}}
+                  </div>
+                </li>
+                <br/>
                 {{#each livestreams}}
                   {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}       
                   <br/>

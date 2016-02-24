@@ -123,7 +123,7 @@ div.add-context {
     flex: auto;
     margin-right: 20px;
     .transparency-rounded;
-    .transparency-fade(background-color, @context-background-color);
+    .transparency-fade(background-color, @light-background-color);
     .search-section {
       height: 100%;
     }
@@ -153,12 +153,12 @@ div.add-context {
         text-transform: uppercase;
         display: inline-block;
         min-width: 80px;
-        color: darken(@deemphasized-light-text-color, 7%);
-        border-bottom: 2px solid darken(@deemphasized-light-text-color, 7%);
+        color: darken(@deemphasized-dark-text-color, 25%);
+        border-bottom: 2px solid darken(@deemphasized-dark-text-color, 25%);
 
         &.selected, &:hover {
-          color: @light-text-color;
-          border-bottom: 2px solid @light-text-color;
+          color: @dark-text-color;
+          border-bottom: 2px solid @dark-text-color;
         }
       }
     }
@@ -267,6 +267,7 @@ div.add-context {
 
   .search-results-container{
     margin-top: 15px;
+    background-color: @transparent-color;
   }
 
   ol.search-results-container {   
@@ -287,13 +288,13 @@ div.add-context {
 
       &:not(.loading-icon){
         &:nth-child(even){
-          background: lighten(@black-color, 10%);
+          background: transparent; 
         }
         &:nth-child(odd){
-          background: lighten(@black-color, 5%);
+          background: transparent; 
         }
         &:hover {
-          background: @black-color;
+          .transparency-fade(background-color, @light-background-color);
         }
       }
 

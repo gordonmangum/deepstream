@@ -5,6 +5,7 @@
 @light-color: #D8D8D8;
 @white-color: #F4F4F4;
 @blue-color: #6F9DC3;
+@transparent-color: transparent;
 
 @dark-transparent-color: rgba(40, 40, 40, .9);
 @light-transparent-color: rgba(244,244,244,0.75);
@@ -23,6 +24,7 @@
 @dark-text-color: @black-color;
 @light-text-color: @light-color;
 @deemphasized-light-text-color: @medium-color;
+@deemphasized-dark-text-color: @medium-color;
 
 @dark-icon-color: @dark-color;
 @alt-dark-icon-color: @dark-medium-color;
@@ -623,7 +625,7 @@ div.link-section {
         padding-top: 0;
         width: calc(100% ~"-" 130px);
         border-bottom: 1px solid @dark-color;
-        color: white;
+        color: @dark-text-color;
         height: 130px;
       }
     }

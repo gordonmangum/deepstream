@@ -392,7 +392,7 @@
     justify-content: flex-end;
     .button-container{
       &.active {
-        .transparency-fade(background-color, @alt-background-color);
+        .transparency-fade-light(background-color, @light-background-color);
         .transparency-rounded-top;
       }
       width: 30%;
@@ -815,7 +815,7 @@
 
 .text-section, .text-result-container{
   .text-content{
-    color: @light-text-color;
+    color: @dark-text-color;
     font-size: 15px;
   }
   textarea{
@@ -936,7 +936,7 @@
 .add-new-context-row{
   cursor: pointer;
   position: relative;
-  .transparency-fade(background-color, @context-background-color);
+  .transparency-fade(background-color, @light-background-color);
   .transparency-rounded;
 
   button{
@@ -971,7 +971,7 @@
   text-transform: uppercase;
   position: absolute;
   top: -@context-browser-header-row-height;
-  .transparency-fade(background-color, @alt-background-color);
+  .transparency-fade(background-color, @light-background-color);
   .transparency-rounded-top;
   width: 100%;
 }
@@ -1401,7 +1401,7 @@
   }
 }
 
-.second-row{
+.second-row {
   padding-top: 3px;
   padding-left: @left-margin;
   font-size: 20px;
@@ -1409,7 +1409,24 @@
   position: relative;
   // height: @second-row-height;
   z-index: 1;
+  .home-icon-li{
+    border-style: none;
+  }
+  .logo-only{
+    .transparency-fade-strong(background-color, @light-background-color);
+    border-radius: 5px;
+  }
+  svg {
+    .fg-stroke {
+      fill: @dark-text-color;
+      stroke: @dark-text-color;
+    }
+    padding:5px;
+    width:45px;
+    height: 44px;
+  }
 }
+
 
 
 
