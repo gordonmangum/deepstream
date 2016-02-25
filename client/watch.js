@@ -185,6 +185,7 @@ Template.watch_page.onCreated(function () {
     }
   };
 
+  
 
   // confirm stream exists confirm user is curator if on curate page. forward curators to curate if they are on watch page
   this.autorun(function(){
@@ -383,9 +384,11 @@ Template.watch_page.onRendered(function(){
                 }
               });
               mainPlayer._youTubePlayer = youTubePlayer;
+              mainPlayer.activeStreamSource = 'youtube';
             }, 1000);
+          } else {
+            mainPlayer.activeStreamSource = 'youtube';
           }
-          mainPlayer.activeStreamSource = 'youtube';
           break;
         case 'ustream':
           if ( !this.mainPlayerUSApiActivated ){
@@ -394,10 +397,12 @@ Template.watch_page.onRendered(function(){
             Meteor.setTimeout(function(){ // TODO this is a hack. Why does it need to wait?
               var ustreamPlayer = UstreamEmbed(that.mainStreamIFrameId);
               mainPlayer._ustreamPlayer = ustreamPlayer;
+              mainPlayer.activeStreamSource = 'ustream';
             }, 1000);
+          } else {
+            mainPlayer.activeStreamSource = 'ustream';
           }
           Meteor.setTimeout(onMainPlayerReady, 4000); // TODO, this is a hack. Is there any way to know that the player is ready?
-          mainPlayer.activeStreamSource = 'ustream';
           break;
         case 'bambuser':
           mainPlayer.activeStreamSource = 'bambuser';
@@ -440,6 +445,12 @@ Template.watch_page.onRendered(function(){
   onMainPlayerStateChange = function(event){
     console.log('PlayerStateChange')
     console.log(event)
+  }
+});
+
+Template.watch_page.onDestroyed(function () {
+  if(mainPlayer){
+    mainPlayer.activeStreamSource = null;
   }
 });
 
@@ -1237,7 +1248,7 @@ var mutingTemplates = [
 
 _.each(mutingTemplates, function(templateName){
   // mute and unmute main video when show video overlay
-  Template[templateName].onCreated(function(){
+  Template[templateName].onRendered(function(){
     // TO-DO check and store current mute status in case already muted
     if(mainPlayer && mainPlayer.activated()){
       if(mainPlayer.isMuted()){

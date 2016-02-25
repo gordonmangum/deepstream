@@ -1498,8 +1498,7 @@ a.svg:after {
   }
   .action-items{
     position: fixed;
-    width:100%; 
-    left:0;
+    right:0;
     button, a{
       .dark-action-button;
     }
@@ -1671,8 +1670,8 @@ a.svg:after {
   .opacity-transition;
   position: absolute;
   z-index: 99999999;
-  top: @top-row-height * 2 + @second-row-height + 10px;
-  left: @left-margin;
+  top: 112px;
+  left: 150px;
   height: 500px;
   width: 600px;
   opacity: 0;
