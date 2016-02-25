@@ -264,26 +264,74 @@
         {{/with}}
 
         {{#with thisDeepstream}}
-
-
-         <div class="curator-menu">
-          <div class="curator-info">
-              <div class="curator-pic">
-                {{> default_user_pic}}
-              </div>
-              <div class="curator-details">
-                <div class="header">CURATOR</div>
-                {{curatorName}}
-              </div>
-            </div>
-
-          {{#if curateMode}}
-            <div class="webcam-button-container">
+         {{#if isCurator}}
+         <div class="settings-bar {{#unless curateMode}}wide-menu{{/unless}}">
+    
+            
+           {{#if curateMode}}
+            <div class="button-container icon-button">
               <button title="Set up webcam narration" class="webcam">{{> webcam_icon}}</button>
             </div>
           {{/if}}
 
           {{#if isCurator}}
+            {{#if onCuratePage}}
+              <div class="button-container">
+              {{#if curateMode}}
+                {{#if showPreviewEditButton}}
+                  <button class="preview">Preview</button>
+                {{/if}}
+              {{else}}
+                {{#if showPreviewEditButton}}
+                  <button class="return-to-curate">Edit</button>
+                {{/if}}
+              {{/if}}
+              </div>
+            {{/if}}
+          {{/if}}
+           
+           
+          {{#if curateMode}}
+          <div class="button-container icon-button">
+              <button class="settings-menu-button {{#if settingsMenuOpen}}active{{/if}}">{{> setting_icon}}</button>
+              {{#if settingsMenuOpen}}
+                {{> settings_menu}}
+              {{/if}}
+          </div>
+          {{/if}}
+
+        </div>
+        {{/if}}
+      
+        {{#unless isCurator}}
+          {{#unless showContextSearch}}
+            {{#unless embedMode}}
+              <button class="suggest-content">Suggest great context</button>
+            {{/unless}}
+          {{/unless}}
+        {{/unless}}
+         <!--<div class="curator-menu">-->
+           
+           
+           <!--
+           {{#if curateMode}}
+            <div class="webcam-button-container">
+              <button title="Set up webcam narration" class="webcam">{{> webcam_icon}}</button>
+            </div>
+          {{/if}}
+          
+            <div class="settings-menu-container {{#if curateMode}}visible{{/if}}">
+              {{#if curateMode}}
+                <div class="settings-button-and-menu">
+                  <button class="settings-menu-button {{#if settingsMenuOpen}}active{{/if}}">{{> setting_icon}}</button>
+                  {{#if settingsMenuOpen}}
+                    {{> settings_menu}}
+                  {{/if}}
+                </div>
+              {{/if}}
+            </div>
+           
+           {{#if isCurator}}
             {{#if onCuratePage}}
               {{#if curateMode}}
                 {{#if showPreviewEditButton}}
@@ -304,7 +352,23 @@
 
           {{/if}}
 
-        </div>
+
+-->
+           <!--
+           <div class="curator-info">
+              <div class="curator-pic">
+                {{> default_user_pic}}
+              </div>
+              <div class="curator-details">
+                <div class="header">CURATOR</div>
+                {{curatorName}}
+              </div>
+            </div>
+
+          
+           </div>
+        -->
+       
       {{/with}}
     </div>
 
@@ -321,18 +385,6 @@
       {{> overlay_context_browser}}
     {{/if}}
     {{> signin_overlay}}
-    {{#with thisDeepstream}}
-      <div class="settings-menu-container {{#if curateMode}}visible{{/if}}">
-        {{#if curateMode}}
-          <div class="settings-button-and-menu">
-            <button class="settings-menu-button {{#if settingsMenuOpen}}active{{/if}}">{{> setting_icon}}</button>
-            {{#if settingsMenuOpen}}
-              {{> settings_menu}}
-            {{/if}}
-          </div>
-        {{/if}}
-      </div>
-    {{/with}}
     {{#if curatorWebcamActive}}
       {{#with getCuratorWebcamStream}}
 
@@ -506,7 +558,7 @@
   {{#if curateMode}}
     {{> context_card_column}}
   {{/if}}
-  <div class="context-timeline-switcher">
+  <div class="context-timeline-switcher {{#unless curateMode}}wide-menu{{/unless}}">
     
       <div class="button-container close-bar-button">
         <button title="Close context bar" class="close-sidebar">
@@ -521,11 +573,13 @@
     </div>
 
     {{#if curateMode}}
+      {{#if showShowSuggestionsButton}}
       <div class="button-container {{#if showSuggestions}}active{{/if}}">
         <button title="User suggestions" class="show-suggestions {{#if showSuggestions}}active{{/if}}" disabled='{{#unless showShowSuggestionsButton}}disabled{{/unless}}'>
           Suggested
         </button>
       </div>
+      {{/if}}
     {{/if}}
     <div class="button-container {{#if showTimeline}}active{{/if}}">
       <button title="Twitter timeline" class="show-timeline {{#if showTimeline}}active{{/if}}" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>

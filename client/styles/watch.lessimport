@@ -402,7 +402,7 @@
         //.transparency-fade-light(background-color, @light-background-color);
         .transparency-rounded-top;
       }
-      width: 30%;
+      .size-to-fit;
       height: 100%;
       position: relative;
       //margin-left: 1.67%;
@@ -435,7 +435,78 @@
       }
     }
   }
+  .settings-bar {
+    height: 35px; //@context-browser-header-row-height;
+    margin-top: 44px;
+    .transparency-fade-strong(background-color, @light-background-color);
+    //position: absolute;
+    //top: -@context-browser-header-row-height;
+    margin-left: @card-column-width;
+    .transparency-rounded;
+    width: calc(100%~'-'60px); //(@card-column-width + @contextAreaPadding * 2));
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    .icon-button{
+      max-width: 45px;
+      svg { 
+        padding: 3px;
+      }
+    }
+    .button-container{
+      .bg{
+        fill: @transparent-color;
+      }
+      &.active {
+        //.transparency-fade-light(background-color, @light-background-color);
+        .transparency-rounded-top;
+      }
+      .size-to-fit;
+      height: 100%;
+      position: relative;
+      //margin-left: 1.67%;
+      //margin-right: 1.67%;
+      .twitter-icon {
+        height: 45px;
+        margin-top: -8px;
+      }
+    }
+    .close-bar-button {
+      max-width: 45px;
+      svg {
+        padding: 3px;
+      }
+    }
+    button {
+      //.center-over-parent-div;
+      .size-to-fit;
+      //text-transform: uppercase;
+      //padding-top: 8px;
+      //padding-bottom: 5px;
+      //margin-bottom: 3px;
+      text-align: center;
+      line-height: 200%;
+
+      .light-action-button;
+
+      &:disabled{
+        visibility: hidden;
+      }
+    }
+  }
+  
+  .context-timeline-switcher.wide-menu{
+    margin-left: 10px;
+    width: calc(100%~'-'10px);
+  }
+  .settings-bar.wide-menu{
+    margin-left: 10px;
+    width: calc(100%~'-'20px);
+  }
 }
+
 
 
 .card-column{
@@ -463,7 +534,7 @@
       fill: @dark-text-color;
     }
     &:hover{
-      background-color: @hover-action-color;
+      background-color: @action-color;
     }
     &.active{
       background-color: @action-color;
@@ -750,8 +821,7 @@
     position: relative;
     .transparency-rounded;
     .transparency-fade-strong(background-color, @light-background-color);
-    @padding: 10px;
-    padding: @padding;
+    padding: 10px;
     &:hover{
       .delete-context, .hover-icon{
         display: inline-block;
@@ -1166,6 +1236,10 @@
   line-height: 18px;
 }
 
+.suggest-content{
+  margin-top:78px;
+  background-color: #AC00D8;
+}
 
 .curator-menu{
   position: relative;
@@ -1219,6 +1293,8 @@
     .dark-action-button;
     right: 5px;
   }
+  
+  
 
   .preview, .return-to-curate {
     width: @button-width;
@@ -1307,21 +1383,23 @@
 
 .settings-menu{
   .edit-menu;
+  border: 1px solid @dark-color;
   color: black;
   top: 35px;
   right: -5px;
   width: 260px;
   z-index: 99999;
+  margin-top: -220px;
   &:after{
     @triangleSize: 8px;
     content:'';
     position: absolute;
-    bottom: 100%;
-    right: 47px;
+    top: 100%;
+    right: 20px;
     margin-left: -@triangleSize;
     width: 0;
     height: 0;
-    border-bottom: solid @triangleSize @light-icon-color;
+    border-top: solid @triangleSize @light-icon-color;
     border-left: solid @triangleSize transparent;
     border-right: solid @triangleSize transparent;
   }

@@ -700,10 +700,10 @@ Template.watch_page.events({
     Session.set('mediaDataType', null);
     return Session.set("showManageCuratorsMenu", true);
   },
-  'mouseenter .settings-button-and-menu' (e, template){
+  'mouseenter .settings-menu-button' (e, template){
     template.settingsMenuOpen.set(true);
   },
-  'mouseleave .settings-menu-container' (e, template){
+  'mouseleave .settings-menu' (e, template){
     template.settingsMenuOpen.set(false);
   },
   'click .microphone' (e, t){
