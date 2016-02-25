@@ -382,38 +382,53 @@
   }
 
   .context-timeline-switcher {
-    height: @context-browser-header-row-height;
-    position: absolute;
-    top: -@context-browser-header-row-height;
+    height: 35px; //@context-browser-header-row-height;
+    .transparency-fade-strong(background-color, @light-background-color);
+    //position: absolute;
+    //top: -@context-browser-header-row-height;
     margin-left: @card-column-width;
     .transparency-rounded;
-    width: calc(100%~'-'(@card-column-width + @contextAreaPadding * 2));
+    width: calc(100%~'-'60px); //(@card-column-width + @contextAreaPadding * 2));
     display: flex;
     flex-direction: row;
     flex-flow: row;
     align-items: flex-end;
     justify-content: flex-end;
     .button-container{
+      .bg{
+        fill: @transparent-color;
+      }
       &.active {
-        .transparency-fade-light(background-color, @light-background-color);
+        //.transparency-fade-light(background-color, @light-background-color);
         .transparency-rounded-top;
       }
       width: 30%;
       height: 100%;
       position: relative;
-      margin-left: 1.67%;
-      margin-right: 1.67%;
+      //margin-left: 1.67%;
+      //margin-right: 1.67%;
+      .twitter-icon {
+        height: 45px;
+        margin-top: -8px;
+      }
+    }
+    .close-bar-button {
+      max-width: 45px;
+      svg {
+        padding: 3px;
+      }
     }
     button {
       .center-over-parent-div;
-      text-transform: uppercase;
-      padding-top: 8px;
-      padding-bottom: 5px;
-      margin-bottom: 3px;
+      .size-to-fit;
+      //text-transform: uppercase;
+      //padding-top: 8px;
+      //padding-bottom: 5px;
+      //margin-bottom: 3px;
       text-align: center;
-      line-height: 100%;
+      line-height: 200%;
 
-      .dark-action-button;
+      .light-action-button;
 
       &:disabled{
         visibility: hidden;
@@ -443,7 +458,10 @@
     margin-top: 5px;
     margin-bottom: 5px;
     line-height: 0;
-    background-color: @dark-color;
+    .transparency-fade-strong(background-color, @light-background-color);
+    .fg {
+      fill: @dark-text-color;
+    }
     &:hover{
       background-color: @hover-action-color;
     }
@@ -519,6 +537,37 @@
 }
 
 
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+
 .bar-open-close{
   button{
     .size-to-fit;
@@ -530,17 +579,20 @@
       .center-over-parent-div;
     }
   }
-
   background-color: inherit;
 }
+
+
+
+
 .right-section{
   .bar-open-close{
     position: absolute;
-    top: 50%;
+    top: 10px;
     left: -30px;
     width: 30px;
-    height: 130px;
-    .transform(translate(0, -50%));
+    height: 50px;
+    //.transform(translate(0, -50%));
     .transparency-rounded-left;
 
   }
@@ -940,7 +992,7 @@
 .add-new-context-row{
   cursor: pointer;
   position: relative;
-  .transparency-fade(background-color, @light-background-color);
+  .transparency-fade-strong(background-color, @light-background-color);
   .transparency-rounded;
 
   button{
@@ -1022,6 +1074,7 @@
 
       .title{
         line-height: normal;
+        color: @light-text-color;
         .ellipsis-text;
       }
     }
@@ -1632,10 +1685,11 @@ a.svg:after {
     }
   }
   label{
-    a{
-      color: @action-color;
-      &:hover{
-        text-decoration: underline !important;
+    a {
+      color:  @dark-text-color; //@action-color;
+      &:hover {
+        color: @medium-text-color;
+        text-decoration: underline!important;
       }
     }
   }

@@ -22,6 +22,7 @@
 
 
 @dark-text-color: @black-color;
+@medium-text-color: @dark-medium-color;
 @light-text-color: @light-color;
 @deemphasized-light-text-color: @medium-color;
 @deemphasized-dark-text-color: @medium-color;
@@ -203,6 +204,19 @@ html {
     .fg{
       fill: @light-icon-color;
     }
+  }
+}
+
+.light-action-button{
+  .transparency-rounded;
+  color: @dark-text-color;
+  .fg{
+    fill: @dark-icon-color;
+  }
+  background-color: @transparent-color;
+  &:hover, &.active {
+    background-color: @action-color;
+    color: @dark-text-color;
   }
 }
 
@@ -657,7 +671,10 @@ div.link-section {
     padding-right: 10px;
     text-align: right;
     a {
-      color: @action-color;
+      color:  @dark-text-color; //@action-color;
+      &:hover {
+        color: @medium-text-color;
+      }
     }
   }
 }

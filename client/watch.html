@@ -234,18 +234,14 @@
 
     <div class="right-section {{#unless showRightSection}}collapsed{{/unless}}">
         {{#if showOpenSidebarIcon}}
-          <div class="bar-open-close">
+          <div class="bar-open-close fadeIn fadeOut animated-fast">
             <button class="open-sidebar">
               {{> drawer_left_icon}}
             </button>
           </div>
         {{else}}
           {{#if showCloseSidebarIcon}}
-            <div class="bar-open-close">
-              <button class="close-sidebar">
-                {{> drawer_right_icon}}
-              </button>
-            </div>
+          <!-- close button on menu bar -->
           {{/if}}
         {{/if}}
 
@@ -511,22 +507,29 @@
     {{> context_card_column}}
   {{/if}}
   <div class="context-timeline-switcher">
-    {{#if curateMode}}
-      <div class="button-container {{#if showSuggestions}}active{{/if}}">
-      <button title="User suggestions" class="show-suggestions {{#if showSuggestions}}active{{/if}}" disabled='{{#unless showShowSuggestionsButton}}disabled{{/unless}}'>
-        Suggest
-      </button>
+    
+      <div class="button-container close-bar-button">
+        <button title="Close context bar" class="close-sidebar">
+          {{> drawer_right_icon}}
+        </button>
       </div>
-    {{/if}}
+  
     <div class="button-container {{#if showContextBrowser}}active{{/if}}">
       <button title="Context" class="show-context-browser {{#if showContextBrowser}}active{{/if}}">
         Context
       </button>
     </div>
 
+    {{#if curateMode}}
+      <div class="button-container {{#if showSuggestions}}active{{/if}}">
+        <button title="User suggestions" class="show-suggestions {{#if showSuggestions}}active{{/if}}" disabled='{{#unless showShowSuggestionsButton}}disabled{{/unless}}'>
+          Suggested
+        </button>
+      </div>
+    {{/if}}
     <div class="button-container {{#if showTimeline}}active{{/if}}">
       <button title="Twitter timeline" class="show-timeline {{#if showTimeline}}active{{/if}}" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>
-        Twitter
+        {{> twitter_icon}}
       </button>
     </div>
 
