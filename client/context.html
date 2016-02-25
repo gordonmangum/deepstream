@@ -16,7 +16,13 @@
       {{> looping_video}}
     {{else}}
       <div class="image-container" style="height: {{mainStreamHeight}}px; width: {{leftSectionWidth}}px; max-width: {{overlayContentMaxWidth}}px;">
-        <img src="{{url}}" />
+        {{#if lgUrl}}
+          <img src="{{lgUrl}}" />
+          <!-- lgUrl -->
+        {{else}}
+          <img src="{{url}}" />
+          <!-- no lgUrl -->
+        {{/if}}
       </div>
       {{#if isGiphy}}<img class="giphy-logo" src="{{c.url 'static/giphy_logo.png'}}" />{{/if}}
       {{#if isFlickr}}
