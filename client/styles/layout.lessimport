@@ -715,7 +715,6 @@ div.twitter-section{
     background-color: inherit;
   }
   div.twitter-text-section {
-    .transparency-fade(background-color, @background-color);
     a {
       &:hover {
         color: @action-color;
