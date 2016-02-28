@@ -119,7 +119,7 @@ div.add-context {
     padding-top: 15px;
     padding-left: 10px;
     padding-right: 10px;
-    height: calc(100% ~'-' @context-browser-header-row-height);
+    height: 100%;
     flex: auto;
     margin-right: 20px;
     .transparency-rounded;

@@ -1079,6 +1079,9 @@
     position: absolute;
   }
   .add-new-context{
+    svg{
+      width: 20px;
+    }
     right: 4px;
     .fg{
       fill: @black-color;
@@ -1672,7 +1675,6 @@ a.svg:after {
   }
 }
 
-
 .create-section.unimplemented{
   text-align: center;
   padding-top: 40px;
@@ -1786,7 +1788,8 @@ a.svg:after {
   }
   display: flex;
   flex-flow: column;
-  width: @right-section-width - @card-column-width - @contextAreaPadding * 2;
+  margin-left: 10px;
+  margin-right: 10px;
   form{
     margin-bottom: 15px;
     input{
