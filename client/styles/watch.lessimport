@@ -1131,6 +1131,32 @@
   }
 }
 
+.list-item-context-section.curator-card{
+  margin-top: 15px;
+  .user-pic {
+    width:40px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+  }
+  .news-preview-top{
+    min-height:50px;
+  }
+  button{
+    color: @white-color;
+    padding: 10px;
+    width: 200px;
+    margin-top: 5px;
+    border-radius: 5px;
+    &.curator-card-like{
+      background-color: #F39700;
+    }
+    &.curator-card-create{
+      background-color: #529900;
+    }
+  }
+}
+
 .list-item-context-section{
   line-height: 0;
 

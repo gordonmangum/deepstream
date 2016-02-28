@@ -642,6 +642,29 @@
         {{#each contextBlocks}}
           {{> list_item_context_section}}
         {{/each}}
+        {{#unless curateMode}}
+          <div class="narrative-section context-section list-item-context-section news-card curator-card">
+            <div class="news-preview-top">
+            <div class="news-author"><small>Curated By</small></div>
+            <div class="news-date">
+              Gordon Magnum
+            </div>
+            <div class="user-pic">
+              {{> default_user_pic }}
+            </div>
+           </div>
+            <!-- hide until functional 
+            <div class="show-full">
+              <center>
+                <button class="curator-card-like favorite-button favorite ">Show some love</button>
+              </center>
+              <center>
+                <button class="curator-card-create create-deepstream">Make your own</button>
+              </center>
+            </div>
+            -->
+          </div>
+        {{/unless}}
         <!--<div class="bottom-bar"></div>-->
       </div>
   </div>
