@@ -603,6 +603,14 @@ div.image-section, .image-preview {
 }
 
 
+.square_logo{
+  .fg{
+    fill: @action-color;
+  }
+  .fg-stroke {
+    stroke: @action-color;
+  }
+}
 
 div.link-section {
   position: relative;

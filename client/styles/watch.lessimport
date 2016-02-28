@@ -1214,7 +1214,7 @@
   font-size: 11px;
   text-align: right;
   .padding-sides(6px);
-  .transparency-fade(background-color, @context-background-color);
+  .transparency-fade-strong(background-color, @light-background-color);
   .transparency-rounded;
 }
 
@@ -1242,6 +1242,8 @@
 
 .suggest-content{
   margin-top:78px;
+  color: @white-color;
+  padding: 10px;
   background-color: #AC00D8;
 }
 
