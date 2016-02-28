@@ -534,7 +534,7 @@
       fill: @dark-text-color;
     }
     &:hover{
-      background-color: @action-color;
+      background-color: @hover-action-color;
     }
     &.active{
       background-color: @action-color;
@@ -558,7 +558,7 @@
   //width: @contentIconWidth;
   margin-top: @context-browser-header-row-height;
   li{
-    background-color: @medium-color;
+    .transparency-fade-strong(background-color, @light-background-color);
   }
 
   button {
@@ -643,6 +643,10 @@
   button{
     .size-to-fit;
     position: relative;
+    .transparency-rounded-left;
+    &:hover{
+      background-color: @hover-action-color;
+    }
     svg{
       .fg{
         fill: @action-color;
@@ -659,12 +663,18 @@
 .right-section{
   .bar-open-close{
     position: absolute;
-    top: 10px;
+    top: 5px;
     left: -30px;
     width: 30px;
-    height: 50px;
+    height: 35px;
+    .transparency-fade-strong(background-color, @light-background-color);
     //.transform(translate(0, -50%));
     .transparency-rounded-left;
+    .open-sidebar {
+      svg {
+        padding: 3px;
+      }
+    }
 
   }
 
@@ -1052,11 +1062,8 @@
 }
 
 .add-new-context-row, .search-section-title{
-  margin-right: @contextAreaPadding;
-  margin-left: @contextAreaPadding;
   margin-bottom: 15px;
-  height: @context-browser-header-row-height;
-  line-height: @context-browser-header-row-height;
+  height: 35px;
 }
 
 .add-new-context-row{
@@ -1092,26 +1099,23 @@
 
 .search-section-title{
   text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-  text-transform: uppercase;
-  position: absolute;
-  top: -@context-browser-header-row-height;
-  .transparency-fade(background-color, @light-background-color);
+  font-size: 15px;
+  line-height: 35px;
+  .transparency-fade-strong(background-color, @light-background-color);
   .transparency-rounded-top;
   width: 100%;
 }
 
 .go-back-button{
   .size(24px);
-  padding: 0;
+  padding: 3px;
 
-  top: 12px - @context-browser-header-row-height;
+  top: 5px;
 
   left: 13px;
   position: absolute;
   .fg{
-    fill: @action-color;
+    fill: @dark-text-color;
   }
   &:hover{
     .fg{

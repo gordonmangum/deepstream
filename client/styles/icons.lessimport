@@ -70,6 +70,6 @@ i.loading-icon{
     fill: @black-color;
   }
   .bg{
-    fill: @medium-color;
+    fill: none;
   }
 }

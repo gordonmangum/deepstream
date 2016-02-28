@@ -214,9 +214,12 @@ html {
     fill: @dark-icon-color;
   }
   background-color: @transparent-color;
-  &:hover, &.active {
-    background-color: @action-color;
+  &:hover {
+    background-color: @hover-action-color;
     color: @dark-text-color;
+  }
+  &.active {
+    background-color: @action-color;
   }
 }
 
