@@ -258,7 +258,7 @@
               {{#if showManageCuratorsMenu}}
                 {{> manage_curators_menu}}
               {{else}}
-                {{> context_browser_area}}
+                {{> context_browser_area deepstreamForContext}}
               {{/if}}
             {{/if}}
           {{/if}}
@@ -556,6 +556,7 @@
 </template>
 
 <template name="context_browser_area">
+  
   {{#if curateMode}}
     {{> context_card_column}}
   {{/if}}
@@ -592,9 +593,9 @@
   {{#if showChat}}
     {{> unimplemented_chat_section}}
   {{else}}
-    {{> context_browser show=showSuggestions suggestions=true contextBlocks=pendingSuggestions}}
+    {{> context_browser show=showSuggestions suggestions=true contextBlocks=pendingSuggestions deepstream=deepstreamForContext}}
     {{> timeline_section show=showTimeline}}
-    {{> context_browser show=showContextBrowser contextBlocks=orderedContext}}
+    {{> context_browser show=showContextBrowser contextBlocks=orderedContext curatorName=curatorName}}
   {{/if}}
 </template>
 
@@ -643,11 +644,12 @@
           {{> list_item_context_section}}
         {{/each}}
         {{#unless curateMode}}
+         
           <div class="narrative-section context-section list-item-context-section news-card curator-card">
             <div class="news-preview-top">
             <div class="news-author"><small>Curated By</small></div>
             <div class="news-date">
-              Gordon Magnum
+              {{curatorName}}
             </div>
             <div class="user-pic">
               {{> default_user_pic }}
@@ -664,7 +666,7 @@
             </div>
             -->
           </div>
-        {{/unless}}
+       {{/unless}}
         <!--<div class="bottom-bar"></div>-->
       </div>
   </div>
