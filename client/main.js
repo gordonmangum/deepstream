@@ -295,6 +295,48 @@ Template.create_deepstream.events({
   }
 });
 
+Template.context_browser.events({
+  'click .create' (){
+    if (Meteor.user()){
+      var accessPriority = Meteor.user().accessPriority;
+      if (accessPriority && accessPriority <= window.createAccessLevel){
+
+        var shortId = Random.id(8);
+
+        var initialStream = (this instanceof Stream) ? this : null;
+
+        Meteor.call('createDeepstream',shortId, initialStream, function(err, pathObject){
+          if (err) {
+            notifyError(err);
+            throw(err);
+          }
+          analytics.track('User clicked create and created deepstream');
+
+        })
+      } else {
+        notifyInfo("Due to high demand, we had to turn off new curation functionality for a moment. Stay tuned for updates!");
+      }
+    } else {
+      Session.set('signingIn', true);
+      analytics.track('User clicked create and needs to sign in', trackingInfoFromPage());
+    }
+  },
+  "click .favorite" () {
+    if(!Meteor.user()){
+      return notifyInfo('Please sign up or log in to favorite DeepStreams');
+    }
+    return Meteor.call('favoriteDeepstream', this.shortId, function(err) {
+      if (err) {
+        notifyError(err);
+        throw(err);
+      } else {
+        analytics.track('Favorite deepstream', trackingInfoFromPage());
+      }
+
+    });
+  }
+  
+});
 
 Meteor.startup(function(){
   $( window ).konami({

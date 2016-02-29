@@ -699,7 +699,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: @dark-transparent-color;
+  //background-color: @dark-transparent-color;
   padding-top: 70px;
   padding-left: 170px;
   padding-right: 100px;
