@@ -190,6 +190,7 @@ div.add-context {
     }
 
     .search-trigger {
+      color: @white-color;
       z-index: 10;
       text-align: center;
       line-height: @searchInputHeight;

@@ -262,7 +262,7 @@
       }
       .stream-description{
 
-        @lineHeight: 18px;
+        @lineHeight: 20px;
         line-height: @lineHeight;
         height: @lineHeight;
         overflow-y: hidden;
@@ -1799,8 +1799,9 @@ a.svg:after {
   label{
     a {
       color:  @dark-text-color; //@action-color;
+      text-decoration: underline!important;
       &:hover {
-        color: @medium-text-color;
+        color: @hover-action-color;
         text-decoration: underline!important;
       }
     }
@@ -1844,10 +1845,10 @@ a.svg:after {
     padding: 10px;
 
     &:nth-child(even){
-      background: lighten(@black-color, 10%);
+      //background: lighten(@black-color, 10%);
     }
     &:nth-child(odd){
-      background: lighten(@black-color, 5%);
+      //background: lighten(@black-color, 5%);
     }
 
   }
