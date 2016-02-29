@@ -1153,9 +1153,17 @@
     border-radius: 5px;
     &.curator-card-like{
       background-color: #F39700;
+      svg {
+        width: 12px;
+        margin-right: 10px;
+      }
     }
     &.curator-card-create{
       background-color: #529900;
+      svg {
+        width: 15px;
+        margin-right: 18px;
+      }
     }
   }
 }
