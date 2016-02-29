@@ -1538,7 +1538,7 @@ a.svg:after {
       .dark-action-button;
     }
     ol{
-      float:right;
+      //float:right;
     }
     ol.user-menu {
       li {
