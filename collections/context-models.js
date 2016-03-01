@@ -237,7 +237,7 @@ ContextBlock.searchMappings = {
   flickr: {
     methodName: 'flickrImageSearchList',
     mapFn (e) {
-      var username, uploadDate, title, flickrOwnerId;
+      var username, uploadDate, title, lgUrl, lgHeight, lgWidth, flickrOwnerId;
       if (e.media) {
         //if single image result
         flickrOwnerId = e.owner.nsid;
@@ -251,7 +251,8 @@ ContextBlock.searchMappings = {
         uploadDate = e.dateupload;
         title = e.title;
       }
-      return {
+      
+      var info = {
         reference: {
           ownerName: ownername,
           flickrOwnerId: flickrOwnerId,
@@ -262,7 +263,28 @@ ContextBlock.searchMappings = {
           flickrServer: e.server,
           title: title
         }
+      };
+      
+      // find the largest version of image available
+      _.each(['z', 'c', 'l', 'h', 'k', 'o'], function(sizeSuffix) {
+        if (e['url_' + sizeSuffix]) {
+          lgUrl = e['url_' + sizeSuffix];
+          // - lgHeight and width don't get set accurately.
+          //lgHeight = e['height_'+ sizeSuffix];
+          //lgWidth = e['width_'+ sizeSuffix];
+        }
+      });
+      
+      if (lgUrl) {
+        _.extend(info.reference, {
+          lgUrl : lgUrl
+          // - lgHeight and width don't get set accurately.
+          //lgHeight: lgHeight,
+          //lgWidth: lgWidth
+        })
       }
+
+      return info;
     }
   },
   cloudinary: {
@@ -813,7 +835,12 @@ ImageBlock = (function (_super) {
       case 'imgur':
         return '//i.imgur.com/' + this.reference.id + '.' + this.reference.fileExtension;
       case 'flickr':
-        return '//farm' + this.reference.flickrFarm + '.staticflickr.com/' + this.reference.flickrServer + '/' + this.reference.id + '_' + this.reference.flickrSecret + '.jpg'
+        var flickrUrl = '//farm' + this.reference.flickrFarm + '.staticflickr.com/' + this.reference.flickrServer + '/' + this.reference.id + '_' + this.reference.flickrSecret + '.jpg';
+        if(this.reference.lgUrl){
+          //if(large url) use it -- different flickrSecrets -> thus use full url
+          flickrUrl = this.reference.lgUrl;
+        }
+        return  flickrUrl;
       case 'giphy':
         return '//media4.giphy.com/media/' + this.reference.id + '/giphy.gif';
       case 'embedly':

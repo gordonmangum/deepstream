@@ -5,6 +5,7 @@
 @light-color: #D8D8D8;
 @white-color: #F4F4F4;
 @blue-color: #6F9DC3;
+@transparent-color: transparent;
 
 @dark-transparent-color: rgba(40, 40, 40, .9);
 @light-transparent-color: rgba(244,244,244,0.75);
@@ -13,6 +14,7 @@
 
 @background-color: @black-color;
 @alt-background-color: @black-color;
+@light-background-color: @white-color;
 @context-background-color: @dark-medium-color;
 @watch-background-color: @black-color;
 
@@ -20,8 +22,10 @@
 
 
 @dark-text-color: @black-color;
+@medium-text-color: @dark-medium-color;
 @light-text-color: @light-color;
 @deemphasized-light-text-color: @medium-color;
+@deemphasized-dark-text-color: @medium-color;
 
 @dark-icon-color: @dark-color;
 @alt-dark-icon-color: @dark-medium-color;
@@ -37,6 +41,7 @@
 
 @live-color: #C90523;
 @action-color: #F6C406;
+@dark-action-color: @context-background-color;
 @hover-action-color: #dea406;
 @placeholder-color: #acacac;
 @favorite-color: #C90523;
@@ -45,38 +50,36 @@
 @hover-pill-color: #5f2d72;
 @inactive-pill-color: #462859;
 
-@horizontal-content-height: 300px;
-
 
 html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }
 
-.transparency-aware(@property; @value){
-  @{property}: @value;
-  &.transparency-mode{
-    @{property}: transparent;
-  }
+
+.transparency-fade(@property; @value){
+  @{property}: fade(@value, 50%);
 }
 
-.transparency-aware-fade(@property; @value){
-  @{property}: @value;
-  &.transparency-mode{
-    @{property}: fade(@value, 70%);
-  }
+.transparency-fade-light(@property; @value){
+  @{property}: fade(@value, 30%);
 }
 
-.transparency-mode-only(@property; @value){
-  &.transparency-mode{
-    @{property}: @value;
-  }
+.transparency-fade-strong(@property; @value){
+  @{property}: fade(@value, 80%);
 }
 
 .transparency-rounded{
-  &.transparency-mode {
     border-radius: 5px;
-  }
+}
+.transparency-rounded-top{
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.transparency-rounded-left{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .standard-icon-colors {
@@ -188,6 +191,37 @@ html {
     background-color: @hover-action-color;
   }
 }
+.dark-action-button{
+  .transparency-rounded;
+  color: @light-text-color;
+  .fg{
+    fill: @light-icon-color;
+  }
+  background-color: @dark-action-color;
+  &:hover, &.active {
+    background-color: @action-color;
+    color: @dark-text-color;
+    .fg{
+      fill: @light-icon-color;
+    }
+  }
+}
+
+.light-action-button{
+  .transparency-rounded;
+  color: @dark-text-color;
+  .fg{
+    fill: @dark-icon-color;
+  }
+  background-color: @transparent-color;
+  &:hover {
+    background-color: @hover-action-color;
+    color: @dark-text-color;
+  }
+  &.active {
+    background-color: @action-color;
+  }
+}
 
 .ellipsis-text{
   white-space: nowrap;
@@ -256,6 +290,14 @@ html {
 
 .left-transition{
   .transition(left 0.2s ease-in);
+}
+
+.right-transition{
+  .transition(right 0.2s ease-in);
+}
+
+.bottom-transition{
+  .transition(bottom 0.2s ease-in);
 }
 
 .width-transition{
@@ -470,9 +512,6 @@ body {
   margin: 0;
   color: @light-text-color;
   background-color: @background-color;
-  &.watch, &.curate{
-    .transparency-aware(background-color, @background-color);
-  }
 
   line-height: 23px;
   font-size: 15px;
@@ -564,6 +603,14 @@ div.image-section, .image-preview {
 }
 
 
+.square_logo{
+  .fg{
+    fill: @action-color;
+  }
+  .fg-stroke {
+    stroke: @action-color;
+  }
+}
 
 div.link-section {
   position: relative;
@@ -603,7 +650,7 @@ div.link-section {
         padding-top: 0;
         width: calc(100% ~"-" 130px);
         border-bottom: 1px solid @dark-color;
-        color: white;
+        color: @dark-text-color;
         height: 130px;
       }
     }
@@ -635,7 +682,10 @@ div.link-section {
     padding-right: 10px;
     text-align: right;
     a {
-      color: @action-color;
+      color:  @dark-text-color; //@action-color;
+      &:hover {
+        color: @medium-text-color;
+      }
     }
   }
 }
@@ -665,7 +715,6 @@ div.twitter-section{
     background-color: inherit;
   }
   div.twitter-text-section {
-    .transparency-aware(background-color, @background-color);
     a {
       &:hover {
         color: @action-color;
@@ -765,7 +814,7 @@ div.text-content {
 }
 
 .text-content{
-  color: @light-text-color;
+  color: @dark-text-color;
   background-color: transparent;
   line-height: 20px;
 }
@@ -774,19 +823,19 @@ textarea.text-content {
   padding: 8px;
   display: block;
   &::-webkit-input-placeholder {
-    color: @dark-medium-color;
+    color: @dark-text-color;
   }
 
   &:-moz-placeholder { /* Firefox 18- */
-    color: @dark-medium-color;
+    color: @dark-text-color;
   }
 
   &::-moz-placeholder {  /* Firefox 19+ */
-    color: @dark-medium-color;
+    color: @dark-text-color;
   }
 
   &:-ms-input-placeholder {
-    color: @dark-medium-color;
+    color: @dark-text-color;
   }
 }
 

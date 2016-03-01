@@ -524,16 +524,19 @@ div.logo-title {
   }
 }
 
+.home{
+  .top-row{
+    background-color: @top-row-color;
+  }
+}
 
-
-div.action-items {
+.action-items {
   z-index: 15;
   @height: 30px;
   position: absolute;
   top: 10px;
-  @media @not-mobile{
-    left: 570px;
-  }
+  right: 20px;
+
   @media @mobile{
     width: 100%;
     text-align: center;

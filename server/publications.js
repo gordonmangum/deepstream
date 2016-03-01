@@ -158,11 +158,22 @@ Meteor.publish("mostRecentStreams", function() {
 });
 
 
+Meteor.publish("singleDeepstreamOnAir", function(userPathSegment, shortId) {
+  check(shortId, String);
+    return Deepstreams.find({userPathSegment: userPathSegment, shortId: shortId, onAir: true},{
+      fields: deepstreamFields
+    });  
+});
+
 Meteor.publish("singleDeepstream", function(userPathSegment, shortId) {
   check(shortId, String);
-  return Deepstreams.find({userPathSegment: userPathSegment, shortId: shortId},{
-    fields: deepstreamFields
-  });
+  if (this.userId) {
+    return Deepstreams.find({userPathSegment: userPathSegment, shortId: shortId, curatorIds: this.userId},{
+      fields: deepstreamFields
+    });
+  } else {
+    return this.ready() 
+  }
 });
 
 Meteor.publish("deepstreamContext", function(streamShortId) {

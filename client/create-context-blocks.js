@@ -43,7 +43,6 @@ var createBlockHelpers = {
   textContent: textContentHelper
 };
 
-
 searchScrollFn = function(d, template) {
   var searchContainer = $("ol.search-results-container");
 
@@ -59,6 +58,7 @@ throttledSearchScrollFn = _.throttle(searchScrollFn, 20);
 var addFocusResult = function(d, template) {
   var focusResult = template.focusResult.get();
   if (focusResult) {
+    
     var textAreaContent = template.$('textarea[name=content]').val();
     focusResult.description = textAreaContent;
 
@@ -136,7 +136,6 @@ var setSearchInput = function(query){
 
 };
 
-
 var existingSearchResults = function(options){
   inputs = getSearchInput.call(this);
   var selector = {
@@ -154,8 +153,6 @@ var existingSearchResults = function(options){
   }
   return SearchResults.find(selector, _.extend({}, options, {sort: {ordinalId: 1} }));
 };
-
-
 
 var searchAPI = function(query) {
   var source = Session.get('newContextDataSource');
@@ -232,8 +229,6 @@ var searchAPI = function(query) {
   });
 };
 
-
-
 var createTemplateNames = [
   'create_image_section',
   'create_video_section',
@@ -257,7 +252,6 @@ _.each(createTemplateNames, function(templateName){
 
 Template.create_text_section.helpers(createBlockHelpers);
 
-
 Template.create_stream_section.onCreated(function(){
   this.addingFunction = window.addStream;
 });
@@ -273,7 +267,6 @@ Template.create_stream_section.helpers({
     return this.creationStep !== 'find_stream';
   }
 });
-
 
 searchTemplateCreatedBoilerplate = function(type, defaultSource) {
   return function() {
@@ -331,7 +324,6 @@ searchTemplateRenderedBoilerplate  = function() {
 
   };
 };
-
 
 Template.create_video_section.onCreated(searchTemplateCreatedBoilerplate('video', 'youtube'));
 Template.create_video_section.onRendered(searchTemplateRenderedBoilerplate());
@@ -415,8 +407,6 @@ Template.create_image_section.events({
 Template.create_image_section.onCreated(searchTemplateCreatedBoilerplate('image', 'flickr'));
 Template.create_image_section.onRendered(searchTemplateRenderedBoilerplate());
 
-
-
 Template.create_audio_section.onCreated(searchTemplateCreatedBoilerplate('audio', 'soundcloud'));
 Template.create_audio_section.onRendered(searchTemplateRenderedBoilerplate());
 
@@ -432,12 +422,10 @@ var dataSourcesByType = {
   'link': [{source: 'link', display: 'Link'}]
 };
 
-
 _.each(dataSourcesByType, function(dataSources, type){
   var templateName = 'create_' + type + '_section';
   Template[templateName].helpers({dataSources: dataSources});
 });
-
 
 Template.create_news_section.onCreated(function() {
   this.type = 'link';
@@ -674,7 +662,6 @@ Template.create_link_section.helpers({
   }
 });
 
-
 Template.create_map_section.onCreated(function() {
   this.type = 'map';
   Session.set('newContextDataSource', 'google_maps');
@@ -764,7 +751,6 @@ Template.search_form.events({
 Template.search_form.onRendered(function(){
   this.randomIdPrefix = Random.id(6);
 });
-
 
 Template.search_form.helpers({
   randomIdPrefix (){

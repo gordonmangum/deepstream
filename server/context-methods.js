@@ -209,7 +209,7 @@ Meteor.methods({
         sort: 'relevance',
         license: '1,2,3,4,5,6,7,8',
         per_page: 200,
-        extras: ['owner_name', 'date_upload'],
+        extras: ['owner_name', 'date_upload', 'url_z', 'url_c', 'url_l', 'url_h', 'url_k', 'url_o'],
         page: page
       };
     }
@@ -225,6 +225,7 @@ Meteor.methods({
     }
 
     if (results && (results.photos)) {
+      
       items = results.photos.photo;
     } else if (results && results.photo) {
       items = [results.photo];

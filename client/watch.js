@@ -185,6 +185,7 @@ Template.watch_page.onCreated(function () {
     }
   };
 
+  
 
   // confirm stream exists confirm user is curator if on curate page. forward curators to curate if they are on watch page
   this.autorun(function(){
@@ -356,20 +357,6 @@ Template.watch_page.onCreated(function () {
   }
 });
 
-// add transparency-mode class to everything quick and dirtily
-_.each(_.keys(Template), function(templateKey) {
-  if(Blaze.isTemplate(Template[templateKey])){
-    Template[templateKey].onRendered(function(){
-      Tracker.autorun(() => {
-        if (Session.get('transparencyMode')){
-          $("*").addClass("transparency-mode")
-        } else {
-          $("*").removeClass("transparency-mode")
-        }
-      })
-    })
-  }
-});
 
 Template.watch_page.onRendered(function(){
   var that = this;
@@ -397,9 +384,11 @@ Template.watch_page.onRendered(function(){
                 }
               });
               mainPlayer._youTubePlayer = youTubePlayer;
+              mainPlayer.activeStreamSource = 'youtube';
             }, 1000);
+          } else {
+            mainPlayer.activeStreamSource = 'youtube';
           }
-          mainPlayer.activeStreamSource = 'youtube';
           break;
         case 'ustream':
           if ( !this.mainPlayerUSApiActivated ){
@@ -408,10 +397,12 @@ Template.watch_page.onRendered(function(){
             Meteor.setTimeout(function(){ // TODO this is a hack. Why does it need to wait?
               var ustreamPlayer = UstreamEmbed(that.mainStreamIFrameId);
               mainPlayer._ustreamPlayer = ustreamPlayer;
+              mainPlayer.activeStreamSource = 'ustream';
             }, 1000);
+          } else {
+            mainPlayer.activeStreamSource = 'ustream';
           }
           Meteor.setTimeout(onMainPlayerReady, 4000); // TODO, this is a hack. Is there any way to know that the player is ready?
-          mainPlayer.activeStreamSource = 'ustream';
           break;
         case 'bambuser':
           mainPlayer.activeStreamSource = 'bambuser';
@@ -454,6 +445,12 @@ Template.watch_page.onRendered(function(){
   onMainPlayerStateChange = function(event){
     console.log('PlayerStateChange')
     console.log(event)
+  }
+});
+
+Template.watch_page.onDestroyed(function () {
+  if(mainPlayer){
+    mainPlayer.activeStreamSource = null;
   }
 });
 
@@ -541,10 +538,13 @@ Template.watch_page.helpers({
     return _.contains(['find_stream', 'add_cards', 'go_on_air'], this.creationStep) && Session.get('curateMode');
   },
   showRightSection (){
-    return !soloOverlayContextModeActive() && (Session.get("curateMode") || !Session.get('reducedView'));
+    return !soloOverlayContextModeActive() && !Session.get('reducedRightView');
+  },
+  showBottomSection (){
+    return !soloOverlayContextModeActive() && !Session.get('reducedBottomView');
   },
   expandMainSection (){
-    return !Session.get("curateMode") && Session.get('reducedView');
+    return !Session.get("curateMode") && Session.get('reducedRightView');
   },
   showWebcamSetup (){
     return Session.get("curateMode") && Session.get('mediaDataType') === 'webcam'; // always setup on webcam
@@ -595,6 +595,18 @@ Template.watch_page.helpers({
   },
   deadstreams (){
     return _.where(this.streams, { live: false });
+  },
+  showCloseSidebarIcon (){
+    return !Session.get('reducedRightView') && !soloOverlayContextModeActive();
+  },
+  showOpenSidebarIcon (){
+    return Session.get('reducedRightView') && !soloOverlayContextModeActive();
+  },
+  showCloseBottombarIcon (){
+    return !Session.get('reducedBottomView') && !soloOverlayContextModeActive();
+  },
+  showOpenBottombarIcon (){
+    return Session.get('reducedBottomView') && !soloOverlayContextModeActive();
   }
 });
 
@@ -699,10 +711,10 @@ Template.watch_page.events({
     Session.set('mediaDataType', null);
     return Session.set("showManageCuratorsMenu", true);
   },
-  'mouseenter .settings-button-and-menu' (e, template){
+  'mouseenter .settings-menu-button' (e, template){
     template.settingsMenuOpen.set(true);
   },
-  'mouseleave .settings-menu-container' (e, template){
+  'mouseleave .settings-menu' (e, template){
     template.settingsMenuOpen.set(false);
   },
   'click .microphone' (e, t){
@@ -767,15 +779,6 @@ Template.watch_page.events({
     scrollToContext(this._id);
     analytics.track('Click context mini preview', trackingInfoFromContext(this));
   },
-  'click .transparency-button' (e, t){
-    if(Session.get('transparencyMode')){
-      Session.set('transparencyMode', false);
-      analytics.track('Click transparency off button', trackingInfoFromPage());
-    } else {
-      Session.set('transparencyMode', true);
-      analytics.track('Click transparency on button', trackingInfoFromPage());
-    }
-  },
   'click .about-deepstream-embed, click .deepstream-logo-embed' (e, t){
     Session.set('showDeepstreamAboutOverlay', true);
   },
@@ -789,8 +792,20 @@ Template.watch_page.events({
     if(mostRecentContextId){
       scrollToContext(mostRecentContextId);
     }
+  },
+  'click .close-sidebar' (){
+    return Session.set('reducedRightView', true);
+  },
+  'click .open-sidebar' (){
+    return Session.set('reducedRightView', false);
+  },
+  'click .close-bottombar' (){
+    return Session.set('reducedBottomView', true);
+  },
+  'click .open-bottombar' (){
+    return Session.set('reducedBottomView', false);
+  },
 
-  }
 });
 
 Template.stream_li.onCreated(function(){
@@ -913,13 +928,8 @@ Template.context_browser.helpers({
   soloSidebarContextMode (){
     var currentContext = getCurrentContext();
     return currentContext && currentContext.soloModeLocation === 'sidebar';
-  },
-  showCloseSidebarIcon (){
-    return !Session.get('reducedView') && !soloOverlayContextModeActive();
-  },
-  showOpenSidebarIcon (){
-    return Session.get('reducedView') && !soloOverlayContextModeActive();
   }
+
 });
 
 Template.context_browser.events({
@@ -1238,7 +1248,7 @@ var mutingTemplates = [
 
 _.each(mutingTemplates, function(templateName){
   // mute and unmute main video when show video overlay
-  Template[templateName].onCreated(function(){
+  Template[templateName].onRendered(function(){
     // TO-DO check and store current mute status in case already muted
     if(mainPlayer && mainPlayer.activated()){
       if(mainPlayer.isMuted()){

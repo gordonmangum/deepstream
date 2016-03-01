@@ -154,6 +154,10 @@ Schema.ContextReferenceProfile = new SimpleSchema({
     type: String,
     optional: true
   },
+  lgUrl:{
+    type: String,
+    optional:true
+  },
   uploadDate: {
     type: Date,
     optional: true
