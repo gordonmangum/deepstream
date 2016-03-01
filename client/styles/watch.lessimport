@@ -29,7 +29,7 @@
   }
   .streams-list{
     white-space: nowrap;
-    min-width:115px;
+    width:115px;
     li.add-stream{
       background-color: rgba(0, 0, 0, 0.7);
     }
@@ -150,6 +150,11 @@
       &:not(.placeholder){
         border: 1px solid @light-text-color;
         .hover-shadow;
+      }
+      &.placeholder {
+        button {
+          font-weight:normal;
+        }
       }
       &:not(.preview-mode){
         width:95%;
