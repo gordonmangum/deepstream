@@ -499,7 +499,9 @@ Template.watch_page.helpers({
       return Deepstreams.findOne({shortId: Template.instance().data.shortId()}, {reactive: Template.instance().data.onCuratePage()});
     }
   },
-
+  showContextBrowser (){
+    return Session.equals('contextMode', 'context');
+  },
   streamUrl (){
     var activeStream = Template.instance().activeStream.get();
     if(activeStream){
