@@ -442,7 +442,7 @@
   }
   .settings-bar {
     height: 35px; //@context-browser-header-row-height;
-    margin-top: 44px;
+    margin-top: 79px;
     .transparency-fade-strong(background-color, @light-background-color);
     //position: absolute;
     //top: -@context-browser-header-row-height;
@@ -454,6 +454,9 @@
     flex-flow: row;
     align-items: flex-end;
     justify-content: flex-end;
+    &.short-margin-top{
+      margin-top:14px;
+    }
     .icon-button{
       max-width: 45px;
       svg { 
@@ -1283,7 +1286,7 @@
 }
 
 .suggest-content{
-  margin-top:78px;
+  margin-top:14px;
   color: @white-color;
   padding: 10px;
   background-color: #AC00D8;
@@ -1761,7 +1764,7 @@ a.svg:after {
 
 .webcam-setup{
   .instructions-header{
-    color: @action-color;
+    color: @dark-action-color;
     font-size: 20px;
   }
   li{

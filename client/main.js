@@ -7,6 +7,8 @@ Meteor.startup(function(){
     windowSizeDep.depend();
 
     var windowWidth = $(window).width();
+    
+    console.log('sir your window size hath altered');
 
     // Safari changes window size in a weird way that jquery doesn't register correctly when scroll up vs down
     Session.set("windowHeight", Meteor.Device.isPhone() && !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/) ? window.innerHeight : $(window).height());

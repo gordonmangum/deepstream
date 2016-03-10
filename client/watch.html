@@ -267,8 +267,7 @@
 
         {{#with thisDeepstream}}
          {{#if isCurator}}
-         <div class="settings-bar {{#unless curateMode}}wide-menu{{/unless}}">
-    
+         <div class="settings-bar {{#unless curateMode}}wide-menu short-margin-top{{/unless}}  {{#if showContextBrowser}}short-margin-top{{/if}}">
             
            {{#if curateMode}}
             <div class="button-container icon-button">
@@ -610,9 +609,9 @@
     </div>
   </div>
 </template>
-
+ 
 <template name="context_browser">
-  <div class="{{#if suggestions}}suggestion-browser{{else}}context-browser{{/if}} {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight}}px">
+  <div class="{{#if suggestions}}suggestion-browser{{else}}context-browser{{/if}} {{#unless show}}hide{{/unless}}" style="height:{{mainStreamHeight 65}}px">
       {{#if curateMode}}
         {{#unless browseSuggestionsMode}}
           <div class="add-new-context-row">
@@ -761,7 +760,7 @@
 </template>
 
 <template name="timeline_section">
-    <div class="timeline-section {{#unless show}}hide{{/unless}}" style="height: {{mainStreamHeight -15}}px">
+    <div class="timeline-section {{#unless show}}hide{{/unless}}" style="height:{{#if curateMode}}{{mainStreamHeight}}{{else}} {{mainStreamHeight 65}}{{/if}}px">
       {{#if curateMode}}
         <form id="timeline-embed" action="" autocomplete="off">
           <label for="timeline-embed-code-input"><a href="https://twitter.com/settings/widgets/new/search" target="_blank">Create a new Timeline widget</a> and enter the generated embed code or url here</label>
