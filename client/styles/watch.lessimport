@@ -23,8 +23,8 @@
     line-height: @height;
     height: @height;
     white-space: nowrap;
-    width: calc(100% ~"-" (@left-margin + @live-indicator-width));
-    max-width: calc(100% ~"-" ( @left-margin + @live-indicator-width));
+    //width: calc(100% ~"-" (@left-margin + @live-indicator-width));
+    //max-width: calc(100% ~"-" ( @left-margin + @live-indicator-width));
     overflow: hidden;
     text-shadow: 2px 2px 2px darken(@light-text-color,60%);
   }
