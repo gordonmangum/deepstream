@@ -102,15 +102,18 @@
       .delete-stream{
         .opacity-transition;
         opacity: 0;
-        .size(14px);
+        .size(30px);
         padding:0;
         svg{
           .size-to-fit;
+          .bg {
+            fill: @medium-color;
+          }
         }
         position: absolute;
         z-index: 10;
-        right: 1px;
-        top: 1px;
+        right: -15px;
+        top: -15px;
       }
       .stream-preview-overlay-iframe{
         position: absolute;
