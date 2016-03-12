@@ -647,6 +647,9 @@ Template.watch_page.events({
   },
   'click .preview' (e, t){
     t.userControlledActiveStreamId.set(null); // so that stream selection doesn't switch
+    // now lets go back to the curate menu
+    Session.set('previousMediaDataType', Session.get('mediaDataType'));
+    Session.set('mediaDataType', null);
     Session.set('curateMode', false);
   },
   'click .return-to-curate' (){
