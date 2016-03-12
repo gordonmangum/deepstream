@@ -797,7 +797,7 @@
     position: absolute;
   }
   .new-context-available-message{
-    .transparency-fade(background-color, @context-background-color);
+    .transparency-fade(background-color, @light-background-color);
     width: calc(100% ~"-" 2 * @contextAreaPadding);
     margin-bottom: 15px;
 

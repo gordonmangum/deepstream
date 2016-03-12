@@ -269,6 +269,8 @@ div.logo-title {
   }
   .title{
     .ellipsis-text;
+    display: inline-block;
+    width: 85%;
     font-size: 20px;
   }
   .small-stream-info, .views{
