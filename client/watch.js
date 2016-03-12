@@ -781,6 +781,12 @@ Template.watch_page.events({
     scrollToContext(this._id);
     analytics.track('Click context mini preview', trackingInfoFromContext(this));
   },
+  'click .curator-card-like' (e, t){
+    analytics.track('Click curator card like', trackingInfoFromPage());
+  },
+  'click .curator-card-create' (e, t){
+    analytics.track('Click curator card create', trackingInfoFromPage());
+  },
   'click .about-deepstream-embed, click .deepstream-logo-embed' (e, t){
     Session.set('showDeepstreamAboutOverlay', true);
   },
@@ -880,7 +886,7 @@ Template.context_card_column.helpers({
   }
 });
 
-Template.context_browser_area.onRendered(function(){
+Template.context_card_column.onRendered(function(){
   // make context sortable
   var sortableSets = [
     {
