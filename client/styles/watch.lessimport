@@ -16,6 +16,7 @@
 .watch{
   background-color: @watch-background-color;
   .stream-title{
+    .ellipsis-text;
     @height: 42px;
     display: inline-block;
     font-size: 36px;
