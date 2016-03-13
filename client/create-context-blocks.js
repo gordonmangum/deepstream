@@ -264,7 +264,7 @@ Template.create_stream_section.events({
 
 Template.create_stream_section.helpers({
   "showBackButton" (d, template) {
-    return this.creationStep !== 'find_stream';
+    return true; //this.creationStep !== 'find_stream'; // Also want back button on find_stream
   }
 });
 

@@ -21,7 +21,7 @@
     <div class="search-section-title">Webcam</div>
     <button class="go-back-button">{{> back_arrow_icon}}</button>
     <div class="create-section add-webcam-section">
-      <h4 class="instructions-header">Webcam narration feature coming soon!</h4> 
+      <h4>Webcam narration feature coming soon!</h4> 
       <!-- Bambuser no longer lets people broadcast from their webcams for free so disable form for the moment.
       <p class="intro">Your webcam can be used as a picture-in-picture video to narrate your DeepStream</p>
       <h4 class="instructions-header">Instructions for Bambuser</h4>
@@ -510,7 +510,7 @@
 
 <template name="create_stream_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} Streams</div>
-  {{#if showBackButton}}<button class="go-back-button">{{> back_arrow_icon}}</button>{{/if}}
+  {{#if showBackButton}}<button class="go-back-button {{#unless showSingleResult}}hide{{/unless}}">{{> back_arrow_icon}}</button>{{/if}}
   <div class="create-section add-stream-section">
     <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
       <div class="tabs">
