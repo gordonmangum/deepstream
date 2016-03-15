@@ -458,15 +458,13 @@ div.logo-title {
 .stream-preview-screen-overlay{
   .full-overlay;
   .full-overlay-close-button-styling;
-  background-color: @dark-transparent-color;
+  .transparency-fade(background-color, @light-background-color);
   .preview-box{
     margin:auto;
     display:block;
     text-align: center;
     height: 510px;
     width: 80%;
-
-    background-color: @homepage-shade-0;
 
     .center-over-parent-div;
 
@@ -476,6 +474,7 @@ div.logo-title {
     }
 
     .right-section{
+      .transparency-fade-strong(background-color, @light-background-color);
       width: 30%;
       border: none;
       float: right;
@@ -483,7 +482,6 @@ div.logo-title {
       padding-top: 20px;
       padding-left: 30px;
       padding-right: 30px;
-      background-color: @homepage-shade-2;
 
       .text{
         text-align: left;

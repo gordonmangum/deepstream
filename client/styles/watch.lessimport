@@ -717,13 +717,15 @@
 }
 
 .tutorial-step{
-
   font-size: 20pt;
   font-weight: bold;
   line-height: 25pt;
   margin-top: 35px;
   color: @dark-text-color;
   word-wrap: break-word;
+  .text {
+    margin-left:50px;
+  }
   &:not(.active){
     button{
       visibility: hidden;
@@ -1573,6 +1575,15 @@ a.svg:after {
       }
     }
   }
+}
+
+.create-overlay{
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+    opacity: 0.5;
+    margin-top: 50px;
 }
 
 .bottom-overlay{

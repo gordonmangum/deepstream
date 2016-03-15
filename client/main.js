@@ -268,7 +268,7 @@ Template.editors_pick_button.events({
 
 Template.create_deepstream.events({
   'click' (){
-
+    // User has clicked 'Create' to create a deepstream
     if (Meteor.user()){
       var accessPriority = Meteor.user().accessPriority;
       if (accessPriority && accessPriority <= window.createAccessLevel){
@@ -277,7 +277,7 @@ Template.create_deepstream.events({
 
         var initialStream = (this instanceof Stream) ? this : null;
 
-        Meteor.call('createDeepstream',shortId, initialStream, function(err, pathObject){
+        Meteor.call('createDeepstream', shortId, initialStream, function(err, pathObject){
           if (err) {
             notifyError(err);
             throw(err);

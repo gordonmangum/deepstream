@@ -64,6 +64,7 @@ Template.content_icons.helpers(contextHelpers);
 
 Template.content_icons.helpers({
   disableAllButStream (){
+    // return bool to determine if first creation step
     return _.contains(['find_stream'], this.creationStep);
   }
 });
