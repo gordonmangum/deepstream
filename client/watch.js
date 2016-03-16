@@ -4,6 +4,8 @@ var ytApiReady = new ReactiveVar(false);
 
 var newContextDep = new Tracker.Dependency;
 
+var embedEventsSet =false;
+
 window.mainPlayer = {
   activated(){
     return this.activeStreamSource ? true : false;
@@ -448,30 +450,34 @@ Template.watch_page.onRendered(function(){
         $(".embed-code-button").attr("data-clipboard-text", '<div style="position: relative; padding-bottom: 56.25%; padding-top: 25px; height: 0;"> <iframe src="' + deepstreamEmbedUrl + '" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>');
 
         // set up embed-code-button in footer
-        var embedClipboard = new Clipboard('.embed-code-button');
-        embedClipboard.on('success', function(e) {
-          notifyInfo('Embed code copied to clipboard!')
-          e.clearSelection();
-        });
+        embedClipboard = new Clipboard('.embed-code-button');
+        
+        if(!embedEventsSet){
+          embedClipboard.on('success', function(e) {
+            notifyInfo('Embed code copied to clipboard!')
+            e.clearSelection();
+          });
 
-        embedClipboard.on('error', function(e) {
-          // Simplistic detection
-          var action = e.action;
-          var actionMsg = '';
-          var actionKey = (action === 'cut' ? 'X' : 'C');
+          embedClipboard.on('error', function(e) {
+            // Simplistic detection
+            var action = e.action;
+            var actionMsg = '';
+            var actionKey = (action === 'cut' ? 'X' : 'C');
 
-          if(/iPhone|iPad/i.test(navigator.userAgent)) {
-            var embedCode = $('.embed-code-button').attr('clipboard-text');
-            actionMsg = 'Here is your embed code: ' + embedCode;
-          }
-          else if (/Mac/i.test(navigator.userAgent)) {
-            actionMsg = 'Press ⌘-' + actionKey + ' to ' + action;
-          }
-          else {
-            actionMsg = 'Press Ctrl-' + actionKey + ' to ' + action;
-          }
-          notifyInfo(actionMsg);
-        });
+            if(/iPhone|iPad/i.test(navigator.userAgent)) {
+              var embedCode = $('.embed-code-button').attr('clipboard-text');
+              actionMsg = 'Here is your embed code: ' + embedCode;
+            }
+            else if (/Mac/i.test(navigator.userAgent)) {
+              actionMsg = 'Press ⌘-' + actionKey + ' to ' + action;
+            }
+            else {
+              actionMsg = 'Press Ctrl-' + actionKey + ' to ' + action;
+            }
+            notifyInfo(actionMsg);
+          });
+          embedEventsSet = true;
+        }
 
       }, 100);
       
