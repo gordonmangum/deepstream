@@ -85,6 +85,7 @@ var goBack = function(e, t) {
 var createBlockEvents = {
   "click .data-source" (d, template) {
     template.focusResult.set(null);
+    SearchResults.remove({type: 'stream'}); // TO-DO, fixes stream results for videos 
     Session.set('newContextDataSource', this.source);
   },
 
@@ -265,6 +266,12 @@ Template.create_stream_section.events({
 Template.create_stream_section.helpers({
   "showBackButton" (d, template) {
     return true; //this.creationStep !== 'find_stream'; // Also want back button on find_stream
+  },
+  "streamDate" (creationDateCompactString, isLive) {
+    if(isLive){
+      return 'LIVE NOW';
+    }
+    return creationDateCompactString;
   }
 });
 
@@ -411,7 +418,7 @@ Template.create_audio_section.onCreated(searchTemplateCreatedBoilerplate('audio'
 Template.create_audio_section.onRendered(searchTemplateRenderedBoilerplate());
 
 var dataSourcesByType = {
-  'stream': [{source: 'all_streaming_services', 'display': 'Livestreams'}],
+  'stream': [{source: 'all_streaming_services', 'display': 'Livestreams'}, {source: 'youtube', display: 'Videos'}],
   'image': [{source: 'flickr', 'display': 'Flickr'}, {source: 'imgur', display: 'Imgur'}, {source: 'cloudinary', display: 'Upload Your Own'}],
   //'gif': [{source: 'giphy', display: 'Giphy'}],
   'video': [{source: 'youtube', display: 'Youtube'}, {source: 'vimeo', display: 'Vimeo'}],

@@ -63,7 +63,8 @@ youtubeMapFn = function (e) {
       username: e.channelTitle,
       userId: e.channelId,
       creationDate: new Date(e.publishedAt),
-      noPreview: !e.thumbnails
+      noPreview: !e.thumbnails,
+      live: e.liveBroadcastContent === 'live'
     },
     live: e.liveBroadcastContent === 'live',
     source: 'youtube'
@@ -387,7 +388,7 @@ Stream = (function (_super) {
 
   Stream.prototype.url = function () {
     if (this.source === 'youtube') {
-      return '//www.youtube.com/embed/' + this.reference.id + '?enablejsapi=1&modestbranding=1&rel=0&iv_load_policy=3&autohide=1';
+      return '//www.youtube.com/embed/' + this.reference.id + '?enablejsapi=1&modestbranding=1&rel=0&iv_load_policy=3&autohide=1&loop=1&playlist=' +this.reference.id;
     } else if (this.source === 'ustream') {
       return '//www.ustream.tv/embed/' + this.reference.id + '?html5ui';
     } else if (this.source === 'bambuser') {
