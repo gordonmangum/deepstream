@@ -306,6 +306,9 @@
         &:hover {
           color: @white-icon-color;
         }
+        &.embed-code-button{
+          width: 30px;
+        }
       }
     }
   }
