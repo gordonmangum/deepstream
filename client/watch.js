@@ -461,7 +461,7 @@ Template.watch_page.onRendered(function(){
           var actionKey = (action === 'cut' ? 'X' : 'C');
 
           if(/iPhone|iPad/i.test(navigator.userAgent)) {
-            var embedCode = $('.embed-code-button').data('clipboard-text');
+            var embedCode = $('.embed-code-button').attr('clipboard-text');
             actionMsg = 'Here is your embed code: ' + embedCode;
           }
           else if (/Mac/i.test(navigator.userAgent)) {
