@@ -436,16 +436,60 @@ Template.watch_page.onRendered(function(){
       Session.set('activeContextId', context._id);
     }
   });
+  
+  this.autorun(function(){
+    if(FlowRouter.subsReady()) {
+      Meteor.setTimeout(function() { // TODO this is a hack.
+    
+        // don't set multiple times and on playerStateChange shouldn't be the trigger.
 
+        // create embed-code
+        var deepstreamEmbedUrl = decodeURIComponent(encodeURIComponent(location.href).replace(/%2Fcurate%2F/, "%2Fembed%2F").replace(/%2Fwatch%2F/, "%2Fembed%2F"));
+        $(".embed-code-button").attr("data-clipboard-text", '<div style="position: relative; padding-bottom: 56.25%; padding-top: 25px; height: 0;"> <iframe src="' + deepstreamEmbedUrl + '" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>');
+
+        // set up embed-code-button in footer
+        var embedClipboard = new Clipboard('.embed-code-button');
+        embedClipboard.on('success', function(e) {
+          notifyInfo('Embed code copied to clipboard!')
+          e.clearSelection();
+        });
+
+        embedClipboard.on('error', function(e) {
+          // Simplistic detection
+          var action = e.action;
+          var actionMsg = '';
+          var actionKey = (action === 'cut' ? 'X' : 'C');
+
+          if(/iPhone|iPad/i.test(navigator.userAgent)) {
+            var embedCode = $('.embed-code-button').data('clipboard-text');
+            actionMsg = 'Here is your embed code: ' + embedCode;
+          }
+          else if (/Mac/i.test(navigator.userAgent)) {
+            actionMsg = 'Press ⌘-' + actionKey + ' to ' + action;
+          }
+          else {
+            actionMsg = 'Press Ctrl-' + actionKey + ' to ' + action;
+          }
+          notifyInfo(actionMsg);
+        });
+
+      }, 100);
+      
+    }
+  });
+  
   onMainPlayerReady = function(event){
     //mainPlayer.play(); // if streamUrl uses autoplayUrl, this is effectively a fallback
   };
 
 
   onMainPlayerStateChange = function(event){
-    console.log('PlayerStateChange')
-    console.log(event)
+    console.log('PlayerStateChange');
+    console.log(event);
   }
+  
+
+  
 });
 
 Template.watch_page.onDestroyed(function () {
