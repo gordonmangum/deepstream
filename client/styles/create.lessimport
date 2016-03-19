@@ -119,9 +119,8 @@ div.add-context {
     padding-top: 15px;
     padding-left: 10px;
     padding-right: 10px;
-    height: 100%;
     flex: auto;
-    margin-right: 20px;
+    height:80%;
     .transparency-rounded;
     .transparency-fade-strong(background-color, @light-background-color);
     .search-section {

@@ -21,6 +21,8 @@
     <div class="search-section-title">Webcam</div>
     <button class="go-back-button">{{> back_arrow_icon}}</button>
     <div class="create-section add-webcam-section">
+      <h4>Webcam narration feature coming soon!</h4> 
+      <!-- Bambuser no longer lets people broadcast from their webcams for free so disable form for the moment.
       <p class="intro">Your webcam can be used as a picture-in-picture video to narrate your DeepStream</p>
       <h4 class="instructions-header">Instructions for Bambuser</h4>
       <ol>
@@ -36,6 +38,7 @@
         <input id="bambuser-username-input" name="bambuser-username" type="text"/>
         <div class="button-container"><button type="submit" class="start-bambuser-webcam start-webcam">GO LIVE</button></div>
       </form>
+      -->
     </div>
   </div>
 </template>
@@ -507,7 +510,7 @@
 
 <template name="create_stream_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} Streams</div>
-  {{#if showBackButton}}<button class="go-back-button">{{> back_arrow_icon}}</button>{{/if}}
+  {{#if showBackButton}}<button class="go-back-button {{#unless showSingleResult}}hide{{/unless}}">{{> back_arrow_icon}}</button>{{/if}}
   <div class="create-section add-stream-section">
     <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
       <div class="tabs">
@@ -529,7 +532,7 @@
                 <div class="content-title">{{#if providerIconUrl}}<img class="provider-image stream-provider-image" src="{{providerIconUrl}}"/>{{/if}}{{title}}</div>
                 <div class="descr">{{caption}}</div>
                 <div class="user">{{username}}</div>
-                <div class="date">LIVE NOW</div>
+                <div class="date">{{streamDate creationDateCompactString live}}</div>
               </div>
             </div>
           </li>
@@ -552,7 +555,7 @@
           <div class="content-title">{{title}}</div>
           <div class="descr">{{caption}}</div>
           <div class="user">{{username}}</div>
-          <div class="date">LIVE NOW</div>
+          <div class="date">{{streamDate creationDateCompactString live}}</div>
         </div>
       {{/with}}
       {{#if showAddButton}}

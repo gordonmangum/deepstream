@@ -7,8 +7,6 @@ Meteor.startup(function(){
     windowSizeDep.depend();
 
     var windowWidth = $(window).width();
-    
-    console.log('sir your window size hath altered');
 
     // Safari changes window size in a weird way that jquery doesn't register correctly when scroll up vs down
     Session.set("windowHeight", Meteor.Device.isPhone() && !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/) ? window.innerHeight : $(window).height());
@@ -270,7 +268,7 @@ Template.editors_pick_button.events({
 
 Template.create_deepstream.events({
   'click' (){
-
+    // User has clicked 'Create' to create a deepstream
     if (Meteor.user()){
       var accessPriority = Meteor.user().accessPriority;
       if (accessPriority && accessPriority <= window.createAccessLevel){
@@ -279,7 +277,7 @@ Template.create_deepstream.events({
 
         var initialStream = (this instanceof Stream) ? this : null;
 
-        Meteor.call('createDeepstream',shortId, initialStream, function(err, pathObject){
+        Meteor.call('createDeepstream', shortId, initialStream, function(err, pathObject){
           if (err) {
             notifyError(err);
             throw(err);

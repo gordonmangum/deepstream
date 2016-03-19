@@ -16,14 +16,15 @@
 .watch{
   background-color: @watch-background-color;
   .stream-title{
+    .ellipsis-text;
     @height: 42px;
     display: inline-block;
     font-size: 36px;
     line-height: @height;
     height: @height;
     white-space: nowrap;
-    width: calc(100% ~"-" (@left-margin + @live-indicator-width));
-    max-width: calc(100% ~"-" ( @left-margin + @live-indicator-width));
+    //width: calc(100% ~"-" (@left-margin + @live-indicator-width));
+    //max-width: calc(100% ~"-" ( @left-margin + @live-indicator-width));
     overflow: hidden;
     text-shadow: 2px 2px 2px darken(@light-text-color,60%);
   }
@@ -101,15 +102,18 @@
       .delete-stream{
         .opacity-transition;
         opacity: 0;
-        .size(14px);
+        .size(30px);
         padding:0;
         svg{
           .size-to-fit;
+          .bg {
+            fill: @medium-color;
+          }
         }
         position: absolute;
         z-index: 10;
-        right: 1px;
-        top: 1px;
+        right: -15px;
+        top: -15px;
       }
       .stream-preview-overlay-iframe{
         position: absolute;
@@ -301,6 +305,9 @@
         color: @light-icon-color;
         &:hover {
           color: @white-icon-color;
+        }
+        &.embed-code-button{
+          width: 30px;
         }
       }
     }
@@ -707,19 +714,21 @@
   bottom: 0;
   left: 0;
   right: 0;
-  //background-color: @dark-transparent-color;
   padding-top: 70px;
   padding-left: 170px;
   padding-right: 100px;
 }
 
 .tutorial-step{
-
   font-size: 20pt;
   font-weight: bold;
   line-height: 25pt;
   margin-top: 35px;
+  color: @dark-text-color;
   word-wrap: break-word;
+  .text {
+    margin-left:50px;
+  }
   &:not(.active){
     button{
       visibility: hidden;
@@ -731,7 +740,7 @@
       cursor: pointer;
       opacity: 0.40;
       &:hover{
-        opacity: 0.70;
+        opacity: 0.90;
       }
     }
   }
@@ -797,7 +806,7 @@
     position: absolute;
   }
   .new-context-available-message{
-    .transparency-fade(background-color, @context-background-color);
+    .transparency-fade(background-color, @light-background-color);
     width: calc(100% ~"-" 2 * @contextAreaPadding);
     margin-bottom: 15px;
 
@@ -1564,6 +1573,15 @@ a.svg:after {
       }
     }
   }
+}
+
+.create-overlay{
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+    opacity: 0.5;
+    margin-top: 50px;
 }
 
 .bottom-overlay{

@@ -62,8 +62,8 @@ Handlebars.registerHelper("windowWidth", function() {
   return Session.get("windowWidth");
 });
 
-Handlebars.registerHelper("windowHeight", function() {
-  return Session.get("windowHeight");
+Handlebars.registerHelper("windowHeight", function(offset) {
+  return Session.get("windowHeight") + (offset || 0);
 });
 
 Handlebars.registerHelper("CONTEXT_WIDTH", function() {
