@@ -41,7 +41,8 @@
           
           
           <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
-            <div class="streams-list">
+            {{#if curateMode}}
+              <div class="streams-list">
                 {{#each livestreams}}
                   {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}       
                   <br/>
@@ -72,6 +73,42 @@
                   <br/>
                 {{/each}}
               </div>
+            {{else}}
+              {{#unless directorMode}}
+                <div class="streams-list">
+                  {{#each livestreams}}
+                    {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}       
+                    <br/>
+                  {{else}}
+                    {{#unless curateMode}}
+                      <li class="placeholder">
+                        <button>
+                          There are no live streams right now
+                        </button>
+                      </li>
+                      <br/>
+                    {{/unless}}
+                  {{/each}}
+                  {{#if curateMode}}
+                    <li class="add-stream">
+                      <button class="show-stream-search">
+                        {{> add_stream_text}}
+                      </button>
+                    </li>
+                    <br/>
+                  {{/if}}
+                  {{#if deadstreams.length}}
+                    <li class="live-dead-divider"></li>
+                    <br/>
+                  {{/if}}
+                  {{#each deadstreams}}
+                    {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}
+                    <br/>
+                  {{/each}}
+                </div>
+              {{/unless}}
+            
+            {{/if}}
           </div>
         </div>
         <div class="main-section {{#if expandMainSection}}expanded{{/if}}">
@@ -249,9 +286,7 @@
       
         {{#unless isCurator}}
           {{#unless showContextSearch}}
-            {{#unless embedMode}}
-              <button class="suggest-content">Suggest great context</button>
-            {{/unless}}
+            <button class="suggest-content">Suggest great context</button>
           {{/unless}}
         {{/unless}}
          <!--<div class="curator-menu">-->
