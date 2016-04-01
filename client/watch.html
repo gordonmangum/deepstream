@@ -285,6 +285,17 @@
         {{/if}}
       
         {{#unless isCurator}}
+          {{#if showHighlightContext}}
+            <div class="highlight-context-container fadeIn fadeOut">
+              <div class="highlight-context-content">
+                <p>Click context cards to expand them.</p>
+                <p>You can learn more about the topic while watching the video!</p>
+                <center>
+                  <button class="got-it-context">Got it!</button>
+                </center>
+              </div>
+            </div>
+          {{/if}}
           {{#unless showContextSearch}}
             <button class="suggest-content">Suggest great context</button>
           {{/unless}}

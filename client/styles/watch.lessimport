@@ -1301,6 +1301,38 @@
   background-color: #AC00D8;
 }
 
+.highlight-context-container {
+  background-color: #F40030; 
+  position: absolute; 
+  top: 33%; 
+  margin-left: -330px; 
+  width:300px;
+  &:after{
+    left: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(244, 0, 48, 0);
+    border-left-color: #F40030;
+    border-width: 30px;
+    margin-top: -30px;
+  }
+  .highlight-context-content {
+    padding: 10px 30px;
+  }
+  .got-it-context {
+    margin-top: 14px; 
+    color: #f4f4f4; 
+    padding: 10px; 
+    background-color: #000; 
+    min-width: 100px;
+  }
+}
+
 .curator-menu{
   position: relative;
   padding-top: 10px;

@@ -659,6 +659,9 @@ Template.watch_page.helpers({
   },
   showOpenBottombarIcon (){
     return Session.get('reducedBottomView') && !soloOverlayContextModeActive();
+  },
+  showHighlightContext(){
+    return !Session.get('shownHighlightContext') && !soloOverlayContextModeActive();
   }
 });
 
@@ -707,6 +710,9 @@ Template.watch_page.events({
   },
   'click .suggest-content' (){
     Session.set('mediaDataType', Session.get('previousMediaDataType') || 'image');
+  },
+  'click .got-it-context' (){
+    Session.set('shownHighlightContext', true);
   },
   'click .publish' (e, t){
     if (this.creationStep === 'go_on_air') {
