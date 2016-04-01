@@ -443,7 +443,14 @@
       .light-action-button;
 
       &:disabled{
-        visibility: hidden;
+        cursor: not-allowed;
+        color: @deemphasized-dark-text-color;
+        .fg {
+          fill: @deemphasized-dark-text-color;
+        }
+        &:hover{
+          background-color: @transparent-color;
+        }
       }
     }
   }

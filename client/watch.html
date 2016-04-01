@@ -48,12 +48,14 @@
                   <br/>
                 {{else}}
                   {{#unless curateMode}}
+                  <!--
                     <li class="placeholder">
                       <button>
                         There are no live streams right now
                       </button>
                     </li>
                     <br/>
+                  -->
                   {{/unless}}
                 {{/each}}
                 {{#if curateMode}}
@@ -65,8 +67,10 @@
                   <br/>
                 {{/if}}
                 {{#if deadstreams.length}}
+                <!--
                   <li class="live-dead-divider"></li>
                   <br/>
+                -->
                 {{/if}}
                 {{#each deadstreams}}
                   {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}
@@ -81,12 +85,14 @@
                     <br/>
                   {{else}}
                     {{#unless curateMode}}
+                    <!--
                       <li class="placeholder">
                         <button>
                           There are no live streams right now
                         </button>
                       </li>
                       <br/>
+                    -->
                     {{/unless}}
                   {{/each}}
                   {{#if curateMode}}
@@ -98,8 +104,10 @@
                     <br/>
                   {{/if}}
                   {{#if deadstreams.length}}
+                  <!--
                     <li class="live-dead-divider"></li>
                     <br/>
+                  -->
                   {{/if}}
                   {{#each deadstreams}}
                     {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}
@@ -564,13 +572,11 @@
     </div>
 
     {{#if curateMode}}
-      {{#if showShowSuggestionsButton}}
       <div class="button-container {{#if showSuggestions}}active{{/if}}">
         <button title="User suggestions" class="show-suggestions {{#if showSuggestions}}active{{/if}}" disabled='{{#unless showShowSuggestionsButton}}disabled{{/unless}}'>
           Suggested
         </button>
       </div>
-      {{/if}}
     {{/if}}
     <div class="button-container {{#if showTimeline}}active{{/if}}">
       <button title="Twitter timeline" class="show-timeline {{#if showTimeline}}active{{/if}}" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>

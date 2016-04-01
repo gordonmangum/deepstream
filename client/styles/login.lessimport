@@ -63,6 +63,23 @@ input.error, input.required {
   }
 }
 
+@media (max-width: 950px){
+  div.login-left {
+    position: relative;
+    // make sign up appear below log-in on small screens
+    float: left;
+    width: 100%;
+    padding: 0;
+  }
+
+  div.login-right {
+    position: relative;
+    float: left;
+    width: 100%;
+    padding: 0;
+  }
+}
+
 form {
   span.error {
     float: right;
