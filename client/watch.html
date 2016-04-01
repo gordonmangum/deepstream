@@ -42,7 +42,7 @@
           
           <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
             {{#if curateMode}}
-              <div class="streams-list">
+              <div class="streams-list" style="max-height:{{mainStreamHeight 0}}px">
                 {{#each livestreams}}
                   {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}       
                   <br/>
@@ -79,7 +79,7 @@
               </div>
             {{else}}
               {{#unless directorMode}}
-                <div class="streams-list">
+                <div class="streams-list" style="max-height: {{mainStreamHeight 0}}px">
                   {{#each livestreams}}
                     {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}       
                     <br/>

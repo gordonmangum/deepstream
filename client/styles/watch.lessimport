@@ -31,6 +31,7 @@
   .streams-list{
     white-space: nowrap;
     width:115px;
+    overflow-y: scroll;
     li.add-stream{
       background-color: rgba(0, 0, 0, 0.7);
     }
