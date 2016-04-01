@@ -17,6 +17,11 @@ Meteor.startup(function(){
       document.body.style.overflowX = "hidden";
       $('body').css('max-width', windowWidth);
     }
+    if(windowWidth < 900) {
+      Session.set('reducedRightView', true);
+    } else {
+      Session.set('reducedRightView', false);
+    }
   });
 
   var windowResize = function() {
@@ -221,6 +226,8 @@ Template.favorite_button.events({
     if(!Meteor.user()){
       return notifyInfo('Please sign up or log in to favorite DeepStreams');
     }
+    console.log('1');
+    console.log(this.shortId);
     return Meteor.call('favoriteDeepstream', this.shortId, function(err) {
       if (err) {
         notifyError(err);
@@ -325,7 +332,8 @@ Template.context_browser.events({
     if(!Meteor.user()){
       return notifyInfo('Please sign up or log in to favorite DeepStreams');
     }
-    return Meteor.call('favoriteDeepstream', this.shortId, function(err) {
+    // not the ideal way to access the stream id based on assumtion of at least one context block -- replace.
+    return Meteor.call('favoriteDeepstream', this.contextBlocks[0].streamShortId, function(err) {
       if (err) {
         notifyError(err);
         throw(err);
