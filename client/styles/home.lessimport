@@ -28,6 +28,10 @@ div.home-top {
   } */
 } 
 
+.home .home-icons .icon {
+  height: 50px;
+  padding: 10px;
+}
 
 div.signup, div.login, div.user_profile {
   padding-top: 150px;

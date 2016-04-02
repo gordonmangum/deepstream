@@ -123,10 +123,23 @@
     <div class="top-row">
       <div class="logo-title">
           <div class="title">
-            <div class="name">  <img src="/images/logo.png" /></div>
-            <div class="slogan">Turn livestreams into something deeper</div>
-
-            <!--<img src="{{c.url 'static/FOLD_TITLE.svg'}}">-->
+            <div class="home-icons">
+              <ol>
+                <li class="home-icon-li">
+                  {{#if embedMode}}
+                    <button class="deepstream-logo-embed">
+                      <span class="icon">
+                        {{> square_logo}}
+                      </span>
+                    </button>
+                  {{else}}
+                    <a href="/" class="svg">
+                      <span class="icon">{{> square_logo}}</span>
+                    </a>
+                  {{/if}}
+                </li>
+              </ol>
+            </div>
           </div>
       </div>
     </div>
@@ -253,21 +266,23 @@
 
 <template name="logo_title">
   <div class="logo-title">
-    {{#if embedMode}}
-      <button class="deepstream-logo-embed">
-        <div class="title">
-          <div class="name">  <img src="/images/logo.png" /></div>
-          <div class="slogan">Turn livestreams into something deeper</div>
-        </div>
-      </button>
-    {{else}}
-      <a href="/">
-        <div class="title">
-          <div class="name">  <img src="/images/logo.png" /></div>
-          <div class="slogan">Turn livestreams into something deeper</div>
-        </div>
-      </a>
-    {{/if}}
+    <div class="home-icons">
+      <ol>
+        <li class="home-icon-li">
+          {{#if embedMode}}
+            <button class="deepstream-logo-embed">
+              <span class="icon">
+                {{> square_logo}}
+              </span>
+            </button>
+          {{else}}
+            <a href="/" class="svg">
+              <span class="icon">{{> square_logo}}</span>
+            </a>
+          {{/if}}
+        </li>
+      </ol>
+    </div>
   </div>
 </template>
 
