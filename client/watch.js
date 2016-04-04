@@ -713,6 +713,7 @@ Template.watch_page.events({
   },
   'click .got-it-context' (){
     Session.set('shownHighlightContext', true);
+    analytics.track('Click got it button for context', trackingInfoFromPage());
   },
   'click .publish' (e, t){
     if (this.creationStep === 'go_on_air') {
