@@ -1588,6 +1588,7 @@ a.svg:after {
 
 .watch{
   .home-icons{ 
+    width: 44px;
     .icon {
       height: 50px;
       padding: 10px;

@@ -124,3 +124,11 @@ a.underline{
       color: @action-color;
   }
 }
+
+.about .home-icons {
+  width: 44px;
+  .icon {
+    height: 50px;
+    padding: 10px;
+  }
+}
