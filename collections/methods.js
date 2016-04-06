@@ -149,7 +149,7 @@ Meteor.methods({
 
       if (Meteor.isClient){
         if(numberOfStreamsBeforeAdd === 1 && !duplicateStream) { // this is the second stream to be added
-          window.notifySuccess("You just added a second stream. Now you can switch between streams and all your viewers will see that change!");
+          window.notifySuccess("You just added a second stream. Now your viewers can switch between streams, or use Director Mode to only show the one you want!");
         }
 
         if (duplicateStream){
