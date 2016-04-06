@@ -353,8 +353,6 @@ Template.create_image_section.onCreated(function(){
     changed (id, changes) { // upload stream updated
       console.info(changes);
       console.info(id);
-      console.info(CLOUDINARY_API_KEY);
-      console.info(CLOUDINARY_API_SECRET);
       if (changes.public_id){ // if upload successful
         var doc = _cloudinary.findOne(id);
         var cardModel = ImageBlock;
@@ -373,10 +371,7 @@ Template.create_image_section.onCreated(function(){
       }
     },
     removed (id) {  // upload failed
-      console.info(changes);
       console.info(id);
-      console.info(CLOUDINARY_API_KEY);
-      console.info(CLOUDINARY_API_SECRET);
       var input = that.$('input[type=file]');
       that.uploadStatus.set('Upload failed');
       input.val(null);
