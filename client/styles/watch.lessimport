@@ -31,7 +31,6 @@
   .streams-list{
     white-space: nowrap;
     width:115px;
-    overflow-y: scroll;
     li.add-stream{
       background-color: rgba(0, 0, 0, 0.7);
     }
@@ -1672,6 +1671,8 @@ a.svg:after {
 }
 
 .second-row {
+  min-width:250px;
+  overflow-y:scroll;
   margin-top: 60px;
   padding-top: 3px;
   padding-left: @left-margin;
