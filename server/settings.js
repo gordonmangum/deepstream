@@ -22,9 +22,6 @@ Meteor.startup(function () {
 });
 
 if (Meteor.settings.CLOUDINARY_API_SECRET){
-  console.log("Cloudinary: " + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME);
-  console.log("Cloudinary: " + Meteor.settings.CLOUDINARY_API_KEY);
-  console.log("Cloudinary: " + Meteor.settings.CLOUDINARY_API_SECRET);
   Cloudinary.config({
     cloud_name: Meteor.settings['public'].CLOUDINARY_CLOUD_NAME,
     api_key: Meteor.settings.CLOUDINARY_API_KEY,
