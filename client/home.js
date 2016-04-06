@@ -323,7 +323,7 @@ Template.deepstreams.helpers({
   streams () {
     if (FlowRouter.subsReady()) {
       var selector = {onAir: true};
-      var sort = { live: -1 };
+      var sort = {}; //{ live: -1 }; this is penalising newly created youtube streams that are not live
       switch (Session.get('homeStreamListMode')) {
         case 'best':
           _.extend(selector, {
@@ -408,7 +408,7 @@ Template.streams.helpers({
         case 'most_recent':
           return Streams.find({}, {
             sort: {
-              createdAt: -1
+              creationDate: -1
             },
             limit: 20,
             reactive: false
