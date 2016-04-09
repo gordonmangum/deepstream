@@ -7,7 +7,6 @@ To start, run: `./start`. You'll want `elasticsearch` running in another window.
 To reset the database, run: `./reset`
 
 
-
 *Heroku Instructions*
 
 There should be 1 `stream_worker` dyno
