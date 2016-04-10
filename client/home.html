@@ -536,46 +536,46 @@
 </template>
 
 <template name="streams_and_cards_preview">
-  <div id="contentListArea">
+  <div id="content-list-area">
     <ul id="list">
       {{#each contentBoxes}}
-        <li class="contentBoxContainer">
-          <div class="container">
-            <div class="previewElementsContainer">
-              <div class="cardContainer">
-                <div class="cardTypeContainer {{cardContentType}}">
-                  <p class="cardType">{{cardContentType}} card</p>
+        <li class="content-box">
+          <div class="content-box-elements-container">
+            <div class="preview-elements-container">
+              <div class="card-container">
+                <div class="card-type-container {{cardContentType}}">
+                  <p class="card-type">{{cardContentType}} card</p>
                 </div>
-                <div class="headlineContainer">
-                  <p class="headlineText">{{headline}}</p>
+                <div class="headline-container">
+                  <p class="headline-text">{{headline}}</p>
                 </div>
-                <div class="longTextContainer">
-                  <p class="longText">{{longText}}</p>
+                <div class="long-text-container">
+                  <p class="long-text">{{longText}}</p>
                 </div>
-                <div class="callToActionContainer">
-                  <button class="callToActionButton" type="button">{{callToActionType}}</button>
+                <div class="call-to-action-container">
+                  <button class="call-to-action-button" type="button">{{callToActionType}}</button>
                 </div>
               </div>
-              <div class="detailsContainer">
-                <div class="statusAndViewsContainer">
-                  <div class="statusContainer">
-                    <p class="statusText">{{status}}</p>
+              <div class="details-container">
+                <div class="status-and-views-container">
+                  <div class="status-container">
+                    <p class="status-text">{{status}}</p>
                   </div>
-                  <div class="currentViewersContainer">
-                    <p class="currentViewersText">{{currentViewers}}</p>
+                  <div class="current-viewers-container">
+                    <p class="current-viewers-text">{{currentViewers}}</p>
                   </div>
                 </div>
-                <div class="titleContainer">
-                  <p class="titleText">{{title}}</p>
+                <div class="title-container">
+                  <p class="title-text">{{title}}</p>
                 </div>
-                <div class="authorContainer">
-                  <p class="authorText">{{author}}</p>
+                <div class="author-container">
+                  <p class="author-text">{{author}}</p>
                 </div>
-                <div class="tagsContainer">
-                  <ul class="tagsList">
+                <div class="tags-container">
+                  <ul class="tags-list">
                     {{#each contentTags}}
-                      <li class="contentTag">
-                        <p class="tagName">{{tagName}}</p>
+                      <li class="content-tag">
+                        <p class="tag-name">{{tagName}}</p>
                       </li>
                     {{/each}}
                   </ul>
@@ -584,13 +584,14 @@
 
               </div>
             </div>
-            <div class="statsContainer">
+            <div class="content-stats-container">
 
             </div>
           </div>
 
         </li>
       {{/each}}
+
     </ul>
   </div>
 
