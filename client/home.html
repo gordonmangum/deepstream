@@ -319,7 +319,8 @@
 
 <template name="streams">
   {{#each streams}}
-    {{> stream_preview }}
+    <!--{{> stream_preview }}-->
+    {{> streams_and_cards_preview}}
   {{/each}}
 </template>
 
@@ -438,6 +439,66 @@
   </div>
 </template>
 
+<template name="streams_and_cards_preview">
+  <div id="contentListArea">
+    <ul id="list">
+      {{#each contentBoxes}}
+        <li class="contentBoxContainer">
+          <div class="container">
+            <div class="previewElementsContainer">
+              <div class="cardContainer">
+                <div class="cardTypeContainer {{cardContentType}}">
+                  <p class="cardType">{{cardContentType}} card</p>
+                </div>
+                <div class="headlineContainer">
+                  <p class="headlineText">{{headline}}</p>
+                </div>
+                <div class="longTextContainer">
+                  <p class="longText">{{longText}}</p>
+                </div>
+                <div class="callToActionContainer">
+                  <button class="callToActionButton" type="button">{{callToActionType}}</button>
+                </div>
+              </div>
+              <div class="detailsContainer">
+                <div class="statusAndViewsContainer">
+                  <div class="statusContainer">
+                    <p class="statusText">{{status}}</p>
+                  </div>
+                  <div class="currentViewersContainer">
+                    <p class="currentViewersText">{{currentViewers}}</p>
+                  </div>
+                </div>
+                <div class="titleContainer">
+                  <p class="titleText">{{title}}</p>
+                </div>
+                <div class="authorContainer">
+                  <p class="authorText">{{author}}</p>
+                </div>
+                <div class="tagsContainer">
+                  <ul class="tagsList">
+                    {{#each contentTags}}
+                      <li class="contentTag">
+                        <p class="tagName">{{tagName}}</p>
+                      </li>
+                    {{/each}}
+                  </ul>
+
+                </div>
+
+              </div>
+            </div>
+            <div class="statsContainer">
+
+            </div>
+          </div>
+
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+
+</template>
 
 <template name="create_deepstream">
   <button class="create-deepstream">
