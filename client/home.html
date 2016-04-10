@@ -234,8 +234,104 @@
       <div class="stream-type-selector-container">
       </div>
       <div class="deepstreams-and-streams">
+        
+      <!--START OF FEATURED DEEPSTREAM-->
+      <!-- start deepstream peek -->
+      <style>
+      /* deepstream peek script styles */
+      #vidContainer {
+          width: 100%;
+          padding-bottom: 18.5625%;
+          overflow: hidden;
+          position: relative;
+      }
+
+      #videoOverlay {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0px;
+          left: 0px;
+          color: red;
+          font-size: 40px;
+          z-index: 10;
+      }
+
+      #overlayImg {
+          width: 100%!important;
+          position: absolute!important;
+          top: 0px!important;
+          left: 0px!important;
+          color: red!important;
+          font-size: 40px!important;
+          z-index: 10!important;
+      }
+
+      .video-close {
+        color:#fff;
+        text-shadow: 3px 3px 1px rgba(150, 150, 150, 1);
+        font-size:200%;
+        position: absolute;
+        right: 30px;
+        top: 20px;
+        z-index: 10;
+      }
+
+      #baseVideo {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0px;
+          left: 0px;
+      }
+
+      </style>
+          <script>
+            //deepstream peek script 
+            $(document).ready(function() {
+            //scroller
+              // scroll handler
+              var scrollToAnchor = function( id ) {
+                // grab the element to scroll to based on the name
+                var elem = $("a[name='"+ id +"']"); 
+                // if that didn't work, look for an element with our ID
+                if ( typeof( elem.offset() ) === "undefined" ) {
+                  elem = $("#"+id);
+                }
+                // if the destination element exists
+                if ( typeof( elem.offset() ) !== "undefined" ) {
+                  // do the scroll
+                  $('html, body').animate({
+                          scrollTop: elem.offset().top
+                  }, 1000 );
+                }
+              };
+
+            $("#videoOverlay").hover(function () {$("#vidContainer").not('.clicked').animate({paddingBottom: "28.125%"}, 200);console.log('mouse-in');},function () {     $("#vidContainer").not('.clicked').animate({paddingBottom: "18.5625%"}, 400);console.log('mouse-out');});
+
+            $("#videoOverlay").click(function () {
+                $("#videoOverlay").addClass('clicked');
+                $("#vidContainer").addClass('clicked');
+                $('.video-close').fadeIn(600);
+                $("#videoOverlay").fadeOut(600);
+                scrollToAnchor('vidTop')
+                $('#vidContainer').animate({paddingBottom: "56.25%"}, 1000,   'swing',function(){});
+            });
+            });
+            </script>
+
+            <div id="vidContainer" style="clear:both">
+              <a name="vidTop"></a>
+              <div id="videoOverlay">
+                <!--<img id="overlayImg" src="">-->
+              </div>
+              <div id="baseVideo">
+                <!--<a href="#" class="video-close" style="display: none;"><i class="fa fa-times"></i></a>-->
+                <div style="position: relative; padding-bottom: 56.25%; padding-top: 25px; height: 0;"> <iframe src="http://deepstream.tv/embed/deepstreamTV/amazing-sharks-SEDsDRNb" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+              </div>
+            </div>
+            <!-- end deepstream peek -->
         <ol>
-          <!--START OF FEATURED DEEPSTREAM-->
           {{#if showDeepstreams}}
             <li>
               <div class="deepstreams-container container">
