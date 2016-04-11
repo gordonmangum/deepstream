@@ -1686,7 +1686,6 @@ a.svg:after {
 
 .second-row {
   min-width:250px;
-  overflow-y:scroll;
   margin-top: 60px;
   padding-top: 3px;
   padding-left: @left-margin;

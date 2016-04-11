@@ -569,7 +569,21 @@
 
           <div class="content-box-elements-container">
             <div class="preview-elements-container">
-              {{#with deepstreamForContext}}
+              <p>Short id: {{shortId}}</p>
+              
+              {{orderedContextIds}}
+              
+              {{#each contextBlocks}}
+               {{_id}}
+               <p>{{type}}</p>
+              {{/each}}
+              
+              
+              {{#each orderedContext}}
+                {{_id}}
+              {{/each}}
+              
+              
               {{#each orderedContext}}
 
               <div class="card-container type-{{type}}">
@@ -587,7 +601,6 @@
                 <img class="underlying-preview" height="200px" src="/images/preview/news_nasa.gif" />
               </div>
               {{/each}}
-              {{/with}}
 
               <div class="enter-deepstream">
                 <svg class="enter-svg" width="120" height="120">

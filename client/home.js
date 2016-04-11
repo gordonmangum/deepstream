@@ -474,6 +474,7 @@ var alreadyRan = false;
 Template.card_preview.helpers({
   streams () {
   if(FlowRouter.subsReady()){
+    console.log(Deepstreams.find({},{reactive:false, limit:10}).fetch());
     return Deepstreams.find({},{reactive:false, limit:10});
   }
 
