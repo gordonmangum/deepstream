@@ -380,7 +380,12 @@
   bottom: @drawer-bottom;
   right: 0;
   top: 55px + @context-browser-header-row-height;
-
+  &.featured-context-container {
+    top: 0;
+    right: 125px;
+    background-color: transparent;
+  }
+  
   display: inline-block;
   z-index: 10;
   width: @right-section-width;
@@ -1156,6 +1161,10 @@
 .list-item-context-plus-annotation{
   &:not(:first-child){
     margin-top: 15px;
+  }
+  &.featured{
+    margin-top: 0;
+    position: absolute;
   }
   .annotation-section{
   }

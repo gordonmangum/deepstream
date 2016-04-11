@@ -221,6 +221,20 @@
       </div>
     {{/with}}
 
+    {{#if featuredMode}}
+      <div class="right-section featured-context-container">
+        <div class="context-browser" style="height:100%">
+          {{#with deepstreamForContext}}
+          <div class="context-area list-mode">
+            {{#each orderedContext}}
+              {{> list_item_context_section}}
+            {{/each}}
+          </div>
+          {{/with}}
+        </div>
+      </div>
+    {{/if}}
+    
 
     {{#unless featuredMode}}
     <div class="right-section {{#unless showRightSection}}collapsed{{/unless}}">
@@ -631,7 +645,7 @@
 </template>
 
 <template name="list_item_context_section">
-  <div class="list-item-context-plus-annotation" data-context-id="{{_id}}">
+  <div class="list-item-context-plus-annotation {{#if featuredMode}}featured{{/if}}" data-context-id="{{_id}}">
     <div class="narrative-section context-section list-item-context-section {{#if type}}{{type}}-card{{/if}} {{#if hasSoloMode}}isClickable{{/if}}" data-context-id="{{_id}}">
       <div class="clickable">
         <div class="provider">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}{{providerName}}</div>
