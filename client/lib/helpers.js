@@ -337,13 +337,22 @@ window.featuredMode = function(){
   return Session.equals('featuredMode', true);
 };
 
+window.featuredPeek = function(){
+  return Session.equals('featuredPeek', true);
+};
+
 window.activateEmbedMode = function(){
   return Session.set('embedMode', true);
 };
 
 window.activateFeaturedMode = function(){
   Session.set('embedMode', true);
-  return Session.set('featuredMode', true);
+  Session.set('featuredMode', true);
+  return Session.set('featuredPeek', true);
+};
+
+window.deactivateFeaturedPeekMode = function(){
+  return Session.set('featuredPeek', false);
 };
 
 window.isMobile = function(){

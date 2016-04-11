@@ -6,7 +6,24 @@
     {{> deepstream_about_overlay}}
   {{/if}}
 
-
+  {{#if featuredMode}}
+    {{#if featuredPeek}}
+      <style>
+        #videoOverlay {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0px;
+          left: 0px;
+          color: red;
+          font-size: 40px;
+          z-index: 10;
+        }
+      </style>
+      <div id="videoOverlay"></div>
+    {{/if}}
+  {{/if}}
+  
   <div class="watch {{#if thisDeepstream.onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}}" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
     {{#with thisDeepstream}}
     
@@ -258,27 +275,30 @@
               })(0);
           };
         })(jQuery);
+        
         $(document).ready(function(){
           setTimeout(function() {
             $('.context-area.list-mode').featuredDisplay();
           }, 2000);
         });
       </script>
-      <div class="right-section featured-context-container">
-        <div class="context-browser" style="height:100%">
-          {{#with deepstreamForContext}}
-          <div class="context-area list-mode">
-            {{#each orderedContext}}
-              {{> list_item_context_section}}
-            {{/each}}
+      {{#if featuredPeek}}
+        <div class="right-section featured-context-container">
+          <div class="context-browser" style="height:100%">
+            {{#with deepstreamForContext}}
+            <div class="context-area list-mode">
+              {{#each orderedContext}}
+                {{> list_item_context_section_featured}}
+              {{/each}}
+            </div>
+            {{/with}}
           </div>
-          {{/with}}
         </div>
-      </div>
+      {{/if}}
     {{/if}}
     
 
-    {{#unless featuredMode}}
+    {{#unless featuredPeek}}
     <div class="right-section {{#unless showRightSection}}collapsed{{/unless}}">
         {{#if showOpenSidebarIcon}}
           <div class="bar-open-close fadeIn fadeOut animated-fast">
@@ -686,8 +706,39 @@
   </div>
 </template>
 
-<template name="list_item_context_section">
+<template name="list_item_context_section_featured">
   <div class="list-item-context-plus-annotation {{#if featuredMode}}featured{{/if}}" data-context-id="{{_id}}">
+    <div class="narrative-section context-section list-item-context-section {{#if type}}{{type}}-card{{/if}} {{#if hasSoloMode}}isClickable{{/if}}" data-context-id="{{_id}}">
+      <div class="clickable">
+        <div class="provider">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}{{providerName}}</div>
+        {{> Template.dynamic template=listModeItemTemplate}}
+        {{#unless curateMode}}
+          {{#if hoverIconTemplate}}<button class="hover-icon">{{> Template.dynamic template=hoverIconTemplate}}</button>{{/if}}
+        {{/unless}}
+      </div>
+      {{#if curateMode}}
+        {{#unless browseSuggestionsMode}}
+          <button title="delete" class="delete-context">{{> close_circle}}</button>
+        {{/unless}}
+      {{/if}}
+    </div>
+    {{#if showAnnotationSection}}
+      {{> annotation_section}}
+    {{/if}}
+    {{#if suggestedByUsername}}
+      <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
+    {{/if}}
+    {{#if browseSuggestionsMode}}
+      <div class="moderation-buttons">
+        <button class="approve-suggestion">{{> approve_icon}}Approve</button>
+        <button class="reject-suggestion">{{> reject_icon}}Reject</button>
+      </div>
+    {{/if}}
+  </div>
+</template>
+
+<template name="list_item_context_section">
+  <div class="list-item-context-plus-annotation" data-context-id="{{_id}}">
     <div class="narrative-section context-section list-item-context-section {{#if type}}{{type}}-card{{/if}} {{#if hasSoloMode}}isClickable{{/if}}" data-context-id="{{_id}}">
       <div class="clickable">
         <div class="provider">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}{{providerName}}</div>

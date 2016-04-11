@@ -679,6 +679,10 @@ var saveStreamTitle = function(template){
 };
 
 Template.watch_page.events({
+  'click #videoOverlay' (e,t){
+    Session.set('featuredPeek', false);
+    analytics.track('Clicked featured homepage stream to expand', trackingInfoFromPage());
+  },
   'click .set-main-stream' (e, t){
     if (Session.get('curateMode')) {
       Meteor.call('setActiveStream', t.data.shortId(), this._id, basicErrorHandler);

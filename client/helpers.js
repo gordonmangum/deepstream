@@ -82,6 +82,10 @@ Handlebars.registerHelper("featuredMode", function() {
   return window.featuredMode();
 });
 
+Handlebars.registerHelper("featuredPeek", function() {
+  return window.featuredPeek();
+});
+
 Handlebars.registerHelper("isMobile", function() {
   return window.isMobile();
 });
