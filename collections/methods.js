@@ -782,5 +782,4 @@ Meteor.methods({
       streamPathSegment: streamPathSegment
     };
   }
-
 });

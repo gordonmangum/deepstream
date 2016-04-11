@@ -412,9 +412,10 @@ Schema.ContextBlocks = new SimpleSchema({
 
 this.ContextBlocks = new Mongo.Collection("context_blocks", {
   transform (doc) {
-    return new ContextBlock(doc);
   //VIVIAN COMMENTED HERE
-    //return newTypeSpecificContextBlock(doc);
+    //return new ContextBlock(doc);
+
+    return newTypeSpecificContextBlock(doc);
   }
 });
 

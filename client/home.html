@@ -561,7 +561,7 @@
 <template name="card_preview">
   {{#with streams}}
     <p>{{_id}}</p>
-    {{contextBox}}
+    {{#with contextBox}}
         <li class="content-box">
           <div class="content-box-elements-container">
             <div class="preview-elements-container">
@@ -613,6 +613,7 @@
           </div>
 
         </li>
+      {{/with}}
 {{/with}}
 
 </template>
