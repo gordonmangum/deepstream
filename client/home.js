@@ -715,6 +715,23 @@ Template.card_preview.helpers({
     }
   };
   },
+streamTags () {
+  //Meteor.call()//IGNORE FOR NOW. JUST PRETEND WE HAVE TAGS FOR STREAMS
+  return [{tag:'hello'},{tag:'world'},{tag:'bottle'},{tag:'neck'}];
+},
+callToActionType () {
+  switch(this.type){
+    case "news":
+      return 'READ MORE';
+      break;
+    case "video":
+      return 'WATCH NOW';
+      break;
+    case "image":
+      return 'ZOOM';
+      break;
+  }
+},
 contextBox () {
   //we need to return a workable set of data
   if (FlowRouter.subsReady()) {

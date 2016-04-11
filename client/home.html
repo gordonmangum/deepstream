@@ -560,45 +560,51 @@
 
 <template name="card_preview">
   {{#with streams}}
-    <p>{{_id}}</p>
-    {{#with contextBox}}
+
         <li class="content-box">
           <div class="content-box-elements-container">
             <div class="preview-elements-container">
+              {{#with contextBox}}
               <div class="card-container">
                 <div class="card-type-container {{type}}">
                   <p class="card-type">{{type}} card</p>
                 </div>
                 <div class="headline-container">
-                  <p class="headline-text">{{title}}</p>
+                  <p class="headline-text">{{reference.title}}</p>
                 </div>
                 <div class="long-text-container">
-                  <p class="long-text">{{longText}}</p>
+                  <p class="long-text">{{reference.description}}</p>
                 </div>
                 <div class="call-to-action-container">
                   <button class="call-to-action-button" type="button">{{callToActionType}}</button>
                 </div>
               </div>
+              {{/with}}
               <div class="details-container">
                 <div class="status-and-views-container">
                   <div class="status-container">
-                    <p class="status-text">{{status}}</p>
+                    {{#if live}}
+                    <p class="status-text live">LIVE</p>
+                      {{else}}
+                      <p class="status-text playback">PLAYBACK</p>
+                    {{/if}}
+
                   </div>
                   <div class="current-viewers-container">
-                    <p class="current-viewers-text">{{formatNumber viewCount}}</p>
+                    <p class="current-viewers-text">{{formatNumber viewCount}} VIEWS</p>
                   </div>
                 </div>
                 <div class="title-container">
                   <p class="title-text">{{title}}</p>
                 </div>
                 <div class="author-container">
-                  <p class="author-text">{{author}}</p>
+                  <p class="author-text">{{curatorName}}</p>
                 </div>
                 <div class="tags-container">
                   <ul class="tags-list">
-                    {{#each contentTags}}
+                    {{#each streamTags}}
                       <li class="content-tag">
-                        <p class="tag-name">{{tagName}}</p>
+                        <p class="tag-name">{{tag}}</p>
                       </li>
                     {{/each}}
                   </ul>
@@ -613,7 +619,7 @@
           </div>
 
         </li>
-      {{/with}}
+
 {{/with}}
 
 </template>
