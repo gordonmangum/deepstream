@@ -177,10 +177,10 @@ Meteor.publish("singleDeepstream", function(userPathSegment, shortId) {
 });
 
 Meteor.publish("deepstreamContext", function(streamShortId) {
-  check(streamShortId, String);
-  return ContextBlocks.find({streamShortId: streamShortId, deleted: {$ne: true}},{
-    fields: contextFields
-  });
+    check(streamShortId, String);
+    return ContextBlocks.find({streamShortId: streamShortId, deleted: {$ne: true}},{
+      fields: contextFields
+    });
 });
 
 
