@@ -78,6 +78,10 @@ Handlebars.registerHelper("embedMode", function() {
   return window.embedMode();
 });
 
+Handlebars.registerHelper("featuredMode", function() {
+  return window.featuredMode();
+});
+
 Handlebars.registerHelper("isMobile", function() {
   return window.isMobile();
 });

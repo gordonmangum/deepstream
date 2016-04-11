@@ -333,6 +333,10 @@ window.embedMode = function(){
   return Session.equals('embedMode', true);
 };
 
+window.featuredMode = function(){
+  return Session.equals('featuredMode', true);
+};
+
 window.activateEmbedMode = function(){
   return Session.set('embedMode', true);
 };

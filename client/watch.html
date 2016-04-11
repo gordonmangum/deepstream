@@ -17,6 +17,7 @@
     <div class="left-section" style="width: {{leftSectionWidth}}px;">
 
         <div class="header-section">
+          {{#unless featuredMode}}
           <div class="top-row">
             <div class="home-icons">
               <ol>
@@ -38,7 +39,7 @@
             {{> banner_buttons}}
             <!-- {{> logo_only}} -->
           </div>
-          
+          {{/unless}}
           
           <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
             {{#if curateMode}}
@@ -128,14 +129,14 @@
             {{#if streamUrl}}
               <div class="main-stream-container {{#if PiP}}PiP{{/if}}">
                 <iframe id="{{mainStreamIFrameId}}"
-                        class="main-stream-iframe {{#unless mainStreamInIFrame}}hide{{/unless}} {{#if PiP}}PiP{{/if}}"
+                        class="main-stream-iframe {{#if featuredMode}}featured{{/if}} {{#unless mainStreamInIFrame}}hide{{/unless}} {{#if PiP}}PiP{{/if}}"
                         src="{{#if mainStreamInIFrame}}{{streamUrl}}{{/if}}" frameborder="0"
                         allowfullscreen></iframe>
                 {{#if mainStreamInFlashPlayer}}
                   {{#unless removeMainStream}}
                   {{#if bambuserPlayer}}
                     <object id="{{mainStreamFlashPlayerId}}" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-                            class="main-stream-flash-object {{#if PiP}}PiP{{/if}}">
+                            class="main-stream-flash-object {{#if featuredMode}}featured{{/if}} {{#if PiP}}PiP{{/if}}">
                       <embed name="{{mainStreamFlashPlayerId}}" src="//static.bambuser.com/r/player.swf"
                              type="application/x-shockwave-flash" flashvars="{{mainStreamFlashVars}}" allowfullscreen="true"
                              allowscriptaccess="always" wmode="opaque"/>
@@ -150,7 +151,7 @@
                       <object id="{{mainStreamFlashPlayerId}}"
                               bgcolor='#000000'
                               data='//www-cdn.jtvnw.net/swflibs/TwitchPlayer.swf'
-                              class="main-stream-flash-object {{#if PiP}}PiP{{/if}}"
+                              class="main-stream-flash-object {{#if featuredMode}}featured{{/if}} {{#if PiP}}PiP{{/if}}"
                               type='application/x-shockwave-flash'>
 
                         <param name="allowFullScreen"
@@ -221,7 +222,7 @@
     {{/with}}
 
 
-
+    {{#unless featuredMode}}
     <div class="right-section {{#unless showRightSection}}collapsed{{/unless}}">
         {{#if showOpenSidebarIcon}}
           <div class="bar-open-close fadeIn fadeOut animated-fast">
@@ -308,68 +309,9 @@
             <button class="suggest-content">Suggest great context</button>
           {{/unless}}
         {{/unless}}
-         <!--<div class="curator-menu">-->
-           
-           
-           <!--
-           {{#if curateMode}}
-            <div class="webcam-button-container">
-              <button title="Set up webcam narration" class="webcam">{{> webcam_icon}}</button>
-            </div>
-          {{/if}}
-          
-            <div class="settings-menu-container {{#if curateMode}}visible{{/if}}">
-              {{#if curateMode}}
-                <div class="settings-button-and-menu">
-                  <button class="settings-menu-button {{#if settingsMenuOpen}}active{{/if}}">{{> setting_icon}}</button>
-                  {{#if settingsMenuOpen}}
-                    {{> settings_menu}}
-                  {{/if}}
-                </div>
-              {{/if}}
-            </div>
-           
-           {{#if isCurator}}
-            {{#if onCuratePage}}
-              {{#if curateMode}}
-                {{#if showPreviewEditButton}}
-                  <button class="preview">Preview</button>
-                {{/if}}
-              {{else}}
-                {{#if showPreviewEditButton}}
-                  <button class="return-to-curate">Edit</button>
-                {{/if}}
-              {{/if}}
-            {{/if}}
-          {{else}}
-            {{#unless showContextSearch}}
-              {{#unless embedMode}}
-                <button class="suggest-content">Suggest Content</button>
-              {{/unless}}
-            {{/unless}}
-
-          {{/if}}
-
-
--->
-           <!--
-           <div class="curator-info">
-              <div class="curator-pic">
-                {{> default_user_pic}}
-              </div>
-              <div class="curator-details">
-                <div class="header">CURATOR</div>
-                {{curatorName}}
-              </div>
-            </div>
-
-          
-           </div>
-        -->
-       
       {{/with}}
     </div>
-
+    {{/unless}}
   </div>
 
   {{#with thisDeepstream}}
