@@ -364,6 +364,7 @@ Template.deepstreams.helpers({
 
 Template.deepstream_preview.onCreated(function(){
   this.subscribe('deepstreamPreviewContext', this.data.deepstream.shortId);
+
 });
 
 Template.deepstream_preview.helpers({
@@ -466,255 +467,270 @@ Template.my_streams.events({
 });
 
 //VIVIAN IS MESSING AROUND HERE:
+
+var newContextDep = new Tracker.Dependency;
+
 var alreadyRan = false;
 Template.card_preview.helpers({
   streams () {
-    return {
-    "_id" : "cTDAwDRzupAcJNEjQ",
-    "savedAt" : "2016-04-10T17:10:15.973Z",
-    "userPathSegment" : "curat0r",
-    "streamPathSegment" : "international-space-station-livecam-3zruKDSm",
-    "mainCuratorId" : "iZP79DDdcJtv4BxjT",
-    "curatorIds" : [
-      "iZP79DDdcJtv4BxjT"
-    ],
-    "curatorName" : "Dr Stream",
-    "curatorUsername" : "curat0r",
-    "shortId" : "3zruKDSm",
-    "creationStep" : null,
-    "description" : "This is a livecam from the International Space Station. Enjoy amazing views of Earth while learning about the ISS.",
-    "title" : "International Space Station LiveCam",
-    "live" : true,
-    "onAir" : true,
-    "directorMode" : false,
-    "createdAt" : "2016-04-10T17:10:15.226Z",
-    "streams" : [
-      {
-        "reference" : {
-          "title" : "Live_ISS_Stream",
-          "description" : "Live video from the International Space Station includes internal views when the crew is on-duty and Earth views at other times. The video is accompanied by audio of conversations between the crew and Mission Control. This video is only available when the space station is in contact with the ground. During \"loss of signal\" periods, viewers will see a blue screen. Since the station orbits the Earth once every 90 minutes, it experiences a sunrise or a sunset about every 45 minutes. When the station is in darkness, external camera video may appear black, but can sometimes provide spectacular views of lightning or city lights below.",
-          "id" : "9408562",
-          "username" : "NASAtelevision",
-          "currentViewers" : 421,
-          "thumbnailUrl" : "http://static-cdn1.ustream.tv/i/channel/picture/9/4/0/8/9408562/9408562_iss_hr_1330361780,120x90,r:1.jpg",
-          "previewUrl" : "http://static-cdn1.ustream.tv/i/channel/picture/9/4/0/8/9408562/9408562_iss_hr_1330361780,320x180,r:1.jpg",
-          "totalViews" : 51620152,
-          "userId" : "796050",
-          "creationDate" : "2011-09-27T19:16:09Z",
-          "lastStreamedAt" : "2015-09-16T20:16:28Z"
-        },
-        "live" : true,
-        "source" : "ustream",
-        "type" : "stream",
-        "authorId" : "iZP79DDdcJtv4BxjT",
-        "searchQuery" : "iss",
-        "fullDetails" : {
-          "_id" : "nvu5kQbwQY2mJQq7W",
-          "id" : "9408562",
-          "title" : "Live_ISS_Stream",
-          "isProtected" : false,
-          "urlTitleName" : "live-iss-stream",
-          "description" : "Live video from the International Space Station includes internal views when the crew is on-duty and Earth views at other times. The video is accompanied by audio of conversations between the crew and Mission Control. This video is only available when the space station is in contact with the ground. During \"loss of signal\" periods, viewers will see a blue screen. Since the station orbits the Earth once every 90 minutes, it experiences a sunrise or a sunset about every 45 minutes. When the station is in darkness, external camera video may appear black, but can sometimes provide spectacular views of lightning or city lights below.\n",
-          "lastStreamedAt" : "2015-09-16T20:16:28Z",
-          "totalViews" : 51620152,
-          "rating" : "0.000",
-          "status" : "live",
-          "viewersNow" : "421",
-          "url" : "http://www.ustream.tv/channel/live-iss-stream",
-          "embedTag" : "<object classid=\"clsid:d27cdb6e-ae6d-11cf-96b8-444553540000\" width=\"320\" height=\"260\" id=\"utv259631\"><param name=\"flashvars\" value=\"autoplay=false&amp;brand=embed&amp;cid=9408562\"/><param name=\"allowfullscreen\" value=\"true\"/><param name=\"allowscriptaccess\" value=\"always\"/><param name=\"movie\" value=\"http://www.ustream.tv/flash/viewer.swf\"/><embed flashvars=\"autoplay=false&amp;brand=embed&amp;cid=9408562\" width=\"320\" height=\"260\" allowfullscreen=\"true\" allowscriptaccess=\"always\" id=\"utv259631\" name=\"utv_n_279502\" src=\"http://www.ustream.tv/flash/viewer.swf\" type=\"application/x-shockwave-flash\" /></object>",
-          "imageUrl" : {
-            "small" : "http://static-cdn1.ustream.tv/i/channel/picture/9/4/0/8/9408562/9408562_iss_hr_1330361780,120x90,r:1.jpg",
-            "medium" : "http://static-cdn1.ustream.tv/i/channel/picture/9/4/0/8/9408562/9408562_iss_hr_1330361780,320x180,r:1.jpg"
-          },
-          "user" : {
-            "id" : "796050",
-            "userName" : "NASAtelevision",
-            "url" : "http://www.ustream.tv/user/NASAtelevision"
-          },
-          "_streamSource" : "ustream",
-          "username" : "NASAtelevision",
-          "creationDate" : "2011-09-27T19:16:09Z",
-          "currentViewers" : 421,
-          "createdAtInUStreamTime" : "2011-09-27 12:16:09",
-          "live" : true,
-          "oneIfCurrent" : 1
-        },
-        "_id" : "2ZyXi9FvkGTMP4eZo",
-        "addedAt" : "2015-09-17T15:51:43.018Z"
-      },
-      {
-        "reference" : {
-          "title" : "ISS HD Earth Viewing Experiment",
-          "description" : "***QUICK NOTES ABOUT HDEV VIDEO***\nBlack Image = International Space Station (ISS) is on the night side of the Earth. \n\nNo Audio = Normal. There is no audio by design. Add your own soundtrack.\n\nFor a display of the real time ISS location plus the HDEV imagery, visit here: http://eol.jsc.nasa.gov/HDEV/\n\nThe High Definition Earth Viewing (HDEV) experiment aboard the ISS was activated April 30, 2014. It is mounted on the External Payload Facility of the European Space Agency’s Columbus module. This experiment includes several commercial HD video cameras aimed at the earth which are enclosed in a pressurized and temperature controlled housing.  Video from these cameras is transmitted back to earth and also streamed live on this channel. While the experiment is operational, views will typically sequence though the different cameras. Between camera switches, a gray and then black color slate will briefly appear. Since the ISS is in darkness during part of each orbit, the images will be dark at those times. During periods of loss of signal with the ground or when HDEV is not operating, a gray color slate or previously recorded video may be seen.  \nAnalysis of this experiment will be conducted to assess the effects of the space environment on the equipment and video quality which may help decisions about cameras for future missions. High school students helped with the design of some of the HDEV components through the High Schools United with NASA to Create Hardware (HUNCH) program. Student teams will also help operate the experiment.  To learn more about the HDEV experiment, visit here:  http://www.nasa.gov/mission_pages/station/research/experiments/917.html",
-          "id" : "17074538",
-          "username" : "NASAtelevision",
-          "currentViewers" : 1048,
-          "thumbnailUrl" : "http://static-cdn1.ustream.tv/i/channel/picture/1/7/0/7/17074538/17074538,120x90,r:3.jpg",
-          "previewUrl" : "http://static-cdn1.ustream.tv/i/channel/picture/1/7/0/7/17074538/17074538,320x180,r:3.jpg",
-          "totalViews" : 53222984,
-          "userId" : "796050",
-          "creationDate" : "2014-01-27T18:31:39Z",
-          "lastStreamedAt" : "2015-09-17T07:17:42Z"
-        },
-        "live" : false,
-        "source" : "ustream",
-        "type" : "stream",
-        "authorId" : "iZP79DDdcJtv4BxjT",
-        "searchQuery" : "iss",
-        "fullDetails" : {
-          "_id" : "cELb8QTGM4Co2kZKr",
-          "id" : "17074538",
-          "title" : "ISS HD Earth Viewing Experiment",
-          "isProtected" : false,
-          "urlTitleName" : "iss-hdev-payload",
-          "description" : "***QUICK NOTES ABOUT HDEV VIDEO***\nBlack Image = International Space Station (ISS) is on the night side of the Earth. \n\nNo Audio = Normal. There is no audio by design. Add your own soundtrack.\n\nFor a display of the real time ISS location plus the HDEV imagery, visit here: http://eol.jsc.nasa.gov/HDEV/\n\nThe High Definition Earth Viewing (HDEV) experiment aboard the ISS was activated April 30, 2014. It is mounted on the External Payload Facility of the European Space Agency’s Columbus module. This experiment includes several commercial HD video cameras aimed at the earth which are enclosed in a pressurized and temperature controlled housing.  Video from these cameras is transmitted back to earth and also streamed live on this channel. While the experiment is operational, views will typically sequence though the different cameras. Between camera switches, a gray and then black color slate will briefly appear. Since the ISS is in darkness during part of each orbit, the images will be dark at those times. During periods of loss of signal with the ground or when HDEV is not operating, a gray color slate or previously recorded video may be seen.  \nAnalysis of this experiment will be conducted to assess the effects of the space environment on the equipment and video quality which may help decisions about cameras for future missions. High school students helped with the design of some of the HDEV components through the High Schools United with NASA to Create Hardware (HUNCH) program. Student teams will also help operate the experiment.  To learn more about the HDEV experiment, visit here:  http://www.nasa.gov/mission_pages/station/research/experiments/917.html",
-          "lastStreamedAt" : "2015-09-17T07:17:42Z",
-          "totalViews" : 53222984,
-          "rating" : "0.000",
-          "status" : "live",
-          "viewersNow" : "1048",
-          "url" : "http://www.ustream.tv/channel/iss-hdev-payload",
-          "embedTag" : "<object classid=\"clsid:d27cdb6e-ae6d-11cf-96b8-444553540000\" width=\"320\" height=\"260\" id=\"utv488309\"><param name=\"flashvars\" value=\"autoplay=false&amp;brand=embed&amp;cid=17074538\"/><param name=\"allowfullscreen\" value=\"true\"/><param name=\"allowscriptaccess\" value=\"always\"/><param name=\"movie\" value=\"http://www.ustream.tv/flash/viewer.swf\"/><embed flashvars=\"autoplay=false&amp;brand=embed&amp;cid=17074538\" width=\"320\" height=\"260\" allowfullscreen=\"true\" allowscriptaccess=\"always\" id=\"utv488309\" name=\"utv_n_599727\" src=\"http://www.ustream.tv/flash/viewer.swf\" type=\"application/x-shockwave-flash\" /></object>",
-          "imageUrl" : {
-            "small" : "http://static-cdn1.ustream.tv/i/channel/picture/1/7/0/7/17074538/17074538,120x90,r:3.jpg",
-            "medium" : "http://static-cdn1.ustream.tv/i/channel/picture/1/7/0/7/17074538/17074538,320x180,r:3.jpg"
-          },
-          "user" : {
-            "id" : "796050",
-            "userName" : "NASAtelevision",
-            "url" : "http://www.ustream.tv/user/NASAtelevision"
-          },
-          "_streamSource" : "ustream",
-          "username" : "NASAtelevision",
-          "creationDate" : "2014-01-27T18:31:39Z",
-          "currentViewers" : 1048,
-          "createdAtInUStreamTime" : "2014-01-27 10:31:39",
-          "live" : true,
-          "oneIfCurrent" : 1
-        },
-        "_id" : "oNGGos4wgLi45Z8ZW",
-        "addedAt" : "2015-09-17T16:49:35.474Z"
-      }
-    ],
-    "activeStreamId" : "oNGGos4wgLi45Z8ZW",
-    "onAirSince" : "2015-09-17T15:55:58.874Z",
-    "firstOnAirAt" : "2015-09-17T15:55:58.874Z",
-    "deleted" : false,
-    "contextBlocks" : [
-      {
-        "type" : "image",
-        "source" : "imgur",
-        "addedAt" : "2016-04-10T17:10:15.396Z",
-        "_id" : "uN7DMxEELSKgkGahZ",
-        "rank" : 0
-      },
-      {
-        "type" : "image",
-        "source" : "imgur",
-        "addedAt" : "2016-04-10T17:10:15.436Z",
-        "_id" : "7DLH4R5K69nmwQXbc",
-        "rank" : 0
-      },
-      {
-        "type" : "news",
-        "source" : "embedly",
-        "addedAt" : "2016-04-10T17:10:15.477Z",
-        "_id" : "9p8XQRR7Jdq4KjY5o",
-        "rank" : 0
-      },
-      {
-        "type" : "news",
-        "source" : "embedly",
-        "addedAt" : "2016-04-10T17:10:15.530Z",
-        "_id" : "4hKPBw9BR4AE7wBFa",
-        "rank" : 0
-      },
-      {
-        "type" : "news",
-        "source" : "embedly",
-        "addedAt" : "2016-04-10T17:10:15.595Z",
-        "_id" : "dGeo6ihBGLjm43gKQ",
-        "rank" : 0
-      },
-      {
-        "type" : "video",
-        "source" : "youtube",
-        "addedAt" : "2016-04-10T17:10:15.648Z",
-        "_id" : "PeDygKRBtkzJNC7jM",
-        "rank" : 0
-      },
-      {
-        "type" : "twitter",
-        "source" : "twitter",
-        "addedAt" : "2016-04-10T17:10:15.677Z",
-        "_id" : "Le5nAW7BaM2Cyri3n",
-        "rank" : 0
-      },
-      {
-        "type" : "twitter",
-        "source" : "twitter",
-        "addedAt" : "2016-04-10T17:10:15.770Z",
-        "_id" : "rhiHghRMdX4k29gyn",
-        "rank" : 0
-      },
-      {
-        "type" : "twitter",
-        "source" : "twitter",
-        "addedAt" : "2016-04-10T17:10:15.809Z",
-        "_id" : "zN9o6ipybRsKNiJJN",
-        "rank" : 0
-      },
-      {
-        "type" : "twitter",
-        "source" : "twitter",
-        "addedAt" : "2016-04-10T17:10:15.852Z",
-        "_id" : "oRyhFe27aRNCMruoN",
-        "rank" : 0
-      },
-      {
-        "type" : "text",
-        "source" : "plaintext",
-        "addedAt" : "2016-04-10T17:10:15.903Z",
-        "_id" : "RybasEE6vGgqvFogz",
-        "rank" : 0
-      },
-      {
-        "type" : "audio",
-        "source" : "soundcloud",
-        "addedAt" : "2016-04-10T17:10:15.924Z",
-        "_id" : "wi5tbTdKKhLEm2urS",
-        "rank" : 0
-      },
-      {
-        "type" : "link",
-        "source" : "embedly",
-        "addedAt" : "2016-04-10T17:10:15.954Z",
-        "_id" : "kN5kNSqDLrTA84A3w",
-        "rank" : 0
-      }
-    ],
-    "curatorInviteCodes" : [ ],
-    "favorited" : [ ],
-    "favoritedTotal" : 0,
-    "curatorWebcamStream" : {
-      "type" : "stream"
-    },
-    "analytics" : {
-      "views" : {
-        "byConnection" : 1,
-        "byIP" : 1,
-        "byId" : 0,
-        "total" : 1
-      },
-      "shares" : {
-        "byConnection" : 0,
-        "byIP" : 0,
-        "byId" : 0,
-        "total" : 0
-      }
-    }
-  };
-  },
+  if(FlowRouter.subsReady()){
+    return Deepstreams.find({},{reactive:false, limit:10});
+  }
+
+},
+deepstreamForContext () {
+  newContextDep.depend();
+  if (FlowRouter.subsReady()) {
+    return Deepstreams.findOne({shortId: this.shortId}, {reactive: false});
+  }
+},
+  //streams () {
+  //  return {
+  //  "_id" : "cTDAwDRzupAcJNEjQ",
+  //  "savedAt" : "2016-04-10T17:10:15.973Z",
+  //  "userPathSegment" : "curat0r",
+  //  "streamPathSegment" : "international-space-station-livecam-3zruKDSm",
+  //  "mainCuratorId" : "iZP79DDdcJtv4BxjT",
+  //  "curatorIds" : [
+  //    "iZP79DDdcJtv4BxjT"
+  //  ],
+  //  "curatorName" : "Dr Stream",
+  //  "curatorUsername" : "curat0r",
+  //  "shortId" : "3zruKDSm",
+  //  "creationStep" : null,
+  //  "description" : "This is a livecam from the International Space Station. Enjoy amazing views of Earth while learning about the ISS.",
+  //  "title" : "International Space Station LiveCam",
+  //  "live" : true,
+  //  "onAir" : true,
+  //  "directorMode" : false,
+  //  "createdAt" : "2016-04-10T17:10:15.226Z",
+  //  "streams" : [
+  //    {
+  //      "reference" : {
+  //        "title" : "Live_ISS_Stream",
+  //        "description" : "Live video from the International Space Station includes internal views when the crew is on-duty and Earth views at other times. The video is accompanied by audio of conversations between the crew and Mission Control. This video is only available when the space station is in contact with the ground. During \"loss of signal\" periods, viewers will see a blue screen. Since the station orbits the Earth once every 90 minutes, it experiences a sunrise or a sunset about every 45 minutes. When the station is in darkness, external camera video may appear black, but can sometimes provide spectacular views of lightning or city lights below.",
+  //        "id" : "9408562",
+  //        "username" : "NASAtelevision",
+  //        "currentViewers" : 421,
+  //        "thumbnailUrl" : "http://static-cdn1.ustream.tv/i/channel/picture/9/4/0/8/9408562/9408562_iss_hr_1330361780,120x90,r:1.jpg",
+  //        "previewUrl" : "http://static-cdn1.ustream.tv/i/channel/picture/9/4/0/8/9408562/9408562_iss_hr_1330361780,320x180,r:1.jpg",
+  //        "totalViews" : 51620152,
+  //        "userId" : "796050",
+  //        "creationDate" : "2011-09-27T19:16:09Z",
+  //        "lastStreamedAt" : "2015-09-16T20:16:28Z"
+  //      },
+  //      "live" : true,
+  //      "source" : "ustream",
+  //      "type" : "stream",
+  //      "authorId" : "iZP79DDdcJtv4BxjT",
+  //      "searchQuery" : "iss",
+  //      "fullDetails" : {
+  //        "_id" : "nvu5kQbwQY2mJQq7W",
+  //        "id" : "9408562",
+  //        "title" : "Live_ISS_Stream",
+  //        "isProtected" : false,
+  //        "urlTitleName" : "live-iss-stream",
+  //        "description" : "Live video from the International Space Station includes internal views when the crew is on-duty and Earth views at other times. The video is accompanied by audio of conversations between the crew and Mission Control. This video is only available when the space station is in contact with the ground. During \"loss of signal\" periods, viewers will see a blue screen. Since the station orbits the Earth once every 90 minutes, it experiences a sunrise or a sunset about every 45 minutes. When the station is in darkness, external camera video may appear black, but can sometimes provide spectacular views of lightning or city lights below.\n",
+  //        "lastStreamedAt" : "2015-09-16T20:16:28Z",
+  //        "totalViews" : 51620152,
+  //        "rating" : "0.000",
+  //        "status" : "live",
+  //        "viewersNow" : "421",
+  //        "url" : "http://www.ustream.tv/channel/live-iss-stream",
+  //        "embedTag" : "<object classid=\"clsid:d27cdb6e-ae6d-11cf-96b8-444553540000\" width=\"320\" height=\"260\" id=\"utv259631\"><param name=\"flashvars\" value=\"autoplay=false&amp;brand=embed&amp;cid=9408562\"/><param name=\"allowfullscreen\" value=\"true\"/><param name=\"allowscriptaccess\" value=\"always\"/><param name=\"movie\" value=\"http://www.ustream.tv/flash/viewer.swf\"/><embed flashvars=\"autoplay=false&amp;brand=embed&amp;cid=9408562\" width=\"320\" height=\"260\" allowfullscreen=\"true\" allowscriptaccess=\"always\" id=\"utv259631\" name=\"utv_n_279502\" src=\"http://www.ustream.tv/flash/viewer.swf\" type=\"application/x-shockwave-flash\" /></object>",
+  //        "imageUrl" : {
+  //          "small" : "http://static-cdn1.ustream.tv/i/channel/picture/9/4/0/8/9408562/9408562_iss_hr_1330361780,120x90,r:1.jpg",
+  //          "medium" : "http://static-cdn1.ustream.tv/i/channel/picture/9/4/0/8/9408562/9408562_iss_hr_1330361780,320x180,r:1.jpg"
+  //        },
+  //        "user" : {
+  //          "id" : "796050",
+  //          "userName" : "NASAtelevision",
+  //          "url" : "http://www.ustream.tv/user/NASAtelevision"
+  //        },
+  //        "_streamSource" : "ustream",
+  //        "username" : "NASAtelevision",
+  //        "creationDate" : "2011-09-27T19:16:09Z",
+  //        "currentViewers" : 421,
+  //        "createdAtInUStreamTime" : "2011-09-27 12:16:09",
+  //        "live" : true,
+  //        "oneIfCurrent" : 1
+  //      },
+  //      "_id" : "2ZyXi9FvkGTMP4eZo",
+  //      "addedAt" : "2015-09-17T15:51:43.018Z"
+  //    },
+  //    {
+  //      "reference" : {
+  //        "title" : "ISS HD Earth Viewing Experiment",
+  //        "description" : "***QUICK NOTES ABOUT HDEV VIDEO***\nBlack Image = International Space Station (ISS) is on the night side of the Earth. \n\nNo Audio = Normal. There is no audio by design. Add your own soundtrack.\n\nFor a display of the real time ISS location plus the HDEV imagery, visit here: http://eol.jsc.nasa.gov/HDEV/\n\nThe High Definition Earth Viewing (HDEV) experiment aboard the ISS was activated April 30, 2014. It is mounted on the External Payload Facility of the European Space Agency’s Columbus module. This experiment includes several commercial HD video cameras aimed at the earth which are enclosed in a pressurized and temperature controlled housing.  Video from these cameras is transmitted back to earth and also streamed live on this channel. While the experiment is operational, views will typically sequence though the different cameras. Between camera switches, a gray and then black color slate will briefly appear. Since the ISS is in darkness during part of each orbit, the images will be dark at those times. During periods of loss of signal with the ground or when HDEV is not operating, a gray color slate or previously recorded video may be seen.  \nAnalysis of this experiment will be conducted to assess the effects of the space environment on the equipment and video quality which may help decisions about cameras for future missions. High school students helped with the design of some of the HDEV components through the High Schools United with NASA to Create Hardware (HUNCH) program. Student teams will also help operate the experiment.  To learn more about the HDEV experiment, visit here:  http://www.nasa.gov/mission_pages/station/research/experiments/917.html",
+  //        "id" : "17074538",
+  //        "username" : "NASAtelevision",
+  //        "currentViewers" : 1048,
+  //        "thumbnailUrl" : "http://static-cdn1.ustream.tv/i/channel/picture/1/7/0/7/17074538/17074538,120x90,r:3.jpg",
+  //        "previewUrl" : "http://static-cdn1.ustream.tv/i/channel/picture/1/7/0/7/17074538/17074538,320x180,r:3.jpg",
+  //        "totalViews" : 53222984,
+  //        "userId" : "796050",
+  //        "creationDate" : "2014-01-27T18:31:39Z",
+  //        "lastStreamedAt" : "2015-09-17T07:17:42Z"
+  //      },
+  //      "live" : false,
+  //      "source" : "ustream",
+  //      "type" : "stream",
+  //      "authorId" : "iZP79DDdcJtv4BxjT",
+  //      "searchQuery" : "iss",
+  //      "fullDetails" : {
+  //        "_id" : "cELb8QTGM4Co2kZKr",
+  //        "id" : "17074538",
+  //        "title" : "ISS HD Earth Viewing Experiment",
+  //        "isProtected" : false,
+  //        "urlTitleName" : "iss-hdev-payload",
+  //        "description" : "***QUICK NOTES ABOUT HDEV VIDEO***\nBlack Image = International Space Station (ISS) is on the night side of the Earth. \n\nNo Audio = Normal. There is no audio by design. Add your own soundtrack.\n\nFor a display of the real time ISS location plus the HDEV imagery, visit here: http://eol.jsc.nasa.gov/HDEV/\n\nThe High Definition Earth Viewing (HDEV) experiment aboard the ISS was activated April 30, 2014. It is mounted on the External Payload Facility of the European Space Agency’s Columbus module. This experiment includes several commercial HD video cameras aimed at the earth which are enclosed in a pressurized and temperature controlled housing.  Video from these cameras is transmitted back to earth and also streamed live on this channel. While the experiment is operational, views will typically sequence though the different cameras. Between camera switches, a gray and then black color slate will briefly appear. Since the ISS is in darkness during part of each orbit, the images will be dark at those times. During periods of loss of signal with the ground or when HDEV is not operating, a gray color slate or previously recorded video may be seen.  \nAnalysis of this experiment will be conducted to assess the effects of the space environment on the equipment and video quality which may help decisions about cameras for future missions. High school students helped with the design of some of the HDEV components through the High Schools United with NASA to Create Hardware (HUNCH) program. Student teams will also help operate the experiment.  To learn more about the HDEV experiment, visit here:  http://www.nasa.gov/mission_pages/station/research/experiments/917.html",
+  //        "lastStreamedAt" : "2015-09-17T07:17:42Z",
+  //        "totalViews" : 53222984,
+  //        "rating" : "0.000",
+  //        "status" : "live",
+  //        "viewersNow" : "1048",
+  //        "url" : "http://www.ustream.tv/channel/iss-hdev-payload",
+  //        "embedTag" : "<object classid=\"clsid:d27cdb6e-ae6d-11cf-96b8-444553540000\" width=\"320\" height=\"260\" id=\"utv488309\"><param name=\"flashvars\" value=\"autoplay=false&amp;brand=embed&amp;cid=17074538\"/><param name=\"allowfullscreen\" value=\"true\"/><param name=\"allowscriptaccess\" value=\"always\"/><param name=\"movie\" value=\"http://www.ustream.tv/flash/viewer.swf\"/><embed flashvars=\"autoplay=false&amp;brand=embed&amp;cid=17074538\" width=\"320\" height=\"260\" allowfullscreen=\"true\" allowscriptaccess=\"always\" id=\"utv488309\" name=\"utv_n_599727\" src=\"http://www.ustream.tv/flash/viewer.swf\" type=\"application/x-shockwave-flash\" /></object>",
+  //        "imageUrl" : {
+  //          "small" : "http://static-cdn1.ustream.tv/i/channel/picture/1/7/0/7/17074538/17074538,120x90,r:3.jpg",
+  //          "medium" : "http://static-cdn1.ustream.tv/i/channel/picture/1/7/0/7/17074538/17074538,320x180,r:3.jpg"
+  //        },
+  //        "user" : {
+  //          "id" : "796050",
+  //          "userName" : "NASAtelevision",
+  //          "url" : "http://www.ustream.tv/user/NASAtelevision"
+  //        },
+  //        "_streamSource" : "ustream",
+  //        "username" : "NASAtelevision",
+  //        "creationDate" : "2014-01-27T18:31:39Z",
+  //        "currentViewers" : 1048,
+  //        "createdAtInUStreamTime" : "2014-01-27 10:31:39",
+  //        "live" : true,
+  //        "oneIfCurrent" : 1
+  //      },
+  //      "_id" : "oNGGos4wgLi45Z8ZW",
+  //      "addedAt" : "2015-09-17T16:49:35.474Z"
+  //    }
+  //  ],
+  //  "activeStreamId" : "oNGGos4wgLi45Z8ZW",
+  //  "onAirSince" : "2015-09-17T15:55:58.874Z",
+  //  "firstOnAirAt" : "2015-09-17T15:55:58.874Z",
+  //  "deleted" : false,
+  //  "contextBlocks" : [
+  //    {
+  //      "type" : "image",
+  //      "source" : "imgur",
+  //      "addedAt" : "2016-04-10T17:10:15.396Z",
+  //      "_id" : "uN7DMxEELSKgkGahZ",
+  //      "rank" : 0
+  //    },
+  //    {
+  //      "type" : "image",
+  //      "source" : "imgur",
+  //      "addedAt" : "2016-04-10T17:10:15.436Z",
+  //      "_id" : "7DLH4R5K69nmwQXbc",
+  //      "rank" : 0
+  //    },
+  //    {
+  //      "type" : "news",
+  //      "source" : "embedly",
+  //      "addedAt" : "2016-04-10T17:10:15.477Z",
+  //      "_id" : "9p8XQRR7Jdq4KjY5o",
+  //      "rank" : 0
+  //    },
+  //    {
+  //      "type" : "news",
+  //      "source" : "embedly",
+  //      "addedAt" : "2016-04-10T17:10:15.530Z",
+  //      "_id" : "4hKPBw9BR4AE7wBFa",
+  //      "rank" : 0
+  //    },
+  //    {
+  //      "type" : "news",
+  //      "source" : "embedly",
+  //      "addedAt" : "2016-04-10T17:10:15.595Z",
+  //      "_id" : "dGeo6ihBGLjm43gKQ",
+  //      "rank" : 0
+  //    },
+  //    {
+  //      "type" : "video",
+  //      "source" : "youtube",
+  //      "addedAt" : "2016-04-10T17:10:15.648Z",
+  //      "_id" : "PeDygKRBtkzJNC7jM",
+  //      "rank" : 0
+  //    },
+  //    {
+  //      "type" : "twitter",
+  //      "source" : "twitter",
+  //      "addedAt" : "2016-04-10T17:10:15.677Z",
+  //      "_id" : "Le5nAW7BaM2Cyri3n",
+  //      "rank" : 0
+  //    },
+  //    {
+  //      "type" : "twitter",
+  //      "source" : "twitter",
+  //      "addedAt" : "2016-04-10T17:10:15.770Z",
+  //      "_id" : "rhiHghRMdX4k29gyn",
+  //      "rank" : 0
+  //    },
+  //    {
+  //      "type" : "twitter",
+  //      "source" : "twitter",
+  //      "addedAt" : "2016-04-10T17:10:15.809Z",
+  //      "_id" : "zN9o6ipybRsKNiJJN",
+  //      "rank" : 0
+  //    },
+  //    {
+  //      "type" : "twitter",
+  //      "source" : "twitter",
+  //      "addedAt" : "2016-04-10T17:10:15.852Z",
+  //      "_id" : "oRyhFe27aRNCMruoN",
+  //      "rank" : 0
+  //    },
+  //    {
+  //      "type" : "text",
+  //      "source" : "plaintext",
+  //      "addedAt" : "2016-04-10T17:10:15.903Z",
+  //      "_id" : "RybasEE6vGgqvFogz",
+  //      "rank" : 0
+  //    },
+  //    {
+  //      "type" : "audio",
+  //      "source" : "soundcloud",
+  //      "addedAt" : "2016-04-10T17:10:15.924Z",
+  //      "_id" : "wi5tbTdKKhLEm2urS",
+  //      "rank" : 0
+  //    },
+  //    {
+  //      "type" : "link",
+  //      "source" : "embedly",
+  //      "addedAt" : "2016-04-10T17:10:15.954Z",
+  //      "_id" : "kN5kNSqDLrTA84A3w",
+  //      "rank" : 0
+  //    }
+  //  ],
+  //  "curatorInviteCodes" : [ ],
+  //  "favorited" : [ ],
+  //  "favoritedTotal" : 0,
+  //  "curatorWebcamStream" : {
+  //    "type" : "stream"
+  //  },
+  //  "analytics" : {
+  //    "views" : {
+  //      "byConnection" : 1,
+  //      "byIP" : 1,
+  //      "byId" : 0,
+  //      "total" : 1
+  //    },
+  //    "shares" : {
+  //      "byConnection" : 0,
+  //      "byIP" : 0,
+  //      "byId" : 0,
+  //      "total" : 0
+  //    }
+  //  }
+  //};
+  //},
 streamTags () {
   //Meteor.call()//IGNORE FOR NOW. JUST PRETEND WE HAVE TAGS FOR STREAMS
   return [{tag:'hello'},{tag:'world'},{tag:'bottle'},{tag:'neck'}];
@@ -1465,7 +1481,7 @@ contextBox () {
 }
 });
 Template.cards_with_deepstreams.onCreated(function(){
-  //this.subscribe('deepstreamPreviewContext', this.data.deepstream.shortId);
+  //this.subscribe('deepstreamPreviewContext', this.shortId);
 });
 Template.card_preview.onCreated(function(){
   //this.subscribe('deepstreamPreviewContext', this.data.deepstream.shortId);

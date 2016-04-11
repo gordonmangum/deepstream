@@ -559,13 +559,15 @@
 </template>
 
 <template name="card_preview">
-  {{#with streams}}
+  {{#each streams}}
 
         <li class="content-box">
 
           <div class="content-box-elements-container">
             <div class="preview-elements-container">
-              {{#with contextBox}}
+              {{#with deepstreamForContext}}
+              {{#each orderedContext}}
+
               <div class="card-container type-{{type}}">
                 <div class="card-type-container {{type}}">
                   <p class="card-type">{{type}}</p>
@@ -576,17 +578,26 @@
                 <div class="long-text-container">
                   <p class="long-text">{{reference.description}}</p>
                 </div>
-                <!--<div class="call-to-action-container">-->
-                  <!--<button class="call-to-action-button" type="button">{{callToActionType}}</button>-->
-                <!--</div>-->
               </div>
               <div class="underlying-preview-container">
                 <img class="underlying-preview" height="200px" src="/images/preview/news_nasa.gif" />
               </div>
+              {{/each}}
               {{/with}}
+
               <div class="enter-deepstream">
                 <svg class="enter-svg" width="120" height="120">
-                  <circle class="enter-circle" r="50" cx="60" cy="60" fill="gold" stroke="white" strokeWidth="8px"></circle>
+                  <defs>
+                    <!--<linearGradient id="strokeGradient" x1="0%" y1="0%" x2="100%" y2="0%">-->
+                      <!--<stop offset="0%"   stop-color="#fff"/>-->
+                      <!--<stop offset="100%" stop-color="red"/>-->
+                    <!--</linearGradient>-->
+                    <radialGradient id="strokeGradient">
+                      <stop offset="89%" stop-color="red"/>
+                      <stop offset="99%" stop-color="white"/>
+                    </radialGradient>
+                  </defs>
+                  <circle class="enter-circle" r="50" cx="60" cy="60" fill="gold" stroke="url(#strokeGradient)" stroke-width="3"></circle>
                   <text class="enter-text" fill="white" font-size="18px" x="0" y="20">
                     <tspan x="35" y="50">ENTER</tspan>
                     <tspan x="3" y="70">DEEPSTREAM</tspan>
@@ -636,7 +647,7 @@
 
         </li>
 
-{{/with}}
+{{/each}}
 
 </template>
 
