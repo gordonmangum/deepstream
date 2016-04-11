@@ -261,18 +261,6 @@
         $(document).ready(function(){
           setTimeout(function() {
             $('.context-area.list-mode').featuredDisplay();
-            /* first try
-            var availableContextCards = $('.list-item-context-plus-annotation.featured');
-            var arrayNumberCards = availableContextCards.length -1;
-            var selectedCardNumber = Math.floor(Math.random()*(arrayNumberCards+1));
-            console.log('the selected card is number ' + selectedCardNumber);
-            var selectedCard = availableContextCards.splice(selectedCardNumber, 1);
-            console.log(selectedCard[0]) //.animate({opacity: '1'});
-            selectedCard[0].fadeTo(1000, 1);
-            // check out http://jsfiddle.net/zKpp2/1/ for next inspiration.
-            console.info($('.list-item-context-plus-annotation.featured'));
-            console.info($('.list-item-context-plus-annotation.featured').length);
-            */
           }, 2000);
         });
       </script>
