@@ -44,8 +44,7 @@ Deepstream = (function() {
 
   Deepstream.prototype.orderedContext = function() {
     var that = this;
-
-    return _.sortBy(ContextBlocks.find({streamShortId: this.shortId}).fetch(), function(e){
+        return _.sortBy(ContextBlocks.find({streamShortId: this.shortId}).fetch(), function(e){
       return that.contextBlockSortFunction(e)
     });
   };

@@ -183,6 +183,7 @@ Meteor.publish("deepstreamContext", function(streamShortId) {
   });
 });
 
+
 Meteor.publish("deepstreamSuggestedContext", function(streamShortId) {
   check(streamShortId, String);
   return SuggestedContextBlocks.find({streamShortId: streamShortId, suggestionStatus: 'pending'},{

@@ -479,9 +479,17 @@ Template.card_preview.helpers({
 
 },
 deepstreamForContext () {
-  newContextDep.depend();
+  //newContextDep.depend();
   if (FlowRouter.subsReady()) {
-    return Deepstreams.findOne({shortId: this.shortId}, {reactive: false});
+    console.log("SHORTID ", this.shortId)
+    if(this.shortId){
+      console.log("orderedContext ", Deepstreams.findOne({shortId: this.shortId}, {reactive:false}).orderedContext());
+      return Deepstreams.findOne({shortId: this.shortId}, {reactive: false}).orderedContext();
+    }else{
+      return [];
+    }
+
+
   }
 },
   //streams () {
