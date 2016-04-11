@@ -566,42 +566,26 @@
   {{#each streams}}
 
         <li class="content-box">
-
           <div class="content-box-elements-container">
             <div class="preview-elements-container">
-              <p>Short id: {{shortId}}</p>
-              
-              {{orderedContextIds}}
-              
-              {{#each contextBlocks}}
-               {{_id}}
-               <p>{{type}}</p>
-              {{/each}}
-              
-              
-              {{#each orderedContext}}
-                {{_id}}
-              {{/each}}
-              
-              
-              {{#each orderedContext}}
 
-              <div class="card-container type-{{type}}">
-                <div class="card-type-container {{type}}">
-                  <p class="card-type">{{type}}</p>
+              {{#with deepstreamForContext}}
+                <div class="card-container type-{{type}}">
+                  <div class="card-type-container {{type}}">
+                    <p class="card-type">{{type}}</p>
+                  </div>
+                  <div class="headline-container">
+                    <p class="headline-text">{{reference.title}}</p>
+                  </div>
+                  <div class="long-text-container">
+                    <p class="long-text">{{reference.description}}</p>
+                  </div>
                 </div>
-                <div class="headline-container">
-                  <p class="headline-text">{{reference.title}}</p>
-                </div>
-                <div class="long-text-container">
-                  <p class="long-text">{{reference.description}}</p>
-                </div>
-              </div>
-              <div class="underlying-preview-container">
+                <div class="underlying-preview-container">
                 <img class="underlying-preview" height="200px" src="/images/preview/news_nasa.gif" />
               </div>
-              {{/each}}
 
+              {{/with}}
               <div class="enter-deepstream">
                 <svg class="enter-svg" width="120" height="120">
                   <defs>
