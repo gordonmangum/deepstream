@@ -566,9 +566,9 @@
           <div class="content-box-elements-container">
             <div class="preview-elements-container">
               {{#with contextBox}}
-              <div class="card-container">
+              <div class="card-container type-{{type}}">
                 <div class="card-type-container {{type}}">
-                  <p class="card-type">{{type}} card</p>
+                  <p class="card-type">{{type}}</p>
                 </div>
                 <div class="headline-container">
                   <p class="headline-text">{{reference.title}}</p>
@@ -576,15 +576,24 @@
                 <div class="long-text-container">
                   <p class="long-text">{{reference.description}}</p>
                 </div>
-                <div class="call-to-action-container">
-                  <button class="call-to-action-button" type="button">{{callToActionType}}</button>
-                </div>
+                <!--<div class="call-to-action-container">-->
+                  <!--<button class="call-to-action-button" type="button">{{callToActionType}}</button>-->
+                <!--</div>-->
               </div>
               <div class="underlying-preview-container">
                 <img class="underlying-preview" height="200px" src="/images/preview/news_nasa.gif" />
               </div>
-
               {{/with}}
+              <div class="enter-deepstream">
+                <svg class="enter-svg" width="120" height="120">
+                  <circle class="enter-circle" r="50" cx="60" cy="60" fill="gold" stroke="white" strokeWidth="8px"></circle>
+                  <text class="enter-text" fill="white" font-size="18px" x="0" y="20">
+                    <tspan x="35" y="50">ENTER</tspan>
+                    <tspan x="3" y="70">DEEPSTREAM</tspan>
+                  </text>
+                </svg>
+                <!--<input class="circle-button" type="button" value="ENTER DEEPSTREAM"/>-->
+              </div>
               <div class="details-container">
                 <div class="status-and-views-container">
                   <div class="status-container">
@@ -595,9 +604,7 @@
                     {{/if}}
 
                   </div>
-                  <div class="enter-deepstream">
-                    <svg class="enter-svg" width="40" height="40"><circle class="enter-circle" r="20" cx="20" cy="20" fill="red"></circle></svg>
-                  </div>
+
                   <div class="current-viewers-container">
                     <p class="current-viewers-text">{{formatNumber viewCount}} VIEWS</p>
                   </div>

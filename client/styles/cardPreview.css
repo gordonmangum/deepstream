@@ -56,8 +56,9 @@ div.card-container {
     margin:0px;
     z-index:3;
     overflow: hidden;
-    background: linear-gradient( black, black, transparent);
+    /*background: linear-gradient( black, black, transparent);*/
 }
+
 div.underlying-preview-container{
     height:200px;
     width:356px;
@@ -78,22 +79,26 @@ div.card-type-container {
     position: relative;
     display: block;
     width:100%;
-    height:15px;
+    height:30px;
     margin: 0px;
     padding: 0px;
 }
 p.card-type {
     position: relative;
     font-variant: small-caps;
-    color:whitesmoke;
+    color:rgba(255,255,255,0.8);
     padding:0px;
     margin: 0px;
     top:-4px;
-    text-align:center;
+    text-align:left;
     font-family: Muli;
+    font-size:25px;
+}
+div.type-news{
+    background: linear-gradient(darkslategrey, transparent);
 }
 div.news {
-    background-color:lightslategray;
+    /*background-color:lightslategray;*/
     width:100%;
 }
 div.video {
@@ -108,9 +113,10 @@ div.headline-container {
     margin-top:2px;
     font-weight:600;
     top:10px;
+    margin-left:3px;
 }
 p.headline-text {
-    padding: 0px;
+    padding: 3px 3px 0px 0px;
     margin: 0px;
     font-family: Muli;
     font-size:14px;
@@ -118,7 +124,7 @@ p.headline-text {
     font-style:oblique;
 }
 div.long-text-container {
-    padding: 0px;
+    padding: 10px 3px 0px 0px;
 }
 p.long-text {
     font-family:Muli;
@@ -155,8 +161,8 @@ div.status-and-views-container {
     width: 100%;
 }
 div.status-container {
-    display: inline-block;
-    width: 100px;
+    display: inline;
+    width: 60px;
     padding-left:2px;
     margin:1px;
 }
@@ -173,10 +179,32 @@ p.status-text {
     left:-15px;
     margin:0px;
     padding: 1px 1px 1px 1px;
+    width:50px;
+}
+
+div.enter-deepstream{
+    display: block;
+    position: relative;
+    top: -260px;
+    z-index: 5;
+    margin: auto;
+    width: 100%;
+    height: 40px;
+    text-align: center;
+}
+svg.enter-svg{
+    display: inline-block;
+}
+input.circle-button{
+    background-color:red;
+    border-radius:80px;
+    border:1px solid white;
+    min-height:50px;
+    white-space: normal;
 }
 div.current-viewers-container {
     display: inline-block;
-    width: 48%;
+    width: 80px;
     padding-right:2px;
     float:right;
 
@@ -245,19 +273,4 @@ p.tag-name{
     background-color:darkorchid;
     font-family:Muli;
     font-size:12px;
-}
-
-div.enter-deepstream{
-    display: inline;
-    position: relative;
-    top:-40px;
-    z-index: 5;
-    left: 60px;
-    width:40px;
-    height:40px;
-}
-svg.enter-svg{
-    display: inline-block;
-    width:100;
-    height:100;
 }
