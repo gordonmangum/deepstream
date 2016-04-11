@@ -1165,6 +1165,7 @@
   &.featured{
     margin-top: 0;
     position: absolute;
+    box-shadow: 0px 0px 15px #F6C406;
   }
   .annotation-section{
   }
