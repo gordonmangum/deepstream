@@ -48,8 +48,6 @@ ContextBlock = (function () {
     }
   };
 
-
-
   return ContextBlock;
 })();
 

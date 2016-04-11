@@ -714,17 +714,24 @@ Template.card_preview.helpers({
       }
     }
   };
+  },
+contextBox () {
+  //we need to return a workable set of data
+  if (FlowRouter.subsReady()) {
+    var boxes = this.contextBlocks;
+    for (var i = 0; i < 3; i++) {
+      var box = boxes[i];
+      var boxId = box._id;
+      console.log(boxId);
+      console.log('contextBlocks: ', ContextBlocks.findOne());
+      console.log('Deepstreams', Deepstreams.findOne());
+    }
   }
+}
 });
 Template.cards_with_deepstreams.onCreated(function(){
   //this.subscribe('deepstreamPreviewContext', this.data.deepstream.shortId);
 });
-//Template.card_preview.helpers({
-//  contextBox () {
-//  console.log('card preview helper..this: ',this);
-//  return this.contextBlocks[0];
-//}
-//});
 Template.card_preview.onCreated(function(){
   //this.subscribe('deepstreamPreviewContext', this.data.deepstream.shortId);
 });

@@ -561,16 +561,16 @@
 <template name="card_preview">
   {{#with streams}}
     <p>{{_id}}</p>
-    {{#with contextBlocks.[1]}}
+    {{contextBox}}
         <li class="content-box">
           <div class="content-box-elements-container">
             <div class="preview-elements-container">
               <div class="card-container">
-                <div class="card-type-container {{cardContentType}}">
-                  <p class="card-type">{{cardContentType}} card</p>
+                <div class="card-type-container {{type}}">
+                  <p class="card-type">{{type}} card</p>
                 </div>
                 <div class="headline-container">
-                  <p class="headline-text">temp {{title}}</p>
+                  <p class="headline-text">{{title}}</p>
                 </div>
                 <div class="long-text-container">
                   <p class="long-text">{{longText}}</p>
@@ -613,7 +613,6 @@
           </div>
 
         </li>
-      {{/with}}
 {{/with}}
 
 </template>
