@@ -333,8 +333,17 @@ window.embedMode = function(){
   return Session.equals('embedMode', true);
 };
 
+window.featuredMode = function(){
+  return Session.equals('featuredMode', true);
+};
+
 window.activateEmbedMode = function(){
   return Session.set('embedMode', true);
+};
+
+window.activateFeaturedMode = function(){
+  Session.set('embedMode', true);
+  return Session.set('featuredMode', true);
 };
 
 window.isMobile = function(){

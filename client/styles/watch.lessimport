@@ -358,6 +358,9 @@
     bottom:0;
     right:0;
   }
+  &.featured {
+    height: 100%;
+  }
   embed{
     .size-to-fit;
   }
