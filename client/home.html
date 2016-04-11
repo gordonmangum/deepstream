@@ -342,7 +342,7 @@
             </li>
           {{/if}}
           <!--END OF FEATURED DEEPSTREAM-->
-          {{#if showLivestreams}}
+          <!--{{#if showDeepStreams}}-->
             <li>
               <div class="streams-container container">
                 <h2>LIVESTREAMS</h2>
@@ -352,10 +352,10 @@
                 {{#if noMoreStreamResults}}
                   {{noMoreStreamResults}}
                 {{/if}}
-                {{> streams}}
+                {{> cards_with_deepstreams}}
               </div>
             </li>
-          {{/if}}
+          <!--{{/if}}-->
         </ol>
       </div>
     </div>
@@ -414,17 +414,24 @@
 </template>
 
 <template name="streams">
+  <div id="content-list-area">
+    <ul id="list">
   {{#each streams}}
     <!--{{> stream_preview }}-->
-    {{> streams_and_cards_preview}}
   {{/each}}
+
+    </ul>
+  </div>
 </template>
+
+
 
 <template name="my_streams">
   <h1>Your Deep Streams</h1>
   {{#each streams}}
       {{> deepstream_preview linkToCurate=true deepstream=this showDeleteButton=true }}
   {{/each}}
+
 </template>
 
 <template name="deepstream_preview">
@@ -535,10 +542,26 @@
   </div>
 </template>
 
-<template name="streams_and_cards_preview">
-  <div id="content-list-area">
-    <ul id="list">
-      {{#each contentBoxes}}
+<template name="create_deepstream">
+  <button class="create-deepstream">
+    <span class="text">Create</span>
+  </button>
+</template>
+
+
+<!--VIVIAN IS HAVING FUN DOWN HERE: -->
+<template name="cards_with_deepstreams">
+    {{> card_preview}}
+</template>
+
+<template name="deepstream_behind_card">
+
+</template>
+
+<template name="card_preview">
+  {{#with streams}}
+    <p>{{_id}}</p>
+    {{#with contextBlocks.[1]}}
         <li class="content-box">
           <div class="content-box-elements-container">
             <div class="preview-elements-container">
@@ -547,7 +570,7 @@
                   <p class="card-type">{{cardContentType}} card</p>
                 </div>
                 <div class="headline-container">
-                  <p class="headline-text">{{headline}}</p>
+                  <p class="headline-text">temp {{title}}</p>
                 </div>
                 <div class="long-text-container">
                   <p class="long-text">{{longText}}</p>
@@ -562,7 +585,7 @@
                     <p class="status-text">{{status}}</p>
                   </div>
                   <div class="current-viewers-container">
-                    <p class="current-viewers-text">{{currentViewers}}</p>
+                    <p class="current-viewers-text">{{formatNumber viewCount}}</p>
                   </div>
                 </div>
                 <div class="title-container">
@@ -590,15 +613,8 @@
           </div>
 
         </li>
-      {{/each}}
-
-    </ul>
-  </div>
+      {{/with}}
+{{/with}}
 
 </template>
 
-<template name="create_deepstream">
-  <button class="create-deepstream">
-    <span class="text">Create</span>
-  </button>
-</template>
