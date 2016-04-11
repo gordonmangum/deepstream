@@ -6,7 +6,24 @@
     {{> deepstream_about_overlay}}
   {{/if}}
 
-
+  {{#if featuredMode}}
+    {{#if featuredPeek}}
+      <style>
+        #videoOverlay {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0px;
+          left: 0px;
+          color: red;
+          font-size: 40px;
+          z-index: 10;
+        }
+      </style>
+      <div id="videoOverlay"></div>
+    {{/if}}
+  {{/if}}
+  
   <div class="watch {{#if thisDeepstream.onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}}" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
     {{#with thisDeepstream}}
     
@@ -265,21 +282,23 @@
           }, 2000);
         });
       </script>
-      <div class="right-section featured-context-container">
-        <div class="context-browser" style="height:100%">
-          {{#with deepstreamForContext}}
-          <div class="context-area list-mode">
-            {{#each orderedContext}}
-              {{> list_item_context_section}}
-            {{/each}}
+      {{#if featuredPeek}}
+        <div class="right-section featured-context-container">
+          <div class="context-browser" style="height:100%">
+            {{#with deepstreamForContext}}
+            <div class="context-area list-mode">
+              {{#each orderedContext}}
+                {{> list_item_context_section}}
+              {{/each}}
+            </div>
+            {{/with}}
           </div>
-          {{/with}}
         </div>
-      </div>
+      {{/if}}
     {{/if}}
     
 
-    {{#unless featuredMode}}
+    {{#unless featuredPeek}}
     <div class="right-section {{#unless showRightSection}}collapsed{{/unless}}">
         {{#if showOpenSidebarIcon}}
           <div class="bar-open-close fadeIn fadeOut animated-fast">
