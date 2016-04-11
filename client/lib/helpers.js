@@ -337,6 +337,11 @@ window.activateEmbedMode = function(){
   return Session.set('embedMode', true);
 };
 
+window.activateFeaturedMode = function(){
+  Session.set('embedMode', true);
+  return Session.set('featuredMode', true);
+};
+
 window.isMobile = function(){
   return (Meteor.Device.isPhone()) && !Meteor.Device.isBot()
 };
