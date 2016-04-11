@@ -733,6 +733,7 @@ callToActionType () {
   }
 },
 contextBox () {
+  //context blocks - >> orderedContext
   //we need to return a workable set of data
   if (FlowRouter.subsReady()) {
     if(!alreadyRan){
