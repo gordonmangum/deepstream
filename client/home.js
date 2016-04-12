@@ -756,6 +756,7 @@ callToActionType () {
     case "image":
       return 'ZOOM';
       break;
+
   }
 },
 contextCard () {
@@ -1627,14 +1628,27 @@ Template.card_preview.events({
   "click .call-to-action-button": function(){
     FlowRouter.go('/watch/'+this.userPathSegment+"/"+this.streamPathSegment);
   },
-  "click .preview-livestream": function(){
+  "click .preview-livestream": function(event){
+    var elem = event.currentTarget;
     //we want to change to previewing the iframe
     //if there's no iframe, add one and autoplay video :D
     //after 10 seconds, remove.
+    var iframe = document.createElement('iframe');
+    $(iframe).attr('class','mini-view');
+    $(iframe).attr('width', '356px');
+    $(iframe).attr('height', '195px');
+    $(iframe).attr('src', returnMe);
+
+    $($(event.currentTarget).find(".underlying-preview-container")[0]).append($(iframe));
+
+    setTimeout(function(){
+      $($(elem).find(".mini-view")).remove();
+    },10000);
 
   },
   "mouseover li.content-box": function(event){
     //on hover, change the status-text to "PREVIEW"
+    var elem = event.currentTarget;
     var statusText = $(event.currentTarget).find(".status-text")[0];
     var deepstream = this;
     var oldStatusText = $(statusText).text();
@@ -1670,17 +1684,6 @@ Template.card_preview.events({
             }
           }
         }
-      var iframe = document.createElement('iframe');
-      $(iframe).attr('class','mini-view');
-      $(iframe).attr('width', '356px');
-      $(iframe).attr('height', '195px');
-      $(iframe).attr('src', returnMe);
-
-      $($(event.currentTarget).find(".underlying-preview-container")[0]).append($(iframe));
-      setTimeout(function(){
-        $($(event.currentTarget).find(".underlying-preview-container")[0]).remove($(iframe));
-      },10000);
-
 
       //in order to pulse, make the box bigger then back to normal
       //$(statusText).css('transform', 'scale(0.9)');
