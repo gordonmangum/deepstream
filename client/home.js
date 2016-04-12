@@ -865,7 +865,7 @@ videoEmbed () {
         console.log('videoStream: ', videoStream);
         if(videoStream.source=='ustream'){
 
-          returnMe = "https://www.ustream.tv/embed/"+videoStream.reference.id+"?html5ui=1&autoplay=true";
+          returnMe = "http://www.ustream.tv/embed/"+videoStream.reference.id+"?html5ui=1&autoplay=true";
           foundOne = true;
         }else{
           if(videoStream.source == 'youtube'){
@@ -1620,8 +1620,8 @@ Template.card_preview.onCreated(function(){
   //this.subscribe('deepstreamPreviewContext', this.data.deepstream.shortId);
 });
 Template.card_preview.events({
-  "click .enter-circle": function(){
-    console.log("TAKE ME TO...")
+  "click .call-to-action-button": function(){
+    FlowRouter.go('/watch/'+this.userPathSegment+"/"+this.streamPathSegment);
   }
 });
 Template.deepstream_behind_card.onCreated(function(){
