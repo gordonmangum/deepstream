@@ -859,10 +859,10 @@ videoEmbed () {
   var vid = this;
   var returnMe;
   var foundOne = false;
-  console.log('vid.streams: ', vid.streams);
+
   vid.streams.forEach(function(videoStream, index){
       if(!foundOne){
-        console.log('videoStream: ', videoStream);
+
         if(videoStream.source=='ustream'){
 
           returnMe = "http://www.ustream.tv/embed/"+videoStream.reference.id+"?html5ui=1&autoplay=true";
@@ -880,6 +880,10 @@ videoEmbed () {
 
   });
 return returnMe;
+},
+previewImage () {
+  console.log(this.streams[0].reference.previewUrl);
+  return this.streams[0].reference.previewUrl;
 },
 contextBox () {
   //context blocks - >> orderedContext
@@ -1622,6 +1626,76 @@ Template.card_preview.onCreated(function(){
 Template.card_preview.events({
   "click .call-to-action-button": function(){
     FlowRouter.go('/watch/'+this.userPathSegment+"/"+this.streamPathSegment);
+  },
+  "click .preview-livestream": function(){
+    //we want to change to previewing the iframe
+    //if there's no iframe, add one and autoplay video :D
+    //after 10 seconds, remove.
+
+  },
+  "mouseover li.content-box": function(event){
+    //on hover, change the status-text to "PREVIEW"
+    var statusText = $(event.currentTarget).find(".status-text")[0];
+    var deepstream = this;
+    var oldStatusText = $(statusText).text();
+    if(oldStatusText!=='PREVIEW ME'){
+      $(statusText).data('old-text', oldStatusText);
+      $(statusText).text("PREVIEW ME");
+
+      setTimeout(function(){
+        $(statusText).text($(statusText).data('old-text'));
+      },5000);
+      // <iframe class="mini-view" id="{{streamShortId}}" width="356px" height="195px" src="{{videoEmbed}}" allowfullscreen webkitallowfullscreen scrolling="no" frameborder="0"></iframe>
+
+      var streamSources = deepstream.streams;
+      var foundOne= false;
+      var returnMe;
+        for(var i = 0; i<streamSources.length; i++){
+          var videoStream = streamSources[i];
+          if(!foundOne){
+            if(videoStream.source=='ustream'){
+
+              returnMe = "http://www.ustream.tv/embed/"+videoStream.reference.id+"?html5ui=1&autoplay=true";
+              foundOne = true;
+              break;
+            }else{
+              if(videoStream.source == 'youtube'){
+                //returnMe = 'https://www.youtube.com/embed/' + videoStream.reference.id + '?enablejsapi=1&modestbranding=1&rel=0&iv_load_policy=3&autohide=1&loop=1&playlist=' +videoStream.reference.id+"&autoplay=true";
+                returnMe = "https://www.youtube.com/embed/"+videoStream.reference.id+"?autoplayplay=1";
+                foundOne = true;
+                break;
+              }else{
+                returnMe = false;
+              }
+            }
+          }
+        }
+      var iframe = document.createElement('iframe');
+      $(iframe).attr('class','mini-view');
+      $(iframe).attr('width', '356px');
+      $(iframe).attr('height', '195px');
+      $(iframe).attr('src', returnMe);
+
+      $($(event.currentTarget).find(".underlying-preview-container")[0]).append($(iframe));
+      setTimeout(function(){
+        $($(event.currentTarget).find(".underlying-preview-container")[0]).remove($(iframe));
+      },10000);
+
+
+      //in order to pulse, make the box bigger then back to normal
+      //$(statusText).css('transform', 'scale(0.9)');
+      //setTimeout(function(){
+      //  $(statusText).css('transform', 'scale(0.1)');
+      //},500);
+      //setTimeout(function(){
+      //  $(statusText).css('transform', 'scale(0.9)');
+      //},500);
+      //setTimeout(function(){
+      //  $(statusText).css('transform', 'scale(1)');
+      //},500);
+
+    }
+
   }
 });
 Template.deepstream_behind_card.onCreated(function(){

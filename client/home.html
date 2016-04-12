@@ -629,12 +629,7 @@
               {{/with}}
               {{/with}}
               <div class="underlying-preview-container">
-                {{#if videoEmbed}}
-                  <iframe class="mini-view" id="{{streamShortId}}" width="356px" height="195px" src="{{videoEmbed}}" allowfullscreen webkitallowfullscreen scrolling="no" frameborder="0"></iframe>
-                  <!--<iframe  src="{{streamPathSegment}}" frameborder="0" height="200px" width="358px" ></iframe>-->
-                {{else}}
-                  <img class="underlying-preview" height="195px" src="/images/preview/news_nasa.gif" />
-                {{/if}}
+                <img class="underlying-preview" height="195px" src="{{previewImage}}" />
               </div>
 
               <div class="enter-deepstream">

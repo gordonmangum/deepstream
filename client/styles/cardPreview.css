@@ -71,14 +71,20 @@ div.underlying-preview-container{
     position: relative;
     z-index: -1;
     top:-200px;
+    border:1px solid white;
 }
 img.underlying-preview{
     display: block;
     position: relative;
-    border:1px solid white;
+    /*border:1px solid white;*/
     /*z-index: -1;*/
     /*top:-200px;*/
     /*border:5px solid yellow;*/
+}
+iframe.mini-view{
+    display: block;
+    position: relative;
+    top:-200px;
 }
 .mini-view{
     /*height:200px;*/
@@ -106,23 +112,23 @@ p.card-type {
     z-index:2;
 }
 div.type-news{
-    background: linear-gradient(black, darkslategrey, transparent);
+    background: linear-gradient(black, rgba(47, 79, 79,0.8), transparent);
     /*box-shadow: 3px 3px 3px rgba(255,255,255,0.7);*/
 }
 div.type-video{
-    background: linear-gradient(black,red, transparent);
+    background: linear-gradient(black, rgba(100, 0, 0, 0.8), transparent);
     /*box-shadow: 3px 3px 3px rgba(255,255,255,0.7);*/
 }
 div.type-twitter{
-    background: linear-gradient(deepskyblue, transparent);
+    background: linear-gradient(black , rgba(0, 191, 255, 0.8), transparent);
     /*box-shadow: 3px 3px 3px rgba(255,255,255,0.7);*/
 }
 div.type-link{
-    background: linear-gradient(black,navy, transparent);
+    background: linear-gradient(black, rgba(0,0,128,0.8), transparent);
     /*box-shadow: 3px 0 15px -4px rgba(255, 255, 255, 0.8), -3px 0 8px -4px rgba(255, 255, 255, 0.8);*/
 }
 div.type-image{
-    background: linear-gradient(darkorange, transparent);
+    background: linear-gradient(black, rgba(255,140,0,0.8), transparent);
 }
 div.news {
     /*background-color:lightslategray;*/
