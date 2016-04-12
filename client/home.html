@@ -616,6 +616,15 @@
                   <div class="headline-container">
                     <p class="headline-text">{{reference.title}}</p>
                   </div>
+
+                  <div class="card-author-container">
+                  {{#if reference.providerName}}
+                    <p class="card-author-text">submitted by: {{reference.providerName}}</p>
+                    {{else}}
+                    <p class="card-author-text">submitted by: {{reference.username}}</p>
+                  {{/if}}
+                    </div>
+
                   <div class="long-text-container">
                     <p class="long-text">{{reference.description}}</p>
                   </div>

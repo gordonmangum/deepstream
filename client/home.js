@@ -759,7 +759,7 @@ callToActionType () {
   }
 },
 contextCard () {
-
+//returns the context card
   var cards = this.orderedContext();//.orderedContext();
   var foundOne = false;
   var returnMe;
@@ -855,11 +855,11 @@ contextCard () {
 
 },
 videoEmbed () {
+  //returns the url for embedding URL or false if it's not a ustream/youtube source
   var vid = this;
   var returnMe;
   var foundOne = false;
   console.log('vid.streams: ', vid.streams);
-  //if(!alreadyGotVid){
   vid.streams.forEach(function(videoStream, index){
       if(!foundOne){
         console.log('videoStream: ', videoStream);
@@ -879,11 +879,6 @@ videoEmbed () {
       }
 
   });
-  //  alreadyGotVid=true;
-  //}else{
-  //  returnMe = false;
-  //}
-  console.log('video embed return: ', returnMe);
 return returnMe;
 },
 contextBox () {

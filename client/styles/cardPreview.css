@@ -96,7 +96,7 @@ div.card-type-container {
 p.card-type {
     position: relative;
     font-variant: small-caps;
-    color:rgba(255,255,255,0.6);
+    color:rgba(255,255,255,0.4);
     padding:0px;
     margin: 0px;
     top:5px;
@@ -141,7 +141,7 @@ div.link{
 div.headline-container {
     margin-top:2px;
     font-weight:600;
-    top:10px;
+    top:5px;
     margin-left:3px;
 }
 p.headline-text {
@@ -152,8 +152,21 @@ p.headline-text {
     line-height:14px;
     font-style:oblique;
 }
+div.card-author-container{
+    padding: 0px;
+    margin: 0px;
+    display: block;
+    font-family: Muli;
+    font-size:12px;
+    font-style:italic;
+}
+p.card-author-text{
+    padding: 0px;
+    margin-left:5px;
+}
 div.long-text-container {
-    padding: 10px 10px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    margin: 0px;
 }
 p.long-text {
     font-family:Muli;
@@ -172,7 +185,8 @@ div.call-to-action-container {
     border:1px solid whitesmoke;
     text-align: center;
     margin:auto;
-    background-color:transparent;
+    background-color:rgba(255,255,255,0.1);
+    color:#f6c406;
 }
 div.details-container {
     position: relative;
@@ -204,7 +218,6 @@ p.status-text {
     font-variant: small-caps;
     font-style: italic;
     color:white;
-    background-color:red;
     font-size:18px;
     border:1px solid white;
     top:90px;
@@ -214,7 +227,12 @@ p.status-text {
     z-index:10;
     /*width:50px;*/
 }
-
+p.live{
+    background-color:red;
+}
+p.playback{
+    background-color:coral;
+}
 div.enter-deepstream{
     display: block;
     position: relative;
