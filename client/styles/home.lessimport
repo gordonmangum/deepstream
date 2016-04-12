@@ -205,6 +205,10 @@ div.logo-title {
   .hover-shadow;
 }
 
+.status-container{
+  cursor: pointer;
+}
+
 .deepstream-preview{
   @width: 570px;
   @stream-image-width: 290px;
