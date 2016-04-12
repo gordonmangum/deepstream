@@ -680,7 +680,9 @@ var saveStreamTitle = function(template){
 
 Template.watch_page.events({
   'click #videoOverlay' (e,t){
-    Session.set('featuredPeek', false);
+    $('.right-section.featured-context-container').fadeOut(1000, function(){
+      Session.set('featuredPeek', false);
+    });
     analytics.track('Clicked featured homepage stream to expand', trackingInfoFromPage());
   },
   'click .set-main-stream' (e, t){
