@@ -1633,17 +1633,45 @@ Template.card_preview.events({
     //we want to change to previewing the iframe
     //if there's no iframe, add one and autoplay video :D
     //after 10 seconds, remove.
+    var deepstream = this;
+
+    var streamSources = deepstream.streams;
+    var foundOne= false;
+    var returnMe;
+    for(var i = 0; i<streamSources.length; i++){
+      var videoStream = streamSources[i];
+      if(!foundOne){
+        if(videoStream.source=='ustream'){
+
+          returnMe = "http://www.ustream.tv/embed/"+videoStream.reference.id+"?html5ui=1&autoplay=true";
+          foundOne = true;
+          break;
+        }else{
+          if(videoStream.source == 'youtube'){
+            //returnMe = 'https://www.youtube.com/embed/' + videoStream.reference.id + '?enablejsapi=1&modestbranding=1&rel=0&iv_load_policy=3&autohide=1&loop=1&playlist=' +videoStream.reference.id+"&autoplay=true";
+            returnMe = "https://www.youtube.com/embed/"+videoStream.reference.id+"?autoplayplay=1";
+            foundOne = true;
+            break;
+          }else{
+            returnMe = false;
+          }
+        }
+      }
+    }
+    console.log('return Me: ', returnMe);
     var iframe = document.createElement('iframe');
     $(iframe).attr('class','mini-view');
     $(iframe).attr('width', '356px');
-    $(iframe).attr('height', '195px');
+    $(iframe).attr('height', '200px');
     $(iframe).attr('src', returnMe);
 
-    $($(event.currentTarget).find(".underlying-preview-container")[0]).append($(iframe));
-
+    //var iframeContainer = $(event.target).parent().parent().parent().siblings('.underlying-preview-container');//.siblings(".underlying-preview-container"));
+    $(event.target).parent().parent().parent().parent().append($(iframe));
+    //$(iframeContainer).append($(iframe));
+    var et = event.target;
     setTimeout(function(){
-      $($(elem).find(".mini-view")).remove();
-    },10000);
+      $(et).parent().parent().parent().parent().find(".mini-view").remove();
+    },15000);
 
   },
   "mouseover li.content-box": function(event){
@@ -1652,38 +1680,15 @@ Template.card_preview.events({
     var statusText = $(event.currentTarget).find(".status-text")[0];
     var deepstream = this;
     var oldStatusText = $(statusText).text();
-    if(oldStatusText!=='PREVIEW ME'){
+    if(oldStatusText!=='CLICK ME TO PREVIEW'){
       $(statusText).data('old-text', oldStatusText);
-      $(statusText).text("PREVIEW ME");
+      $(statusText).text("CLICK ME TO PREVIEW");
 
       setTimeout(function(){
         $(statusText).text($(statusText).data('old-text'));
       },5000);
       // <iframe class="mini-view" id="{{streamShortId}}" width="356px" height="195px" src="{{videoEmbed}}" allowfullscreen webkitallowfullscreen scrolling="no" frameborder="0"></iframe>
 
-      var streamSources = deepstream.streams;
-      var foundOne= false;
-      var returnMe;
-        for(var i = 0; i<streamSources.length; i++){
-          var videoStream = streamSources[i];
-          if(!foundOne){
-            if(videoStream.source=='ustream'){
-
-              returnMe = "http://www.ustream.tv/embed/"+videoStream.reference.id+"?html5ui=1&autoplay=true";
-              foundOne = true;
-              break;
-            }else{
-              if(videoStream.source == 'youtube'){
-                //returnMe = 'https://www.youtube.com/embed/' + videoStream.reference.id + '?enablejsapi=1&modestbranding=1&rel=0&iv_load_policy=3&autohide=1&loop=1&playlist=' +videoStream.reference.id+"&autoplay=true";
-                returnMe = "https://www.youtube.com/embed/"+videoStream.reference.id+"?autoplayplay=1";
-                foundOne = true;
-                break;
-              }else{
-                returnMe = false;
-              }
-            }
-          }
-        }
 
       //in order to pulse, make the box bigger then back to normal
       //$(statusText).css('transform', 'scale(0.9)');
