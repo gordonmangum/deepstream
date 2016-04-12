@@ -682,6 +682,9 @@ Template.watch_page.events({
   'click #videoOverlay' (e,t){
     $('.right-section.featured-context-container').fadeOut(1000, function(){
       Session.set('featuredPeek', false);
+      Meteor.setTimeout(function(){
+        $('.right-section').fadeIn(1000);
+      },100);
     });
     analytics.track('Clicked featured homepage stream to expand', trackingInfoFromPage());
   },
