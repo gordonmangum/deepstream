@@ -60,7 +60,7 @@ div.card-container {
     margin:auto;
     z-index:3;
     overflow: hidden;
-    /*background: linear-gradient( black, black, transparent);*/
+    background: linear-gradient( transparent, black, transparent);
 }
 
 div.underlying-preview-container{
@@ -114,6 +114,9 @@ p.card-type {
     font-family: Muli;
     font-size:35px;
     z-index:2;
+}
+div.card-container{
+
 }
 div.type-news{
     background: linear-gradient(black, rgba(47, 79, 79,0.8), transparent);
