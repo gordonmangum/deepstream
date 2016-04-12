@@ -130,8 +130,13 @@ div.type-link{
 div.type-image{
     background: linear-gradient(black, rgba(255,140,0,0.8), transparent);
 }
-div.type-image{
+div.type-audio{
     background: linear-gradient(black, rgba(128, 0, 128, 0.8), transparent);
+}
+div.type-map{
+    background: linear-gradient(black, rgba(130, 200, 128, 0.8), transparent);
+}]div.type-text{
+    background: linear-gradient(black, rgba(130, 130, 128, 0.8), transparent);
 }
 div.news,div.video, div.image,div.link,div.audio {
     /*background-color:lightslategray;*/

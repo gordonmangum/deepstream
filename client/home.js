@@ -1628,7 +1628,7 @@ Template.card_preview.events({
   "click .call-to-action-button": function(){
     FlowRouter.go('/watch/'+this.userPathSegment+"/"+this.streamPathSegment);
   },
-  "click .preview-livestream": function(event){
+  "click .status-text": function(event){
     var elem = event.currentTarget;
     //we want to change to previewing the iframe
     //if there's no iframe, add one and autoplay video :D
