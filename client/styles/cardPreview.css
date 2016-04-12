@@ -22,21 +22,23 @@ div#content-list-area {
 li.content-box {
     position: relative;
     display: inline-block;
-    height:300px;
+    height:380px;
     width:33%;
     margin:auto;
+    padding: 5px;
 
     /*background-color: blue;*/
 }
 div.content-box-elements-container {
     position: relative;
     display: block;
-    /*background: linear-gradient( black, black, transparent);*/
-    /*border:2px solid red;*/
+    /*background-color: rgba(0,0,0,0.6);*/
+    /*border:2px solid #f6c406;*/
     width: 360px;
-    height:100%;;
-    padding: 0px;
-    margin:auto;
+    height:90%;;
+    margin:5px;
+    /*text-align:center;*/
+    /*margin:auto;*/
     z-index: 3;
 }
 div.preview-elements-container {
@@ -45,16 +47,17 @@ div.preview-elements-container {
     width:100%;
     height:100%;
     padding: 0px;
+    text-align:left;
     margin:0px;
 }
 div.card-container {
     position: relative;
     display: block;
-    width:100%;
+    width:90%;
     height:200px;
     /*border-bottom:1px solid pink;*/
     padding:0px;
-    margin:0px;
+    margin:auto;
     z-index:3;
     overflow: hidden;
     /*background: linear-gradient( black, black, transparent);*/
@@ -72,9 +75,15 @@ div.underlying-preview-container{
 img.underlying-preview{
     display: block;
     position: relative;
+    border:1px solid white;
     /*z-index: -1;*/
     /*top:-200px;*/
     /*border:5px solid yellow;*/
+}
+.mini-view{
+    /*height:200px;*/
+    /*width:356px;*/
+    border:1px solid white;
 }
 div.card-type-container {
     position: relative;
@@ -82,7 +91,7 @@ div.card-type-container {
     width:100%;
     height:30px;
     margin: 0px;
-    padding: 0px;
+    padding: 5px;
 }
 p.card-type {
     position: relative;
@@ -90,23 +99,27 @@ p.card-type {
     color:rgba(255,255,255,0.6);
     padding:0px;
     margin: 0px;
-    top:0px;
+    top:5px;
     text-align:left;
     font-family: Muli;
-    font-size:55px;
+    font-size:35px;
     z-index:2;
 }
 div.type-news{
-    background: linear-gradient(darkslategrey, transparent);
+    background: linear-gradient(black, darkslategrey, transparent);
+    /*box-shadow: 3px 3px 3px rgba(255,255,255,0.7);*/
 }
 div.type-video{
-    background: linear-gradient(red, transparent);
+    background: linear-gradient(black,red, transparent);
+    /*box-shadow: 3px 3px 3px rgba(255,255,255,0.7);*/
 }
 div.type-twitter{
     background: linear-gradient(deepskyblue, transparent);
+    /*box-shadow: 3px 3px 3px rgba(255,255,255,0.7);*/
 }
 div.type-link{
-    background: linear-gradient(navy, transparent);
+    background: linear-gradient(black,navy, transparent);
+    /*box-shadow: 3px 0 15px -4px rgba(255, 255, 255, 0.8), -3px 0 8px -4px rgba(255, 255, 255, 0.8);*/
 }
 div.type-image{
     background: linear-gradient(darkorange, transparent);
@@ -132,39 +145,41 @@ div.headline-container {
     margin-left:3px;
 }
 p.headline-text {
-    padding: 3px 3px 0px 0px;
-    margin: 0px;
+    padding: 0px 0px 0px 0px;
+    margin: 20px 10px 0px 0px;
     font-family: Muli;
-    font-size:14px;
+    font-size:18px;
     line-height:14px;
     font-style:oblique;
 }
 div.long-text-container {
-    padding: 10px 3px 0px 0px;
+    padding: 10px 10px 0px 0px;
 }
 p.long-text {
     font-family:Muli;
     font-size:12px;
     line-height:12px;
-    padding: 0px;
+    margin-left:5px;
+    padding: 0px 0px 0px 0px;
 }
 div.call-to-action-container {
 
 }
-button.call-to-action-button{
+.call-to-action-button{
     display: block;
     position: relative;
-    padding: 0px;
+    padding: 10px;
     border:1px solid whitesmoke;
     text-align: center;
     margin:auto;
+    background-color:transparent;
 }
 div.details-container {
     position: relative;
     display: block;
     width:100%;
     height:100px;
-    top:-200px;
+    /*top:-200px;*/
 }
 div.details-container p{
     /*color:black;*/
@@ -181,6 +196,7 @@ div.status-container {
     width: 60px;
     padding-left:2px;
     margin:1px;
+    top:-30px;
 }
 p.status-text {
     position: relative;
@@ -191,11 +207,12 @@ p.status-text {
     background-color:red;
     font-size:18px;
     border:1px solid white;
-    top:-15px;
+    top:90px;
     left:-15px;
     margin:0px;
     padding: 1px 1px 1px 1px;
-    width:50px;
+    z-index:10;
+    /*width:50px;*/
 }
 
 div.enter-deepstream{
@@ -219,16 +236,14 @@ input.circle-button{
     white-space: normal;
 }
 div.current-viewers-container {
-    display: inline-block;
+    display: block;
     width: 80px;
-    padding-right:2px;
-    float:right;
+    margin-right:10px;
 
 }
 p.current-viewers-text {
     width:100%;
     color:lightgray;
-    text-align:right;
     padding:0px;
     margin:0px;
     font-size:12px;
@@ -241,7 +256,7 @@ div.title-container {
 }
 p.title-text {
     color:black;
-    font-size:13px;
+    font-size:18px;
     line-height: 13px;
     font-weight:600;
     padding:0px;
@@ -259,12 +274,12 @@ p.author-text {
     font-size:11px;
     font-family:Muli;
     font-style:italic;
-    color:white;
+    color:whitesmoke;
     padding:0px;
     margin:1px;
 }
 div.tags-container {
-    display: block;
+    display: none;
     width: 100%;
     padding: 0px;
     margin: 0px;

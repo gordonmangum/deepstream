@@ -354,7 +354,7 @@
           <!--{{#if showDeepStreams}}-->
             <li>
               <div class="streams-container container">
-                <h2>LIVESTREAMS</h2>
+                <h2>LATEST DEEPSTREAMS</h2>
                 {{#if loadingStreamResults}}
                   Loading...
                 {{/if}}
@@ -573,58 +573,12 @@
         <li class="content-box">
           <div class="content-box-elements-container">
             <div class="preview-elements-container">
-
-              {{#with deepstreamForContext}}
-
-                  {{#with contextCard}}
-                <div class="card-container type-{{type}}">
-                  <div class="card-type-container {{type}}">
-                    <p class="card-type">{{type}}</p>
-                  </div>
-                  <div class="headline-container">
-                    <p class="headline-text">{{reference.title}}</p>
-                  </div>
-                  <div class="long-text-container">
-                    <p class="long-text">{{reference.description}}</p>
-                  </div>
-                </div>
-              {{/with}}
-              {{/with}}
-              <div class="underlying-preview-container">
-                {{#if videoEmbed}}
-                  <iframe class="mini-view" id="{{streamShortId}}" width="350" height="200" src="{{videoEmbed}}" allowfullscreen webkitallowfullscreen scrolling="no" frameborder="0" style="border: 0 none transparent;"></iframe>
-                  <!--<iframe  src="{{streamPathSegment}}" frameborder="0" height="200px" width="358px" ></iframe>-->
-                {{else}}
-                  <img class="underlying-preview" height="200px" src="/images/preview/news_nasa.gif" />
-                {{/if}}
-              </div>
-
-              <div class="enter-deepstream">
-                <svg class="enter-svg" width="120" height="120">
-                  <defs>
-                    <!--<linearGradient id="strokeGradient" x1="0%" y1="0%" x2="100%" y2="0%">-->
-                      <!--<stop offset="0%"   stop-color="#fff"/>-->
-                      <!--<stop offset="100%" stop-color="red"/>-->
-                    <!--</linearGradient>-->
-                    <radialGradient id="strokeGradient">
-                      <stop offset="80%" stop-color="darkgray"/>
-                      <stop offset="98%" stop-color="white"/>
-                    </radialGradient>
-                  </defs>
-                  <circle class="enter-circle" r="50" cx="60" cy="60" fill="black" stroke="lightgray" stroke-width="3"></circle>
-                  <text class="enter-text" fill="white" font-size="18px" x="0" y="20">
-                    <tspan x="35" y="50">ENTER</tspan>
-                    <tspan x="3" y="70">DEEPSTREAM</tspan>
-                  </text>
-                </svg>
-                <!--<input class="circle-button" type="button" value="ENTER DEEPSTREAM"/>-->
-              </div>
               <div class="details-container">
                 <div class="status-and-views-container">
                   <div class="status-container">
                     {{#if live}}
-                    <p class="status-text live">LIVE</p>
-                      {{else}}
+                      <p class="status-text live">LIVE</p>
+                    {{else}}
                       <p class="status-text playback">PLAYBACK</p>
                     {{/if}}
 
@@ -652,6 +606,57 @@
                 </div>
 
               </div>
+              {{#with deepstreamForContext}}
+
+                  {{#with contextCard}}
+                <div class="card-container type-{{type}}">
+                  <div class="card-type-container {{type}}">
+                    <p class="card-type">latest {{type}}:</p>
+                  </div>
+                  <div class="headline-container">
+                    <p class="headline-text">{{reference.title}}</p>
+                  </div>
+                  <div class="long-text-container">
+                    <p class="long-text">{{reference.description}}</p>
+                  </div>
+                </div>
+              {{/with}}
+              {{/with}}
+              <div class="underlying-preview-container">
+                {{#if videoEmbed}}
+                  <iframe class="mini-view" id="{{streamShortId}}" width="356px" height="195px" src="{{videoEmbed}}" allowfullscreen webkitallowfullscreen scrolling="no" frameborder="0"></iframe>
+                  <!--<iframe  src="{{streamPathSegment}}" frameborder="0" height="200px" width="358px" ></iframe>-->
+                {{else}}
+                  <img class="underlying-preview" height="195px" src="/images/preview/news_nasa.gif" />
+                {{/if}}
+              </div>
+
+              <div class="enter-deepstream">
+
+                <!--<svg class="enter-svg" width="356" height="120">-->
+                  <!--<defs>-->
+                    <!--&lt;!&ndash;<linearGradient id="strokeGradient" x1="0%" y1="0%" x2="100%" y2="0%">&ndash;&gt;-->
+                      <!--&lt;!&ndash;<stop offset="0%"   stop-color="#fff"/>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<stop offset="100%" stop-color="red"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</linearGradient>&ndash;&gt;-->
+                    <!--<radialGradient id="strokeGradient">-->
+                      <!--<stop offset="80%" stop-color="darkgray"/>-->
+                      <!--<stop offset="98%" stop-color="white"/>-->
+                    <!--</radialGradient>-->
+                  <!--</defs>-->
+
+                  <!--&lt;!&ndash;#f6c406&ndash;&gt;-->
+                  <!--<rect class="enter-rect" width="130" height="50" x="103" y="30" fill="none" stroke="black" stroke-width="3"></rect>-->
+                  <!--<text class="enter-text" fill="white" font-size="18px" x="103" y="20">-->
+                    <!--<tspan x="140" y="50">ENTER</tspan>-->
+                    <!--<tspan x="112" y="70">DEEPSTREAM</tspan>-->
+                  <!--</text>-->
+                <!--</svg>-->
+
+
+                <input class="call-to-action-button" type="button" value="ENTER DEEPSTREAM"/>
+              </div>
+
             </div>
             <div class="content-stats-container">
 

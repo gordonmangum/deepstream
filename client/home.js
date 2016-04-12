@@ -886,7 +886,6 @@ videoEmbed () {
   console.log('video embed return: ', returnMe);
 return returnMe;
 },
-
 contextBox () {
   //context blocks - >> orderedContext
   //we need to return a workable set of data
@@ -1624,6 +1623,11 @@ Template.cards_with_deepstreams.onCreated(function(){
 });
 Template.card_preview.onCreated(function(){
   //this.subscribe('deepstreamPreviewContext', this.data.deepstream.shortId);
+});
+Template.card_preview.events({
+  "click .enter-circle": function(){
+    console.log("TAKE ME TO...")
+  }
 });
 Template.deepstream_behind_card.onCreated(function(){
 
