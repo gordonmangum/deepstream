@@ -17,14 +17,15 @@ div#content-list-area {
     list-style: none;
     padding: 0px;
     margin:0px;
+    width:100%;
 }
 li.content-box {
     position: relative;
     display: inline-block;
     height:300px;
-    width:360px;
-    padding: 0px;
-    margin: 0px;
+    width:33%;
+    margin:auto;
+
     /*background-color: blue;*/
 }
 div.content-box-elements-container {
@@ -32,10 +33,10 @@ div.content-box-elements-container {
     display: block;
     /*background: linear-gradient( black, black, transparent);*/
     /*border:2px solid red;*/
-    width: 100%;
+    width: 360px;
     height:100%;;
     padding: 0px;
-    margin:0px;
+    margin:auto;
     z-index: 3;
 }
 div.preview-elements-container {
@@ -86,29 +87,44 @@ div.card-type-container {
 p.card-type {
     position: relative;
     font-variant: small-caps;
-    color:rgba(255,255,255,0.8);
+    color:rgba(255,255,255,0.6);
     padding:0px;
     margin: 0px;
-    top:-4px;
+    top:0px;
     text-align:left;
     font-family: Muli;
-    font-size:25px;
+    font-size:55px;
+    z-index:2;
 }
 div.type-news{
     background: linear-gradient(darkslategrey, transparent);
+}
+div.type-video{
+    background: linear-gradient(red, transparent);
+}
+div.type-twitter{
+    background: linear-gradient(deepskyblue, transparent);
+}
+div.type-link{
+    background: linear-gradient(navy, transparent);
+}
+div.type-image{
+    background: linear-gradient(darkorange, transparent);
 }
 div.news {
     /*background-color:lightslategray;*/
     width:100%;
 }
 div.video {
-    background-color: red;
     width:100%;
 }
 div.image{
-    background-color:purple;
     width:100%;
 }
+div.link{
+
+}
+
 div.headline-container {
     margin-top:2px;
     font-weight:600;

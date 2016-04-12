@@ -471,6 +471,7 @@ Template.my_streams.events({
 var newContextDep = new Tracker.Dependency;
 
 var alreadyRan = false;
+var alreadyGotVid = false;
 Template.card_preview.helpers({
   streams () {
   if(FlowRouter.subsReady()){
@@ -482,10 +483,10 @@ Template.card_preview.helpers({
 deepstreamForContext () {
   //newContextDep.depend();
   if (FlowRouter.subsReady()) {
-    console.log("SHORTID ", this.shortId)
+    //console.log("SHORTID ", this.shortId)
     if(this.shortId){
-      console.log("orderedContext ", Deepstreams.findOne({shortId: this.shortId}, {reactive:false}).orderedContext());
-      return Deepstreams.findOne({shortId: this.shortId}, {reactive: false}).orderedContext();
+      //console.log("orderedContext ", Deepstreams.findOne({shortId: this.shortId}, {reactive:false}));
+      return Deepstreams.findOne({shortId: this.shortId}, {reactive: false});//.orderedContext();
     }else{
       return [];
     }
@@ -757,6 +758,135 @@ callToActionType () {
       break;
   }
 },
+contextCard () {
+
+  var cards = this.orderedContext();//.orderedContext();
+  var foundOne = false;
+  var returnMe;
+  cards.forEach(function(card, index){
+    if(!foundOne && index==0){
+      switch(card.type){
+        case "news":
+          returnMe = {
+            _id:card._id,
+            fromEmbedly:card.fromEmbedly,
+            reference: {
+              content:card.reference.content,
+              description:card.reference.description,
+              originalUrl:card.reference.originalUrl,
+              primaryAuthor:card.reference.primaryAuthor,
+              providerIconUrl:card.reference.providerIconUrl,
+              providerName:card.reference.providerName,
+              publishedMs:card.reference.publishedMs,
+              title:card.reference.title,
+              topImage:{
+                height:card.reference.topImage.height,
+                url:card.reference.topImage.url,
+                width:card.reference.topImage.width
+              },
+              url:card.reference.url
+            },
+            streamShortId:card.streamShortId,
+            type:card.type
+          };
+          foundOne = true;
+          break;
+        case "twitter":
+          break;
+        case "video":
+          returnMe = {
+            _id:card._id,
+            reference: {
+              creationDate:card.reference.creationDate,
+              description:card.reference.description,
+              id:card.reference.id,
+              mapType:card.reference.mapType,
+              noPreview:card.reference.noPreview,
+              title:card.reference.title,
+              userId:card.reference.userId,
+              username: card.reference.username
+            },
+            streamShortId:card.streamShortId,
+            type:card.type,
+            source:card.source
+          };
+          foundOne = true;
+          break;
+        case "link":
+          returnMe = {
+            _id:card._id,
+            fromEmbedly:card.fromEmbedly,
+            reference: {
+              embedleyTyp:card.reference.embedleyTyp,
+              description:card.reference.description,
+              mapType:card.reference.mapType,
+              providerUrl:card.reference.providerUrl,
+              providerName:card.reference.providerName,
+              thumbnailHeight:card.reference.thumbnailHeight,
+              thumbnailUrl:card.reference.thumbnailUrl,
+              thumbnailWidth:card.reference.thumbnailWidth,
+              title:card.reference.title,
+              url:card.reference.url
+            },
+            source: card.source,
+            streamShortId:card.streamShortId,
+            type:card.type
+          };
+          foundOne = true;
+          break;
+        default:
+          returnMe = {
+          _id:card._id,
+          reference: {
+            title:card.reference.title,
+            url:card.reference.url
+          },
+          streamShortId:card.streamShortId,
+          type:card.type
+        };
+          foundOne = true;
+          console.log("found a new card: ",card);
+
+      }
+    }
+  });
+
+  return returnMe;
+
+},
+videoEmbed () {
+  var vid = this;
+  var returnMe;
+  var foundOne = false;
+  console.log('vid.streams: ', vid.streams);
+  //if(!alreadyGotVid){
+  vid.streams.forEach(function(videoStream, index){
+      if(!foundOne){
+        console.log('videoStream: ', videoStream);
+        if(videoStream.source=='ustream'){
+
+          returnMe = "https://www.ustream.tv/embed/"+videoStream.reference.id+"?html5ui=1&autoplay=true";
+          foundOne = true;
+        }else{
+          if(videoStream.source == 'youtube'){
+            //returnMe = 'https://www.youtube.com/embed/' + videoStream.reference.id + '?enablejsapi=1&modestbranding=1&rel=0&iv_load_policy=3&autohide=1&loop=1&playlist=' +videoStream.reference.id+"&autoplay=true";
+            returnMe = "https://www.youtube.com/embed/"+videoStream.reference.id+"?autoplayplay=1";
+            foundOne = true;
+          }else{
+            returnMe = false;
+          }
+        }
+      }
+
+  });
+  //  alreadyGotVid=true;
+  //}else{
+  //  returnMe = false;
+  //}
+  console.log('video embed return: ', returnMe);
+return returnMe;
+},
+
 contextBox () {
   //context blocks - >> orderedContext
   //we need to return a workable set of data

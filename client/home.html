@@ -331,7 +331,12 @@
               <a name="vidTop"></a>
               <div id="baseVideo">
                 <!--<a href="#" class="video-close" style="display: none;"><i class="fa fa-times"></i></a>-->
+                
+                <!-- remove while debugging context
                 <div style="position: relative; padding-bottom: 56.25%; padding-top: 25px; height: 0;"> <iframe src="/featured/curat0r/amazing-sharks-SEDsDRNb" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+                -->
+
+
               </div>
             </div>
             <!-- end deepstream peek -->
@@ -570,6 +575,8 @@
             <div class="preview-elements-container">
 
               {{#with deepstreamForContext}}
+
+                  {{#with contextCard}}
                 <div class="card-container type-{{type}}">
                   <div class="card-type-container {{type}}">
                     <p class="card-type">{{type}}</p>
@@ -581,11 +588,17 @@
                     <p class="long-text">{{reference.description}}</p>
                   </div>
                 </div>
-                <div class="underlying-preview-container">
-                <img class="underlying-preview" height="200px" src="/images/preview/news_nasa.gif" />
+              {{/with}}
+              {{/with}}
+              <div class="underlying-preview-container">
+                {{#if videoEmbed}}
+                  <iframe class="mini-view" id="{{streamShortId}}" width="350" height="200" src="{{videoEmbed}}" allowfullscreen webkitallowfullscreen scrolling="no" frameborder="0" style="border: 0 none transparent;"></iframe>
+                  <!--<iframe  src="{{streamPathSegment}}" frameborder="0" height="200px" width="358px" ></iframe>-->
+                {{else}}
+                  <img class="underlying-preview" height="200px" src="/images/preview/news_nasa.gif" />
+                {{/if}}
               </div>
 
-              {{/with}}
               <div class="enter-deepstream">
                 <svg class="enter-svg" width="120" height="120">
                   <defs>
@@ -594,11 +607,11 @@
                       <!--<stop offset="100%" stop-color="red"/>-->
                     <!--</linearGradient>-->
                     <radialGradient id="strokeGradient">
-                      <stop offset="89%" stop-color="red"/>
-                      <stop offset="99%" stop-color="white"/>
+                      <stop offset="80%" stop-color="darkgray"/>
+                      <stop offset="98%" stop-color="white"/>
                     </radialGradient>
                   </defs>
-                  <circle class="enter-circle" r="50" cx="60" cy="60" fill="gold" stroke="url(#strokeGradient)" stroke-width="3"></circle>
+                  <circle class="enter-circle" r="50" cx="60" cy="60" fill="black" stroke="lightgray" stroke-width="3"></circle>
                   <text class="enter-text" fill="white" font-size="18px" x="0" y="20">
                     <tspan x="35" y="50">ENTER</tspan>
                     <tspan x="3" y="70">DEEPSTREAM</tspan>
