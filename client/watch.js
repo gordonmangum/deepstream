@@ -266,6 +266,9 @@ Template.watch_page.onCreated(function () {
   this.autorun(function(){
     if(FlowRouter.subsReady()){
       var deepstream = Deepstreams.findOne({shortId: that.data.shortId()}, {fields: {contextBlocks: 1}});
+      if(!deepstream){
+        return;
+      }
       var newNumContextBlocks = deepstream.contextBlocks.length;
       if(typeof numContextBlocks === 'number'){
         if(newNumContextBlocks > numContextBlocks){
@@ -320,6 +323,9 @@ Template.watch_page.onCreated(function () {
     if (FlowRouter.subsReady()) {
       var userControlledActiveStreamId = that.userControlledActiveStreamId.get();
       var deepstream = Deepstreams.findOne({shortId: that.data.shortId()});
+      if(!deepstream){
+        return;
+      }
       var newActiveStream;
 
       if (!Session.get('curateMode') && userControlledActiveStreamId && deepstream.userStreamSwitchAllowed()) {
@@ -334,7 +340,7 @@ Template.watch_page.onCreated(function () {
         activeStream = that.activeStream.get();
       });
 
-      if(activeStream && activeStream.source === newActiveStream.source && activeStream._id !== newActiveStream._id){
+      if(activeStream && newActiveStream && activeStream.source === newActiveStream.source && activeStream._id !== newActiveStream._id){
         Session.set('removeMainStream', true);
         Meteor.setTimeout(() => Session.set('removeMainStream', false), 0);
       }
