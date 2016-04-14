@@ -168,11 +168,13 @@ Meteor.publish("singleDeepstreamOnAir", function(userPathSegment, shortId) {
 Meteor.publish("singleDeepstream", function(userPathSegment, shortId) {
   check(shortId, String);
   if (this.userId) {
-    return Deepstreams.find({userPathSegment: userPathSegment, shortId: shortId, curatorIds: this.userId},{
+    return Deepstreams.find({userPathSegment: userPathSegment, shortId: shortId, $or: [{curatorIds: this.userId}, {onAir: true}]},{
       fields: deepstreamFields
     });
   } else {
-    return this.ready() 
+    return Deepstreams.find({userPathSegment: userPathSegment, shortId: shortId, onAir: true},{
+      fields: deepstreamFields
+    });
   }
 });
 
