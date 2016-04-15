@@ -323,9 +323,6 @@ Template.watch_page.onCreated(function () {
     if (FlowRouter.subsReady()) {
       var userControlledActiveStreamId = that.userControlledActiveStreamId.get();
       var deepstream = Deepstreams.findOne({shortId: that.data.shortId()});
-      if(!deepstream){
-        return;
-      }
       var newActiveStream;
 
       if (!Session.get('curateMode') && userControlledActiveStreamId && deepstream.userStreamSwitchAllowed()) {
@@ -354,7 +351,13 @@ Template.watch_page.onCreated(function () {
 
   if (Session.get('deepstreamViewed') !== shortId) {
     Session.set('deepstreamViewed', shortId);
-    Meteor.call('countDeepstreamView', shortId);
+    if(embedMode()){ // in embed mode, wait for a scroll before counting a view
+      $(window).one('mousemove', function(){
+        Meteor.call('countDeepstreamView', shortId);
+      })
+    } else {
+      Meteor.call('countDeepstreamView', shortId);
+    }
     analytics.track('View stream', {
       label: shortId,
       onCuratePage: this.data.onCuratePage(),
