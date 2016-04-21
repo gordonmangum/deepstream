@@ -179,20 +179,11 @@ Meteor.publish("singleDeepstream", function(userPathSegment, shortId) {
 });
 
 Meteor.publish("deepstreamContext", function(streamShortId) {
-    check(streamShortId, String);
-    return ContextBlocks.find({streamShortId: streamShortId, deleted: {$ne: true}},{
-      fields: contextFields
-    });
-});
-
-Meteor.publish("deepstreamHomepageContext", function(streamShortIds) {
-  //check(streamShortIds, Array);
-  //check(streamShortId, String);
-  return ContextBlocks.find({streamShortId: { $in: streamShortIds }, deleted: {$ne: true}},{
+  check(streamShortId, String);
+  return ContextBlocks.find({streamShortId: streamShortId, deleted: {$ne: true}},{
     fields: contextFields
   });
 });
-
 
 Meteor.publish("deepstreamSuggestedContext", function(streamShortId) {
   check(streamShortId, String);
