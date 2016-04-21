@@ -56,7 +56,6 @@ html {
   -ms-text-size-adjust: 100%;
 }
 
-
 .transparency-fade(@property; @value){
   @{property}: fade(@value, 50%);
 }
@@ -117,6 +116,11 @@ html {
 .text-align-start{
   text-align: left; // fallback
   text-align: start;
+}
+
+.centered-div {
+  width: 100%;
+  text-align:center;
 }
 
 .pill-radios{
