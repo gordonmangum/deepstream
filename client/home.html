@@ -1,5 +1,3 @@
-
-
 <template name="top_banner">
   <div class="home-top {{#if border}}{{border}}{{/if}}">
     <div class="top-row">
@@ -234,7 +232,6 @@
       <div class="stream-type-selector-container">
       </div>
       <div class="deepstreams-and-streams">
-        
       <!--START OF FEATURED DEEPSTREAM-->
       <!-- start deepstream peek -->
       <style>
@@ -346,20 +343,20 @@
             </li>
           {{/if}}
           <!--END OF FEATURED DEEPSTREAM-->
-          <!--{{#if showDeepStreams}}-->
+          {{#if showLivestreams}}
             <li>
               <div class="streams-container container">
-                <h2>LATEST DEEPSTREAMS</h2>
+                <h2>LIVESTREAMS</h2>
                 {{#if loadingStreamResults}}
                   Loading...
                 {{/if}}
                 {{#if noMoreStreamResults}}
                   {{noMoreStreamResults}}
                 {{/if}}
-                {{> cards_with_deepstreams}}
+                {{> streams}}
               </div>
             </li>
-          <!--{{/if}}-->
+          {{/if}}
         </ol>
       </div>
     </div>
@@ -418,24 +415,16 @@
 </template>
 
 <template name="streams">
-  <div id="content-list-area">
-    <ul id="list">
   {{#each streams}}
-    <!--{{> stream_preview }}-->
+    {{> stream_preview }}
   {{/each}}
-
-    </ul>
-  </div>
 </template>
-
-
 
 <template name="my_streams">
   <h1>Your Deep Streams</h1>
   {{#each streams}}
       {{> deepstream_preview linkToCurate=true deepstream=this showDeleteButton=true }}
   {{/each}}
-
 </template>
 
 <template name="deepstream_preview">
@@ -546,126 +535,9 @@
   </div>
 </template>
 
+
 <template name="create_deepstream">
   <button class="create-deepstream">
     <span class="text">Create</span>
   </button>
 </template>
-
-
-<!--VIVIAN IS HAVING FUN DOWN HERE: -->
-<template name="cards_with_deepstreams">
-    {{> card_preview}}
-</template>
-
-<template name="deepstream_behind_card">
-
-</template>
-
-<template name="card_preview">
-  {{#each streams}}
-
-        <li class="content-box">
-          <div class="content-box-elements-container">
-            <div class="preview-elements-container">
-              <div class="details-container">
-                <div class="status-and-views-container">
-                  <div class="status-container">
-                    {{#if live}}
-                      <p class="status-text live">LIVE</p>
-                    {{else}}
-                      <p class="status-text playback">PLAYBACK</p>
-                    {{/if}}
-
-                  </div>
-
-                  <div class="current-viewers-container">
-                    <p class="current-viewers-text">{{formatNumber viewCount}} VIEWS</p>
-                  </div>
-                </div>
-                <div class="title-container">
-                  <p class="title-text">{{title}}</p>
-                </div>
-                <div class="author-container">
-                  <p class="author-text">{{curatorName}}</p>
-                </div>
-                <div class="tags-container">
-                  <ul class="tags-list">
-                    {{#each streamTags}}
-                      <li class="content-tag">
-                        <p class="tag-name">{{tag}}</p>
-                      </li>
-                    {{/each}}
-                  </ul>
-
-                </div>
-
-              </div>
-              {{#with deepstreamForContext}}
-
-                  {{#with contextCard}}
-                <div class="card-container type-{{type}}">
-                  <div class="card-type-container {{type}}">
-                    <p class="card-type">latest {{type}}:</p>
-                  </div>
-                  <div class="headline-container">
-                    <p class="headline-text">{{reference.title}}</p>
-                  </div>
-
-                  <div class="card-author-container">
-                  {{#if reference.providerName}}
-                    <p class="card-author-text">submitted by: {{reference.providerName}}</p>
-                    {{else}}
-                    <p class="card-author-text">submitted by: {{reference.username}}</p>
-                  {{/if}}
-                    </div>
-
-                  <div class="long-text-container">
-                    <p class="long-text">{{reference.description}}</p>
-                  </div>
-                </div>
-              {{/with}}
-              {{/with}}
-              <div class="underlying-preview-container">
-                <img class="underlying-preview" height="200px" src="{{previewImage}}" />
-              </div>
-
-              <div class="enter-deepstream">
-
-                <!--<svg class="enter-svg" width="356" height="120">-->
-                  <!--<defs>-->
-                    <!--&lt;!&ndash;<linearGradient id="strokeGradient" x1="0%" y1="0%" x2="100%" y2="0%">&ndash;&gt;-->
-                      <!--&lt;!&ndash;<stop offset="0%"   stop-color="#fff"/>&ndash;&gt;-->
-                      <!--&lt;!&ndash;<stop offset="100%" stop-color="red"/>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</linearGradient>&ndash;&gt;-->
-                    <!--<radialGradient id="strokeGradient">-->
-                      <!--<stop offset="80%" stop-color="darkgray"/>-->
-                      <!--<stop offset="98%" stop-color="white"/>-->
-                    <!--</radialGradient>-->
-                  <!--</defs>-->
-
-                  <!--&lt;!&ndash;#f6c406&ndash;&gt;-->
-                  <!--<rect class="enter-rect" width="130" height="50" x="103" y="30" fill="none" stroke="black" stroke-width="3"></rect>-->
-                  <!--<text class="enter-text" fill="white" font-size="18px" x="103" y="20">-->
-                    <!--<tspan x="140" y="50">ENTER</tspan>-->
-                    <!--<tspan x="112" y="70">DEEPSTREAM</tspan>-->
-                  <!--</text>-->
-                <!--</svg>-->
-
-
-                <input class="call-to-action-button" type="button" value="ENTER DEEPSTREAM"/>
-              </div>
-
-            </div>
-            <div class="content-stats-container">
-
-            </div>
-          </div>
-
-
-        </li>
-
-{{/each}}
-
-</template>
-
