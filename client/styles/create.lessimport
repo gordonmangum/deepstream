@@ -474,7 +474,23 @@ div.add-context {
       text-align: center;
       font-size: 12px;
       line-height: 35px;
+      &.negative-button{
+        .dark-action-button-no-rounding;
+      }
+      &.tweet-button{
+        background-color: #55acee;
+        color: #ffffff;
+      }
     }
+}
+img.profile-picture {
+  margin:auto;
+  margin-right: 2px;
+  margin-bottom: -7.5px;
+  z-index: 10;
+  border-radius: @profile-picture-size/2;
+  width: 30px;
+  height: auto;
 }
 
 .create-link-section {

@@ -195,6 +195,22 @@ html {
     background-color: @hover-action-color;
   }
 }
+
+.dark-action-button-no-rounding{
+  color: @light-text-color;
+  .fg{
+    fill: @light-icon-color;
+  }
+  background-color: @dark-action-color;
+  &:hover, &.active {
+    background-color: @action-color;
+    color: @dark-text-color;
+    .fg{
+      fill: @light-icon-color;
+    }
+  }
+}
+
 .dark-action-button{
   .transparency-rounded;
   color: @light-text-color;
