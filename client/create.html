@@ -389,6 +389,7 @@
           </li>
         </ol>
       </div>
+      {{#if stepZero}}
       {{#with focusResult}}
         <div class="single-result">
           <div class="twitter-section">
@@ -430,18 +431,23 @@
           </div>
         </div>
         {{/with}}
+        {{/if}}
         {{#if showAddButton}}
+        {{#if stepZero}}
         <div class="centered-div">
           <button type="button" class="add-button relative-button {{#if isActive}}enabled{{/if}}">
             {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
           </button>
         </div>
+        {{/if}}
         <div class="reply-to-tweeter">
           {{#with focusResult}}
+          {{#if stepOne}}
           <span id="step-1-tweet">
             <div class="centered-div">
+             
               <p>Would you like to reply to this tweet with a 'thank you' to @{{screenname}}</p>
-              <button type="button" class="add-button relative-button">
+              <button type="button" class="add-button tweet-to-tweet-author relative-button">
                 Yes
               </button>
               <button type="button" class="add-button negative-button relative-button">
@@ -449,16 +455,19 @@
               </button>
             </div>
           </span>
+          {{/if}}
+          {{#if stepTwo}}
           <span id="step-2-tweet">
-            <!-- note if suggesting the user will tweet a different tweet -->
             <img class="profile-picture" src="{{profileImage currentUser}}"/>
-            <textarea rows="6">@{{screenname}} your tweet is now in(been suggested for) the #DeepstreamNameCamelCase Deepstream experience! http://localhost.com/watch/dwanderton/deep-stream-oKzrpE2t</textarea>
+            <!--unless is curator doesnt work here in with statement -->
+            <textarea class="tweet-area" rows="6">@{{screenname}} your tweet {{#unless isCurator}}has been suggested for{{else}}is now in{{/unless}} the #DeepstreamNameCamelCase Deepstream experience! http://localhost.com/watch/dwanderton/deep-stream-oKzrpE2t</textarea>
             <div class="centered-div">
               <button type="button" class="add-button tweet-button relative-button">
                 Tweet
               </button>
             </div>
           </span>
+          {{/if}}
           {{/with}}
         </div>
         {{/if}}

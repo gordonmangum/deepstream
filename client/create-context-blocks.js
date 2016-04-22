@@ -108,6 +108,9 @@ var createBlockEvents = {
   },
 
   "click .add-button": addFocusResult,
+  "click .add-button.tweet-to-tweet-author" (d, template) {
+    template.tweetToTweetAuthor.set(true);
+  },
   "keydown .text-content.editable" (e, t) {
     if (e.which === 13){
       addFocusResult.apply(this,arguments);
@@ -341,23 +344,27 @@ Template.create_stream_section.onRendered(searchTemplateRenderedBoilerplate());
 Template.create_twitter_section.onCreated(searchTemplateCreatedBoilerplate('twitter', 'twitter'));
 Template.create_twitter_section.onCreated(function(){
   this.addingFunction = function(focusResult, template){
-    if(this.tweetstep === 0){
-      console.log('clicked add tweet -- now show step 1');
-      this.tweetstep = 1;
-    } else if (this.tweetstep === 1){
-      console.log('clicked yes or no');
-      if(true){ //clicked yes
-      this.tweetstep = 2;
-      } else {
-        addContext(focusResult);
-      }
-    } else if (this.tweetstep === 2){
+    if(this.tweetstep.get() === 0){
+      this.tweetstep.set(1);
+    } else if (this.tweetstep.get() === 1){
+      var that = this;
+      Meteor.setTimeout(function(){ // allow setting of var in click events
+        if(that.tweetToTweetAuthor.get()){ 
+          that.tweetstep.set(2);
+        } else {
+          addContext(focusResult);
+        }
+      },0);   
+    } else if (this.tweetstep.get() === 2){
       // clicked 'Tweet'
       // clicked intent link
       addContext(focusResult);
     } 
   };
-  this.tweetstep = 0;
+  this.tweetstep = new ReactiveVar();
+  this.tweetToTweetAuthor = new ReactiveVar();
+  this.tweetToTweetAuthor.set(false);
+  this.tweetstep.set(0);
 });
 
 
@@ -761,10 +768,29 @@ Template.create_text_section.events({
   'click .go-back-button': goBack
 });
 
+
+Template.create_twitter_section.events({
+  'click .go-back-button' (e, template){
+    template.tweetstep.set(0);
+  }
+});
+
 Template.create_twitter_section.helpers({
   twitterUser () {
     var user = Meteor.user();
     return user && user.services && user.services.twitter && user.services.twitter.id;
+  },
+  currentStep () {
+    return Template.instance().tweetstep;
+  },
+  stepZero () {
+    return Template.instance().tweetstep.get() === 0;
+  },
+  stepOne () {
+    return Template.instance().tweetstep.get() === 1;
+  },
+  stepTwo () {
+    return Template.instance().tweetstep.get() === 2;
   }
 });
 
