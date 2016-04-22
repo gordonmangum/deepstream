@@ -428,9 +428,8 @@
             </div>
           {{/if}}
           </div>
-
-
         </div>
+        {{/with}}
         {{#if showAddButton}}
         <div class="centered-div">
           <button type="button" class="add-button relative-button {{#if isActive}}enabled{{/if}}">
@@ -438,6 +437,7 @@
           </button>
         </div>
         <div class="reply-to-tweeter">
+          {{#with focusResult}}
           <span id="step-1-tweet">
             <div class="centered-div">
               <p>Would you like to reply to this tweet with a 'thank you' to @{{screenname}}</p>
@@ -459,10 +459,10 @@
               </button>
             </div>
           </span>
-
+          {{/with}}
         </div>
         {{/if}}
-      {{/with}}
+      
     </div>
   {{else}}
     <div class="create-section link-twitter">
