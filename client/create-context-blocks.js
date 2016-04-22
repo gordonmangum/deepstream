@@ -58,7 +58,7 @@ throttledSearchScrollFn = _.throttle(searchScrollFn, 20);
 var addFocusResult = function(d, template) {
   var focusResult = template.focusResult.get();
   if (focusResult) {
-    
+
     var textAreaContent = template.$('textarea[name=content]').val();
     focusResult.description = textAreaContent;
 
@@ -339,6 +339,28 @@ Template.create_stream_section.onCreated(searchTemplateCreatedBoilerplate('strea
 Template.create_stream_section.onRendered(searchTemplateRenderedBoilerplate());
 
 Template.create_twitter_section.onCreated(searchTemplateCreatedBoilerplate('twitter', 'twitter'));
+Template.create_twitter_section.onCreated(function(){
+  this.addingFunction = function(focusResult, template){
+    if(this.tweetstep === 0){
+      console.log('clicked add tweet -- now show step 1');
+      this.tweetstep = 1;
+    } else if (this.tweetstep === 1){
+      console.log('clicked yes or no');
+      if(true){ //clicked yes
+      this.tweetstep = 2;
+      } else {
+        addContext(focusResult);
+      }
+    } else if (this.tweetstep === 2){
+      // clicked 'Tweet'
+      // clicked intent link
+      addContext(focusResult);
+    } 
+  };
+  this.tweetstep = 0;
+});
+
+
 Template.create_twitter_section.onRendered(searchTemplateRenderedBoilerplate());
 
 Template.create_image_section.onCreated(function(){
