@@ -200,10 +200,15 @@
 }
 
 
+
+
 .left-section{
   height: 100%;
   float: left;
-  max-width: calc(100% ~"-" @right-section-width);
+  width: calc(100% ~"-" @right-section-width);
+  @media (max-width: 900px) {
+    width: 100%;
+  }
 
   .header-section{
     position: fixed;
