@@ -351,9 +351,7 @@ Template.watch_page.onCreated(function () {
 
   if (Session.get('deepstreamViewed') !== shortId) {
     Session.set('deepstreamViewed', shortId);
-    if(featuredMode()){ // don't count a view 
-      
-    } else if(embedMode()){ // in embed mode, wait for a scroll before counting a view
+    if(embedMode()){ // in embed mode, wait for a scroll before counting a view
       $(window).one('mousemove', function(){
         Meteor.call('countDeepstreamView', shortId);
       });
