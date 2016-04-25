@@ -342,7 +342,6 @@ window.featuredPeek = function(){
 };
 
 window.activateEmbedMode = function(){
-  Session.set('featuredMode', false);
   return Session.set('embedMode', true); 
 };
 
