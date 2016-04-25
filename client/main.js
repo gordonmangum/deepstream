@@ -54,6 +54,8 @@ Meteor.startup(function(){
 
   if (inIFrame()){
     activateEmbedMode();
+  } else {
+    deactivateFeaturedMode();
   }
 });
 

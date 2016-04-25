@@ -342,13 +342,20 @@ window.featuredPeek = function(){
 };
 
 window.activateEmbedMode = function(){
-  return Session.set('embedMode', true);
+  Session.set('featuredMode', false);
+  return Session.set('embedMode', true); 
 };
 
 window.activateFeaturedMode = function(){
   Session.set('embedMode', true);
   Session.set('featuredMode', true);
   return Session.set('featuredPeek', true);
+};
+
+window.deactivateFeaturedMode = function(){
+  Session.set('embedMode', false);
+  Session.set('featuredMode', false);
+  return Session.set('featuredPeek', false);
 };
 
 window.deactivateFeaturedPeekMode = function(){

@@ -12,21 +12,6 @@
         display: none;
       }
     </style>
-    {{#if featuredPeek}}
-      <style>
-        #videoOverlay {
-          width: 100%;
-          height: 100%;
-          position: absolute;
-          top: 0px;
-          left: 0px;
-          color: red;
-          font-size: 40px;
-          z-index: 10;
-        }
-      </style>
-      <div id="videoOverlay"></div>
-    {{/if}}
   {{/if}}
   
   <div class="watch {{#if thisDeepstream.onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}}" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
@@ -259,8 +244,6 @@
               // Store children in loader variable
               var loader = $(this).children(),
                   length = loader.length;
-            
-              console.info(loader);
 
               (function fadeLoop(index){
                   if (index < length) {
