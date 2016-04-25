@@ -637,6 +637,7 @@ div.logo-title {
     z-index: 10;
 }
 
+/* not used. delete soon.
 #overlayImg {
     width: 100%!important;
     position: absolute!important;
@@ -646,14 +647,19 @@ div.logo-title {
     font-size: 40px!important;
     z-index: 10!important;
 }
+*/
 
 .activate-featured-hover {
   padding-top: 13%;
   height: 100%;
   width: 100%;
   text-align: center;
+  p {
+   text-shadow: 1px 0px 16px #000;
+  }
 }
 
+/* not used. delete soon.
 .video-close {
   color:#fff;
   text-shadow: 3px 3px 1px rgba(150, 150, 150, 1);
@@ -663,6 +669,7 @@ div.logo-title {
   top: 20px;
   z-index: 10;
 }
+*/
 
 #baseVideo {
     width: 100%;

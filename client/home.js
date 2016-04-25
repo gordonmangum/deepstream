@@ -316,6 +316,14 @@ Template.home.events({
   "click .logo-title" (e, t){
     Session.set('homeStreamListType', 'both');
     Session.set('homeStreamListMode', 'best');
+  },
+  "mouseenter #videoOverlay" (e, t){
+    console.log('hovered');
+    $('.activate-featured-hover p').fadeIn();
+  },
+  "mouseleave #videoOverlay" (e, t){
+    console.log('unhovered');
+    $('.activate-featured-hover p').fadeOut();
   }
 });
 
