@@ -768,10 +768,29 @@ Template.create_text_section.events({
   'click .go-back-button': goBack
 });
 
-
 Template.create_twitter_section.events({
   'click .go-back-button' (e, template){
     template.tweetstep.set(0);
+  },
+  'change #tweetarea' (e, template){
+    var tweetTextEncoded = encodeURIComponent($('#tweetarea').val());
+    $('#tweetToTweeterLink').attr('href', 'https://twitter.com/intent/tweet?text=' + tweetTextEncoded + '&');
+  },
+  'keyup #tweetarea' (e, template){
+    var tweetTextEncoded = encodeURIComponent($('#tweetarea').val());
+    $('#tweetToTweeterLink').attr('href', 'https://twitter.com/intent/tweet?text=' + tweetTextEncoded + '&');
+  },
+  'paste #tweetarea' (e, template){
+    var tweetTextEncoded = encodeURIComponent($('#tweetarea').val());
+    $('#tweetToTweeterLink').attr('href', 'https://twitter.com/intent/tweet?text=' + tweetTextEncoded + '&');
+  },
+  'mouseup #tweetarea' (e, template){
+    var tweetTextEncoded = encodeURIComponent($('#tweetarea').val());
+    $('#tweetToTweeterLink').attr('href', 'https://twitter.com/intent/tweet?text=' + tweetTextEncoded + '&');
+  },
+  'input #tweetarea' (e, template){
+    var tweetTextEncoded = encodeURIComponent($('#tweetarea').val());
+    $('#tweetToTweeterLink').attr('href', 'https://twitter.com/intent/tweet?text=' + tweetTextEncoded + '&');
   }
 });
 
@@ -791,6 +810,30 @@ Template.create_twitter_section.helpers({
   },
   stepTwo () {
     return Template.instance().tweetstep.get() === 2;
+    //set up tweetText?
+  },
+  tweetText() {
+    // intial set up tweet here
+    var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {reactive: false, fields: {title:1, userPathSegment:1, streamPathSegment:1}});
+    var tweetTextForTweet = '@' + this.fullDetails.user.screen_name + ' your tweet is now in the ';
+    if(deepstream.title !== ""){
+      // from http://stackoverflow.com/a/32604073/3700836
+      tweetTextForTweet += '#' + deepstream.title.toLowerCase().replace( /[-_]+/g, ' ').replace( /[^\w\s]/g, '').replace( / (.)/g, function($1) { return $1.toUpperCase(); }).replace( / /g, '' ) + ' ';
+    }
+    tweetTextForTweet += 'Deepstream experience! ' + window.location.protocol + '//' + window.location.host + '/watch/' + deepstream.userPathSegment + '/' + deepstream.streamPathSegment;
+    return  tweetTextForTweet;
+  },
+  tweetToTweeterUrl () {
+    // intial set up tweet here
+    var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {reactive: false, fields: {title:1, userPathSegment:1, streamPathSegment:1}});
+    var tweetTextForTweet = '@' + this.fullDetails.user.screen_name + ' your tweet is now in the ';
+    if(deepstream.title !== ""){
+      // from http://stackoverflow.com/a/32604073/3700836
+      tweetTextForTweet += '#' + deepstream.title.toLowerCase().replace( /[-_]+/g, ' ').replace( /[^\w\s]/g, '').replace( / (.)/g, function($1) { return $1.toUpperCase(); }).replace( / /g, '' ) + ' ';
+    }
+    tweetTextForTweet += 'Deepstream experience! ' + window.location.protocol + '//' + window.location.host + '/watch/' + deepstream.userPathSegment + '/' + deepstream.streamPathSegment;
+    var tweetTextEncoded = encodeURIComponent(tweetTextForTweet);
+    return  'https://twitter.com/intent/tweet?text=' + tweetTextEncoded + '&';
   }
 });
 

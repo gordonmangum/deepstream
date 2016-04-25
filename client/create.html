@@ -460,11 +460,13 @@
           <span id="step-2-tweet">
             <img class="profile-picture" src="{{profileImage currentUser}}"/>
             <!--unless is curator doesnt work here in with statement -->
-            <textarea class="tweet-area" rows="6">@{{screenname}} your tweet {{#unless isCurator}}has been suggested for{{else}}is now in{{/unless}} the #DeepstreamNameCamelCase Deepstream experience! http://localhost.com/watch/dwanderton/deep-stream-oKzrpE2t</textarea>
+            <textarea id="tweetarea" class="tweet-area" rows="6">{{tweetText}}</textarea>
             <div class="centered-div">
-              <button type="button" class="add-button tweet-button relative-button">
-                Tweet
-              </button>
+              <a id="tweetToTweeterLink" href="{{tweetToTweeterUrl}}" target="_blank">
+                <button type="button" class="add-button tweet-button relative-button">
+                  Tweet
+                </button>
+              </a>
             </div>
           </span>
           {{/if}}
