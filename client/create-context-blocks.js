@@ -347,7 +347,11 @@ Template.create_twitter_section.onCreated(function(){
     if(this.tweetstep.get() === 0){
       
       // check isCuratorHere
-      this.tweetstep.set(1);
+      if(Session.get('curateMode')){
+        this.tweetstep.set(1);
+      } else {
+        addContext(focusResult);
+      }
       
     } else if (this.tweetstep.get() === 1){
       var that = this;
@@ -756,7 +760,6 @@ Template.create_text_section.onCreated(function() {
 });
 
 Template.create_text_section.onRendered(function() {
-
   this.$('textarea').focus();
 });
 
