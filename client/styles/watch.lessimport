@@ -224,12 +224,9 @@
     padding-right: 5px;
     @height: @footer-section-height - 25px;
     position: fixed;
-    left: 0px;
-    bottom: @drawer-bottom;
+    left: 250px;
+    top: @drawer-bottom;
     .bottom-transition;
-    &.collapsed{
-      bottom: -@height;
-    }
     height: @height;
     display: flex;
     flex-direction: row;
