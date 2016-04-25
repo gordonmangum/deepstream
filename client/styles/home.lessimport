@@ -634,20 +634,7 @@ div.logo-title {
     left: 0px;
     color: #fff;
     font-size: 40px;
-    z-index: 10;
 }
-
-/* not used. delete soon.
-#overlayImg {
-    width: 100%!important;
-    position: absolute!important;
-    top: 0px!important;
-    left: 0px!important;
-    color: red!important;
-    font-size: 40px!important;
-    z-index: 10!important;
-}
-*/
 
 .activate-featured-hover {
   padding-top: 13%;
@@ -658,18 +645,6 @@ div.logo-title {
    text-shadow: 1px 0px 16px #000;
   }
 }
-
-/* not used. delete soon.
-.video-close {
-  color:#fff;
-  text-shadow: 3px 3px 1px rgba(150, 150, 150, 1);
-  font-size:200%;
-  position: absolute;
-  right: 30px;
-  top: 20px;
-  z-index: 10;
-}
-*/
 
 #baseVideo {
     width: 100%;
