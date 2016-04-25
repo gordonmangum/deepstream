@@ -345,7 +345,10 @@ Template.create_twitter_section.onCreated(searchTemplateCreatedBoilerplate('twit
 Template.create_twitter_section.onCreated(function(){
   this.addingFunction = function(focusResult, template){
     if(this.tweetstep.get() === 0){
+      
+      // check isCuratorHere
       this.tweetstep.set(1);
+      
     } else if (this.tweetstep.get() === 1){
       var that = this;
       Meteor.setTimeout(function(){ // allow setting of var in click events
