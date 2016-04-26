@@ -102,8 +102,19 @@ getLeftSectionWidth = function(offset){
   return Session.get("windowWidth") - 400 + (offset || 0);
 };
 
+getTitleSectionWidth = function(offset){
+  if(Session.get("windowWidth") > 900) {
+    return Session.get("windowWidth") - 400 + (offset || 0);
+  }
+  return Session.get("windowWidth") - 50 + (offset || 0);
+};
+
 Handlebars.registerHelper("leftSectionWidth", function(offset) {
   return getLeftSectionWidth(offset);
+});
+
+Handlebars.registerHelper("titleSectionWidth", function(offset) {
+  return getTitleSectionWidth(offset);
 });
 
 Handlebars.registerHelper("mainStreamHeight", function(offset) {
