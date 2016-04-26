@@ -216,6 +216,13 @@ Template.preview_text_section.helpers(horizontalBlockHelpers);
 Template.homepage_preview_text_section.helpers(horizontalBlockHelpers);
 Template.display_text_section.events(editableTextEventsBoilerplate('editTextSection'));
 
+Template.display_poll_section.onCreated(editableTextCreatedBoilerplate);
+//Template.display_text_section.onDestroyed(editableTextDestroyedBoilerplate('editTextSection'));
+Template.display_poll_section.helpers(horizontalBlockHelpers);
+Template.preview_poll_section.helpers(horizontalBlockHelpers);
+Template.homepage_preview_poll_section.helpers(horizontalBlockHelpers);
+Template.display_poll_section.events(editableTextEventsBoilerplate('editPollSection'));
+
 
 Template.favorite_button.helpers({
   userFavorited () {

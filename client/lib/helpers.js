@@ -163,6 +163,7 @@ window.singularizeMediaType = function(mediaType){
 window.contextTypes = [
   "stream",
   "text",
+  "poll",
   "image",
   "map",
   "video",

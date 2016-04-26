@@ -126,6 +126,26 @@
   </div>
 </template>
 
+<template name="create_poll_section">
+  <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} Poll</div>
+  <button class="go-back-button">{{> back_arrow_icon}}</button>
+  <div class="create-section">
+    <div class="tabs">
+      <ul>
+        {{#each dataSources}}
+          <li class="data-source {{#if selected}}selected{{/if}}">{{display}}</li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="poll-result-container">
+      <textarea name="content" value={{content}} class="poll-content editable" rows="40" dir="auto"></textarea>
+    </div>
+    <button class="add-button">
+      {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
+    </button>
+  </div>
+</template>
+
 <template name="create_link_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Link</div>
   <button class="go-back-button">{{> back_arrow_icon}}</button>

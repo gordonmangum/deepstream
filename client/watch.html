@@ -467,6 +467,11 @@
         </button>
       </li>
       <li>
+        <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} poll" class='poll-button {{#if poll}}active{{/if}}' disabled='{{disableAllButStream}}'>
+          {{> poll_icon }}
+        </button>
+      </li>
+      <li>
         <button title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} maps" class='map-button {{#if map}}active{{/if}}' disabled='{{disableAllButStream}}'>
           {{> map_icon }}
         </button>
@@ -640,6 +645,7 @@
         <!--<div class="top-bar"></div>-->
       {{/if}}
       <div class="context-area list-mode {{#if soloSidebarContextMode}}hide{{/if}}">
+        
         {{#each contextBlocks}}
           {{> list_item_context_section}}
         {{/each}}

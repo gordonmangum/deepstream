@@ -462,6 +462,7 @@ var dataSourcesByType = {
   'twitter': [{source: 'twitter', display: 'Twitter'}],
   'map': [{source: 'google_maps', display: 'Google Maps'}],
   'text': [{source: 'free_text', display: 'Free Text'}],
+  'poll': [{source: 'pie_poll', display: 'Pie Poll'}],
   'link': [{source: 'link', display: 'Link'}]
 };
 
@@ -767,6 +768,27 @@ Template.create_text_section.events({
   'click .add-button' (e, template){
     e.preventDefault()
     addContext(new TextBlock({
+      content: template.$('textarea[name=content]').val(),
+      source: 'plaintext'
+    }));
+  },
+  'click .go-back-button': goBack
+});
+
+Template.create_poll_section.onCreated(function() {
+  this.type = 'poll';
+  this.focusResult = new ReactiveVar(); // just as a stub
+  Session.set('newContextDataSource', 'pie_poll');
+});
+
+Template.create_poll_section.onRendered(function() {
+  this.$('textarea').focus();
+});
+
+Template.create_poll_section.events({
+  'click .add-button' (e, template){
+    e.preventDefault()
+    addContext(new PollBlock({
       content: template.$('textarea[name=content]').val(),
       source: 'plaintext'
     }));

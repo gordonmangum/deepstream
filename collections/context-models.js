@@ -30,7 +30,6 @@ ContextBlock = (function () {
     return formatDateCompact(this.reference.creationDate);
   };
 
-
   ContextBlock.prototype.providerName = function() {
     return this.source.toUpperCase().replace(/\_/, ' ');
   };
@@ -50,7 +49,6 @@ ContextBlock = (function () {
 
   return ContextBlock;
 })();
-
 
 youtubeMapFn = function (e) {
   return {
@@ -504,8 +502,6 @@ Stream = (function (_super) {
   return Stream;
 
 })(ContextBlock);
-
-
 
 VideoBlock = (function (_super) {
   __extends(VideoBlock, _super);
@@ -982,7 +978,6 @@ ImageBlock = (function (_super) {
 
 })(ContextBlock);
 
-
 MapBlock = (function (_super) {
   __extends(MapBlock, _super);
 
@@ -1090,6 +1085,55 @@ TextBlock = (function (_super) {
 
 })(ContextBlock);
 
+PollBlock = (function (_super) {
+  __extends(PollBlock, _super);
+
+  function PollBlock(doc) {
+    PollBlock.__super__.constructor.call(this, doc);
+    this.type = 'poll';
+    if (!this.source) {
+      this.source = 'plaintext';
+    }
+  }
+
+  PollBlock.prototype.longSnippet = function () {
+    var maxLength;
+    maxLength = 40;
+    if (this.content.length <= maxLength) {
+      return this.content;
+    } else {
+      return this.content.slice(0, maxLength) + '...';
+    }
+  };
+
+  PollBlock.prototype.anchorMenuSnippet = function () {
+    return this.content;
+  };
+
+  PollBlock.prototype.providerName = function() {
+    return 'Poll'
+  };
+
+  PollBlock.prototype.providerIconUrl = function() {
+    return '/images/free_text_icon.svg'
+  };
+
+
+  PollBlock.prototype.soloModeLocation = 'sidebar';
+  PollBlock.prototype.soloModeTemplate = 'display_poll_section';
+  PollBlock.prototype.listModeItemTemplate = 'preview_poll_section';
+  PollBlock.prototype.annotationAllowed = false;
+  PollBlock.prototype.countListModeViewAsRead = false;
+  PollBlock.prototype.searchList = false;
+  PollBlock.prototype.searchListTemplate = null;
+  PollBlock.prototype.searchSoloTemplate = 'create_poll_section';
+  PollBlock.prototype.homepagePreview = false;
+  PollBlock.prototype.homepagePreviewTemplate = null; //'homepage_preview_poll_section';
+
+  return PollBlock;
+
+})(ContextBlock);
+
 LinkBlock = (function (_super) {
   __extends(LinkBlock, _super);
 
@@ -1158,7 +1202,6 @@ LinkBlock = (function (_super) {
 
 })(ContextBlock);
 
-
 if(Meteor.isClient){
   var cleanNewsHtmlOptions = {
     allowedTags: ['p'], // only allow p
@@ -1170,7 +1213,6 @@ if(Meteor.isClient){
     return $.htmlClean(html, cleanNewsHtmlOptions);
   };
 }
-
 
 NewsBlock = (function (_super) {
   __extends(NewsBlock, _super);

@@ -372,6 +372,18 @@ Meteor.methods({
 
     return updateContextBlock.call(this, {"streamShortId": streamShortId, "_id": contextId }, {"$set": {"content": content}});
   },
+  editPollSection (streamShortId, contextId, content) {
+    check(streamShortId, String);
+    check(contextId, String);
+    check(content, String);
+    var deepstream = Deepstreams.findOne({shortId: streamShortId}, {fields: {'curatorIds': 1}});
+
+    if(!_.contains(deepstream.curatorIds, this.userId)){
+      throw new Meteor.Error('User not authorized to edit context in this deepstream');
+    }
+
+    return updateContextBlock.call(this, {"streamShortId": streamShortId, "_id": contextId }, {"$set": {"content": content}});
+  },
   reorderContext (shortId, ordering){
     check(shortId, String);
     check(ordering, [String]);
