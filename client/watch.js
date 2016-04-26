@@ -689,6 +689,7 @@ var saveStreamTitle = function(template){
 
 Template.watch_page.events({
   'click #videoOverlay' (e,t){
+    // now not in use
     $('.right-section.featured-context-container').fadeOut(1000, function(){
       Session.set('featuredPeek', false);
       Meteor.setTimeout(function(){
@@ -890,8 +891,7 @@ Template.watch_page.events({
   },
   'click .open-bottombar' (){
     return Session.set('reducedBottomView', false);
-  },
-
+  }
 });
 
 Template.stream_li.onCreated(function(){
