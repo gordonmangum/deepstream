@@ -137,13 +137,24 @@
         {{/each}}
       </ul>
     </div>
-    <div class="poll-result-container">
-      <textarea name="content" value={{content}} class="poll-content editable" rows="40" dir="auto"></textarea>
+    <div class="poll-question-container">
+      <p>Question:</p>
+      <textarea name="content" value={{content}} class="poll-content editable" rows="5" dir="auto"></textarea>
+    </div>
+    <div class="poll-question-container">
+      <p>Possible responses:</p>
+      {{> add_poll_option}}
+      
     </div>
     <button class="add-button">
       {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
     </button>
   </div>
+</template>
+
+<template name="add_poll_option">
+  <input type="radio" disabled><input type="text" maxlength="40" class="poll-option" placeholder="Option 1">
+  <input type="radio" disabled><input type="text" maxlength="40" class="poll-option" placeholder="Option 2">
 </template>
 
 <template name="create_link_section">

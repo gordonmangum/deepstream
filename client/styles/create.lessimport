@@ -104,7 +104,6 @@ div.create-section.link-twitter{
 
 @newCardBottomButtonHeight: 35px;
 
-
 div.add-context {
   display: flex;
   flex-flow: column;

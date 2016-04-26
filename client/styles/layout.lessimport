@@ -471,6 +471,11 @@ input[type="text"], input[type="password"], input[type="email"] {
   font-size: 16px;
 }
 
+input.poll-option{
+  width: 90%;
+  margin-left: 10px;
+}
+
 input[type="search"] {
   -webkit-appearance: none;
   -webkit-border-radius: 0px;

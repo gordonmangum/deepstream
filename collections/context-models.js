@@ -1092,7 +1092,7 @@ PollBlock = (function (_super) {
     PollBlock.__super__.constructor.call(this, doc);
     this.type = 'poll';
     if (!this.source) {
-      this.source = 'plaintext';
+      this.source = 'pie_poll';
     }
   }
 
@@ -1130,6 +1130,7 @@ PollBlock = (function (_super) {
   PollBlock.prototype.homepagePreview = false;
   PollBlock.prototype.homepagePreviewTemplate = null; //'homepage_preview_poll_section';
 
+  console.log('PollBlock prototype created');
   return PollBlock;
 
 })(ContextBlock);

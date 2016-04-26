@@ -241,7 +241,7 @@ var createTemplateNames = [
   'create_map_section',
   'create_audio_section',
   'create_news_section',
-  'create_link_section'
+  'create_link_section',
 ];
 
 _.each(createTemplateNames, function(templateName){
@@ -255,6 +255,7 @@ _.each(createTemplateNames, function(templateName){
 });
 
 Template.create_text_section.helpers(createBlockHelpers);
+Template.create_poll_section.helpers(createBlockHelpers);
 
 Template.create_stream_section.onCreated(function(){
   this.addingFunction = window.addStream;
@@ -462,7 +463,7 @@ var dataSourcesByType = {
   'twitter': [{source: 'twitter', display: 'Twitter'}],
   'map': [{source: 'google_maps', display: 'Google Maps'}],
   'text': [{source: 'free_text', display: 'Free Text'}],
-  'poll': [{source: 'pie_poll', display: 'Pie Poll'}],
+  'poll': [{source: 'pie_poll', display: 'Polling'}],
   'link': [{source: 'link', display: 'Link'}]
 };
 
@@ -756,6 +757,7 @@ Template.create_map_section.helpers({
 
 Template.create_text_section.onCreated(function() {
   this.type = 'text';
+  console.log('text section on created fired');
   this.focusResult = new ReactiveVar(); // just as a stub
   Session.set('newContextDataSource', 'free_text');
 });
@@ -777,6 +779,7 @@ Template.create_text_section.events({
 
 Template.create_poll_section.onCreated(function() {
   this.type = 'poll';
+  console.log('poll section on created fired');
   this.focusResult = new ReactiveVar(); // just as a stub
   Session.set('newContextDataSource', 'pie_poll');
 });
