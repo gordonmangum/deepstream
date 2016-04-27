@@ -475,6 +475,9 @@ input.poll-option{
   width: 90%;
   margin-left: 10px;
 }
+textarea.poll-content{
+  padding: 10px;
+}
 
 input[type="search"] {
   -webkit-appearance: none;
