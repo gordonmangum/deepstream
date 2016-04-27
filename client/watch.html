@@ -48,7 +48,8 @@
           {{/unless}}
           
           <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
-            <div class="title-section {{#unless showBottomSection}}collapsed{{/unless}}" style="width: {{titleSectionWidth}}px;">
+              <div class="icon trigger-title"  style="{{#if isCurator}}display:none{{/if}}"><i class="fa fa-info-circle"></i></div>
+            <div class="title-section {{#unless showBottomSection}}collapsed{{/unless}}" style="width: {{titleSectionWidth}}px; {{#unless isCurator}}opacity:0;{{/unless}}">
                 {{{streamTitleElement}}}
               <div class="about-stream">
                 {{{streamDescriptionElement}}}

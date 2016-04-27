@@ -209,7 +209,6 @@
     font-weight: normal;
     .bottom-transition;
     width: inherit;
-    
     .report-inappropriate-content{
       margin-left:3px;
       
@@ -716,7 +715,7 @@
 
 .tutorial{
   position: absolute;
-  z-index: 1;
+  z-index: 3;
   top: 0;
   bottom: 0;
   left: 0;
@@ -1624,7 +1623,7 @@ a.svg:after {
 .create-overlay{
     width: 100%;
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     background-color: white;
     opacity: 0.5;
     margin-top: 50px;
