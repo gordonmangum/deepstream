@@ -899,7 +899,11 @@ Template.watch_page.events({
   },
   'click .open-bottombar' (){
     return Session.set('reducedBottomView', false);
+<<<<<<< HEAD
   }
+=======
+  },
+>>>>>>> master
 });
 
 Template.stream_li.onCreated(function(){
