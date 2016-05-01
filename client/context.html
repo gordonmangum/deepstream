@@ -19,8 +19,8 @@
 <template name="pieChart">
   <!-- if !voted -->
   <span>
-    {{#each options}}
-    <input type="radio" name="vote" value="{{@index}}" id="radio--option-{{@index}}"><label for="radio--option-{{@index}}">{{name}}</label><br/><!-- change id and name with context box id-->
+    {{#each option in options}}
+      <input type="radio" name="vote-{{_id}}" value="{{@index}}" id="radio-{{_id}}-option-{{@index}}"><label for="radio-{{_id}}-option-{{@index}}">{{option.name}}</label><br/><!-- change id and name with context box id-->
     {{/each}}
     <button class="add-button relative-button">
       Vote
@@ -29,10 +29,10 @@
   <!-- if voted -->
   <span>
     <div class="center">
-      <svg id="pieChart"></svg>
+      <svg id="pieChart-{{_id}}"></svg>
     </div>
-    {{#each options}}
-      <p><span>{{value}} abs. value</span> {{name}}</p>
+    {{#each option in options}}
+      <p><span>{{option.value}} abs. value</span> {{option.name}}</p>
     {{/each}}
   </span>
   <!--

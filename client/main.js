@@ -247,7 +247,7 @@ Template.pieChart.events(
   }
   */
   'click .add-button': function(){
-    Meteor.call('voteInPoll', this._id, parseInt($('input[name=vote]:checked').val()), function(err, success){ //set name of input to be with id of context block
+    Meteor.call('voteInPoll', this._id, parseInt($('input[name=vote-' + this._id + ']:checked').val()), function(err, success){ //set name of input to be with id of context block
       console.log('voted in poll');
       // set voted long-term session parameter here using id of context block
     });
@@ -272,14 +272,13 @@ Template.pieChart.rendered = function()
   //Easy colors accessible via a 10-step ordinal scale
   var color = d3.scale.category10();
   
-  
   //Create SVG element add the context block id to it -----------------------------------------
-  var svg = d3.select("#pieChart")
+  var svg = d3.select("#pieChart-" + this.data._id)
     .attr("width", w)
     .attr("height", h);
   var key = function(d)
   {
-    return d.data._id;
+    return d.data.name; //._id;
   };
   Deps.autorun(function()
   {
@@ -289,13 +288,21 @@ Template.pieChart.rendered = function()
         value: 1
       }
     };
-    var sortModifier = Session.get('pieChartSortModifier');
-    if (sortModifier && sortModifier.sort) modifier.sort = sortModifier.sort;
+    //var sortModifier = Session.get('pieChartSortModifier');
+    //if (sortModifier && sortModifier.sort) modifier.sort = sortModifier.sort;
     
     // use the data from the PollBlock-----------------------------------------
-    var dataset = Slices.find({}, modifier).fetch();
-    console.log('in autorun');
-    console.log(this);
+    //var dataset = Slices.find({}, modifier).fetch();
+    //console.log(dataset);
+    var query = {};
+    query._id = 'mATQwPsYCyFNshpmt';
+    var dataset = ContextBlocks.find(query, {data: 1}).fetch()[0].data; 
+    var totalVotes = -2;
+    dataset.forEach(function(value, index, array){
+      totalVotes += value.value; 
+    });
+    
+    console.log('Total Votes: ' + totalVotes);
     
     var arcs = svg.selectAll("g.arc")
       .data(pie(dataset), key);
@@ -320,7 +327,8 @@ Template.pieChart.rendered = function()
       .attr("text-anchor", "middle")
       .text(function(d)
       {
-        return ''; //d.value;  //don't show value in pie
+        var percentage = Math.round(((d.value-1)/totalVotes)*100) -1;
+        return percentage + '%';
       });
     arcs.transition()
       .select('path')
@@ -342,7 +350,8 @@ Template.pieChart.rendered = function()
       })
       .text(function(d)
       {
-        return ''; //d.value;  //don't show value in pie
+        var percentage = Math.round(((d.value -1)/totalVotes)*100);
+        return percentage + '%';
       });
     arcs.exit()
       .remove();
