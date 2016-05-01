@@ -1954,3 +1954,19 @@ a.svg:after {
     }
   }
 }
+
+
+#pieChart{
+  text {
+    font-family: sans-serif;
+    font-size: 12px;
+    fill: white;
+  }
+  path:hover {
+    fill: orange;
+  }
+}
+
+.center {
+  text-align: center;
+}

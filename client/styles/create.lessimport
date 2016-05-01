@@ -457,30 +457,7 @@ div.add-context {
     }
   }
 
-    button.add-button {
-      position: absolute;
-      right: 30px;
-      bottom: 15px;
-      &.relative-button{
-        position: relative;
-        right: initial;
-        bottom: initial;
-      }
-      text-transform: uppercase;
-      .action-button;
-      height: @newCardBottomButtonHeight;
-      width: 90px;
-      text-align: center;
-      font-size: 12px;
-      line-height: 35px;
-      &.negative-button{
-        .dark-action-button-no-rounding;
-      }
-      &.tweet-button{
-        background-color: #55acee;
-        color: #ffffff;
-      }
-    }
+
 }
 img.profile-picture {
   margin:auto;
@@ -530,4 +507,29 @@ img.profile-picture {
 
 .tweet-area {
   width: 80%;
+}
+
+button.add-button {
+  position: absolute;
+  right: 30px;
+  bottom: 15px;
+  &.relative-button{
+    position: relative;
+    right: initial;
+    bottom: initial;
+  }
+  text-transform: uppercase;
+  .action-button;
+  height: @newCardBottomButtonHeight;
+  width: 90px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 35px;
+  &.negative-button{
+    .dark-action-button-no-rounding;
+  }
+  &.tweet-button{
+    background-color: #55acee;
+    color: #ffffff;
+  }
 }

@@ -276,6 +276,18 @@ Schema.ContextReferenceProfile = new SimpleSchema({
     type: String,
     optional: true
   },
+  data: {
+    type: [Object],
+    minCount: 2,
+    maxCount: 2,
+    optional: true
+  },
+  'data.$.name': {
+    type: String
+  },
+  'data.$.value':{
+    type: String
+  },
   providerIconUrl: {
     type: String,
     optional: true
@@ -361,6 +373,18 @@ Schema.ContextBlocks = new SimpleSchema({
     type: String,
     trim: false,
     optional: true
+  },
+  data: {
+    type: [Object],
+    minCount: 2,
+    maxCount: 2,
+    optional: true
+  },
+  'data.$.name': {
+    type: String
+  },
+  'data.$.value':{
+    type: Number
   },
   reference: {
     type: Schema.ContextReferenceProfile,

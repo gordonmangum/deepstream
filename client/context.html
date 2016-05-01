@@ -16,6 +16,34 @@
   </div>
 </template>
 
+<template name="pieChart">
+  <!-- if !voted -->
+  <span>
+    {{#each options}}
+    <input type="radio" name="vote" value="{{@index}}" id="radio--option-{{@index}}"><label for="radio--option-{{@index}}">{{name}}</label><br/><!-- change id and name with context box id-->
+    {{/each}}
+    <button class="add-button relative-button">
+      Vote
+    </button>
+  </span>
+  <!-- if voted -->
+  <span>
+    <div class="center">
+      <svg id="pieChart"></svg>
+    </div>
+    {{#each options}}
+      <p><span>{{value}} abs. value</span> {{name}}</p>
+    {{/each}}
+  </span>
+  <!--
+    <h4>Pie Chart - <small><a href="http://chimera.labs.oreilly.com/books/1230000000345/ch11.html#_pie_layout">View Original</a></small></h4>
+    <input type="button" id="add" value="Add a Value" />
+    <input type="button" id="remove" value="Remove a Value" />
+    <input type="button" id="randomize" value="Randomize Values" />
+    <input type="button" id="toggleSort" value="Toggle Sorting" />
+  -->
+</template>
+
 <template name="homepage_preview_poll_section">
   <div class="homepage-preview-poll-section" dir="auto">
     {{{content}}}
@@ -326,6 +354,9 @@
   <div class="show-full">
     <div class="text-preview" dir="auto">
       {{content}}
+    </div>
+    <div class="chart-container">
+      {{> pieChart}}
     </div>
   </div>
 </template>

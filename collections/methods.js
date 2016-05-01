@@ -712,6 +712,19 @@ Meteor.methods({
 
     return updateDeepstream.call(this, {shortId: shortId}, {$pull: { curatorIds: curatorId}});
   },
+  voteInPoll (contextBlockId, optionNumber) {
+    check(contextBlockId, String);
+    check(optionNumber, Number);
+    console.log(contextBlockId);
+    console.log(optionNumber);
+    var voteChoice = "data." + optionNumber + ".value";
+    // use query object to set value dynamically
+    var query = {};
+    query[voteChoice] = 1;
+    return ContextBlocks.update(contextBlockId, {
+      $inc: query
+    }); 
+  },
   favoriteDeepstream (streamShortId) {
     check(streamShortId, String);
     return changeFavorite.call(this, streamShortId, true);

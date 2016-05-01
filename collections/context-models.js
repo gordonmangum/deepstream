@@ -1119,7 +1119,7 @@ PollBlock = (function (_super) {
   };
 
 
-  PollBlock.prototype.soloModeLocation = 'sidebar';
+  PollBlock.prototype.soloModeLocation = null; //'sidebar';
   PollBlock.prototype.soloModeTemplate = 'display_poll_section';
   PollBlock.prototype.listModeItemTemplate = 'preview_poll_section';
   PollBlock.prototype.annotationAllowed = false;

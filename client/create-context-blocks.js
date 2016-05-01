@@ -791,9 +791,15 @@ Template.create_poll_section.onRendered(function() {
 Template.create_poll_section.events({
   'click .add-button' (e, template){
     e.preventDefault()
+    var chartOptions = [];
+    $('.poll-option').each(function(index){
+      chartOptions.push({name: $(this).val(), value: 1});
+    })
+    
     addContext(new PollBlock({
       content: template.$('textarea[name=content]').val(),
-      source: 'plaintext'
+      data: chartOptions,
+      source: 'pie_poll'
     }));
   },
   'click .go-back-button': goBack
