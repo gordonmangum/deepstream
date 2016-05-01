@@ -235,6 +235,20 @@ if (Slices.find({}).count() === 0)
 Template.pieChart.helpers({
   options: function(){
     return this.data;
+  },
+  totalVotes: function(){
+    var totalVotes = -2.
+    this.data.forEach(function(value, index, array){
+      totalVotes += value.value;
+    });
+    return totalVotes;
+  },
+  percentageVote: function(votes){
+    var totalVotes = -2.
+    this.data.forEach(function(value, index, array){
+      totalVotes += value.value;
+    });
+    return Math.round(((votes -1)/totalVotes)*100)
   }
 });
 Template.pieChart.events(

@@ -30,18 +30,13 @@
   <span>
     <div class="center">
       <svg id="pieChart-{{_id}}"></svg>
+      <br/>
+      {{totalVotes}} people voted
     </div>
     {{#each option in options}}
-      <p><span>{{option.value}} abs. value</span> {{option.name}}</p>
+      <p><span>{{percentageVote option.value}}%</span> {{option.name}}</p>
     {{/each}}
   </span>
-  <!--
-    <h4>Pie Chart - <small><a href="http://chimera.labs.oreilly.com/books/1230000000345/ch11.html#_pie_layout">View Original</a></small></h4>
-    <input type="button" id="add" value="Add a Value" />
-    <input type="button" id="remove" value="Remove a Value" />
-    <input type="button" id="randomize" value="Randomize Values" />
-    <input type="button" id="toggleSort" value="Toggle Sorting" />
-  -->
 </template>
 
 <template name="homepage_preview_poll_section">
