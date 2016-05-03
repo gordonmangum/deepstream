@@ -299,7 +299,7 @@ Template.pieChart.rendered = function()
   {
     return d.data.name; //._id;
   };
-  Deps.autorun(function()
+  Tracker.autorun(function()
   {
     var modifier = {
       fields:
