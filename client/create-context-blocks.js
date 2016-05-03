@@ -779,7 +779,6 @@ Template.create_text_section.events({
 
 Template.create_poll_section.onCreated(function() {
   this.type = 'poll';
-  console.log('poll section on created fired');
   this.focusResult = new ReactiveVar(); // just as a stub
   Session.set('newContextDataSource', 'pie_poll');
 });

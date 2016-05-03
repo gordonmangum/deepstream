@@ -225,16 +225,12 @@ window.soloOverlayContextModeActive = function(){
 
 
 window.emptyContextBlockOfCurrentMediaDataType = function(){
-  console.log('ask for empty context block');
   return newTypeSpecificContextBlock({type: Session.get('mediaDataType')});
 };
 
 
 window.contextHelpers = _.object(contextTypes, _.map(contextTypes, function(type) {
   return function() {
-    if(type === 'poll'){
-      console.log('mediaDataType is equal to ' + type + ': ' + (Session.get('mediaDataType') === type)); 
-    }
     return Session.get('mediaDataType') === type;
   };
 }));
