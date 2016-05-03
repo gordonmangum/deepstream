@@ -17,21 +17,26 @@
 </template>
 
 <template name="pieChart">
-  {{#unless hasVoted _id}}
-  <span>
-    {{#each option in options}}
-      <input type="radio" name="vote-{{_id}}" value="{{@index}}" id="radio-{{_id}}-option-{{@index}}"><label for="radio-{{_id}}-option-{{@index}}">{{option.name}}</label><br/><!-- change id and name with context box id-->
-    {{/each}}
-    <div class="center" style="padding:15px;">
-      <button class="add-button relative-button">
-        Vote
-      </button>
-    </div>
-  </span>
-  {{/unless}}
-  {{#if hasVoted _id}}
-   {{> chart_container}}
+  {{#if isCurator}}
+    {{> chart_container}}
   {{/if}}
+  {{#unless isCurator}}
+    {{#unless hasVoted _id}}
+    <span>
+      {{#each option in options}}
+        <input type="radio" name="vote-{{_id}}" value="{{@index}}" id="radio-{{_id}}-option-{{@index}}"><label for="radio-{{_id}}-option-{{@index}}">{{option.name}}</label><br/><!-- change id and name with context box id-->
+      {{/each}}
+      <div class="center" style="padding:15px;">
+        <button class="add-button relative-button">
+          Vote
+        </button>
+      </div>
+    </span>
+    {{/unless}}
+    {{#if hasVoted _id}}
+     {{> chart_container}}
+    {{/if}}
+  {{/unless}}
 </template>
 
 <template name="chart_container">
@@ -376,7 +381,6 @@
 
   <div class="show-full">
     <h4 class="news-title">{{title}}</h4>
-
     <div class="news-preview">
       {{introduction}}
     </div>
