@@ -670,7 +670,11 @@ Template.watch_page.helpers({
     return Session.get('reducedBottomView') && !soloOverlayContextModeActive();
   },
   showHighlightContext(){
-    return !Session.get('shownHighlightContext') && !soloOverlayContextModeActive();
+    if(Session.get('shownHighlightContext')){
+      return !Session.get('shownHighlightContext') && !soloOverlayContextModeActive(); 
+    } else {
+      return !document.cookie.match('shownHighlightContext=') && !soloOverlayContextModeActive();
+    }
   }
 });
 
@@ -730,7 +734,9 @@ Template.watch_page.events({
     Session.set('mediaDataType', Session.get('previousMediaDataType') || 'image');
   },
   'click .got-it-context' (){
-    Session.set('shownHighlightContext', true);
+    Session.set('shownHighlightContext', true); 
+    // set session for update now, and cookie for persistance
+    document.cookie = "shownHighlightContext=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
     analytics.track('Click got it button for context', trackingInfoFromPage());
   },
   'click .publish' (e, t){
