@@ -224,14 +224,6 @@ Template.homepage_preview_poll_section.helpers(horizontalBlockHelpers);
 Template.display_poll_section.events(editableTextEventsBoilerplate('editPollSection'));
 
 // Start PieChart code 
-var Slices = new Meteor.Collection(null);
-Session.setDefault('pieChartSort', 'none');
-Session.setDefault('pieChartSortModifier', undefined);
-if (Slices.find({}).count() === 0)
-{
-  for (i = 0; i < 2; i++) // 2 values to replicate our polling
-    Slices.insert({ value: Math.floor(Math.random() * 100)});
-}
 Template.pieChart.helpers({
   options: function(){
     return this.data;
@@ -248,7 +240,17 @@ Template.pieChart.helpers({
     this.data.forEach(function(value, index, array){
       totalVotes += value.value;
     });
+    if(totalVotes < 1){
+      return '50';
+    }
     return Math.round(((votes -1)/totalVotes)*100)
+  },
+  hasVoted: function(contextId){
+    if(Session.get('voted' + contextId)){
+      return Session.get('voted'+contextId); 
+    } else {
+      return document.cookie.match('voted'+contextId+'=');
+    }
   }
 });
 Template.pieChart.events(
@@ -261,8 +263,11 @@ Template.pieChart.events(
   }
   */
   'click .add-button': function(){
+    Session.set('voted' + this._id, true); 
+    // set session for update now, and cookie for persistance
+    document.cookie = "voted"+ this._id +"=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
     Meteor.call('voteInPoll', this._id, parseInt($('input[name=vote-' + this._id + ']:checked').val()), function(err, success){ //set name of input to be with id of context block
-      console.log('voted in poll');
+      // console.log('voted in poll');
       // set voted long-term session parameter here using id of context block
     });
   }
@@ -302,14 +307,8 @@ Template.pieChart.rendered = function()
         value: 1
       }
     };
-    //var sortModifier = Session.get('pieChartSortModifier');
-    //if (sortModifier && sortModifier.sort) modifier.sort = sortModifier.sort;
-    
-    // use the data from the PollBlock-----------------------------------------
-    //var dataset = Slices.find({}, modifier).fetch();
-    //console.log(dataset);
     var query = {};
-    query._id = 'mATQwPsYCyFNshpmt';
+    query._id = $(svg[0][0]).data('contextid');
     var dataset = ContextBlocks.find(query, {data: 1}).fetch()[0].data; 
     var totalVotes = -2;
     dataset.forEach(function(value, index, array){
@@ -341,6 +340,9 @@ Template.pieChart.rendered = function()
       .attr("text-anchor", "middle")
       .text(function(d)
       {
+        if(totalVotes < 1){
+          return '50%';
+        }
         var percentage = Math.round(((d.value-1)/totalVotes)*100) -1;
         return percentage + '%';
       });
@@ -364,6 +366,9 @@ Template.pieChart.rendered = function()
       })
       .text(function(d)
       {
+        if(totalVotes < 1){
+          return '50%';
+        }
         var percentage = Math.round(((d.value -1)/totalVotes)*100);
         return percentage + '%';
       });
@@ -371,9 +376,6 @@ Template.pieChart.rendered = function()
       .remove();
   });
 };
-
-// End PieChart code 
-
 
 Template.favorite_button.helpers({
   userFavorited () {

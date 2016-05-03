@@ -1115,7 +1115,7 @@ PollBlock = (function (_super) {
   };
 
   PollBlock.prototype.providerIconUrl = function() {
-    return '/images/free_text_icon.svg'
+    return '/images/poll_icon.svg'
   };
 
 
