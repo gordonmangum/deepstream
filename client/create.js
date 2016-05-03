@@ -71,12 +71,10 @@ Template.content_icons.helpers({
 
 
 Template.content_icons.events(_.object(_.map(contextTypes, function(type){
-    console.log('click .' + type + '-button');
     return 'click .' + type + '-button'
   })
   , _.map(contextTypes, function(type) {
     return function() {
-      console.log('mediaDataType set to ' + type);
       Session.set('mediaDataType', type);
     };
   }))

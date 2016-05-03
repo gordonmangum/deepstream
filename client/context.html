@@ -30,7 +30,12 @@
   </span>
   {{/unless}}
   {{#if hasVoted _id}}
-  <span>
+   {{> chart_container}}
+  {{/if}}
+</template>
+
+<template name="chart_container">
+    <span>
     <div class="center" style="padding:15px;">
       <svg id="pieChart-{{_id}}" data-contextid="{{_id}}"></svg>
     </div>
@@ -41,7 +46,6 @@
       <p><span>{{percentageVote option.value}}%</span> {{option.name}}</p>
     {{/each}}
   </span>
-  {{/if}}
 </template>
 
 <template name="homepage_preview_poll_section">

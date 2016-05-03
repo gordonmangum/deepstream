@@ -253,27 +253,15 @@ Template.pieChart.helpers({
     }
   }
 });
-Template.pieChart.events(
-{
-  /* should use this to create the values on the context block
-  'click #add': function()
-  {
-    Slices.insert({value: Math.floor(Math.random() * 100)});
-    // how to insert slices
-  }
-  */
+Template.pieChart.events({
   'click .add-button': function(){
-    Session.set('voted' + this._id, true); 
+    var votedId = this._id;
     // set session for update now, and cookie for persistance
     document.cookie = "voted"+ this._id +"=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
-    Meteor.call('voteInPoll', this._id, parseInt($('input[name=vote-' + this._id + ']:checked').val()), function(err, success){ //set name of input to be with id of context block
-      // console.log('voted in poll');
-      // set voted long-term session parameter here using id of context block
-    });
+    Meteor.call('voteInPoll', this._id, parseInt($('input[name=vote-' + this._id + ']:checked').val()), function(err, success){});
   }
 });
-Template.pieChart.rendered = function()
-{
+Template.chart_container.rendered = function(){
   //Width and height
   var w = 200;
   var h = 200;
@@ -291,6 +279,9 @@ Template.pieChart.rendered = function()
   //Easy colors accessible via a 10-step ordinal scale
   var color = d3.scale.category10();
   
+  //access to contextId
+  var contextId = this.data._id;
+  
   //Create SVG element add the context block id to it -----------------------------------------
   var svg = d3.select("#pieChart-" + this.data._id)
     .attr("width", w)
@@ -299,83 +290,103 @@ Template.pieChart.rendered = function()
   {
     return d.data.name; //._id;
   };
-  Tracker.autorun(function()
-  {
-    var modifier = {
-      fields:
-      {
-        value: 1
-      }
-    };
-    var query = {};
-    query._id = $(svg[0][0]).data('contextid');
-    var dataset = ContextBlocks.find(query, {data: 1}).fetch()[0].data; 
-    var totalVotes = -2;
-    dataset.forEach(function(value, index, array){
-      totalVotes += value.value; 
-    });
-    
-    console.log('Total Votes: ' + totalVotes);
-    
-    var arcs = svg.selectAll("g.arc")
-      .data(pie(dataset), key);
-    var newGroups = arcs.enter()
-      .append("g")
-      .attr("class", "arc")
-      .attr("transform", "translate(" + outerRadius + "," + outerRadius +
-        ")");
-    //Draw arc paths
-    newGroups.append("path")
-      .attr("fill", function(d, i)
-      {
-        return color(i);
-      })
-      .attr("d", arc);
-    //Labels
-    newGroups.append("text")
-      .attr("transform", function(d)
-      {
-        return "translate(" + arc.centroid(d) + ")";
-      })
-      .attr("text-anchor", "middle")
-      .text(function(d)
-      {
-        if(totalVotes < 1){
-          return '50%';
-        }
-        var percentage = Math.round(((d.value-1)/totalVotes)*100) -1;
-        return percentage + '%';
-      });
-    arcs.transition()
-      .select('path')
-      .attrTween("d", function(d)
-      {
-        this._current = this._current || d;
-        var interpolate = d3.interpolate(this._current, d);
-        this._current = interpolate(0);
-        return function(t)
+  Tracker.autorun(function(){
+    if(contextId){
+      var modifier = {
+        fields:
         {
-          return arc(interpolate(t));
-        };
-      });
-    arcs.transition()
-      .select('text')
-      .attr("transform", function(d)
-      {
-        return "translate(" + arc.centroid(d) + ")";
-      })
-      .text(function(d)
-      {
-        if(totalVotes < 1){
-          return '50%';
+          value: 1
         }
-        var percentage = Math.round(((d.value -1)/totalVotes)*100);
-        return percentage + '%';
+      };
+      var query = {};
+      query._id = contextId;
+      var dataset = ContextBlocks.find(query, {data: 1}).fetch()[0].data; 
+      var totalVotes = -2;
+      dataset.forEach(function(value, index, array){
+        totalVotes += value.value; 
       });
-    arcs.exit()
-      .remove();
+      var arcs = svg.selectAll("g.arc")
+        .data(pie(dataset), key);
+      var newGroups = arcs.enter()
+        .append("g")
+        .attr("class", "arc")
+        .attr("transform", "translate(" + outerRadius + "," + outerRadius +
+          ")");
+      //Draw arc paths
+      newGroups.append("path")
+        .attr("fill", function(d, i)
+        {
+          return color(i);
+        })
+        .attr("d", arc);
+      //Labels
+      newGroups.append("text")
+        .attr("transform", function(d)
+        {
+          return "translate(" + arc.centroid(d) + ")";
+        })
+        .attr("text-anchor", "middle")
+        .text(function(d)
+        {
+          if(totalVotes < 1){
+            return '50%';
+          }
+          var percentage = Math.round(((d.value-1)/totalVotes)*100) -1;
+          return percentage + '%';
+        });
+      arcs.transition()
+        .select('path')
+        .attrTween("d", function(d)
+        {
+          this._current = this._current || d;
+          var interpolate = d3.interpolate(this._current, d);
+          this._current = interpolate(0);
+          return function(t)
+          {
+            return arc(interpolate(t));
+          };
+        });
+      arcs.transition()
+        .select('text')
+        .attr("transform", function(d)
+        {
+          return "translate(" + arc.centroid(d) + ")";
+        })
+        .text(function(d)
+        {
+          if(totalVotes < 1){
+            return '50%';
+          }
+          var percentage = Math.round(((d.value -1)/totalVotes)*100);
+          return percentage + '%';
+        });
+      arcs.exit()
+        .remove();
+    }
   });
 };
+Template.chart_container.helpers({
+  options: function(){
+    return this.data;
+  },
+  totalVotes: function(){
+    var totalVotes = -2.
+    this.data.forEach(function(value, index, array){
+      totalVotes += value.value;
+    });
+    return totalVotes;
+  },
+  percentageVote: function(votes){
+    var totalVotes = -2.
+    this.data.forEach(function(value, index, array){
+      totalVotes += value.value;
+    });
+    if(totalVotes < 1){
+      return '50';
+    }
+    return Math.round(((votes -1)/totalVotes)*100)
+  }
+});
 
 Template.favorite_button.helpers({
   userFavorited () {

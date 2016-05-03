@@ -1130,7 +1130,6 @@ PollBlock = (function (_super) {
   PollBlock.prototype.homepagePreview = false;
   PollBlock.prototype.homepagePreviewTemplate = null; //'homepage_preview_poll_section';
 
-  console.log('PollBlock prototype created');
   return PollBlock;
 
 })(ContextBlock);
