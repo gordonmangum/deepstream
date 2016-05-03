@@ -138,11 +138,11 @@
       </ul>
     </div>
     <div class="poll-question-container">
-      <p>Question:</p>
-      <textarea name="content" value={{content}} class="poll-content editable" rows="5" dir="auto"></textarea>
+      <p><b>Question:</b></p>
+      <textarea name="content" value={{content}} class="poll-content editable" rows="5" dir="auto" placeholder="Which pizza topping is the weirdest?"></textarea>
     </div>
     <div class="poll-question-container">
-      <p>Possible responses:</p>
+      <p><b>Possible responses:</b></p>
       {{> add_poll_option}}
       
     </div>
@@ -153,8 +153,8 @@
 </template>
 
 <template name="add_poll_option">
-  <input type="radio" disabled><input type="text" maxlength="40" class="poll-option" placeholder="Option 1">
-  <input type="radio" disabled><input type="text" maxlength="40" class="poll-option" placeholder="Option 2">
+  <input type="radio" disabled><input type="text" maxlength="40" class="poll-option" placeholder="Roasted Grapes">
+  <input type="radio" disabled><input type="text" maxlength="40" class="poll-option" placeholder="Sauerkraut">
 </template>
 
 <template name="create_link_section">

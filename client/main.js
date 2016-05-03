@@ -316,6 +316,8 @@ Template.chart_container.rendered = function(){
       newGroups.append("path")
         .attr("fill", function(d, i)
         {
+          console.log(i);
+          console.log(color(i));
           return color(i);
         })
         .attr("d", arc);
@@ -385,6 +387,15 @@ Template.chart_container.helpers({
       return '50';
     }
     return Math.round(((votes -1)/totalVotes)*100)
+  },
+  colorFromIndex: function(index){
+    var color = d3.scale.category10();
+    var i = 0;
+    while(i < index) {
+      color(i);
+      i++;
+    }
+    return color(i);
   }
 });
 

@@ -1970,3 +1970,31 @@ a.svg:after {
 .center {
   text-align: center;
 }
+
+.padded {
+  padding-left:15px;
+  padding-right:15px;
+  padding-top:5px;
+  padding-bottom:5px; 
+}
+
+.padded-top {
+  padding-left:15px;
+  padding-right:15px;
+  padding-top:15px;
+  padding-bottom:5px; 
+}
+
+.poll-question {
+  font-weight:normal;
+  font-style:italic;
+}
+
+label.vote-option {
+  padding-left: 10px;
+}
+
+p.vote-description{
+  display: inline;
+  line-height: 1;
+}

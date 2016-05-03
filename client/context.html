@@ -24,7 +24,9 @@
     {{#unless hasVoted _id}}
     <span>
       {{#each option in options}}
-        <input type="radio" name="vote-{{_id}}" value="{{@index}}" id="radio-{{_id}}-option-{{@index}}"><label for="radio-{{_id}}-option-{{@index}}">{{option.name}}</label><br/><!-- change id and name with context box id-->
+        <div class="padded">
+          <input type="radio" name="vote-{{_id}}" value="{{@index}}" id="radio-{{_id}}-option-{{@index}}"><label class="vote-option" for="radio-{{_id}}-option-{{@index}}">{{option.name}}</label>
+        </div>
       {{/each}}
       <div class="center" style="padding:15px;">
         <button class="add-button relative-button">
@@ -47,8 +49,11 @@
     <div class="center" style="padding:15px;">
       {{totalVotes}} people voted
     </div>
+    
     {{#each option in options}}
-      <p><span>{{percentageVote option.value}}%</span> {{option.name}}</p>
+    <div class='padded-top'>
+      <span style="color: {{colorFromIndex @index}};font-size: x-large;"><b>{{percentageVote option.value}}%</b></span><p class="vote-description"><label class="vote-option">{{option.name}}</label></p>
+    </div>
     {{/each}}
   </span>
 </template>
@@ -362,7 +367,7 @@
 <template name="preview_poll_section">
   <div class="show-full">
     <div class="text-preview" dir="auto">
-      {{content}}
+      <h3 class="poll-question">{{content}}</h3>
     </div>
     <div class="chart-container">
       {{> pieChart}}
