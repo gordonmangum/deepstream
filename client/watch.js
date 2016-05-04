@@ -374,7 +374,7 @@ Template.watch_page.onRendered(function(){
 
   this.mainPlayerYTApiActivated = false;
   this.mainPlayerUSApiActivated = false;
-
+  
   // activate jsAPIs for main stream
   this.autorun(function(){
     if(ytApiReady.get() && FlowRouter.subsReady()){
@@ -497,13 +497,22 @@ Template.watch_page.onRendered(function(){
     //mainPlayer.play(); // if streamUrl uses autoplayUrl, this is effectively a fallback
   };
 
-
   onMainPlayerStateChange = function(event){
     //console.log('PlayerStateChange');
     //console.log(event);
   }
   
+  // show title at start then fade out after 4 seconds if not in curateMode
+  if(!Session.get('curateMode')){
+    $('.title-section').fadeTo(400, 1, function(){
+      Meteor.setTimeout(function(){
+        $('.title-section').fadeTo(400, 0);
+        $('.trigger-title').fadeTo(400, 1);
+      },4000);
 
+    });
+    $('.trigger-title').fadeTo(100, 0);
+  }
   
 });
 
@@ -722,12 +731,14 @@ Template.watch_page.events({
     }
   },
   'mouseleave .second-row' (e, t){
-    $('.title-section').css('opacity', 0);
-    $('.trigger-title').css('opacity', 1);
+    if(!Session.get("curateMode")){
+      $('.title-section').fadeTo(400, 0);
+      $('.trigger-title').fadeTo(400, 1);
+    }
   },
   'mouseenter .trigger-title' (e, t){
-    $('.title-section').css('opacity', 1);
-    $('.trigger-title').css('opacity', 0);
+    $('.title-section').fadeTo(400, 1);
+    $('.trigger-title').fadeTo(400, 0);
   },
   'click .preview' (e, t){
     t.userControlledActiveStreamId.set(null); // so that stream selection doesn't switch

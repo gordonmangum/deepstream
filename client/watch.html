@@ -48,8 +48,8 @@
           {{/unless}}
           
           <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
-              <div class="icon trigger-title"  style="{{#if isCurator}}display:none{{/if}}"><i class="fa fa-info-circle"></i></div>
-            <div class="title-section {{#unless showBottomSection}}collapsed{{/unless}}" style="width: {{titleSectionWidth}}px; {{#unless isCurator}}opacity:0;{{/unless}}">
+            <div class="icon trigger-title"  style="{{#if curateMode}}display:none{{/if}}"><i class="fa fa-info-circle"></i></div>
+            <div class="title-section {{#unless showBottomSection}}collapsed{{/unless}}" style="width: {{titleSectionWidth}}px;{{#if curateMode}}opacity:1;{{else}} opacity:0;{{/if}}{{#unless isCurator}}opacity:0;{{/unless}}">
                 {{{streamTitleElement}}}
               <div class="about-stream">
                 {{{streamDescriptionElement}}}
