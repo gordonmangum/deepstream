@@ -300,79 +300,81 @@ Template.chart_container.rendered = function(){
       };
       var query = {};
       query._id = contextId;
-      var dataset = ContextBlocks.find(query, {data: 1}).fetch()[0].data; 
-      var totalVotes = 0;
-      dataset.forEach(function(value, index, array){
-        totalVotes += value.value; 
-      });
-      var arcs = svg.selectAll("g.arc")
-        .data(pie(dataset), key);
-      var newGroups = arcs.enter()
-        .append("g")
-        .attr("class", "arc")
-        .attr("transform", "translate(" + outerRadius + "," + outerRadius +
-          ")");
-      //Draw arc paths
-      newGroups.append("path")
-        .attr("fill", function(d, i)
-        {
-          console.log(i);
-          console.log(color(i));
-          return color(i);
-        })
-        .attr("d", arc);
-      //Labels
-      newGroups.append("text")
-        .attr("transform", function(d)
-        {
-          return "translate(" + arc.centroid(d) + ")";
-        })
-        .attr("text-anchor", "middle")
-        .text(function(d)
-        {
-          if(totalVotes < 1){
-            //don't annotate small values
-            return '0%';
-          }
-          var percentage = Math.round((d.value/totalVotes)*100);
-          if(percentage<10){
-            //don't annotate small values
-            return '';
-          }
-          return percentage + '%';
+      var dataset = ContextBlocks.find(query, {data: 1}).fetch()[0];
+      console.log(dataset);
+      if(dataset){
+        dataset = dataset.data; 
+        var totalVotes = 0;
+        dataset.forEach(function(value, index, array){
+          totalVotes += value.value; 
         });
-      arcs.transition()
-        .select('path')
-        .attrTween("d", function(d)
-        {
-          this._current = this._current || d;
-          var interpolate = d3.interpolate(this._current, d);
-          this._current = interpolate(0);
-          return function(t)
+        var arcs = svg.selectAll("g.arc")
+          .data(pie(dataset), key);
+        var newGroups = arcs.enter()
+          .append("g")
+          .attr("class", "arc")
+          .attr("transform", "translate(" + outerRadius + "," + outerRadius +
+            ")");
+        //Draw arc paths
+        newGroups.append("path")
+          .attr("fill", function(d, i)
           {
-            return arc(interpolate(t));
-          };
-        });
-      arcs.transition()
-        .select('text')
-        .attr("transform", function(d)
-        {
-          return "translate(" + arc.centroid(d) + ")";
-        })
-        .text(function(d)
-        {
-          if(totalVotes < 1){
-            return '0%';
-          }
-          var percentage = Math.round((d.value/totalVotes)*100);
-          if(percentage<10){
-            //don't annotate small values
-            return '';
-          }
-          return percentage + '%';
-        });
-      arcs.exit()
-        .remove();
+            return color(i);
+          })
+          .attr("d", arc);
+        //Labels
+        newGroups.append("text")
+          .attr("transform", function(d)
+          {
+            return "translate(" + arc.centroid(d) + ")";
+          })
+          .attr("text-anchor", "middle")
+          .text(function(d)
+          {
+            if(totalVotes < 1){
+              //don't annotate small values
+              return '0%';
+            }
+            var percentage = Math.round((d.value/totalVotes)*100);
+            if(percentage<10){
+              //don't annotate small values
+              return '';
+            }
+            return percentage + '%';
+          });
+        arcs.transition()
+          .select('path')
+          .attrTween("d", function(d)
+          {
+            this._current = this._current || d;
+            var interpolate = d3.interpolate(this._current, d);
+            this._current = interpolate(0);
+            return function(t)
+            {
+              return arc(interpolate(t));
+            };
+          });
+        arcs.transition()
+          .select('text')
+          .attr("transform", function(d)
+          {
+            return "translate(" + arc.centroid(d) + ")";
+          })
+          .text(function(d)
+          {
+            if(totalVotes < 1){
+              return '0%';
+            }
+            var percentage = Math.round((d.value/totalVotes)*100);
+            if(percentage<10){
+              //don't annotate small values
+              return '';
+            }
+            return percentage + '%';
+          });
+        arcs.exit()
+          .remove();
+      }
     }
   });
 };
@@ -392,7 +394,6 @@ Template.chart_container.helpers({
     this.data.forEach(function(value, index, array){
       totalVotes += value.value;
     });
-    console.log('total votes: ' + totalVotes);
     if(totalVotes < 1){
       return '0';
     }

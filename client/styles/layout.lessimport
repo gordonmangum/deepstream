@@ -482,9 +482,12 @@ input[type="text"], input[type="password"], input[type="email"] {
 input.poll-option{
   width: 90%;
   margin-left: 10px;
+  margin-bottom: 0;
+  height: inherit;
+  padding: 2px 2px 2px 15px;
 }
 textarea.poll-content{
-  padding: 10px;
+  padding: 2px;
 }
 
 input[type="search"] {

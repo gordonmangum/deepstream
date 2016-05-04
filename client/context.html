@@ -17,10 +17,10 @@
 </template>
 
 <template name="pieChart">
-  {{#if isCurator}}
+  {{#if isCuratorInTemplate}}
     {{> chart_container}}
   {{/if}}
-  {{#unless isCurator}}
+  {{#unless isCuratorInTemplate}}
     {{#unless hasVoted _id}}
     <span>
       {{#each option in options}}
