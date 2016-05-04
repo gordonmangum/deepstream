@@ -790,15 +790,23 @@ Template.create_poll_section.events({
   'click .add-button' (e, template){
     e.preventDefault()
     var chartOptions = [];
+    var i = 0;
     $('.poll-option').each(function(index){
-      chartOptions.push({name: $(this).val(), value: 0});
-    })
+      if($(this).val()){
+        chartOptions.push({name: $(this).val(), value: 0});
+        i++;
+      }
+    });
     
-    addContext(new PollBlock({
-      content: template.$('textarea[name=content]').val(),
-      data: chartOptions,
-      source: 'pie_poll'
-    }));
+    if(i < 2) {
+      $('.text-error.min-error').show() 
+    } else {
+      addContext(new PollBlock({
+        content: template.$('textarea[name=content]').val(),
+        data: chartOptions,
+        source: 'pie_poll'
+      }));
+    }
   },
   'click .go-back-button': goBack
 });

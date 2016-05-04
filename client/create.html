@@ -143,6 +143,7 @@
     </div>
     <div class="poll-question-container">
       <p><b>Possible responses:</b></p>
+      <p class="text-error min-error" style="display:none;">Please add at least two options.</p>
       {{> add_poll_option}}
       
     </div>
@@ -155,6 +156,9 @@
 <template name="add_poll_option">
   <input type="radio" disabled><input type="text" maxlength="40" class="poll-option" placeholder="Roasted Grapes">
   <input type="radio" disabled><input type="text" maxlength="40" class="poll-option" placeholder="Sauerkraut">
+  <input type="radio" disabled><input type="text" maxlength="40" class="poll-option" placeholder="Crab">
+  <input type="radio" disabled><input type="text" maxlength="40" class="poll-option" placeholder="Seaweed">
+  <input type="radio" disabled><input type="text" maxlength="40" class="poll-option" placeholder="Hollandaise Sauce">
 </template>
 
 <template name="create_link_section">

@@ -279,7 +279,7 @@ Schema.ContextReferenceProfile = new SimpleSchema({
   data: {
     type: [Object],
     minCount: 2,
-    maxCount: 2,
+    maxCount: 5,
     optional: true
   },
   'data.$.name': {
@@ -377,7 +377,7 @@ Schema.ContextBlocks = new SimpleSchema({
   data: {
     type: [Object],
     minCount: 2,
-    maxCount: 2,
+    maxCount: 5,
     optional: true
   },
   'data.$.name': {
