@@ -318,11 +318,9 @@ Template.home.events({
     Session.set('homeStreamListMode', 'best');
   },
   "mouseenter #videoOverlay" (e, t){
-    console.log('hovered');
     $('.activate-featured-hover p').fadeIn();
   },
   "mouseleave #videoOverlay" (e, t){
-    console.log('unhovered');
     $('.activate-featured-hover p').fadeOut();
   }
 });

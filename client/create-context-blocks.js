@@ -757,7 +757,6 @@ Template.create_map_section.helpers({
 
 Template.create_text_section.onCreated(function() {
   this.type = 'text';
-  console.log('text section on created fired');
   this.focusResult = new ReactiveVar(); // just as a stub
   Session.set('newContextDataSource', 'free_text');
 });
