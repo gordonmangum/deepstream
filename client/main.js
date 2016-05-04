@@ -301,7 +301,6 @@ Template.chart_container.rendered = function(){
       var query = {};
       query._id = contextId;
       var dataset = ContextBlocks.find(query, {data: 1}).fetch()[0];
-      console.log(dataset);
       if(dataset){
         dataset = dataset.data; 
         var totalVotes = 0;
