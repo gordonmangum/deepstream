@@ -332,7 +332,7 @@ Template.chart_container.rendered = function(){
         {
           if(totalVotes < 1){
             //don't annotate small values
-            return '';
+            return '0%';
           }
           var percentage = Math.round((d.value/totalVotes)*100);
           if(percentage<10){
@@ -362,7 +362,7 @@ Template.chart_container.rendered = function(){
         .text(function(d)
         {
           if(totalVotes < 1){
-            return '';
+            return '0%';
           }
           var percentage = Math.round((d.value/totalVotes)*100);
           if(percentage<10){
