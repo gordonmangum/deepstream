@@ -715,8 +715,6 @@ Meteor.methods({
   voteInPoll (contextBlockId, optionNumber) {
     check(contextBlockId, String);
     check(optionNumber, Number);
-    console.log(contextBlockId);
-    console.log(optionNumber);
     var voteChoice = "data." + optionNumber + ".value";
     // use query object to set value dynamically
     var query = {};
