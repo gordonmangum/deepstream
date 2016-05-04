@@ -243,7 +243,12 @@ Template.pieChart.helpers({
     if(totalVotes < 1){
       return '0';
     }
-    return Math.round((votes/totalVotes)*100)
+    
+    var percent = Math.round((votes/totalVotes)*100)
+    if(percent < 10){
+      return percent + '%<span style="opacity:0">0</span>';
+    }
+    return percent + '%';
   },
   hasVoted: function(contextId){
     if(Session.get('voted' + contextId)){
@@ -396,7 +401,11 @@ Template.chart_container.helpers({
     if(totalVotes < 1){
       return '0';
     }
-    return Math.round(((votes)/totalVotes)*100)
+    var percent = Math.round((votes/totalVotes)*100)
+    if(percent < 10){
+      return percent + '%<span style="opacity:0">0</span>';
+    }
+    return percent + '%';
   },
   colorFromIndex: function(index){
     var color = d3.scale.category10();

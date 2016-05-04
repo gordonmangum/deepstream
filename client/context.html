@@ -52,7 +52,7 @@
     
     {{#each option in options}}
     <div class='padded-top'>
-      <span style="color: {{colorFromIndex @index}};font-size: x-large;"><b>{{percentageVote option.value}}%</b></span><p class="vote-description"><label class="vote-option">{{option.name}}</label></p>
+      <span style="color: {{colorFromIndex @index}};font-size: x-large;"><b>{{{percentageVote option.value}}}</b></span><p class="vote-description"><label class="vote-option">{{option.name}}</label></p>
     </div>
     {{/each}}
   </span>
