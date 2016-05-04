@@ -499,8 +499,8 @@ Template.watch_page.onRendered(function(){
 
 
   onMainPlayerStateChange = function(event){
-    console.log('PlayerStateChange');
-    console.log(event);
+    //console.log('PlayerStateChange');
+    //console.log(event);
   }
   
 
@@ -693,6 +693,7 @@ var saveStreamTitle = function(template){
 
 Template.watch_page.events({
   'click #videoOverlay' (e,t){
+    // now not in use
     $('.right-section.featured-context-container').fadeOut(1000, function(){
       Session.set('featuredPeek', false);
       Meteor.setTimeout(function(){
@@ -719,6 +720,14 @@ Template.watch_page.events({
     } else {
       streamElement.removeClass('to-delete');
     }
+  },
+  'mouseleave .second-row' (e, t){
+    $('.title-section').css('opacity', 0);
+    $('.trigger-title').css('opacity', 1);
+  },
+  'mouseenter .trigger-title' (e, t){
+    $('.title-section').css('opacity', 1);
+    $('.trigger-title').css('opacity', 0);
   },
   'click .preview' (e, t){
     t.userControlledActiveStreamId.set(null); // so that stream selection doesn't switch
@@ -1184,12 +1193,15 @@ Template.creation_tutorial.helpers({
 
 Template.creation_tutorial.events({
   'click .find-stream .text' (e, t){
+    $('.header-section').css('z-index',1);
     Meteor.call('goToFindStreamStep', this.shortId, basicErrorHandler);
   },
   'click .add-cards .text' (e, t){
+    $('.header-section').css('z-index',1);
     Meteor.call('goToAddCardsStep', this.shortId, basicErrorHandler);
   },
   'click .go-on-air .text' (e, t){
+    $('.header-section').css('z-index',2);
     Meteor.call('goToPublishStreamStep', this.shortId, basicErrorHandler);
   },
   'click .find-stream button' (e, t){
@@ -1197,6 +1209,8 @@ Template.creation_tutorial.events({
   },
   'click .add-cards button' (e, t){
     Meteor.call('skipAddCardsStep', this.shortId, basicErrorHandler);
+    console.log('clicked add cards');
+    $('.header-section').css('z-index',2);
   },
   'click .title-description-overlay .close' (e, t){
     Meteor.call('goBackFromTitleDescriptionStep', this.shortId, basicErrorHandler);

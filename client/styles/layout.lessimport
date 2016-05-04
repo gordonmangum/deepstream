@@ -39,7 +39,7 @@
 @homepage-shade-4: @dark-medium-color;
 @homepage-shade-5: #525252;
 
-@live-color: #C90523;
+@live-color: #C90923;
 @action-color: #F6C406;
 @dark-action-color: @context-background-color;
 @hover-action-color: #dea406;
@@ -194,6 +194,14 @@ html {
   &:hover {
     background-color: @hover-action-color;
   }
+}
+
+.trigger-title{
+  font-size:25px;
+  position:absolute;
+  text-shadow: 2px 2px 2px darken(@light-text-color,60%);
+  top:45px;
+  z-index:1;
 }
 
 .dark-action-button-no-rounding{

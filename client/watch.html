@@ -48,6 +48,39 @@
           {{/unless}}
           
           <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
+              <div class="icon trigger-title"  style="{{#if isCurator}}display:none{{/if}}"><i class="fa fa-info-circle"></i></div>
+            <div class="title-section {{#unless showBottomSection}}collapsed{{/unless}}" style="width: {{titleSectionWidth}}px; {{#unless isCurator}}opacity:0;{{/unless}}">
+                {{{streamTitleElement}}}
+              <div class="about-stream">
+                {{{streamDescriptionElement}}}
+                <div class="stream-views">
+                  <div class="views">
+                    {{#if activeStream.live}}
+                      <div class="live-indicator">
+                        LIVE
+                      </div>
+                    {{/if}}
+                      <div class="view-counter">
+                        Views: {{formatNumber viewCount}}
+                      </div>
+                    {{#unless isCurator}}
+                    <!--
+                      <a title="Report inappropriate content" class="report-inappropriate-content" href="mailto:deepstream@media.mit.edu?subject=Inappropriate Content in DeepStream '{{title}}' - {{shortId}}
+                    &body=(Please let us know which content on this page is inappropriate and we'll get right on it!)" target="_blank">{{> inappropriate_content_icon}}</a> -->
+                   {{/unless}}
+                  </div>
+                  <div class="stream-stats-and-share">
+                    <div class="share-and-favorite">
+                      {{> favorite_button}}
+                      <button class="twitter-share-button">{{> twitter_share_icon}}</button>
+                      <button class="facebook-share-button">{{> facebook_share_icon}}</button>
+                      <button class="email-share-button">{{> email_share_icon}}</button>
+                      <button class="embed-code-button" data-clipboard-text='true'>{{> embed_code_icon}}</button>
+                    </div>
+                  </div> 
+                </div>
+              </div>
+            </div>
             {{#if curateMode}}
               <div class="streams-list" style="max-height:{{mainStreamHeight 0}}px">
                 {{#each livestreams}}
@@ -190,39 +223,6 @@
               <!--{{/unless}}-->
             {{/if}}
           </div>
-          <div class="footer-section {{#unless showBottomSection}}collapsed{{/unless}}" style="width: {{leftSectionWidth}}px;">
-              {{{streamTitleElement}}}
-            <div class="about-stream">
-              <div class="icon"><i class="fa fa-info-circle"></i></div>
-              {{{streamDescriptionElement}}}
-            </div>
-            <div class="stream-views">
-              <div class="views">
-                {{#if activeStream.live}}
-                  <div class="live-indicator">
-                    LIVE
-                  </div>
-                {{/if}}
-                Views: {{formatNumber viewCount}}
-                <div class="stream-stats-and-share">
-                  <div class="share-and-favorite">
-                    {{> favorite_button}}
-                    <button class="twitter-share-button">{{> twitter_share_icon}}</button>
-                    <button class="facebook-share-button">{{> facebook_share_icon}}</button>
-                    <button class="email-share-button">{{> email_share_icon}}</button>
-                    <button class="embed-code-button" data-clipboard-text='true'>{{> embed_code_icon}}</button>
-                  </div>
-                </div> 
-                {{#unless isCurator}}
-                <!--
-                  <a title="Report inappropriate content" class="report-inappropriate-content" href="mailto:deepstream@media.mit.edu?subject=Inappropriate Content in DeepStream '{{title}}' - {{shortId}}
-                &body=(Please let us know which content on this page is inappropriate and we'll get right on it!)" target="_blank">{{> inappropriate_content_icon}}</a> -->
-               {{/unless}}
-              </div>
-              
-            </div>
-          </div>
-
         </div>
       </div>
     {{/with}}
