@@ -331,9 +331,14 @@ Template.chart_container.rendered = function(){
         .text(function(d)
         {
           if(totalVotes < 1){
-            return '0%';
+            //don't annotate small values
+            return '';
           }
-          var percentage = Math.round((d.value/totalVotes)*100) -1;
+          var percentage = Math.round((d.value/totalVotes)*100);
+          if(percentage<10){
+            //don't annotate small values
+            return '';
+          }
           return percentage + '%';
         });
       arcs.transition()
@@ -357,9 +362,13 @@ Template.chart_container.rendered = function(){
         .text(function(d)
         {
           if(totalVotes < 1){
-            return '0%';
+            return '';
           }
           var percentage = Math.round((d.value/totalVotes)*100);
+          if(percentage<10){
+            //don't annotate small values
+            return '';
+          }
           return percentage + '%';
         });
       arcs.exit()
