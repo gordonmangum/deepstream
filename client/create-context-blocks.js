@@ -792,7 +792,7 @@ Template.create_poll_section.events({
     e.preventDefault()
     var chartOptions = [];
     $('.poll-option').each(function(index){
-      chartOptions.push({name: $(this).val(), value: 1});
+      chartOptions.push({name: $(this).val(), value: 0});
     })
     
     addContext(new PollBlock({

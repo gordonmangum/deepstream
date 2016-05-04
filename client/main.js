@@ -229,21 +229,21 @@ Template.pieChart.helpers({
     return this.data;
   },
   totalVotes: function(){
-    var totalVotes = -2.
+    var totalVotes = 0;
     this.data.forEach(function(value, index, array){
       totalVotes += value.value;
     });
     return totalVotes;
   },
   percentageVote: function(votes){
-    var totalVotes = -2.
+    var totalVotes = 0;
     this.data.forEach(function(value, index, array){
       totalVotes += value.value;
     });
     if(totalVotes < 1){
-      return '50';
+      return '0';
     }
-    return Math.round(((votes -1)/totalVotes)*100)
+    return Math.round((votes/totalVotes)*100)
   },
   hasVoted: function(contextId){
     if(Session.get('voted' + contextId)){
@@ -301,7 +301,7 @@ Template.chart_container.rendered = function(){
       var query = {};
       query._id = contextId;
       var dataset = ContextBlocks.find(query, {data: 1}).fetch()[0].data; 
-      var totalVotes = -2;
+      var totalVotes = 0;
       dataset.forEach(function(value, index, array){
         totalVotes += value.value; 
       });
@@ -331,9 +331,9 @@ Template.chart_container.rendered = function(){
         .text(function(d)
         {
           if(totalVotes < 1){
-            return '50%';
+            return '0%';
           }
-          var percentage = Math.round(((d.value-1)/totalVotes)*100) -1;
+          var percentage = Math.round((d.value/totalVotes)*100) -1;
           return percentage + '%';
         });
       arcs.transition()
@@ -357,9 +357,9 @@ Template.chart_container.rendered = function(){
         .text(function(d)
         {
           if(totalVotes < 1){
-            return '50%';
+            return '0%';
           }
-          var percentage = Math.round(((d.value -1)/totalVotes)*100);
+          var percentage = Math.round((d.value/totalVotes)*100);
           return percentage + '%';
         });
       arcs.exit()
@@ -372,21 +372,22 @@ Template.chart_container.helpers({
     return this.data;
   },
   totalVotes: function(){
-    var totalVotes = -2.
+    var totalVotes = 0;
     this.data.forEach(function(value, index, array){
       totalVotes += value.value;
     });
     return totalVotes;
   },
   percentageVote: function(votes){
-    var totalVotes = -2.
+    var totalVotes = 0;
     this.data.forEach(function(value, index, array){
       totalVotes += value.value;
     });
+    console.log('total votes: ' + totalVotes);
     if(totalVotes < 1){
-      return '50';
+      return '0';
     }
-    return Math.round(((votes -1)/totalVotes)*100)
+    return Math.round(((votes)/totalVotes)*100)
   },
   colorFromIndex: function(index){
     var color = d3.scale.category10();
