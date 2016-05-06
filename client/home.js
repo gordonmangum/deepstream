@@ -211,7 +211,6 @@ var getCheckBoxesNames = [
     "twitch"
   ];
 
-
 var updateCheckBoxes = function(){
 
   var checked  = getCheckBoxesNames.filter(function(elem){
