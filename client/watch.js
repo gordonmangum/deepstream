@@ -1051,31 +1051,17 @@ Template.context_browser.helpers({
     Meteor.call('returnCuratorNames', curatorIds, function(error, results){
       var nameList = results;
       var curatorNames = '';
-      if(nameList.includes(this.curatorName)){
-        nameList.forEach(function(value, index, array){
-          if(value !== undefined){
-            if(index === (array.length-2)){
-              curatorNames += value + ' and '
-            } else if(index === (array.length-1)){
-              curatorNames += value + '.'
-            } else {
-              curatorNames += value + ', '
-            }
+      nameList.forEach(function(value, index, array){
+        if(value !== undefined){
+          if(index === (array.length-2)){
+            curatorNames += value + ' and '
+          } else if(index === (array.length-1)){
+            curatorNames += value + '.'
+          } else {
+            curatorNames += value + ', '
           }
-        });
-      } else {
-        nameList.forEach(function(value, index, array){
-          if(value !== undefined){
-            if(index === (array.length-2)){
-              curatorNames += value + ' and '
-            } else if(index === (array.length-1)){
-              curatorNames += value + '.'
-            } else {
-              curatorNames += value + ', '
-            }
-          }
-        });
-      }
+        }
+      });
       Session.set('curatorNames', curatorNames);
     });
     return Session.get('curatorNames');
