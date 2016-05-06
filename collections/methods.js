@@ -723,6 +723,15 @@ Meteor.methods({
       $inc: query
     }); 
   },
+  returnCuratorNames(curatorIds){
+    check(curatorIds, [String]);
+    var curatorProfiles = Meteor.users.find({_id: {$in: curatorIds}},{fields:{profile:1}}).fetch();
+    var nameList = [];
+    curatorProfiles.forEach(function(user){
+      nameList.push(user.profile.name);
+    });
+    return nameList;
+  },
   favoriteDeepstream (streamShortId) {
     check(streamShortId, String);
     return changeFavorite.call(this, streamShortId, true);

@@ -1042,6 +1042,29 @@ Template.context_browser.helpers({
   },
   userFavorited () {
     return Meteor.user() && _.contains(Meteor.user().profile.favorites, this.shortId);
+  },
+  curatorNames () {
+    var curatorIds = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {curatorIds: 1}}).curatorIds;
+    if(curatorIds.length < 2){
+      return this.curatorName;
+    }
+    Meteor.call('returnCuratorNames', curatorIds, function(error, results){
+      var nameList = results;
+      var curatorNames = '';
+      nameList.forEach(function(value, index, array){
+        if(value !== undefined){
+          if(index === (array.length-2)){
+            curatorNames += value + ' and '
+          } else if(index === (array.length-1)){
+            curatorNames += value + '.'
+          } else {
+            curatorNames += value + ', '
+          }
+        }
+      });
+      Session.set('curatorNames', curatorNames);
+    });
+    return Session.get('curatorNames');
   }
 });
 

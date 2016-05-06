@@ -813,9 +813,8 @@
     .transparency-fade(background-color, @light-background-color);
     width: calc(100% ~"-" 2 * @contextAreaPadding);
     margin-bottom: 15px;
-
+    margin-left: 10px;
     button{
-      padding: 8px;
       .size-to-fit;
       font-weight: bold;
     }
