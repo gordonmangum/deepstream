@@ -263,7 +263,9 @@ Template.pieChart.events({
     var votedId = this._id;
     // set session for update now, and cookie for persistance
     document.cookie = "voted"+ this._id +"=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
-    Meteor.call('voteInPoll', this._id, parseInt($('input[name=vote-' + this._id + ']:checked').val()), function(err, success){});
+    Meteor.call('voteInPoll', this._id, parseInt($('input[name=vote-' + this._id + ']:checked').val()), function(err, success){
+        analytics.track('viewer voted in poll', trackingInfoFromPage());
+    });
   }
 });
 Template.chart_container.rendered = function(){
