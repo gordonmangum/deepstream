@@ -250,6 +250,7 @@ _.each(createTemplateNames, function(templateName){
   Template[templateName].events({
     "dblclick .search-results-container li:not(.loading-icon)" (d, template) {
       addContext(this);
+      analytics.track('Create ' + templateName +' Context Card', trackingInfoFromPage());
     }
   });
 });
@@ -351,6 +352,7 @@ Template.create_twitter_section.onCreated(function(){
       if(Session.get('curateMode')){
         this.tweetstep.set(1);
       } else {
+        analytics.track('Create Twitter Context Card', trackingInfoFromPage());
         addContext(focusResult);
       }
       
@@ -360,12 +362,14 @@ Template.create_twitter_section.onCreated(function(){
         if(that.tweetToTweetAuthor.get()){ 
           that.tweetstep.set(2);
         } else {
+          analytics.track('Create Twitter Context Card', trackingInfoFromPage());
           addContext(focusResult);
         }
       },0);   
     } else if (this.tweetstep.get() === 2){
       // clicked 'Tweet'
       // clicked intent link
+      analytics.track('Create Twitter Context Card', trackingInfoFromPage());
       addContext(focusResult);
     } 
   };
@@ -768,6 +772,7 @@ Template.create_text_section.onRendered(function() {
 Template.create_text_section.events({
   'click .add-button' (e, template){
     e.preventDefault()
+    analytics.track('Create Text Context Card', trackingInfoFromPage());
     addContext(new TextBlock({
       content: template.$('textarea[name=content]').val(),
       source: 'plaintext'
@@ -806,6 +811,7 @@ Template.create_poll_section.events({
         data: chartOptions,
         source: 'pie_poll'
       }));
+      analytics.track('Create Poll Context Card', trackingInfoFromPage());
     }
   },
   'click .go-back-button': goBack
