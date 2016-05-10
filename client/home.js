@@ -213,12 +213,10 @@ var getCheckBoxesNames = [
 
 
 var updateCheckBoxes = function(){
-
   var checked  = getCheckBoxesNames.filter(function(elem){
     var id = elem + "-checkbox";
     return document.getElementById(id).checked;
   });
-
   if(checked.length == 0){
     console.log("No boxes were selected");
   }
@@ -234,20 +232,19 @@ var getHomepageStreamSearchResults = function() {
 };
 
 Template.home.events({
-  "change #livestreams-checkbox,#deepstream-checkbox"(e, t){
-    var boxes = getCheckBoxesNames.filter(function (i) {
+  "change #livestreams-checkbox" (e, t){
+     var boxes = getCheckBoxesNames.filter(function (i) {
       return i !== "deepstream";
     });
     var livestreams = document.getElementById("livestreams-checkbox");
     var deepstreams = document.getElementById("deepstream-checkbox");
-
     if(livestreams.checked){
       boxes.forEach(function(box){
         document
           .getElementById(box + "-checkbox")
           .checked = true;
       });
-    }else{
+    } else {
       boxes.forEach(function(box){
         document
           .getElementById(box + "-checkbox")
@@ -255,6 +252,18 @@ Template.home.events({
       });
     }
     updateCheckBoxes();
+  },
+  "change #deepstream-checkbox,#livestreams-checkbox,#youtube-checkbox,#bambuser-checkbox,#ustream-checkbox,#twitch-checkbox" (e, t){
+    var deepstreams = document.getElementById("deepstream-checkbox");
+    var livestreams = document.getElementById("livestreams-checkbox");
+    updateCheckBoxes();
+    var yt = document.getElementById("youtube-checkbox");
+    var tw = document.getElementById("twitch-checkbox");
+    var bu = document.getElementById("bambuser-checkbox");
+    var us = document.getElementById("ustream-checkbox");    
+    if(yt.checked || tw.checked || bu.checked || us.checked){
+      livestreams.checked = true;
+    }
     var mode;
     //11
     if(deepstreams.checked && livestreams.checked){
@@ -272,9 +281,19 @@ Template.home.events({
     else {
     // hide eveything?
     }
+    console.log(mode)
     Session.set('homeStreamListType', mode);
   },
   "change #deepstream-checkbox,#youtube-checkbox,#bambuser-checkbox,#ustream-checkbox,#twitch-checkbox" (e,t ){
+    var livestreams = document.getElementById("livestreams-checkbox");
+    var yt = document.getElementById("youtube-checkbox");
+    var tw = document.getElementById("twitch-checkbox");
+    var bu = document.getElementById("bambuser-checkbox");
+    var us = document.getElementById("ustream-checkbox");    
+    if(yt.checked || tw.checked || bu.checked || us.checked){
+      livestreams.checked = true;
+    }
+
    updateCheckBoxes();
   },
 "focus .stream-search-form" (e,t){
