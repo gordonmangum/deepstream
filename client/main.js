@@ -505,6 +505,12 @@ Template.create_deepstream.events({
   }
 });
 
+Template.context_browser.helpers({
+  userFavorited () {
+    return Meteor.user() && _.contains(Meteor.user().profile.favorites, Session.get('streamShortId'));
+  }
+});
+
 Template.context_browser.events({
   'click .create' (){
     if (Meteor.user()){
@@ -535,8 +541,8 @@ Template.context_browser.events({
     if(!Meteor.user()){
       return notifyInfo('Please sign up or log in to favorite DeepStreams');
     }
-    // not the ideal way to access the stream id based on assumtion of at least one context block -- replace.
-    return Meteor.call('favoriteDeepstream', this.contextBlocks[0].streamShortId, function(err) {
+
+    return Meteor.call('favoriteDeepstream', Session.get("streamShortId"), function(err) {
       if (err) {
         notifyError(err);
         throw(err);

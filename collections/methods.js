@@ -24,6 +24,10 @@ changeFavorite = function(shortId, toFavorite) {
     }
   });
 
+  if(!deepstream){
+    throw new Error('Deepstream not found');
+  }
+
   operator = toFavorite ? '$addToSet' : '$pull';
   deepstreamOperation = {};
   deepstreamOperation[operator] = {
