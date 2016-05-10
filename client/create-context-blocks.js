@@ -819,6 +819,7 @@ Template.create_poll_section.events({
 
 Template.create_twitter_section.events({
   'click .go-back-button' (e, template){
+    template.tweetToTweetAuthor.set(false);
     template.tweetstep.set(0);
   },
   'change #tweetarea' (e, template){
