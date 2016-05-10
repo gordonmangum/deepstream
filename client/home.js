@@ -281,7 +281,6 @@ Template.home.events({
     else {
     // hide eveything?
     }
-    console.log(mode)
     Session.set('homeStreamListType', mode);
   },
   "change #deepstream-checkbox,#youtube-checkbox,#bambuser-checkbox,#ustream-checkbox,#twitch-checkbox" (e,t ){
