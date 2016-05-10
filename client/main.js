@@ -431,8 +431,6 @@ Template.favorite_button.events({
     if(!Meteor.user()){
       return notifyInfo('Please sign up or log in to favorite DeepStreams');
     }
-    console.log('1');
-    console.log(this.shortId);
     return Meteor.call('favoriteDeepstream', this.shortId, function(err) {
       if (err) {
         notifyError(err);
@@ -543,8 +541,21 @@ Template.context_browser.events({
     if(!Meteor.user()){
       return notifyInfo('Please sign up or log in to favorite DeepStreams');
     }
-
     return Meteor.call('favoriteDeepstream', Session.get("streamShortId"), function(err) {
+      if (err) {
+        notifyError(err);
+        throw(err);
+      } else {
+        analytics.track('Favorite deepstream', trackingInfoFromPage());
+      }
+
+    });
+  },
+  "click .unfavorite" () {
+    if(!Meteor.user()){
+      return notifyInfo('Please sign up or log in to favorite DeepStreams');
+    }
+    return Meteor.call('unfavoriteDeepstream', Session.get("streamShortId"), function(err) {
       if (err) {
         notifyError(err);
         throw(err);

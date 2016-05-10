@@ -1041,6 +1041,7 @@ Template.context_browser.helpers({
     return currentContext && currentContext.soloModeLocation === 'sidebar';
   },
   userFavorited () {
+    console.log(_.contains(Meteor.user().profile.favorites, this.shortId));
     return Meteor.user() && _.contains(Meteor.user().profile.favorites, this.shortId);
   },
   curatorNames () {
