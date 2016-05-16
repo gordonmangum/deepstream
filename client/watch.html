@@ -644,7 +644,6 @@
         <!--<div class="top-bar"></div>-->
       {{/if}}
       <div class="context-area list-mode {{#if soloSidebarContextMode}}hide{{/if}}">
-        
         {{#each contextBlocks}}
           {{> list_item_context_section}}
         {{/each}}
@@ -731,6 +730,11 @@
 </template>
 
 <template name="list_item_context_section">
+  {{#if showContext}}
+  showME
+  {{else}}
+  hideME
+  {{/if}}
   <div class="list-item-context-plus-annotation" data-context-id="{{_id}}">
     <div class="narrative-section context-section list-item-context-section {{#if type}}{{type}}-card{{/if}} {{#if hasSoloMode}}isClickable{{/if}}" data-context-id="{{_id}}">
       <div class="clickable">

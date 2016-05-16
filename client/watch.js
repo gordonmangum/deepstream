@@ -1,9 +1,6 @@
 var ytScriptLoaded = false;
-
 var ytApiReady = new ReactiveVar(false);
-
 var newContextDep = new Tracker.Dependency;
-
 var embedEventsSet =false;
 
 window.mainPlayer = {
@@ -145,6 +142,20 @@ window.mainPlayer = {
       default:
         return false
     }
+  },
+  getElapsedTime(){
+    switch(this.activeStreamSource){
+      case 'youtube':
+        return this._youTubePlayer.getCurrentTime();
+      //case 'ustream':
+      //  return
+      //case 'bambuser':
+      //  return
+      //case 'twitch':
+      //  return
+      default:
+        return false
+    }
   }
 };
 
@@ -153,6 +164,13 @@ Template.watch_page.onCreated(function () {
     $.getScript('https://www.youtube.com/iframe_api', function () {});
     ytScriptLoaded = true;
   }
+  
+
+  this.checkTime = Meteor.setInterval(()=>{
+    if(mainPlayer && mainPlayer.getElapsedTime){
+      Session.set('currentTimeElapsed', mainPlayer.getElapsedTime());
+    }
+  }.bind(this),4000);
 
   this.mainStreamIFrameId = Random.id(8);
   Session.set('mainStreamIFrameId', this.mainStreamIFrameId);
@@ -194,8 +212,6 @@ Template.watch_page.onCreated(function () {
     if(FlowRouter.subsReady()){
       var stream = Deepstreams.findOne({shortId: that.data.shortId()}, {reactive: false});
       var user = Meteor.user();
-
-
       if(!stream){
         setStatusCode(404);
         return BlazeLayout.render("stream_not_found");
@@ -520,6 +536,7 @@ Template.watch_page.onDestroyed(function () {
   if(mainPlayer){
     mainPlayer.activeStreamSource = null;
   }
+  Meteor.clearInterval(this.checkTime);
 });
 
 
@@ -1157,6 +1174,13 @@ Template.solo_context_section.helpers({
   }
 });
 Template.list_item_context_section.helpers(horizontalBlockHelpers);
+Template.list_item_context_section.helpers({
+  showContext(){
+    console.log(this.videoMarker);
+    console.log(Session.get('currentTimeElapsed'));
+    return true;
+  },
+});
 
 Template.title_description_overlay.onCreated(function(){
   this.titleLength = new ReactiveVar(this.title ? this.title.length : 0);
