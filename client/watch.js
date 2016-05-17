@@ -160,7 +160,8 @@ window.mainPlayer = {
       default:
         return false
     }
-  }
+  },
+  activeStream: new ReactiveVar({})
 };
 
 Template.watch_page.onCreated(function () {
@@ -170,12 +171,6 @@ Template.watch_page.onCreated(function () {
   }
   
   Session.set('replayContext', false);
-
-  this.checkTime = Meteor.setInterval(()=>{
-    if(mainPlayer && mainPlayer.getElapsedTime){
-      Session.set('currentTimeElapsed', mainPlayer.getElapsedTime());
-    }
-  }.bind(this),4000);
 
   this.mainStreamIFrameId = Random.id(8);
   Session.set('mainStreamIFrameId', this.mainStreamIFrameId);
@@ -334,8 +329,6 @@ Template.watch_page.onCreated(function () {
 
   });
 
-
-
   this.activeStream = new ReactiveVar();
   this.userControlledActiveStreamId = new ReactiveVar();
 
@@ -357,12 +350,11 @@ Template.watch_page.onCreated(function () {
       Tracker.nonreactive(function(){
         activeStream = that.activeStream.get();
       });
-
       if(activeStream && newActiveStream && activeStream.source === newActiveStream.source && activeStream._id !== newActiveStream._id){
         Session.set('removeMainStream', true);
         Meteor.setTimeout(() => Session.set('removeMainStream', false), 0);
       }
-
+      
       that.activeStream.set(newActiveStream);
     }
   });
@@ -396,10 +388,17 @@ Template.watch_page.onRendered(function(){
   this.mainPlayerYTApiActivated = false;
   this.mainPlayerUSApiActivated = false;
   
+  this.checkTime = Meteor.setInterval(()=>{
+    if(mainPlayer && mainPlayer.getElapsedTime){
+      Session.set('currentTimeElapsed', mainPlayer.getElapsedTime());
+    }
+  }.bind(this),4000);
+  
   // activate jsAPIs for main stream
   this.autorun(function(){
     if(ytApiReady.get() && FlowRouter.subsReady()){
       var activeStream = that.activeStream.get();
+      mainPlayer.activeStream.set(that.activeStream.get());
       if(!activeStream){
         return
       }
@@ -977,6 +976,9 @@ Template.stream_li.events({
 });
 
 Template.context_browser_area.helpers({
+  orderedContext (){
+    return this.orderedContext(Session.get("replayContext"))
+  },
   showShowSuggestionsButton (){
     return Session.get('curateMode') && this.hasPendingSuggestions();
   },
@@ -1068,7 +1070,9 @@ Template.context_browser.helpers({
     return pluralizeMediaType(Session.get('mediaDataType') || Session.get('previousMediaDataType')).toUpperCase();
   },
   replayAvailable(){
-    if(mainPlayer.activeStreamSource === "youtube"){
+    console.log(mainPlayer.activeStream.get());
+    
+    if(mainPlayer.activeStream.get().source === "youtube" && !mainPlayer.activeStream.get().live){
       return true;
     } else {
       return false;
