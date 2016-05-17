@@ -46,7 +46,7 @@ Deepstream = (function() {
     var that = this;
     var sortedBlocks =  _.sortBy(ContextBlocks.find({streamShortId: this.shortId}).fetch(), function(e){return that.contextBlockSortFunction(e)});
     if(sortByVideoMarker){
-      sortedBlocks = _.sortBy(sortedBlocks, function(block){ return parseFloat(block.videoMarker)*-1; });
+      sortedBlocks = _.sortBy(sortedBlocks, function(block){ return block.videoMarker*-1; });
     }
     return sortedBlocks;
     

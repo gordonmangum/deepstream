@@ -735,7 +735,8 @@
 </template>
 
 <template name="list_item_context_section">
-  <div class="list-item-context-plus-annotation" data-context-id="{{_id}}" style="{{#unless showContext}} display:none;{{/unless}}">
+  {{#if showContext}}
+  <div class="list-item-context-plus-annotation" data-context-id="{{_id}}">
     <div class="narrative-section context-section list-item-context-section {{#if type}}{{type}}-card{{/if}} {{#if hasSoloMode}}isClickable{{/if}}" data-context-id="{{_id}}">
       <div class="clickable">
         <div class="provider">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}{{providerName}}</div>
@@ -763,6 +764,7 @@
       </div>
     {{/if}}
   </div>
+  {{/if}}
 </template>
 
 <template name="annotation_section">

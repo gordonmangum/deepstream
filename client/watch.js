@@ -392,7 +392,7 @@ Template.watch_page.onRendered(function(){
     if(mainPlayer && mainPlayer.getElapsedTime){
       Session.set('currentTimeElapsed', mainPlayer.getElapsedTime());
     }
-  }.bind(this),4000);
+  },4000);
   
   // activate jsAPIs for main stream
   this.autorun(function(){
@@ -1070,8 +1070,6 @@ Template.context_browser.helpers({
     return pluralizeMediaType(Session.get('mediaDataType') || Session.get('previousMediaDataType')).toUpperCase();
   },
   replayAvailable(){
-    console.log(mainPlayer.activeStream.get());
-    
     if(mainPlayer.activeStream.get().source === "youtube" && !mainPlayer.activeStream.get().live){
       return true;
     } else {
@@ -1218,7 +1216,7 @@ Template.list_item_context_section.helpers({
       if(!Session.get("currentTimeElapsed")){
         return false;
       }
-      if(parseFloat(Session.get("currentTimeElapsed")) < parseFloat(this.videoMarker)){
+      if(parseFloat(Session.get("currentTimeElapsed")) < this.videoMarker){
         return false;
       }
       return true;
