@@ -146,7 +146,11 @@ window.mainPlayer = {
   getElapsedTime(){
     switch(this.activeStreamSource){
       case 'youtube':
-        return this._youTubePlayer.getCurrentTime();
+        if(this._youTubePlayer.getCurrentTime){
+          return this._youTubePlayer.getCurrentTime();
+        } else {
+          return 0;
+        }
       //case 'ustream':
       //  return
       //case 'bambuser':
@@ -165,6 +169,7 @@ Template.watch_page.onCreated(function () {
     ytScriptLoaded = true;
   }
   
+  Session.set('replayContext', false);
 
   this.checkTime = Meteor.setInterval(()=>{
     if(mainPlayer && mainPlayer.getElapsedTime){
@@ -536,6 +541,7 @@ Template.watch_page.onDestroyed(function () {
   if(mainPlayer){
     mainPlayer.activeStreamSource = null;
   }
+  Session.set('replayContext', false)
   Meteor.clearInterval(this.checkTime);
 });
 
@@ -908,6 +914,14 @@ Template.watch_page.events({
   'click .curator-card-create' (e, t){
     analytics.track('Click curator card create', trackingInfoFromPage());
   },
+  'click .curator-card-replay' (e, t){
+    if(Session.get("replayContext")){
+      Session.set("replayContext", false);
+    } else {
+      Session.set("replayContext", true);
+    }
+    analytics.track('Click curator card replay context', trackingInfoFromPage());
+  },
   'click .about-deepstream-embed, click .deepstream-logo-embed' (e, t){
     Session.set('showDeepstreamAboutOverlay', true);
   },
@@ -1053,6 +1067,20 @@ Template.context_browser.helpers({
   mediaTypeForDisplay (){
     return pluralizeMediaType(Session.get('mediaDataType') || Session.get('previousMediaDataType')).toUpperCase();
   },
+  replayAvailable(){
+    if(mainPlayer.activeStreamSource === "youtube"){
+      return true;
+    } else {
+      return false;
+    }
+  },
+  replayContextOn(){
+    if(Session.get("replayContext")){
+      return true;
+    } else {
+      return false;
+    }
+  },
   soloSidebarContextMode (){
     var currentContext = getCurrentContext();
     return currentContext && currentContext.soloModeLocation === 'sidebar';
@@ -1176,9 +1204,23 @@ Template.solo_context_section.helpers({
 Template.list_item_context_section.helpers(horizontalBlockHelpers);
 Template.list_item_context_section.helpers({
   showContext(){
-    console.log(this.videoMarker);
-    console.log(Session.get('currentTimeElapsed'));
-    return true;
+    if(Session.get("replayContext") === true){
+      if(Session.get("curateMode") === true){
+        return true;
+      }
+      if(!this.videoMarker){
+        return true;
+      }
+      if(!Session.get("currentTimeElapsed")){
+        return false;
+      }
+      if(parseFloat(Session.get("currentTimeElapsed")) < parseFloat(this.videoMarker)){
+        return false;
+      }
+      return true;
+    } else {
+      return true;
+    }
   },
 });
 
