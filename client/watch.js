@@ -207,9 +207,12 @@ Template.watch_page.onCreated(function () {
 
       if (that.data.onCuratePage()){
         if ((user = Meteor.user())) { // if there is a user
-          if (!_.contains(stream.curatorIds, user._id)) { // if they don't own the stream take them to stream not found
-            setStatusCode(404);
-            return BlazeLayout.render("stream_not_found");
+          if (!_.contains(stream.curatorIds, user._id)) { // if they don't own the stream take them to stream watch page
+            FlowRouter.withReplaceState(function(){
+              FlowRouter.go(stream.watchPath());
+            });
+            //setStatusCode(404); // fail nicer
+            //return BlazeLayout.render("stream_not_found");
           }
           var accessPriority = Meteor.user().accessPriority;
           if (!accessPriority || accessPriority > window.createAccessLevel){
