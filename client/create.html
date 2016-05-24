@@ -126,6 +126,11 @@
     <div class="text-result-container">
       <textarea name="content" value={{content}} class="text-content editable" rows="40" dir="auto"></textarea>
     </div>
+    {{#if replayContextOn}}
+    <div class="video-marker">
+      {{> videoMarkerInput}}
+    </div>
+    {{/if}}
     <button class="add-button">
       {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
     </button>
@@ -153,9 +158,11 @@
       {{> add_poll_option}}
       
     </div>
+    {{#if replayContextOn}}
     <div class="video-marker">
       {{> videoMarkerInput}}
     </div>
+    {{/if}}
     <button class="add-button">
       {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
     </button>
@@ -230,6 +237,11 @@
       {{/if}}
     {{/if}}
     {{#if showAddButton}}
+        {{#if replayContextOn}}
+      <div class="video-marker">
+        {{> videoMarkerInput}}
+      </div>
+      {{/if}}
       <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
         {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
       </button>
@@ -274,6 +286,11 @@
       {{/if}}
     {{/if}}
     {{#if showAddButton}}
+      {{#if replayContextOn}}
+      <div class="video-marker">
+        {{> videoMarkerInput}}
+      </div>
+      {{/if}}
       <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
         {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
       </button>
@@ -308,6 +325,11 @@
           <img width="250" src="{{uploadPreview}}">
         </div>
         {{#if showAddButton}}
+          {{#if replayContextOn}}
+          <div class="video-marker">
+            {{> videoMarkerInput}}
+          </div>
+          {{/if}}
           <button type="submit" class="add-button">
             {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
           </button>
@@ -359,6 +381,11 @@
       <img src="{{previewUrl 200 CONTEXT_WIDTH}}"/>
     </div>
     {{#if showAddButton}}
+      {{#if replayContextOn}}
+      <div class="video-marker">
+        {{> videoMarkerInput}}
+      </div>
+      {{/if}}
       <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
         {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
       </button>
@@ -479,6 +506,11 @@
         {{#if showAddButton}}
         {{#if stepZero}}
         <div class="centered-div">
+          {{#if replayContextOn}}
+          <div class="video-marker">
+            {{> videoMarkerInput}}
+          </div>
+          {{/if}}
           <button type="button" class="add-button relative-button {{#if isActive}}enabled{{/if}}">
             {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
           </button>
@@ -581,6 +613,11 @@
         </div>
       {{/with}}
       {{#if showAddButton}}
+        {{#if replayContextOn}}
+        <div class="video-marker">
+          {{> videoMarkerInput}}
+        </div>
+        {{/if}}
         <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
           {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
         </button>
@@ -709,7 +746,11 @@
         </div>
       {{/with}}
       {{#if showAddButton}}
-
+        {{#if replayContextOn}}
+        <div class="video-marker">
+          {{> videoMarkerInput}}
+        </div>
+        {{/if}}
         <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
           {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
         </button>

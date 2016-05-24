@@ -1,3 +1,11 @@
+Template.registerHelper("replayContextOn", function() {
+    if(Session.get("replayContext")){
+      return true;
+    } else {
+      return false;
+    }
+});
+
 Template.registerHelper("debugContext", function() {
   return console.log(this);
 });

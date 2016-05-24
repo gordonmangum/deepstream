@@ -116,8 +116,12 @@ window.addContext = function(contextBlock) { // add or suggest
     contextBlock.authorId = user._id;
     contextBlock.rank = 0; // places above existing ranked context
     if(mainPlayer.getElapsedTime()){
-      if(Session.set('videoMarkerTouched'){
-        contextBlock.videoMarker = Session.get('userVideoMarker')
+      console.log('video Marker Touced:');
+      console.log(Session.get('videoMarkerTouched'));
+      console.log('user video marker:');
+      console.log(Session.get('userVideoMarker'));
+      if(Session.get('videoMarkerTouched')){
+        contextBlock.videoMarker = Session.get('userVideoMarker');
       } else {
         contextBlock.videoMarker = mainPlayer.getElapsedTime();
       }
@@ -188,7 +192,7 @@ Template.videoMarkerInput.helpers({
 });
 
 Template.videoMarkerInput.events({
-  'keyup input.videoMarkerInput' (e, template){
+  'keyup input#video-marker-input' (e, template){
     Session.set('videoMarkerTouched', true);
     Session.set('userVideoMarker', $('#video-marker-input').val());
   }
