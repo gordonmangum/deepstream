@@ -116,10 +116,6 @@ window.addContext = function(contextBlock) { // add or suggest
     contextBlock.authorId = user._id;
     contextBlock.rank = 0; // places above existing ranked context
     if(mainPlayer.getElapsedTime()){
-      console.log('video Marker Touced:');
-      console.log(Session.get('videoMarkerTouched'));
-      console.log('user video marker:');
-      console.log(Session.get('userVideoMarker'));
       if(Session.get('videoMarkerTouched')){
         contextBlock.videoMarker = Session.get('userVideoMarker');
       } else {

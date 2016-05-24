@@ -356,6 +356,11 @@
       {{#if focusResult}}
         <div class="single-result">
           <img src="{{focusResult.url}}">
+          {{#if replayContextOn}}
+          <div class="video-marker">
+            {{> videoMarkerInput}}
+          </div>
+          {{/if}}
           <button type="submit" class="add-button">
             {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
           </button>

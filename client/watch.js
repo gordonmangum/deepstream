@@ -1079,13 +1079,6 @@ Template.context_browser.helpers({
       return false;
     }
   },
-  replayContextOn(){
-    if(Session.get("replayContext")){
-      return true;
-    } else {
-      return false;
-    }
-  },
   soloSidebarContextMode (){
     var currentContext = getCurrentContext();
     return currentContext && currentContext.soloModeLocation === 'sidebar';
