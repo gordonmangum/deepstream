@@ -106,6 +106,12 @@
   </div>
 </template>
 
+<template name="videoMarkerInput">
+  <label>Appear at </label>
+  <input id="video-marker-input" type="text" value="{{videoMarkerEstimate}}"/>
+  <label> seconds.</label>
+</template>
+
 <template name="create_text_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} Text</div>
   <button class="go-back-button">{{> back_arrow_icon}}</button>
@@ -146,6 +152,9 @@
       <p class="text-error min-error" style="display:none;">Please add at least two options.</p>
       {{> add_poll_option}}
       
+    </div>
+    <div class="video-marker">
+      {{> videoMarkerInput}}
     </div>
     <button class="add-button">
       {{#unless isCurator}}Suggest{{else}}Add{{/unless}}

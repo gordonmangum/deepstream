@@ -1,20 +1,20 @@
-Handlebars.registerHelper("debugContext", function() {
+Template.registerHelper("debugContext", function() {
   return console.log(this);
 });
 
-Handlebars.registerHelper("log", function(v) {
+Template.registerHelper("log", function(v) {
   return console.log(v);
 });
 
-Handlebars.registerHelper("curateMode", function() {
+Template.registerHelper("curateMode", function() {
   return Session.get("curateMode");
 });
 
-Handlebars.registerHelper("browseSuggestionsMode", function() {
+Template.registerHelper("browseSuggestionsMode", function() {
   return browseSuggestionsMode();
 });
 
-Handlebars.registerHelper("dateInPast", function(date) {
+Template.registerHelper("dateInPast", function(date) {
   if(!date){
     return null
   }
@@ -22,42 +22,42 @@ Handlebars.registerHelper("dateInPast", function(date) {
 });
 
 
-Handlebars.registerHelper("currentContext", function(){
+Template.registerHelper("currentContext", function(){
   return getCurrentContext()
 });
 
 
-Handlebars.registerHelper("hasContext", function(v) {
+Template.registerHelper("hasContext", function(v) {
   return !_.isEmpty(this);
 });
 
 
-Handlebars.registerHelper("saving", function() {
+Template.registerHelper("saving", function() {
   return Session.get("saving");
 });
 
-Handlebars.registerHelper("signingIn", function() {
+Template.registerHelper("signingIn", function() {
   return Session.get("signingIn");
 });
 
-Handlebars.registerHelper("showEditorsPickButton", function(){
+Template.registerHelper("showEditorsPickButton", function(){
   return Session.get('showEditorsPickButton') && Meteor.user().admin;
 });
 
-Handlebars.registerHelper("isContextOfType", function(type) {
+Template.registerHelper("isContextOfType", function(type) {
   return type == this.type;
 });
 
-Handlebars.registerHelper("UsersCollection", Meteor.users);
+Template.registerHelper("UsersCollection", Meteor.users);
 
-Handlebars.registerHelper("isCurator", function() {
+Template.registerHelper("isCurator", function() {
   if(this.curatorIds){
     Session.set('curatorIds', this.curatorIds);
   }
   return Meteor.userId() && _.contains(this.curatorIds, Meteor.userId());
 });
 
-Handlebars.registerHelper("isCuratorInTemplate", function(){
+Template.registerHelper("isCuratorInTemplate", function(){
   if(!Session.get('curatorIds')){
     if(this.curatorIds){
       Session.set('curatorIds', this.curatorIds);
@@ -66,43 +66,43 @@ Handlebars.registerHelper("isCuratorInTemplate", function(){
   return Meteor.userId() && _.contains(Session.get('curatorIds'), Meteor.userId());
 });
 
-Handlebars.registerHelper("isMainCurator", function() {
+Template.registerHelper("isMainCurator", function() {
   return Meteor.userId() && this.mainCuratorId === Meteor.userId();
 });
 
-Handlebars.registerHelper("windowWidth", function() {
+Template.registerHelper("windowWidth", function() {
   return Session.get("windowWidth");
 });
 
-Handlebars.registerHelper("windowHeight", function(offset) {
+Template.registerHelper("windowHeight", function(offset) {
   return Session.get("windowHeight") + (offset || 0);
 });
 
-Handlebars.registerHelper("CONTEXT_WIDTH", function() {
+Template.registerHelper("CONTEXT_WIDTH", function() {
   return window.CONTEXT_WIDTH;
 });
 
-Handlebars.registerHelper('showDeepstreamAboutOverlay', function() {
+Template.registerHelper('showDeepstreamAboutOverlay', function() {
   return Session.get('showDeepstreamAboutOverlay');
 });
 
-Handlebars.registerHelper("embedMode", function() {
+Template.registerHelper("embedMode", function() {
   return window.embedMode();
 });
 
-Handlebars.registerHelper("featuredMode", function() {
+Template.registerHelper("featuredMode", function() {
   return window.featuredMode();
 });
 
-Handlebars.registerHelper("featuredPeek", function() {
+Template.registerHelper("featuredPeek", function() {
   return window.featuredPeek();
 });
 
-Handlebars.registerHelper("isMobile", function() {
+Template.registerHelper("isMobile", function() {
   return window.isMobile();
 });
 
-Handlebars.registerHelper("newContextAvailable", function() {
+Template.registerHelper("newContextAvailable", function() {
   return Session.get('newContextAvailable');
 });
 
@@ -121,25 +121,25 @@ getTitleSectionWidth = function(offset){
   return Session.get("windowWidth") - 50 + (offset || 0);
 };
 
-Handlebars.registerHelper("leftSectionWidth", function(offset) {
+Template.registerHelper("leftSectionWidth", function(offset) {
   return getLeftSectionWidth(offset);
 });
 
-Handlebars.registerHelper("titleSectionWidth", function(offset) {
+Template.registerHelper("titleSectionWidth", function(offset) {
   return getTitleSectionWidth(offset);
 });
 
-Handlebars.registerHelper("mainStreamHeight", function(offset) {
+Template.registerHelper("mainStreamHeight", function(offset) {
   return getMainStreamHeight(offset);
 });
 
-Handlebars.registerHelper("overlayContentMaxWidth", function() {
+Template.registerHelper("overlayContentMaxWidth", function() {
   return Session.get("windowWidth") - 285 - 3 * 20 - 2 * 10; // PiPWidth - 3 * leftMargin - padding
 });
 
 
 
-Handlebars.registerHelper("profileImage", function(user, size) {
+Template.registerHelper("profileImage", function(user, size) {
   var diameter;
   if (size === 'large'){
     diameter = 150;
@@ -156,13 +156,13 @@ Handlebars.registerHelper("profileImage", function(user, size) {
   }
 });
 
-Handlebars.registerHelper("formatNumber", function(num){
+Template.registerHelper("formatNumber", function(num){
   if(!num){
     return 0;
   }
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 });
 
-Handlebars.registerHelper("formatDate", window.formatDate);
-Handlebars.registerHelper("formatDateNice", window.formatDateNice);
-Handlebars.registerHelper("formatDateCompact", window.formatDateCompact);
+Template.registerHelper("formatDate", window.formatDate);
+Template.registerHelper("formatDateNice", window.formatDateNice);
+Template.registerHelper("formatDateCompact", window.formatDateCompact);

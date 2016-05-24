@@ -509,6 +509,17 @@ img.profile-picture {
   width: 80%;
 }
 
+div.video-marker {
+  position: absolute;
+  bottom: 0;
+  input {
+    text-align: center;
+    width: 65px;
+    height: auto;
+    padding: 0;
+  }
+}
+
 button.add-button {
   position: absolute;
   right: 30px;

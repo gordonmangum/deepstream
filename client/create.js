@@ -116,7 +116,11 @@ window.addContext = function(contextBlock) { // add or suggest
     contextBlock.authorId = user._id;
     contextBlock.rank = 0; // places above existing ranked context
     if(mainPlayer.getElapsedTime()){
-      contextBlock.videoMarker = mainPlayer.getElapsedTime(); 
+      if(Session.set('videoMarkerTouched'){
+        contextBlock.videoMarker = Session.get('userVideoMarker')
+      } else {
+        contextBlock.videoMarker = mainPlayer.getElapsedTime();
+      }
     }
   } else {
     notifyInfo('Please log in to suggest content');
@@ -165,6 +169,30 @@ Template.link_twitter.events({
   }
 });
 
+Template.videoMarkerInput.onCreated(function(){
+  Session.set('videoMarkerTouched', false);
+  Session.set('userVideoMarker', 0);
+});
+
+Template.videoMarkerInput.onDestroyed(function(){
+  Session.set('videoMarkerTouched', false);
+  Session.set('userVideoMarker', 0);
+});
+
+Template.videoMarkerInput.helpers({
+  videoMarkerEstimate(){
+    if(!Session.get('videoMarkerTouched')){
+      return Math.round(Session.get("currentTimeElapsed"));
+    }
+  }
+});
+
+Template.videoMarkerInput.events({
+  'keyup input.videoMarkerInput' (e, template){
+    Session.set('videoMarkerTouched', true);
+    Session.set('userVideoMarker', $('#video-marker-input').val());
+  }
+});
 
 Template.unimplemented_chat_section.onCreated(function(){
   notifyFeature('Chat: coming soon!');
