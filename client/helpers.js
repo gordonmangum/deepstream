@@ -1,5 +1,4 @@
 Template.registerHelper("replayContextOn", function() {
-  console.log(Session.get("replayContext"));
   if(Session.get("replayContext")){
     return true;
   } else {
