@@ -170,7 +170,7 @@ Template.watch_page.onCreated(function () {
     ytScriptLoaded = true;
   }
   
-  Session.set('replayContext', false);
+  Session.set('replayContext', true);
 
   this.mainStreamIFrameId = Random.id(8);
   Session.set('mainStreamIFrameId', this.mainStreamIFrameId);
@@ -391,7 +391,7 @@ Template.watch_page.onRendered(function(){
   this.mainPlayerYTApiActivated = false;
   this.mainPlayerUSApiActivated = false;
   
-  this.checkTime = Meteor.setInterval(()=>{
+  this.checkTime = setInterval(()=>{
     if(mainPlayer && mainPlayer.getElapsedTime){
       Session.set('currentTimeElapsed', mainPlayer.getElapsedTime());
     }
@@ -543,7 +543,7 @@ Template.watch_page.onDestroyed(function () {
   if(mainPlayer){
     mainPlayer.activeStreamSource = null;
   }
-  Session.set('replayContext', false)
+  Session.set('replayContext', true);
   Meteor.clearInterval(this.checkTime);
 });
 
@@ -917,10 +917,10 @@ Template.watch_page.events({
     analytics.track('Click curator card create', trackingInfoFromPage());
   },
   'click .curator-card-replay' (e, t){
-    if(Session.get("replayContext")){
-      Session.set("replayContext", false);
+    if(Session.get('replayContext')){
+      Session.set('replayContext', false);
     } else {
-      Session.set("replayContext", true);
+      Session.set('replayContext', true);
     }
     analytics.track('Click curator card replay context', trackingInfoFromPage());
   },
