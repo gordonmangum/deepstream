@@ -6,6 +6,14 @@ Template.registerHelper("replayContextOn", function() {
   }
 });
 
+Template.registerHelper("replayAvailable", function() {
+  if(mainPlayer.activeStream.get().source === "youtube" && !mainPlayer.activeStream.get().live){
+    return true;
+  } else {
+    return false;
+  }
+});
+
 Template.registerHelper("debugContext", function() {
   return console.log(this);
 });

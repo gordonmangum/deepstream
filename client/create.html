@@ -126,7 +126,7 @@
     <div class="text-result-container">
       <textarea name="content" value={{content}} class="text-content editable" rows="40" dir="auto"></textarea>
     </div>
-    {{#if replayContextOn}}
+    {{#if replayAvailable}}
     <div class="video-marker">
       {{> videoMarkerInput}}
     </div>
@@ -158,7 +158,7 @@
       {{> add_poll_option}}
       
     </div>
-    {{#if replayContextOn}}
+    {{#if replayAvailable}}
     <div class="video-marker">
       {{> videoMarkerInput}}
     </div>
@@ -237,7 +237,7 @@
       {{/if}}
     {{/if}}
     {{#if showAddButton}}
-        {{#if replayContextOn}}
+      {{#if replayAvailable}}
       <div class="video-marker">
         {{> videoMarkerInput}}
       </div>
@@ -286,7 +286,7 @@
       {{/if}}
     {{/if}}
     {{#if showAddButton}}
-      {{#if replayContextOn}}
+      {{#if replayAvailable}}
       <div class="video-marker">
         {{> videoMarkerInput}}
       </div>
@@ -325,7 +325,7 @@
           <img width="250" src="{{uploadPreview}}">
         </div>
         {{#if showAddButton}}
-          {{#if replayContextOn}}
+          {{#if replayAvailable}}
           <div class="video-marker">
             {{> videoMarkerInput}}
           </div>
@@ -356,7 +356,7 @@
       {{#if focusResult}}
         <div class="single-result">
           <img src="{{focusResult.url}}">
-          {{#if replayContextOn}}
+          {{#if replayAvailable}}
           <div class="video-marker">
             {{> videoMarkerInput}}
           </div>
@@ -386,7 +386,7 @@
       <img src="{{previewUrl 200 CONTEXT_WIDTH}}"/>
     </div>
     {{#if showAddButton}}
-      {{#if replayContextOn}}
+      {{#if replayAvailable}}
       <div class="video-marker">
         {{> videoMarkerInput}}
       </div>
@@ -511,7 +511,7 @@
         {{#if showAddButton}}
         {{#if stepZero}}
         <div class="centered-div">
-          {{#if replayContextOn}}
+          {{#if replayAvailable}}
           <div class="video-marker">
             {{> videoMarkerInput}}
           </div>
@@ -618,7 +618,7 @@
         </div>
       {{/with}}
       {{#if showAddButton}}
-        {{#if replayContextOn}}
+        {{#if replayAvailable}}
         <div class="video-marker">
           {{> videoMarkerInput}}
         </div>
@@ -751,7 +751,7 @@
         </div>
       {{/with}}
       {{#if showAddButton}}
-        {{#if replayContextOn}}
+        {{#if replayAvailable}}
         <div class="video-marker">
           {{> videoMarkerInput}}
         </div>
