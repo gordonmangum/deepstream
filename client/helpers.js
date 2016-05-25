@@ -1,3 +1,34 @@
+Template.registerHelper("browseSuggestionsMode", function() {
+  return browseSuggestionsMode();
+});
+
+Template.registerHelper("curateMode", function() {
+  return Session.get("curateMode");
+});
+
+Template.registerHelper("currentContext", function(){
+  return getCurrentContext()
+});
+
+Template.registerHelper("dateInPast", function(date) {
+  if(!date){
+    return null
+  }
+  return moment(date).fromNow();
+});
+
+Template.registerHelper("debugContext", function() {
+  return console.log(this);
+});
+
+Template.registerHelper("formatDuration", function(seconds) {
+  return moment.duration({seconds: seconds}).format("h:mm:ss", {trim: false}); 
+});
+
+Template.registerHelper("log", function(v) {
+  return console.log(v);
+});
+
 Template.registerHelper("replayContextOn", function() {
   if(Session.get("replayContext")){
     return true;
@@ -13,35 +44,6 @@ Template.registerHelper("replayAvailable", function() {
     return false;
   }
 });
-
-Template.registerHelper("debugContext", function() {
-  return console.log(this);
-});
-
-Template.registerHelper("log", function(v) {
-  return console.log(v);
-});
-
-Template.registerHelper("curateMode", function() {
-  return Session.get("curateMode");
-});
-
-Template.registerHelper("browseSuggestionsMode", function() {
-  return browseSuggestionsMode();
-});
-
-Template.registerHelper("dateInPast", function(date) {
-  if(!date){
-    return null
-  }
-  return moment(date).fromNow();
-});
-
-
-Template.registerHelper("currentContext", function(){
-  return getCurrentContext()
-});
-
 
 Template.registerHelper("hasContext", function(v) {
   return !_.isEmpty(this);

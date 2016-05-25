@@ -754,6 +754,9 @@
     {{#if showAnnotationSection}}
       {{> annotation_section}}
     {{/if}}
+    {{#if showVideoMarkerSection}}
+      {{> video_marker_section}}
+    {{/if}}
     {{#if suggestedByUsername}}
       <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
     {{/if}}
@@ -773,6 +776,12 @@
       {{> default_user_pic }}
     </div>
     {{{annotation}}}
+  </div>
+</template>
+
+<template name="video_marker_section">
+  <div class="video-marker-section">
+    {{> clock_icon}}<span>{{formatDuration videoMarker}}</span>
   </div>
 </template>
 

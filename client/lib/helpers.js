@@ -193,6 +193,9 @@ window.horizontalBlockHelpers = _.extend({}, {
   annotation: textContentHelper,
   showAnnotationSection () {
     return this.annotationAllowed && (Session.get('curateMode') || this.annotation) && !window.browseSuggestionsMode();
+  },
+  showVideoMarkerSection () {
+    return Session.get('curateMode') && (mainPlayer.activeStream.get().source === "youtube" && !mainPlayer.activeStream.get().live)
   }
 });
 

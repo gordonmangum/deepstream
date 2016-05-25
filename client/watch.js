@@ -1072,13 +1072,6 @@ Template.context_browser.helpers({
   mediaTypeForDisplay (){
     return pluralizeMediaType(Session.get('mediaDataType') || Session.get('previousMediaDataType')).toUpperCase();
   },
-  replayAvailable(){
-    if(mainPlayer.activeStream.get().source === "youtube" && !mainPlayer.activeStream.get().live){
-      return true;
-    } else {
-      return false;
-    }
-  },
   soloSidebarContextMode (){
     var currentContext = getCurrentContext();
     return currentContext && currentContext.soloModeLocation === 'sidebar';

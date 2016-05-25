@@ -117,7 +117,8 @@ window.addContext = function(contextBlock) { // add or suggest
     contextBlock.rank = 0; // places above existing ranked context
     if(mainPlayer.getElapsedTime()){
       if(Session.get('videoMarkerTouched')){
-        contextBlock.videoMarker = Session.get('userVideoMarker');
+        var videoMarkerArray = Session.get('userVideoMarker').split(':').reverse();
+        contextBlock.videoMarker = moment.duration({hours: videoMarkerArray[2], minutes: videoMarkerArray[1], seconds: videoMarkerArray[0]}).asSeconds();
       } else {
         contextBlock.videoMarker = mainPlayer.getElapsedTime();
       }
@@ -182,7 +183,7 @@ Template.videoMarkerInput.onDestroyed(function(){
 Template.videoMarkerInput.helpers({
   videoMarkerEstimate(){
     if(!Session.get('videoMarkerTouched')){
-      return Math.round(Session.get("currentTimeElapsed"));
+      return moment.duration(Session.get("currentTimeElapsed"), "seconds").format("h:mm:ss", {trim: false});
     }
   }
 });

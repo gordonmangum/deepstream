@@ -514,9 +514,28 @@ div.video-marker {
   bottom: 0;
   input {
     text-align: center;
-    width: 65px;
+    width: 105px;
     height: auto;
     padding: 0;
+  }
+}
+
+.video-marker-section {
+  background-color: rgba(244, 244, 244, 0.8);
+  border-radius: 5px;
+  padding: 7px 3px;
+  display: flex;
+  flex-direction: row;
+  flex-flow: row;
+  span {
+    margin-left: 10px;
+  }
+  svg {
+    height: 18px;
+    width: 18px;
+    .fg {
+      fill: #000;
+    }
   }
 }
 

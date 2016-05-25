@@ -58,3 +58,4 @@ london:body-class
 kadira:flow-router
 kadira:blaze-layout
 d3js:d3
+oaf:moment-duration-format
