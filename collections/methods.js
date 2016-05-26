@@ -361,8 +361,22 @@ Meteor.methods({
     if(!_.contains(deepstream.curatorIds, this.userId)){
       throw new Meteor.Error('User not authorized to edit context in this deepstream');
     }
-
+    
     return updateContextBlock.call(this, {"streamShortId": streamShortId, "_id": contextId }, {"$set": {"annotation": annotation}});
+  },
+  editContextBlockVideoMarker (streamShortId, contextId, videoMarker) {
+    check(streamShortId, String);
+    check(contextId, String);
+    check(videoMarker, String);
+    var deepstream = Deepstreams.findOne({shortId: streamShortId}, {fields: {'curatorIds': 1}});
+    if(!_.contains(deepstream.curatorIds, this.userId)){
+      throw new Meteor.Error('User not authorized to edit context in this deepstream');
+    }
+    
+    var videoMarkerArray = videoMarker.split(':').reverse();
+    videoMarker = moment.duration({hours: videoMarkerArray[2], minutes: videoMarkerArray[1], seconds: videoMarkerArray[0]}).asSeconds();
+    
+    return updateContextBlock.call(this, {"streamShortId": streamShortId, "_id": contextId }, {"$set": {"videoMarker": videoMarker}});
   },
   editTextSection (streamShortId, contextId, content) {
     check(streamShortId, String);

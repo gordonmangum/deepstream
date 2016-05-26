@@ -537,6 +537,9 @@ div.video-marker {
       fill: #000;
     }
   }
+  textarea {
+   padding: 0;
+  }
 }
 
 button.add-button {

@@ -781,7 +781,7 @@
 
 <template name="video_marker_section">
   <div class="video-marker-section">
-    {{> clock_icon}}<span>{{formatDuration videoMarker}}</span>
+    {{> clock_icon}}<span><textarea name="videoMarker" class="text-content editable video-marker" rows="1" placeholder="{{formatDuration videoMarker}}" dir="auto"></textarea></span>
   </div>
 </template>
 

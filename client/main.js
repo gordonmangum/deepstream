@@ -116,7 +116,7 @@ editableTextCreatedBoilerplate = function() {
 
 editableTextEventsBoilerplate = function(meteorMethod) {
   return {
-    "blur .text-content.editable" (d, template) {
+    "blur .text-content.editable.annotation" (d, template) {
       var that = this;
       if (Session.get('curateMode')) {
         var textContent = template.$('textarea[name=content]').val();
@@ -124,13 +124,13 @@ editableTextEventsBoilerplate = function(meteorMethod) {
         Meteor.call(meteorMethod, Session.get('streamShortId'),that._id, textContent, saveCallback);
       }
     },
-    "mouseenter .text-content.editable" (d, template) {
+    "mouseenter .text-content.editable.annotation" (d, template) {
       document.body.style.overflow = 'hidden';
     },
-    "mouseleave .text-content.editable" (d, template) {
+    "mouseleave .text-content.editable.annotation" (d, template) {
       document.body.style.overflow = 'auto';
     },
-    "keypress .image-section .text-content.editable" (e, template) { // save on Enter
+    "keypress .image-section .text-content.editable.annotation" (e, template) { // save on Enter
       var that = this;
       if (Session.get('curateMode') && e.which === 13 ) {
         e.preventDefault();
@@ -141,7 +141,33 @@ editableTextEventsBoilerplate = function(meteorMethod) {
     }
   }
 };
-
+editableVideoMarkerEventsBoilerplate = function(meteorMethod) {
+  return {
+    "blur .text-content.editable.video-marker" (d, template) {
+      var that = this;
+      if (Session.get('curateMode')) {
+        var textContent = template.$('textarea[name=videoMarker]').val();
+        Session.set('saveState', 'saving');
+        Meteor.call(meteorMethod, Session.get('streamShortId'),that._id, textContent, saveCallback);
+      }
+    },
+    "mouseenter .text-content.editable.video-marker" (d, template) {
+      document.body.style.overflow = 'hidden';
+    },
+    "mouseleave .text-content.editable.video-marker" (d, template) {
+      document.body.style.overflow = 'auto';
+    },
+    "keypress .image-section .text-content.editable.video-marker" (e, template) { // save on Enter
+      var that = this;
+      if (Session.get('curateMode') && e.which === 13 ) {
+        e.preventDefault();
+        var textContent = template.$('textarea[name=videoMarker]').val();
+        Session.set('saveState', 'saving');
+        Meteor.call(meteorMethod, that._id, textContent, saveCallback);
+      }
+    }
+  }
+};
 
 var imagePlaceholderHeight = function(){
   return this.heightAtGivenWidth(CONTEXT_WIDTH);
@@ -154,17 +180,21 @@ Template.preview_image_section.helpers({
 });
 Template.preview_image_section.helpers(horizontalBlockHelpers);
 Template.preview_image_section.events(editableTextEventsBoilerplate('editContextBlockAnnotation'));
+Template.preview_image_section.events(editableVideoMarkerEventsBoilerplate('editContextBlockVideoMarker'));
 
 Template.display_image_section.onCreated(editableTextCreatedBoilerplate);
 //Template.display_image_section.onCreated(editableTextDestroyedBoilerplate('editContextBlockAnnotation'));
 Template.display_image_section.helpers(horizontalBlockHelpers);
 Template.display_image_section.events(editableTextEventsBoilerplate('editContextBlockAnnotation'));
+Template.display_image_section.events(editableVideoMarkerEventsBoilerplate('editContextBlockVideoMarker'));
 
 Template.display_audio_section.helpers(horizontalBlockHelpers);
 Template.display_audio_section.events(editableTextEventsBoilerplate('editContextBlockAnnotation'));
+Template.display_audio_section.events(editableVideoMarkerEventsBoilerplate('editContextBlockVideoMarker'));
 
 Template.display_video_section.helpers(horizontalBlockHelpers);
 Template.display_video_section.events(editableTextEventsBoilerplate('editContextBlockAnnotation'));
+Template.display_video_section.events(editableVideoMarkerEventsBoilerplate('editContextBlockVideoMarker'));
 
 Template.preview_video_section.helpers({
   height () {
@@ -174,16 +204,20 @@ Template.preview_video_section.helpers({
 });
 
 Template.list_item_context_section.events(editableTextEventsBoilerplate('editContextBlockAnnotation'));
+Template.list_item_context_section.events(editableVideoMarkerEventsBoilerplate('editContextBlockVideoMarker'));
 
 
 Template.preview_video_section.helpers(horizontalBlockHelpers);
 Template.preview_video_section.events(editableTextEventsBoilerplate('editContextBlockAnnotation'));
+Template.preview_video_section.events(editableVideoMarkerEventsBoilerplate('editContextBlockVideoMarker'));
 
 Template.display_twitter_section.helpers(horizontalBlockHelpers);
 Template.display_twitter_section.events(editableTextEventsBoilerplate('editContextBlockAnnotation'));
+Template.display_twitter_section.events(editableVideoMarkerEventsBoilerplate('editContextBlockVideoMarker'));
 
 Template.display_map_section.helpers(horizontalBlockHelpers);
 Template.display_map_section.events(editableTextEventsBoilerplate('editContextBlockAnnotation'));
+Template.display_map_section.events(editableVideoMarkerEventsBoilerplate('editContextBlockVideoMarker'));
 
 Template.preview_map_section.helpers({
   width: CONTEXT_WIDTH,
@@ -191,13 +225,16 @@ Template.preview_map_section.helpers({
 });
 Template.preview_map_section.helpers(horizontalBlockHelpers);
 Template.preview_map_section.events(editableTextEventsBoilerplate('editContextBlockAnnotation'));
+Template.preview_map_section.events(editableVideoMarkerEventsBoilerplate('editContextBlockVideoMarker'));
 
 Template.preview_news_section.helpers(horizontalBlockHelpers);
 Template.display_news_section.helpers(horizontalBlockHelpers);
 Template.display_news_section.events(editableTextEventsBoilerplate('editContextBlockAnnotation'));
+Template.display_news_section.events(editableVideoMarkerEventsBoilerplate('editContextBlockVideoMarker'));
 
 Template.display_link_section.helpers(horizontalBlockHelpers);
 Template.display_link_section.events(editableTextEventsBoilerplate('editContextBlockAnnotation'));
+Template.display_link_section.events(editableVideoMarkerEventsBoilerplate('editContextBlockVideoMarker'));
 Template.display_link_section.events({
   'click a' (e, t) {
     var url = e.currentTarget.href;
