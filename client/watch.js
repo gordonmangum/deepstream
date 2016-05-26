@@ -395,7 +395,7 @@ Template.watch_page.onRendered(function(){
     if(mainPlayer && mainPlayer.getElapsedTime){
       Session.set('currentTimeElapsed', mainPlayer.getElapsedTime());
     }
-  },4000);
+  },2000);
   
   // activate jsAPIs for main stream
   this.autorun(function(){
