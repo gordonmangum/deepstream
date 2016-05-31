@@ -73,6 +73,7 @@ meteorhacks:meteorx@1.4.1
 meteorhacks:npm@1.5.0
 meteorhacks:picker@1.0.3
 meteorhacks:subs-manager@1.6.2
+meteorhacks:unblock@1.1.0
 mikowals:batch-insert@1.1.13
 minifiers@1.1.7
 minimongo@1.0.10
