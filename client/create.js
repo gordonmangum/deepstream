@@ -184,14 +184,37 @@ Template.videoMarkerInput.helpers({
   videoMarkerEstimate(){
     if(!Session.get('videoMarkerTouched')){
       return moment.duration(Session.get("currentTimeElapsed"), "seconds").format("h:mm:ss", {trim: false});
+    } else {
+      return Session.get('userVideoMarker');
     }
   }
 });
 
 Template.videoMarkerInput.events({
+  'focus input#video-marker-input' (e, template){
+    // on focus pause the videoMarker input
+    console.log('focused in on the video marker currently at: ' + $('#video-marker-input').val());
+    Session.set('userVideoMarker', $('#video-marker-input').val());
+    Session.set('videoMarkerTouched', true);
+  },
   'keyup input#video-marker-input' (e, template){
+    console.log('keyup on input');
     Session.set('videoMarkerTouched', true);
     Session.set('userVideoMarker', $('#video-marker-input').val());
+    if(e.which === 13){
+      var textContent = template.$('#video-marker-input').val();
+      var videoMarkerArray = textContent.split(':').reverse();
+      var videoMarker = moment.duration({hours: videoMarkerArray[2], minutes: videoMarkerArray[1], seconds: videoMarkerArray[0]}).asSeconds();
+      videoMarker = moment.duration(videoMarker, "seconds").format("h:mm:ss", {trim: false});
+      template.$('#video-marker-input').val(videoMarker);
+    }
+  },
+  'blur input#video-marker-input' (e, template){
+    var textContent = template.$('#video-marker-input').val();
+    var videoMarkerArray = textContent.split(':').reverse();
+    var videoMarker = moment.duration({hours: videoMarkerArray[2], minutes: videoMarkerArray[1], seconds: videoMarkerArray[0]}).asSeconds();
+    videoMarker = moment.duration(videoMarker, "seconds").format("h:mm:ss", {trim: false});
+    template.$('#video-marker-input').val(videoMarker);
   }
 });
 

@@ -565,7 +565,9 @@
 <template name="context_browser_area">
   
   {{#if curateMode}}
-    {{> context_card_column}}
+    {{#unless replayAvailable}}
+      {{> context_card_column}}
+    {{/unless}}
   {{/if}}
   <div class="context-timeline-switcher {{#unless curateMode}}wide-menu{{/unless}}">
     
@@ -781,7 +783,7 @@
 
 <template name="video_marker_section">
   <div class="video-marker-section">
-    {{> clock_icon}}<span>Card appears at: <textarea name="videoMarker" class="text-content editable video-marker" rows="1" placeholder="{{formatDuration videoMarker}}" dir="auto"></textarea></span>
+    {{> clock_icon}}<span>Card appears at: <input name="videoMarker" class="text-content editable video-marker" rows="1" value="{{formatDuration videoMarker}}" dir="auto" /></span>
   </div>
 </template>
 

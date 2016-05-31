@@ -146,9 +146,13 @@ editableVideoMarkerEventsBoilerplate = function(meteorMethod) {
     "blur .text-content.editable.video-marker" (d, template) {
       var that = this;
       if (Session.get('curateMode')) {
-        var textContent = template.$('textarea[name=videoMarker]').val();
+        var textContent = template.$('input[name=videoMarker]').val();
+        var videoMarkerArray = textContent.split(':').reverse();
+        var videoMarker = moment.duration({hours: videoMarkerArray[2], minutes: videoMarkerArray[1], seconds: videoMarkerArray[0]}).asSeconds();
+        videoMarker = moment.duration(videoMarker, "seconds").format("h:mm:ss", {trim: false});
+        template.$('input[name=videoMarker]').val(videoMarker);
         Session.set('saveState', 'saving');
-        Meteor.call(meteorMethod, Session.get('streamShortId'),that._id, textContent, saveCallback);
+        Meteor.call(meteorMethod, Session.get('streamShortId'),that._id, textContent.toString(), saveCallback);
       }
     },
     "mouseenter .text-content.editable.video-marker" (d, template) {
@@ -158,12 +162,18 @@ editableVideoMarkerEventsBoilerplate = function(meteorMethod) {
       document.body.style.overflow = 'auto';
     },
     "keypress .image-section .text-content.editable.video-marker" (e, template) { // save on Enter
-      var that = this;
-      if (Session.get('curateMode') && e.which === 13 ) {
-        e.preventDefault();
-        var textContent = template.$('textarea[name=videoMarker]').val();
-        Session.set('saveState', 'saving');
-        Meteor.call(meteorMethod, that._id, textContent, saveCallback);
+      if (e.which === 13) {
+        var that = this;
+        if (Session.get('curateMode') && e.which === 13 ) {
+          e.preventDefault();
+          var textContent = template.$('input[name=videoMarker]').val();
+          var videoMarkerArray = textContent.split(':').reverse();
+          var videoMarker = moment.duration({hours: videoMarkerArray[2], minutes: videoMarkerArray[1], seconds: videoMarkerArray[0]}).asSeconds();
+          videoMarker = moment.duration(videoMarker, "seconds").format("h:mm:ss", {trim: false});
+          template.$('input[name=videoMarker]').val(videoMarker);
+          Session.set('saveState', 'saving');
+          Meteor.call(meteorMethod, that._id, textContent.toString(), saveCallback);
+        }
       }
     }
   }
