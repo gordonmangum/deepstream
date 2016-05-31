@@ -5,7 +5,8 @@ Deepstreams._ensureIndex({
 });
 
 Deepstreams._ensureIndex({
-  onAir: 1
+  onAir: 1,
+  live: 1
 });
 
 //Deepstreams._ensureIndex({
