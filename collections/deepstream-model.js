@@ -43,6 +43,7 @@ Deepstream = (function() {
   };
 
   Deepstream.prototype.orderedContext = function(sortByVideoMarker) {
+    console.log('sort by video marker value: ' + sortByVideoMarker);
     var that = this;
     var sortedBlocks =  _.sortBy(ContextBlocks.find({streamShortId: this.shortId}).fetch(), function(e){return that.contextBlockSortFunction(e)});
     if(sortByVideoMarker){

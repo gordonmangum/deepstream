@@ -575,6 +575,10 @@ Schema.Deepstreams = new SimpleSchema({
   userPathSegment: {
     type: String
   },
+  replayEnabled: {
+    type: Boolean,
+    defaultValue: true
+  },
   streamPathSegment: {
     type: String
   },

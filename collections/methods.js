@@ -428,12 +428,10 @@ Meteor.methods({
         directorMode: false
       }
     });
-
     if(updated){
       updateDeepstreamStatuses({selector: {shortId: shortId}});
     }
     return updated
-
   },
   directorModeOn (shortId){
     check(shortId, String);
@@ -443,6 +441,36 @@ Meteor.methods({
     }, {
       $set: {
         directorMode: true
+      }
+    });
+    if(updated){
+      updateDeepstreamStatuses({selector: {shortId: shortId}});
+    }
+    return updated
+  },
+  replayEnabledOff (shortId){
+    check(shortId, String);
+    this.unblock();
+    var updated = updateDeepstream.call(this, {
+      shortId: shortId
+    }, {
+      $set: {
+        replayEnabled: false
+      }
+    });
+    if(updated){
+      updateDeepstreamStatuses({selector: {shortId: shortId}});
+    }
+    return updated
+  },
+  replayEnabledOn (shortId){
+    check(shortId, String);
+    this.unblock();
+    var updated = updateDeepstream.call(this, {
+      shortId: shortId
+    }, {
+      $set: {
+        replayEnabled: true
       }
     });
     if(updated){

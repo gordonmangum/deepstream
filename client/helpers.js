@@ -30,15 +30,34 @@ Template.registerHelper("log", function(v) {
 });
 
 Template.registerHelper("replayContextOn", function() {
-  if(Session.get("replayContext")){
+  if(Session.get('replayContext')){
     return true;
   } else {
     return false;
   }
 });
 
+Template.registerHelper("replayEnabled", function() {
+  return Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1}}).replayEnabled;
+});
+
 Template.registerHelper("replayAvailable", function() {
   if(mainPlayer.activeStream.get().source === "youtube" && !mainPlayer.activeStream.get().live){
+    //check number of streams
+    var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {reactive: true, fields: {streams:1}});
+    if(deepstream.streams.length === 1){
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+});
+
+Template.registerHelper("singleStreamDeepstream", function() {
+  var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {reactive: true, fields: {streams:1}});
+  if(deepstream.streams.length === 1){
     return true;
   } else {
     return false;

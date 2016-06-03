@@ -565,9 +565,7 @@
 <template name="context_browser_area">
   
   {{#if curateMode}}
-    {{#unless replayAvailable}}
-      {{> context_card_column}}
-    {{/unless}}
+    {{> context_card_column}}
   {{/if}}
   <div class="context-timeline-switcher {{#unless curateMode}}wide-menu{{/unless}}">
     
@@ -610,9 +608,11 @@
 <template name="context_card_column">
   <div class="card-column">
     <div class="previews-container">
-      {{#each orderedInternalContext}}
-        <div class="context-mini-preview {{#if isActiveContext}}active{{/if}}" data-context-id="{{_id}}">{{> relevant_content_icon}}</div>
-      {{/each}}
+      {{#unless replayAvailable}}
+        {{#each orderedInternalContext}}
+          <div class="context-mini-preview {{#if isActiveContext}}active{{/if}}" data-context-id="{{_id}}">{{> relevant_content_icon}}</div>
+        {{/each}}
+      {{/unless}}
     </div>
   </div>
 </template>
@@ -667,10 +667,12 @@
               <center>
                 <button class="curator-card-like favorite-button {{#if userFavorited}}unfavorite{{else}}favorite{{/if}}">{{> favorite_icon}} Show some love</button>
               </center>
-              {{#if replayAvailable}}
-              <center>
-                <button class="curator-card-replay {{#if replayContextOn}}replay{{/if}}">{{> replay_icon}} Replay Context</button>
-              </center>
+              {{#if singleStreamDeepstream}}
+                {{#if replayAvailable}}
+                <center>
+                  <button class="curator-card-replay {{#if replayContextOn}}replay{{/if}}">{{> replay_icon}} Replay Context</button>
+                </center>
+                {{/if}}
               {{/if}}
               <center>
                 <button class="curator-card-create create">{{> create_icon}} Make your own</button>
@@ -756,8 +758,10 @@
     {{#if showAnnotationSection}}
       {{> annotation_section}}
     {{/if}}
-    {{#if showVideoMarkerSection}}
-      {{> video_marker_section}}
+    {{#if replayAvailable}}
+      {{#if showVideoMarkerSection}}
+        {{> video_marker_section}}
+      {{/if}}
     {{/if}}
     {{#if suggestedByUsername}}
       <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
@@ -790,6 +794,17 @@
 <template name="settings_menu">
   <div class="settings-menu">
     <ul>
+      <li>
+        {{#if replayAvailable}}
+          {{#if replayEnabled}}
+            <button class="replay-context-mode-off">Turn Replay Context Off</button>
+          {{else}}
+            <button class="replay-context-mode-on">Turn Replay Context On</button>
+          {{/if}}
+        {{else}}
+          <button class="replay-context-mode-on">Turn Replay Context On</button>
+        {{/if}}
+      </li>
       <li>
         {{#if directorMode}}
           <button class="director-mode-off">Turn Director Mode Off</button>

@@ -1507,7 +1507,7 @@
   right: -5px;
   width: 260px;
   z-index: 99999;
-  margin-top: -220px;
+  margin-top: -280px;
   &:after{
     @triangleSize: 8px;
     content:'';

@@ -169,8 +169,6 @@ Template.watch_page.onCreated(function () {
     $.getScript('https://www.youtube.com/iframe_api', function () {});
     ytScriptLoaded = true;
   }
-  
-  Session.set('replayContext', true);
 
   this.mainStreamIFrameId = Random.id(8);
   Session.set('mainStreamIFrameId', this.mainStreamIFrameId);
@@ -537,6 +535,19 @@ Template.watch_page.onRendered(function(){
     $('.trigger-title').fadeTo(100, 0);
   }
   
+  Meteor.setTimeout(function(){
+    var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {reactive: true, fields: {streams:1}});
+    if(deepstream.streams.length === 1){
+      if(mainPlayer.activeStream.get().source === "youtube" && !mainPlayer.activeStream.get().live){
+        Session.set('replayContext', true);
+      } else {
+        Session.set('replayContext', false);
+      }
+    } else {
+      Session.set('replayContext', false);
+    }
+  },0);
+  
 });
 
 Template.watch_page.onDestroyed(function () {
@@ -837,6 +848,12 @@ Template.watch_page.events({
   'click .director-mode-on' (e, t){
     return Meteor.call('directorModeOn', t.data.shortId(), basicErrorHandler)
   },
+  'click .replay-context-mode-off' (e, t){
+    Meteor.call('replayEnabledOff', t.data.shortId(), basicErrorHandler)
+  },
+  'click .replay-context-mode-on' (e, t){
+    Meteor.call('replayEnabledOn', t.data.shortId(), basicErrorHandler)
+  },
   'click .show-manage-curators-menu' (e, t){
     Session.set('previousMediaDataType', Session.get('mediaDataType'));
     Session.set('mediaDataType', null);
@@ -980,7 +997,15 @@ Template.stream_li.events({
 
 Template.context_browser_area.helpers({
   orderedContext (){
-    return this.orderedContext(Session.get("replayContext"))
+    var replayEnabled = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1}}).replayEnabled;
+    if(!replayEnabled){
+      repalyEnabled = false;
+    }
+    if(Session.get('curateMode')){
+      return this.orderedContext(replayEnabled);
+    } else { 
+      return this.orderedContext(replayEnabled && Session.get('replayContext'))
+    }
   },
   showShowSuggestionsButton (){
     return Session.get('curateMode') && this.hasPendingSuggestions();
@@ -1195,7 +1220,7 @@ Template.solo_context_section.helpers({
 Template.list_item_context_section.helpers(horizontalBlockHelpers);
 Template.list_item_context_section.helpers({
   showContext(){
-    if(Session.get("replayContext") === true){
+    if(Session.get('replayContext') === true){
       if(Session.get("curateMode") === true){
         return true;
       }
