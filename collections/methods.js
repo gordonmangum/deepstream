@@ -122,8 +122,27 @@ Meteor.methods({
     deepstream = Deepstreams.findOne({shortId: shortId}, {fields:{'activeStreamId' : 1, 'creationStep': 1, 'streams': 1}});
 
     var numberOfStreamsBeforeAdd = deepstream.streams.length;
-
+    
     modifierObject['$set'] = {};
+    
+    console.log(stream);
+    // set replay 
+    if(numberOfStreamsBeforeAdd > 0){
+      _.extend(modifierObject['$set'], {
+        replayEnabled : false
+      });
+      if(Meteor.isClient){
+        Session.set('replayContext', false);
+      }
+    } else if (numberOfStreamsBeforeAdd === 0 && !stream.live) {
+      _.extend(modifierObject['$set'], {
+        replayEnabled : true
+      });
+      if(Meteor.isClient){
+        Session.set('replayContext', true);
+      }
+    }
+    
 
     // make stream active if none is active
     if (!deepstream.activeStreamId){
@@ -189,7 +208,7 @@ Meteor.methods({
     var streamToDelete = _.extend(_.findWhere(deepstream.streams, {_id: streamId}), {deletedAt: new Date});
 
 
-    var modifier = {
+    var modifierObject = {
       $pull: {
         streams: {
           _id: streamId
@@ -208,14 +227,34 @@ Meteor.methods({
         .sortBy('live')
         .last()
         .value();
-      modifier['$set'] = {
+      modifierObject['$set'] = {
         activeStreamId: newActiveStream ? newActiveStream._id : null // set to another recent stream, preferably live
       }
     }
-
+    
+    
+    var numberOfStreamsBeforeDelete = deepstream.streams.length;
+    
+    // set replay 
+    if(numberOfStreamsBeforeDelete > 2){
+      _.extend(modifierObject['$set'], {
+        replayEnabled : false
+      });
+      if(Meteor.isClient){
+        Session.set('replayContext', false);
+      }
+    } else if (numberOfStreamsBeforeDelete === 2 && !deepstream.streams[0].live) {
+      _.extend(modifierObject['$set'], {
+        replayEnabled : true
+      });
+      if(Meteor.isClient){
+        Session.set('replayContext', true);
+      }
+    }
+    
     var numUpdated = updateDeepstream.call(this, {
       shortId: shortId
-    }, modifier);
+    }, modifierObject);
 
     if (numUpdated){
       updateDeepstreamStatuses({selector: {shortId: shortId}});

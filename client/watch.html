@@ -608,7 +608,7 @@
 <template name="context_card_column">
   <div class="card-column">
     <div class="previews-container">
-      {{#unless replayAvailable}}
+      {{#unless replayEnabled}}
         {{#each orderedInternalContext}}
           <div class="context-mini-preview {{#if isActiveContext}}active{{/if}}" data-context-id="{{_id}}">{{> relevant_content_icon}}</div>
         {{/each}}
@@ -667,7 +667,7 @@
               <center>
                 <button class="curator-card-like favorite-button {{#if userFavorited}}unfavorite{{else}}favorite{{/if}}">{{> favorite_icon}} Show some love</button>
               </center>
-              {{#if singleStreamDeepstream}}
+              {{#if replayEnabled}}
                 {{#if replayAvailable}}
                 <center>
                   <button class="curator-card-replay {{#if replayContextOn}}replay{{/if}}">{{> replay_icon}} Replay Context</button>
@@ -802,7 +802,7 @@
             <button class="replay-context-mode-on">Turn Replay Context On</button>
           {{/if}}
         {{else}}
-          <button class="replay-context-mode-on">Turn Replay Context On</button>
+          <button class="replay-context-mode-on">Turn Replay Context On (disabled)</button>
         {{/if}}
       </li>
       <li>

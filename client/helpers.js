@@ -55,15 +55,6 @@ Template.registerHelper("replayAvailable", function() {
   }
 });
 
-Template.registerHelper("singleStreamDeepstream", function() {
-  var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {reactive: true, fields: {streams:1}});
-  if(deepstream.streams.length === 1){
-    return true;
-  } else {
-    return false;
-  }
-});
-
 Template.registerHelper("hasContext", function(v) {
   return !_.isEmpty(this);
 });
