@@ -174,8 +174,6 @@ Template.watch_page.onCreated(function () {
   Session.set('mainStreamIFrameId', this.mainStreamIFrameId);
   this.mainStreamFlashPlayerId = Random.id(8);
 
-
-
   var that = this;
 
   this.settingsMenuOpen = new ReactiveVar();
@@ -395,6 +393,15 @@ Template.watch_page.onRendered(function(){
     }
   },1000);
   
+  this.autorun(function(){
+    var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1}});
+    if(deepstream) {
+      Session.set('replayEnabled', deepstream.replayEnabled);
+    } else {
+      Session.set('replayEnabled', false);
+    }
+  });
+ 
   // activate jsAPIs for main stream
   this.autorun(function(){
     if(ytApiReady.get() && FlowRouter.subsReady()){
@@ -546,7 +553,7 @@ Template.watch_page.onRendered(function(){
     } else {
       Session.set('replayContext', false);
     }
-  },0);
+  },1000);
   
 });
 
@@ -554,6 +561,7 @@ Template.watch_page.onDestroyed(function () {
   if(mainPlayer){
     mainPlayer.activeStreamSource = null;
   }
+  Session.set('replayEnabled', false);
   Session.set('replayContext', true);
   Meteor.clearInterval(this.checkTime);
 });
@@ -1073,7 +1081,7 @@ Template.context_card_column.onRendered(function(){
         Meteor.call('reorderContext', Session.get('streamShortId'), newOrder, saveCallback);
       }
     });
-    this.$(sortableOuterDiv).disableSelection();
+    this.$(sortableOuterDiv).disableSelection(); 
 
     Tracker.autorun(() => {
       if(Session.get('curateMode')){
@@ -1220,21 +1228,32 @@ Template.solo_context_section.helpers({
 Template.list_item_context_section.helpers(horizontalBlockHelpers);
 Template.list_item_context_section.helpers({
   showContext(){
-    if(Session.get('replayContext') === true){
-      if(Session.get("curateMode") === true){
+    console.log('show context?');
+    if(Session.get('replayEnabled')){
+      if(Session.get('replayContext') === true){
+        if(Session.get("curateMode") === true){
+          console.log('true curate');
+          return true;
+        }
+        if(!this.videoMarker){
+          return true;
+          console.log('true no video marker');
+        }
+        if(!Session.get("currentTimeElapsed")){
+          console.log('no current time elapsed yet');
+          return false;
+        }
+        if(parseFloat(Session.get("currentTimeElapsed")) < this.videoMarker){
+          console.log('false not this cards time yet');
+          return false;
+        }
+        return true;
+      } else {
+        console.log('true replay context off');
         return true;
       }
-      if(!this.videoMarker){
-        return true;
-      }
-      if(!Session.get("currentTimeElapsed")){
-        return false;
-      }
-      if(parseFloat(Session.get("currentTimeElapsed")) < this.videoMarker){
-        return false;
-      }
-      return true;
     } else {
+      console.log('true replay context disabled');
       return true;
     }
   },
