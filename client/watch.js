@@ -862,6 +862,9 @@ Template.watch_page.events({
   'click .replay-context-mode-on' (e, t){
     Meteor.call('replayEnabledOn', t.data.shortId(), basicErrorHandler)
   },
+  'click .replay-context-mode-disabled' (e, t){
+    notifyError('Unfortunately Replay Context is not available for Deepstreams with a livestream or more than one stream');
+  },
   'click .show-manage-curators-menu' (e, t){
     Session.set('previousMediaDataType', Session.get('mediaDataType'));
     Session.set('mediaDataType', null);
