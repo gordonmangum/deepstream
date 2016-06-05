@@ -98,14 +98,6 @@
                   -->
                   {{/unless}}
                 {{/each}}
-                {{#if curateMode}}
-                  <li class="add-stream">
-                    <button class="show-stream-search">
-                      {{> add_stream_text}}
-                    </button>
-                  </li>
-                  <br/>
-                {{/if}}
                 {{#if deadstreams.length}}
                 <!--
                   <li class="live-dead-divider"></li>
@@ -116,6 +108,14 @@
                   {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}
                   <br/>
                 {{/each}}
+                {{#if curateMode}}
+                  <li class="add-stream">
+                    <button class="show-stream-search">
+                      {{> add_stream_text}}
+                    </button>
+                  </li>
+                  <br/>
+                {{/if}}
               </div>
             {{else}}
               {{#unless directorMode}}
