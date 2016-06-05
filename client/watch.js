@@ -1231,32 +1231,25 @@ Template.solo_context_section.helpers({
 Template.list_item_context_section.helpers(horizontalBlockHelpers);
 Template.list_item_context_section.helpers({
   showContext(){
-    console.log('show context?');
     if(Session.get('replayEnabled')){
       if(Session.get('replayContext') === true){
         if(Session.get("curateMode") === true){
-          console.log('true curate');
           return true;
         }
         if(!this.videoMarker){
           return true;
-          console.log('true no video marker');
         }
         if(!Session.get("currentTimeElapsed")){
-          console.log('no current time elapsed yet');
           return false;
         }
         if(parseFloat(Session.get("currentTimeElapsed")) < this.videoMarker){
-          console.log('false not this cards time yet');
           return false;
         }
         return true;
       } else {
-        console.log('true replay context off');
         return true;
       }
     } else {
-      console.log('true replay context disabled');
       return true;
     }
   },

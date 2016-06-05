@@ -265,12 +265,25 @@ Template.create_stream_section.onCreated(function(){
 Template.create_stream_section.events({
   "dblclick .search-results-container li:not(.loading-icon)" (d, template) {
     addStream(this, template);
-  }
+  },
+  "click .got-it-replay-warning" (){
+    Session.set('shownStreamReplayWarning', true); 
+    // set session for update now, and cookie for persistance
+    document.cookie = "shownStreamReplayWarning=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+    analytics.track('Click got it button for context replay stream warning', trackingInfoFromPage());
+  },
 });
 
 Template.create_stream_section.helpers({
   "showBackButton" (d, template) {
     return true; //this.creationStep !== 'find_stream'; // Also want back button on find_stream
+  },
+  "showStreamReplayWarning" (d, template){
+    if(Session.get('shownStreamReplayWarning')){
+      return !Session.get('shownStreamReplayWarning'); 
+    } else {
+      return !document.cookie.match('shownStreamReplayWarning=');
+    }
   },
   "streamDate" (creationDateCompactString, isLive) {
     if(isLive){

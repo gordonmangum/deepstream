@@ -633,6 +633,20 @@
 <template name="create_stream_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} Streams</div>
   {{#if showBackButton}}<button class="go-back-button {{#unless showSingleResult}}hide{{/unless}}">{{> back_arrow_icon}}</button>{{/if}}
+  {{#if replayAvailable}}
+    {{#if replayEnabled}}
+      {{#if showStreamReplayWarning}}
+      <div class="stream-replay-warning-container">
+        <div class="stream-replay-warning-content">
+          <p>Currently your context cards will appear at a specific time in the current video. Adding another video or stream means all of your cards will be shown at once.</p>
+          <center>
+            <button class="got-it-replay-warning">Got it!</button>
+          </center>
+        </div>
+      </div> 
+      {{/if}}
+    {{/if}}
+  {{/if}} 
   <div class="create-section add-stream-section">
     <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
       <div class="tabs">

@@ -1326,7 +1326,35 @@
   padding: 10px;
   background-color: #AC00D8;
 }
-
+.stream-replay-warning-container {
+  background-color: #F40030;
+  position: absolute;
+  z-index: 11;
+  &:before{
+    right: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(244, 0, 48, 0);
+    border-right-color: #F40030;
+    border-width: 30px;
+    margin-top: -97px;
+  }
+  .stream-replay-warning-content {
+    padding: 10px 30px;
+  }
+  .got-it-replay-warning {
+    margin-top: 14px; 
+    color: #f4f4f4; 
+    padding: 10px; 
+    background-color: #000; 
+    min-width: 100px;
+  }
+}
 .highlight-context-container {
   background-color: #F40030; 
   position: absolute; 
