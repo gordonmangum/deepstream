@@ -1329,7 +1329,7 @@
 .stream-replay-warning-container {
   background-color: #F40030;
   position: absolute;
-  z-index: 11;
+  z-index: 110;
   &:before{
     right: 100%;
     top: 50%;
