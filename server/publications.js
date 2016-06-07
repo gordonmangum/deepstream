@@ -117,7 +117,7 @@ Meteor.publish("deepstreamsOnAir", function(options) {
     onAir: true
   }, {
     sort: {
-      live: -1
+      createdAt: -1
     },
     fields: deepstreamFields,
     skip: options.page * PUB_SIZE,
