@@ -1085,7 +1085,7 @@ Template.context_card_column.onRendered(function(){
       }
     });
     this.$(sortableOuterDiv).disableSelection(); 
-
+    
     Tracker.autorun(() => {
       if(Session.get('curateMode')){
         this.$(sortableOuterDiv).sortable('enable');

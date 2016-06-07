@@ -42,7 +42,7 @@ Template.registerHelper("replayEnabled", function() {
 });
 
 Template.registerHelper("replayAvailable", function() {
-  if(mainPlayer.activeStream.get().source === "youtube" && !mainPlayer.activeStream.get().live){
+  if(mainPlayer && mainPlayer.activeStream && mainPlayer.activeStream.get() && mainPlayer.activeStream.get().source === "youtube" && !mainPlayer.activeStream.get().live){
     //check number of streams
     var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {reactive: true, fields: {streams:1}});
     if(deepstream.streams.length === 1){

@@ -540,8 +540,7 @@ Template.create_deepstream.events({
             throw(err);
           }
           analytics.track('User clicked create and created deepstream');
-
-        })
+        });
       } else {
         notifyInfo("Due to high demand, we had to turn off new curation functionality for a moment. Stay tuned for updates!");
       }
