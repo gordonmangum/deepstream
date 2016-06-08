@@ -3,168 +3,176 @@ var ytApiReady = new ReactiveVar(false);
 var newContextDep = new Tracker.Dependency;
 var embedEventsSet =false;
 
-window.mainPlayer = {
-  activated(){
-    return this.activeStreamSource ? true : false;
-  },
-  play(){
-    switch(this.activeStreamSource){
-      case 'youtube':
-        this._youTubePlayer.playVideo();
-        break;
-      case 'ustream':
-        this._ustreamPlayer.callMethod('play');
-        break;
-      case 'bambuser':
-        this._bambuserPlayer.playBroadcast();
-        break;
-      case 'twitch':
-        this._twitchPlayer.playVideo();
-        break;
-      case 'ml30':
-        break;
-      default:
-        throw new Meteor.Error('main player has no active stream source')
-    }
-  },
-  pause(){
-    switch(this.activeStreamSource){
-      case 'youtube':
-        this._youTubePlayer.pauseVideo();
-        break;
-      case 'ustream':
-        this._ustreamPlayer.callMethod('pause');
-        break;
-      case 'bambuser':
-        this._bambuserPlayer.pauseBroadcast();
-        break;
-      case 'twitch':
-        this._twitchPlayer.pauseVideo();
-        break;
-      case 'ml30':
-        break;
-      default:
-        throw new Meteor.Error('main player has no active stream source')
-    }
-  },
-  stop(){
-    switch(this.activeStreamSource){
-      case 'youtube':
-        this._youTubePlayer.stopVideo();
-        break;
-      case 'ustream':
-        this._ustreamPlayer.callMethod('stop');
-        break;
-      case 'bambuser':
-        this._bambuserPlayer.pauseBroadcast();
-        break;
-      case 'twitch':
-        this._twitchPlayer.pauseVideo();
-        break;
-      case 'ml30':
-        break;
-      default:
-        throw new Meteor.Error('main player has no active stream source')
-    }
-  },
-  mute(){
-    switch(this.activeStreamSource){
-      case 'youtube':
-        this._youTubePlayer.mute();
-        break;
-      case 'ustream':
-        this._ustreamPlayer.callMethod('volume', 0);
-        break;
-      case 'bambuser':
-        this._bambuserPlayer.mute();
-        break;
-      case 'twitch':
-        this._twitchPlayer.mute();
-        break;
-      case 'ml30':
-        document.getElementById(Session.get('mainStreamIFrameId')).contentWindow.postMessage('mute', 'https://civic.mit.edu');
-        break;
-      default:
-        throw new Meteor.Error('main player has no active stream source')
-    }
-  },
-  unmute(){
-    switch(this.activeStreamSource){
-      case 'youtube':
-        this._youTubePlayer.unMute();
-        break;
-      case 'ustream':
-        this._ustreamPlayer.callMethod('volume', 70); // TO-DO return volume to wherever they were before mute
-        break;
-      case 'bambuser':
-        this._bambuserPlayer.unmute();
-        break;
-      case 'twitch':
-        this._twitchPlayer.unmute();
-        break;
-      case 'ml30':
-        document.getElementById(Session.get('mainStreamIFrameId')).contentWindow.postMessage('unmute', 'https://civic.mit.edu');
-        break;
-      default:
-        throw new Meteor.Error('main player has no active stream source')
-    }
-  },
-  lowerVolume(){
-    switch(this.activeStreamSource){
-      case 'youtube':
-        this._youTubePlayer.setVolume(15);
-        break;
-      case 'ustream':
-        this._ustreamPlayer.callMethod('volume', 15);
-        break;
-      case 'bambuser':
-        this._bambuserPlayer.mute();
-        break;
-      case 'twitch':
-        this._twitchPlayer.mute();
-        break;
-      case 'ml30':
-        break;
-      default:
-        throw new Meteor.Error('main player has no active stream source')
-    }
-  },
-  isMuted(){
-    switch(this.activeStreamSource){
-      case 'youtube':
-        return this._youTubePlayer.isMuted();
-      //case 'ustream':
-      //  return
-      //case 'bambuser':
-      //  return
-      //case 'twitch':
-      //  return
-      default:
-        return false
-    }
-  },
-  getElapsedTime(){
-    switch(this.activeStreamSource){
-      case 'youtube':
-        if(this._youTubePlayer.getCurrentTime){
-          return this._youTubePlayer.getCurrentTime();
-        } else {
-          return 0;
-        }
-      //case 'ustream':
-      //  return
-      //case 'bambuser':
-      //  return
-      //case 'twitch':
-      //  return
-      default:
-        return false
-    }
-  },
-  activeStream: new ReactiveVar({})
+window.resetMainPlayer = function(){
+  window.mainPlayer = {
+    activated(){
+      return this.activeStreamSource ? true : false;
+    },
+    play(){
+      switch(this.activeStreamSource){
+        case 'youtube':
+          this._youTubePlayer.playVideo();
+          break;
+        case 'ustream':
+          this._ustreamPlayer.callMethod('play');
+          break;
+        case 'bambuser':
+          this._bambuserPlayer.playBroadcast();
+          break;
+        case 'twitch':
+          this._twitchPlayer.playVideo();
+          break;
+        case 'ml30':
+          break;
+        default:
+          throw new Meteor.Error('main player has no active stream source')
+      }
+    },
+    pause(){
+      switch(this.activeStreamSource){
+        case 'youtube':
+          this._youTubePlayer.pauseVideo();
+          break;
+        case 'ustream':
+          this._ustreamPlayer.callMethod('pause');
+          break;
+        case 'bambuser':
+          this._bambuserPlayer.pauseBroadcast();
+          break;
+        case 'twitch':
+          this._twitchPlayer.pauseVideo();
+          break;
+        case 'ml30':
+          break;
+        default:
+          throw new Meteor.Error('main player has no active stream source')
+      }
+    },
+    stop(){
+      switch(this.activeStreamSource){
+        case 'youtube':
+          this._youTubePlayer.stopVideo();
+          break;
+        case 'ustream':
+          this._ustreamPlayer.callMethod('stop');
+          break;
+        case 'bambuser':
+          this._bambuserPlayer.pauseBroadcast();
+          break;
+        case 'twitch':
+          this._twitchPlayer.pauseVideo();
+          break;
+        case 'ml30':
+          break;
+        default:
+          throw new Meteor.Error('main player has no active stream source')
+      }
+    },
+    mute(){
+      switch(this.activeStreamSource){
+        case 'youtube':
+          this._youTubePlayer.mute();
+          break;
+        case 'ustream':
+          this._ustreamPlayer.callMethod('volume', 0);
+          break;
+        case 'bambuser':
+          this._bambuserPlayer.mute();
+          break;
+        case 'twitch':
+          this._twitchPlayer.mute();
+          break;
+        case 'ml30':
+          document.getElementById(Session.get('mainStreamIFrameId')).contentWindow.postMessage('mute', 'https://civic.mit.edu');
+          break;
+        default:
+          throw new Meteor.Error('main player has no active stream source')
+      }
+    },
+    unmute(){
+      switch(this.activeStreamSource){
+        case 'youtube':
+          this._youTubePlayer.unMute();
+          break;
+        case 'ustream':
+          this._ustreamPlayer.callMethod('volume', 70); // TO-DO return volume to wherever they were before mute
+          break;
+        case 'bambuser':
+          this._bambuserPlayer.unmute();
+          break;
+        case 'twitch':
+          this._twitchPlayer.unmute();
+          break;
+        case 'ml30':
+          document.getElementById(Session.get('mainStreamIFrameId')).contentWindow.postMessage('unmute', 'https://civic.mit.edu');
+          break;
+        default:
+          throw new Meteor.Error('main player has no active stream source')
+      }
+    },
+    lowerVolume(){
+      switch(this.activeStreamSource){
+        case 'youtube':
+          this._youTubePlayer.setVolume(15);
+          break;
+        case 'ustream':
+          this._ustreamPlayer.callMethod('volume', 15);
+          break;
+        case 'bambuser':
+          this._bambuserPlayer.mute();
+          break;
+        case 'twitch':
+          this._twitchPlayer.mute();
+          break;
+        case 'ml30':
+          break;
+        default:
+          throw new Meteor.Error('main player has no active stream source')
+      }
+    },
+    isMuted(){
+      switch(this.activeStreamSource){
+        case 'youtube':
+          return this._youTubePlayer.isMuted();
+        //case 'ustream':
+        //  return
+        //case 'bambuser':
+        //  return
+        //case 'twitch':
+        //  return
+        default:
+          return false
+      }
+    },
+    getElapsedTime(){
+      switch(this.activeStreamSource){
+        case 'youtube':
+          if(this._youTubePlayer.getCurrentTime){
+            return this._youTubePlayer.getCurrentTime();
+          } else {
+            return 0;
+          }
+        //case 'ustream':
+        //  return
+        //case 'bambuser':
+        //  return
+        //case 'twitch':
+        //  return
+        default:
+          return false
+      }
+    },
+    activeStream: new ReactiveVar({}),
+    YTApiActivated: false,
+    USApiActivated : false
+  };
 };
 
+resetMainPlayer();
+
 Template.watch_page.onCreated(function () {
+
+  console.log(111)
   if(!ytScriptLoaded){
     $.getScript('https://www.youtube.com/iframe_api', function () {});
     ytScriptLoaded = true;
@@ -251,6 +259,7 @@ Template.watch_page.onCreated(function () {
 
   this.autorun(function(){
     Session.set("streamShortId", that.data.shortId());
+    resetMainPlayer();
   });
 
   Session.set('contextMode', 'context');
@@ -384,8 +393,6 @@ Template.watch_page.onCreated(function () {
 Template.watch_page.onRendered(function(){
   var that = this;
 
-  this.mainPlayerYTApiActivated = false;
-  this.mainPlayerUSApiActivated = false;
   
   this.checkTime = setInterval(()=>{
     if(mainPlayer && mainPlayer.getElapsedTime){
@@ -412,9 +419,10 @@ Template.watch_page.onRendered(function(){
       }
       switch(activeStream.source){
         case 'youtube':
-          if ( !this.mainPlayerYTApiActivated ){
+
+          if ( !mainPlayer.YTApiActivated ){
             console.log('activate the yt api!!')
-            this.mainPlayerYTApiActivated = true;
+            mainPlayer.YTApiActivated = true;
             Meteor.setTimeout(function(){ // TODO this is a hack. Why does it need to wait?
               var youTubePlayer = new YT.Player(that.mainStreamIFrameId, {
                 events: {
@@ -430,9 +438,9 @@ Template.watch_page.onRendered(function(){
           }
           break;
         case 'ustream':
-          if ( !this.mainPlayerUSApiActivated ){
+          if ( !mainPlayer.USApiActivated ){
             console.log('activate the ustream api!!')
-            this.mainPlayerUSApiActivated = true;
+            mainPlayer.USApiActivated = true;
             Meteor.setTimeout(function(){ // TODO this is a hack. Why does it need to wait?
               var ustreamPlayer = UstreamEmbed(that.mainStreamIFrameId);
               mainPlayer._ustreamPlayer = ustreamPlayer;
