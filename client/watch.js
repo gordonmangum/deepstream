@@ -172,7 +172,6 @@ resetMainPlayer();
 
 Template.watch_page.onCreated(function () {
 
-  console.log(111)
   if(!ytScriptLoaded){
     $.getScript('https://www.youtube.com/iframe_api', function () {});
     ytScriptLoaded = true;
@@ -549,9 +548,9 @@ Template.watch_page.onRendered(function(){
     });
     $('.trigger-title').fadeTo(100, 0);
   }
-  
+  Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1}}).replayEnabled;
   Meteor.setTimeout(function(){
-    var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {reactive: true, fields: {streams:1}});
+    var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {reactive: true, fields: {streams:1, replayEnabled:1}});
     if(deepstream.streams.length === 1){
       if(mainPlayer.activeStream.get().source === "youtube" && !mainPlayer.activeStream.get().live){
         Session.set('replayContext', true);
@@ -561,7 +560,7 @@ Template.watch_page.onRendered(function(){
     } else {
       Session.set('replayContext', false);
     }
-  },1000);
+  },1300);
   
 });
 

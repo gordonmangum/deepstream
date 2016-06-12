@@ -125,7 +125,7 @@ Meteor.methods({
     
     modifierObject['$set'] = {};
     
-    console.log(stream);
+    //console.log(stream);
     // set replay 
     if(numberOfStreamsBeforeAdd > 0){
       _.extend(modifierObject['$set'], {
@@ -414,8 +414,11 @@ Meteor.methods({
     
     var videoMarkerArray = videoMarker.split(':').reverse();
     videoMarker = moment.duration({hours: videoMarkerArray[2], minutes: videoMarkerArray[1], seconds: videoMarkerArray[0]}).asSeconds().toString();
-    
-    return updateContextBlock.call(this, {"streamShortId": streamShortId, "_id": contextId }, {"$set": {"videoMarker": videoMarker}});
+    if(ContextBlocks.findOne(contextId)){
+      return updateContextBlock.call(this, {"streamShortId": streamShortId, "_id": contextId }, {"$set": {"videoMarker": videoMarker}});
+    } else {
+      return updateSuggestedContextBlock.call(this, {"streamShortId": streamShortId, "_id": contextId }, {"$set": {"videoMarker": videoMarker}});
+    }
   },
   editTextSection (streamShortId, contextId, content) {
     check(streamShortId, String);
