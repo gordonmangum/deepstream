@@ -11,6 +11,9 @@ loginWithTwitter = function () {
     } else if (!Meteor.user().username) { // if they are signing up for the first time they won't have a username yet
       FlowRouter.go('twitter-signup');
     } else { // otherwise they are a returning user, they are now logged in and free to proceed
+      if(window.mainPlayer){
+        window.resetMainPlayer();
+      }
       notifyLogin();
     }
   });
@@ -49,9 +52,12 @@ Template.login_buttons.events({
     e.preventDefault();
     t.showUserInfo.set(false);
     t.loggingOut.set(true);
-    Meteor.logout(() =>
+    Meteor.logout(() => {
+      if(window.mainPlayer){
+        window.resetMainPlayer();
+      }
       t.loggingOut.set(false)
-    );
+    });
   }
 });
 

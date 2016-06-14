@@ -26,6 +26,9 @@ Template.login_form.events({
       if (err) {
         template.loginError.set(err.reason); 
       } else {
+        if(window.mainPlayer){
+          window.resetMainPlayer();
+        }
         returnFromSignIn();
         notifyLogin();
       }
