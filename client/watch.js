@@ -391,6 +391,7 @@ Template.watch_page.onCreated(function () {
 
 Template.watch_page.onRendered(function(){
   var that = this;
+  Session.set('replayEnabled', true);
 
   
   this.checkTime = setInterval(()=>{
@@ -403,8 +404,6 @@ Template.watch_page.onRendered(function(){
     var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1}});
     if(deepstream) {
       Session.set('replayEnabled', deepstream.replayEnabled);
-    } else {
-      Session.set('replayEnabled', false);
     }
   });
  
@@ -570,6 +569,7 @@ Template.watch_page.onDestroyed(function () {
   }
   Session.set('replayEnabled', false);
   Session.set('replayContext', true);
+  Session.set('currentTimeElapsed', undefined);
   Meteor.clearInterval(this.checkTime);
 });
 
@@ -1246,7 +1246,7 @@ Template.list_item_context_section.helpers({
         if(!this.videoMarker){
           return true;
         }
-        if(!Session.get("currentTimeElapsed")){
+        if(!Session.get("currentTimeElapsed") || Session.get("currentTimeElapsed") === 0){
           return false;
         }
         if(parseFloat(Session.get("currentTimeElapsed")) < this.videoMarker){
