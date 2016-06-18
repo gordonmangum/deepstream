@@ -824,7 +824,6 @@ Meteor.methods({
         //find & remove port number
         host = host.split(':')[0];
         if(_.contains(whitelist, host)){ // CHECK IF DOMAIN IN WHITELIST
-          console.log('in white list');
           var title = host + ' embed';
           //use cloudinary default thumbnail
           items[0] = {
@@ -852,7 +851,6 @@ Meteor.methods({
       //find & remove port number
       host = host.split(':')[0];
       if(_.contains(whitelist, host)){ // CHECK IF DOMAIN IN WHITELIST
-        console.log('in white list');
         var title = host + ' embed';
         //use cloudinary default thumbnail
         items[0] = {
@@ -864,7 +862,7 @@ Meteor.methods({
       } else {
         // return empty -- not in whitelist
       }
-    }else {
+    } else {
       //return empty results
     }
     return {

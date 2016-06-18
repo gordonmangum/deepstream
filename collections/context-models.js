@@ -393,6 +393,8 @@ Stream = (function (_super) {
         return this.autoplayUrl() + '&mute=1';
       case 'twitch':
         return this.autoplayUrl() + '&volume=0';
+      default:
+        return this.autoplayUrl() +'&volume=0' + '&mute=1' + '&fs=0'
     }
   };
 
@@ -481,6 +483,8 @@ Stream = (function (_super) {
         return "http://static-cdn.jtvnw.net/previews-ttv/live_user_" + this.reference.channelName + "-80x45.jpg";
       case 'ml30':
         return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/static/MIT_ML_Logo_white';
+      case 'embed':
+        return 'http://res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/v1466257562/placeholder_movie_rad2ai.png';
     }
   };
 
