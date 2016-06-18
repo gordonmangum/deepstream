@@ -74,7 +74,7 @@
   <div class="search-form">
     <form autocomplete="off">
       <div class="search-outside-input-container">
-        <div class="search-trigger">{{#if searchInputLabel}}{{searchInputLabel}}{{else}}Search{{/if}}</div>
+        <div class="search-trigger">{{#if searchInputLabel}}{{searchInputLabel}}{{else}}{{#if customSearchLabel}}{{customSearchLabel}}{{else}}Search{{/if}}{{/if}}</div>
         <div class="search-input-container">
           <input type="search" placeholder={{placeholder}} autofocus="autofocus" dir="auto">
         </div>

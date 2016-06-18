@@ -199,6 +199,8 @@ var searchAPI = function(query) {
   }
 
   Meteor.call(integrationDetails.methodName, query, option, page, function(err, results) {
+    console.log('we got this:');
+    console.log(results);
     that.loadingResults.set(false);
     if (err) {
       that.noMoreResults.set('No more results'); // TO-DO - surface error to user?
@@ -213,6 +215,7 @@ var searchAPI = function(query) {
       that.noMoreResults.set('No results found');
       return;
     }
+    console.log('we made it to chain!');
     _.chain(items)
       .map(integrationDetails.mapFn || _.identity)
       .each(function(item, i) {
@@ -227,7 +230,6 @@ var searchAPI = function(query) {
         _.defaults(item, {
           source: source // for multi-source search, may already have a source
         });
-
         SearchResults.insert(item);
       });
   });
@@ -458,7 +460,7 @@ Template.create_audio_section.onCreated(searchTemplateCreatedBoilerplate('audio'
 Template.create_audio_section.onRendered(searchTemplateRenderedBoilerplate());
 
 var dataSourcesByType = {
-  'stream': [{source: 'all_streaming_services', 'display': 'Livestreams'}, {source: 'youtube', display: 'Videos'}, {source: 'embed', display: 'Embed Code'}], //, {source: 'meerkat', display: 'Meerkat'}],
+  'stream': [{source: 'all_streaming_services', 'display': 'Livestreams'}, {source: 'youtube', display: 'Videos'}, {source: 'embed', display: 'Embed Code'}, {source: 'meerkat', display: 'Meerkat'}],
   'image': [{source: 'flickr', 'display': 'Flickr'}, {source: 'imgur', display: 'Imgur'}, {source: 'cloudinary', display: 'Upload Your Own'}],
   //'gif': [{source: 'giphy', display: 'Giphy'}],
   'video': [{source: 'youtube', display: 'Youtube'}, {source: 'vimeo', display: 'Vimeo'}],
@@ -903,7 +905,22 @@ Template.search_form.helpers({
   randomIdPrefix (){
     return Template.instance().randomIdPrefix;
   },
+  customSearchLabel(){
+    switch(Session.get('newContextDataSource')){
+      case 'embed':
+        return 'Paste Code';
+      case 'meerkat':
+        return 'Username';
+    }
+    return false;
+  },
   placeholder () {
+    switch(Session.get('newContextDataSource')){
+      case 'embed':
+        return 'e.g. <iframe width="480" height="270" src="http://www.ustream.tv/embed/3064708?html5ui" scrolling="no" allowfullscreen webkitallowfullscreen frameborder="0" style="border: 0 none transparent;"></iframe>';
+      case 'meerkat':
+        return 'e.g. meerkat101';
+    }
     switch(Template.instance().data.placeholderType){
       case 'links':
         return 'e.g. ' +

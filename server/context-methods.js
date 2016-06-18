@@ -796,7 +796,6 @@ Meteor.methods({
   },
   embedToStreamMagic (query){
     check(query, Match.Optional(String));
-    this.unblock();
     var nextPageToken = 'end';
     var items = [];
     var whitelist = ["ustream.tv", "www.ustream.tv", "periscope.tv", "www.periscope.tv"];
@@ -864,6 +863,22 @@ Meteor.methods({
       }
     } else {
       //return empty results
+    }
+    return {
+      'nextPage': nextPageToken,
+      'items': items
+    }
+  },
+  meerkatUsernameToStream (username){ //username a.k.a. query
+    check(username, Match.Optional(String));
+    var nextPageToken = 'end';
+    var items = [];
+    var url = 'http://meerkatapp.co/social/player/embed/' + username + '?version=1&username=' + username + '&type=bigsquare&social=true&cover=DEFAULT&userid=&source=http%3A%2F%2Fdeepstream.tv';
+    items[0] = {
+      kind: 'meerkat#video',
+      url: url,
+      host: 'meerkat.co',
+      title: username + ' on Meerkat'
     }
     return {
       'nextPage': nextPageToken,

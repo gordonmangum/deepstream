@@ -327,13 +327,11 @@ Template.watch_page.onCreated(function () {
       var userControlledActiveStreamId = that.userControlledActiveStreamId.get();
       var deepstream = Deepstreams.findOne({shortId: that.data.shortId()});
       var newActiveStream;
-
       if (!Session.get('curateMode') && userControlledActiveStreamId && deepstream.userStreamSwitchAllowed()) {
         newActiveStream = deepstream.getStream(userControlledActiveStreamId);
       } else {
         newActiveStream = deepstream.activeStream();
       }
-
       // hack to remove and reinsert active main stream when the same service is used in old stream and new stream
       var activeStream;
       Tracker.nonreactive(function(){
@@ -344,7 +342,6 @@ Template.watch_page.onCreated(function () {
         Session.set('removeMainStream', true);
         Meteor.setTimeout(() => Session.set('removeMainStream', false), 0);
       }
-
       that.activeStream.set(newActiveStream);
     }
   });
@@ -551,7 +548,7 @@ Template.watch_page.helpers({
     return Template.instance().mainStreamFlashPlayerId;
   },
   mainStreamInIFrame (){
-    return _.contains(['ustream', 'youtube', 'ml30', 'embed'], Template.instance().activeStream.get().source);
+    return _.contains(['ustream', 'youtube', 'ml30', 'embed', 'meerkat'], Template.instance().activeStream.get().source);
   },
   mainStreamInFlashPlayer (){
     return _.contains(['bambuser', 'twitch'], Template.instance().activeStream.get().source);
