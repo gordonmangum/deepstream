@@ -400,7 +400,7 @@ Stream = (function (_super) {
     if (this.source === 'bambuser') {
       return this.url() + "&autoplay=1";
     } else {
-      return this.url() + "&autoplay=true";
+      return this.url() + "&autoplay=true&auto_play=true&loop=1";
     }
   };
 
@@ -415,7 +415,7 @@ Stream = (function (_super) {
       case 'twitch':
         return this.autoplayUrl() + '&volume=0';
       default:
-        return this.autoplayUrl() +'&volume=0' + '&mute=1' + '&fs=0'
+        return this.autoplayUrl() +'&volume=0' + '&mute=1' + '&fs=0' + '&automute=0'
     }
   };
 

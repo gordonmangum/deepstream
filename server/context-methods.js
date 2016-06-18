@@ -798,7 +798,7 @@ Meteor.methods({
     check(query, Match.Optional(String));
     var nextPageToken = 'end';
     var items = [];
-    var whitelist = ["ustream.tv", "www.ustream.tv", "periscope.tv", "www.periscope.tv", "w.soundcloud.com"];
+    var whitelist = ["ustream.tv", "www.ustream.tv", "periscope.tv", "www.periscope.tv", "w.soundcloud.com", "player.vimeo.com"];
     
     var re = /src="([^"']+)|src='([^"']+)/; 
     var str = query;
