@@ -159,6 +159,26 @@ ContextBlock.searchMappings = {
     methodName: 'ustreamVideoSearchList',
     mapFn: ustreamMapFn
   },
+  embed: {
+    methodName: 'embedToStreamMagic',
+    mapFn (e) {
+      return {
+        reference: {
+          title: e.title, //'cats rock',//e.channel.status,
+          description: 'No description', //e.channel.game,
+          id: 'custom-embed-' + Random.id(8), //e._id,
+          channelName: 'Custom Embed',//e.channel.name,
+          url: e.url,
+          currentViewers: 0, //e.viewers,
+          totalViews: 0, //e.channel.views,
+          channelId: '0',// e.channel.id,
+          creationDate: new Date()//new Date(e.created_at)
+        },
+        live: false,
+        source: 'embed'
+      }
+    }
+  },
   twitch: {
     methodName: 'twitchVideoSearchList',
     mapFn: twitchMapFn
@@ -337,21 +357,15 @@ Stream = (function (_super) {
 
   Stream.prototype.currentViewers = function () {
     switch (this.source){
-      case 'youtube':
-        return this.reference.currentViewers;
-      case 'ustream':
-        return this.reference.currentViewers;
       case 'bambuser':
-        return null
+        return null;
+      default:
+        return this.reference.currentViewers;
     }
   };
   Stream.prototype.totalViews = function () {
     switch (this.source){
-      case 'youtube':
-        return this.reference.totalViews;
-      case 'ustream':
-        return this.reference.totalViews;
-      case 'bambuser':
+      default:
         return this.reference.totalViews;
     }
   };
@@ -398,6 +412,8 @@ Stream = (function (_super) {
       return '//www.twitch.tv/' + this.reference.channelName + '/embed?';
     } else if (this.source === 'ml30'){
       return 'https://civic.mit.edu/ml30-deepstream/?'
+    } else if (this.source === 'embed') {
+      return this.reference.url;
     }
   };
 

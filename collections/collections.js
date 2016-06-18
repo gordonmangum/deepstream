@@ -512,6 +512,10 @@ Schema.Streams = new SimpleSchema({
         type: String,
         optional: true // youtube sometimes doesn't have channel title, which we call username
       },
+      url: {
+        type: String,
+        optional: true // only used by whitelist embeds
+      },
       userId: {
         type: String,
         optional: true
