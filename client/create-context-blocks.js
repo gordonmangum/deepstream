@@ -917,7 +917,7 @@ Template.search_form.helpers({
   placeholder () {
     switch(Session.get('newContextDataSource')){
       case 'embed':
-        return 'e.g. <iframe width="480" height="270" src="http://www.ustream.tv/embed/3064708?html5ui" scrolling="no" allowfullscreen webkitallowfullscreen frameborder="0" style="border: 0 none transparent;"></iframe>';
+        return 'e.g. URL or <iframe src="http://www.ustream.tv/embed/3064708?html5ui"></iframe>';
       case 'meerkat':
         return 'e.g. meerkat101';
     }
