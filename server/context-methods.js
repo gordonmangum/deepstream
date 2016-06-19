@@ -798,7 +798,7 @@ Meteor.methods({
     check(query, Match.Optional(String));
     var nextPageToken = 'end';
     var items = [];
-    var whitelist = ["ustream.tv", "www.ustream.tv", "periscope.tv", "www.periscope.tv", "w.soundcloud.com", "player.vimeo.com", "www.facebook.com", "facebook.com"];
+    var whitelist = ["ustream.tv", "www.ustream.tv", "periscope.tv", "www.periscope.tv", "w.soundcloud.com", "player.vimeo.com", "www.facebook.com", "facebook.com", "tunein.com", "www.tunein.com"];
     var re = /src="([^"']+)|src='([^"']+)/; 
     var str = query;
     var m;
@@ -823,7 +823,6 @@ Meteor.methods({
         host = host.split(':')[0];
         if(_.contains(whitelist, host)){ // CHECK IF DOMAIN IN WHITELIST
           var title = host + ' embed';
-          //use cloudinary default thumbnail
           items[0] = {
             kind: 'embed#video',
             url: url,

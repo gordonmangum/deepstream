@@ -433,7 +433,12 @@ Stream = (function (_super) {
         return 'https://civic.mit.edu/ml30-deepstream/?';
       }
       default:
-        return this.reference.url;
+        url = this.reference.url;
+        if(url.substr(-1) === '/') {
+          url = url.substr(0, url.length - 1);
+          url += '?';
+        }
+        return url;
     }
   };
 
