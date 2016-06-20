@@ -199,8 +199,6 @@ var searchAPI = function(query) {
   }
 
   Meteor.call(integrationDetails.methodName, query, option, page, function(err, results) {
-    console.log('we got this:');
-    console.log(results);
     that.loadingResults.set(false);
     if (err) {
       that.noMoreResults.set('No more results'); // TO-DO - surface error to user?
@@ -215,7 +213,6 @@ var searchAPI = function(query) {
       that.noMoreResults.set('No results found');
       return;
     }
-    console.log('we made it to chain!');
     _.chain(items)
       .map(integrationDetails.mapFn || _.identity)
       .each(function(item, i) {
