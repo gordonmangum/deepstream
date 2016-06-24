@@ -864,9 +864,11 @@ Template.watch_page.events({
     return Meteor.call('directorModeOn', t.data.shortId(), basicErrorHandler)
   },
   'click .replay-context-mode-off' (e, t){
+    notifyInfo('Replay Context is now off. Your cards will all be visible and in the order you have arranged them.');
     Meteor.call('replayEnabledOff', t.data.shortId(), basicErrorHandler)
   },
   'click .replay-context-mode-on' (e, t){
+    notifyInfo('Replay Context is now on. Your cards will appear at the time shown on each card.');
     Meteor.call('replayEnabledOn', t.data.shortId(), basicErrorHandler)
   },
   'click .replay-context-mode-disabled' (e, t){
@@ -1015,10 +1017,36 @@ Template.stream_li.events({
 
 Template.context_browser_area.helpers({
   orderedContext (){
+    /*
+    if(Session.get('replayContext')){
+      return true;
+    } else {
+      return false;
+    }
+    */
+    
+    var rplyAvail = false;
+    if(mainPlayer && mainPlayer.activeStream && mainPlayer.activeStream.get() && mainPlayer.activeStream.get().source === "youtube" && !mainPlayer.activeStream.get().live){
+    //check number of streams
+    var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {reactive: true, fields: {streams:1}});
+    if(deepstream.streams.length === 1){
+        rplyAvail = true;
+      } else {
+        rplyAvail = false;
+      }
+    } else {
+      rplyAvail = false;
+    }
+    
+    
+    var replayEnabled = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1}}).replayEnabled;
+    if(!replayEnabled){
+      repalyEnabled = false;
+    }
     if(Session.get('curateMode')){
-      return this.orderedContext(Session.get('replayContext'));
+      return this.orderedContext(replayEnabled && rplyAvail);
     } else { 
-      return this.orderedContext(Session.get('replayContext') && Session.get('replayContext'))
+      return this.orderedContext(replayEnabled && rplyAvail && Session.get('replayContext'))
     }
   },
   showShowSuggestionsButton (){
