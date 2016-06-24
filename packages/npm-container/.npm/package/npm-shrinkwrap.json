@@ -122,6 +122,9 @@
         }
       }
     },
+    "http": {
+      "version": "0.0.0"
+    },
     "prerender-node": {
       "version": "2.0.2",
       "dependencies": {
@@ -217,6 +220,17 @@
       "dependencies": {
         "oauth": {
           "version": "0.9.9"
+        }
+      }
+    },
+    "url": {
+      "version": "0.11.0",
+      "dependencies": {
+        "punycode": {
+          "version": "1.3.2"
+        },
+        "querystring": {
+          "version": "0.2.0"
         }
       }
     },

@@ -14,6 +14,7 @@ var VIMEO_ACCESS_TOKEN = Meteor.settings.VIMEO_ACCESS_TOKEN;
 
 
 var Twit = Meteor.npmRequire('twit');
+var Url = Meteor.npmRequire('url');
 var Vimeo = Meteor.npmRequire('vimeo-api').Vimeo;
 
 if (!GOOGLE_API_SERVER_KEY) {
@@ -777,16 +778,30 @@ Meteor.methods({
     page = page || 1;
 
     requestParams['page'] = page;
-
-    res = HTTP.get('http://api.ustream.tv/json/' + kindOfThingToSearch + '/' + sortBy + '/search/' + searchString, {
+    
+    if(process.env.PROXIMO_URL){
+      var proxyUrl = process.env.PROXIMO_URL;
+    } else {
+      var proxyUrl = Meteor.settings.PROXIMO_URL;
+    }
+    var proxy = Url.parse(proxyUrl);
+    
+    // Talk About TODO
+    
+    res = HTTP.get('http://api.ustream.tv/json/' + kindOfThingToSearch + '/' + sortBy + '/search/' + searchString + "?page=" + page + "&limit=100" + "&key=" + USTREAM_DATA_API_KEY, {
       params: requestParams,
-      timeout: 20000
+      timeout: 20000,
+      npmRequestOptions:{
+       hostname: proxy.hostname,
+       headers: {"Proxy-Authorization": "Basic "+ new Buffer(proxy.auth).toString('base64')},
+       port:  proxy.port || 80,
+       path: 'http://api.ustream.tv/json/' + kindOfThingToSearch + '/' + sortBy + '/search/' + searchString
+      }
     });
-
-    //console.log('aaaaaaaaaaa')
-    //console.log(res)
-
-    items = res.data.results;
+    
+   console.log(res);
+    items = [];
+    //items = res.data.results;
 
     if (items && items.length) {
       nextPageToken = page + 1;

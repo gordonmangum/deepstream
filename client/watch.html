@@ -608,7 +608,7 @@
 <template name="context_card_column">
   <div class="card-column">
     <div class="previews-container">
-      {{#unless replayEnabled}}
+      {{#unless replayContextOn}}
         {{#each orderedInternalContext}}
           <div class="context-mini-preview {{#if isActiveContext}}active{{/if}}" data-context-id="{{_id}}">{{> relevant_content_icon}}</div>
         {{/each}}
