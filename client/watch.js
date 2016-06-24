@@ -1015,14 +1015,10 @@ Template.stream_li.events({
 
 Template.context_browser_area.helpers({
   orderedContext (){
-    var replayEnabled = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1}}).replayEnabled;
-    if(!replayEnabled){
-      repalyEnabled = false;
-    }
     if(Session.get('curateMode')){
-      return this.orderedContext(replayEnabled);
+      return this.orderedContext(Session.get('replayContext'));
     } else { 
-      return this.orderedContext(replayEnabled && Session.get('replayContext'))
+      return this.orderedContext(Session.get('replayContext') && Session.get('replayContext'))
     }
   },
   showShowSuggestionsButton (){
