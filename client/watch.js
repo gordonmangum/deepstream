@@ -1038,15 +1038,20 @@ Template.context_browser_area.helpers({
       rplyAvail = false;
     }
     
+    console.log('replay available: ' +rplyAvail);
+    console.log('replay context: ' + Session.get('replayContext'));
     
     var replayEnabled = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1}}).replayEnabled;
     if(!replayEnabled){
       repalyEnabled = false;
     }
+    
+    console.log('replay enabled: ' + repalyEnabled );
+    
     if(Session.get('curateMode')){
-      return this.orderedContext(replayEnabled && rplyAvail);
+      return this.orderedContext(replayEnabled);
     } else { 
-      return this.orderedContext(replayEnabled && rplyAvail && Session.get('replayContext'))
+      return this.orderedContext(replayEnabled && Session.get('replayContext'))
     }
   },
   showShowSuggestionsButton (){
