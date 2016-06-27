@@ -1042,11 +1042,9 @@ Template.context_browser_area.helpers({
     console.log('replay context: ' + Session.get('replayContext'));
     
     var replayEnabled = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1}}).replayEnabled;
-    if(!replayEnabled){
-      repalyEnabled = false;
+    if(!replayEnabled || replayEnabled === undefined){
+      replayEnabled = false;
     }
-    
-    console.log('replay enabled: ' + repalyEnabled );
     
     if(Session.get('curateMode')){
       return this.orderedContext(replayEnabled);
