@@ -470,7 +470,8 @@ Schema.Streams = new SimpleSchema({
     optional: true
   },
   authorId: {
-    type: String
+    type: String,
+    optional:true // seemed to be crashing out removeStreamFromStream 
   },
   type: {
     type: String
@@ -577,7 +578,7 @@ Schema.Deepstreams = new SimpleSchema({
   },
   replayEnabled: {
     type: Boolean,
-    defaultValue: true
+    defaultValue: false
   },
   streamPathSegment: {
     type: String

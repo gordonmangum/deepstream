@@ -38,7 +38,9 @@ Template.registerHelper("replayContextOn", function() {
 });
 
 Template.registerHelper("replayEnabled", function() {
-  return Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1}}).replayEnabled;
+  var val = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1}}).replayEnabled;
+  Session.set("replayEnabled", val);
+  return val;
 });
 
 Template.registerHelper("replayAvailable", function() {

@@ -168,7 +168,7 @@ window.resetMainPlayer = function(){
   };
 };
 
-resetMainPlayer();
+window.resetMainPlayer();
 
 Template.watch_page.onCreated(function () {
 
@@ -258,7 +258,7 @@ Template.watch_page.onCreated(function () {
 
   this.autorun(function(){
     Session.set("streamShortId", that.data.shortId());
-    resetMainPlayer();
+    window.resetMainPlayer();
   });
 
   Session.set('contextMode', 'context');
@@ -398,7 +398,7 @@ Template.watch_page.onRendered(function(){
     if(mainPlayer && mainPlayer.getElapsedTime){
       Session.set('currentTimeElapsed', mainPlayer.getElapsedTime());
     }
-  },1000);
+  },800);
   
   this.autorun(function(){
     var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1}});

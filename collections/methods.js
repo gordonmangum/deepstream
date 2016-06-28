@@ -236,11 +236,12 @@ Meteor.methods({
     var numberOfStreamsBeforeDelete = deepstream.streams.length;
     
     // set replay 
-    if(numberOfStreamsBeforeDelete > 2){
+    if(numberOfStreamsBeforeDelete > 2 || numberOfStreamsBeforeDelete === 1){
       _.extend(modifierObject['$set'], {
         replayEnabled : false
       });
       if(Meteor.isClient){
+        window.resetMainPlayer();
         Session.set('replayContext', false);
       }
     } else if (numberOfStreamsBeforeDelete === 2 && !deepstream.streams[0].live) {
