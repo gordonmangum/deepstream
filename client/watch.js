@@ -1038,9 +1038,6 @@ Template.context_browser_area.helpers({
       rplyAvail = false;
     }
     
-    console.log('replay available: ' +rplyAvail);
-    console.log('replay context: ' + Session.get('replayContext'));
-    
     var replayEnabled = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1}}).replayEnabled;
     if(!replayEnabled || replayEnabled === undefined){
       replayEnabled = false;
@@ -1375,7 +1372,6 @@ Template.creation_tutorial.events({
   },
   'click .add-cards button' (e, t){
     Meteor.call('skipAddCardsStep', this.shortId, basicErrorHandler);
-    console.log('clicked add cards');
     $('.header-section').css('z-index',2);
   },
   'click .title-description-overlay .close' (e, t){
@@ -1440,7 +1436,7 @@ Template.timeline_section.onRendered(function(){
               width: 'auto'
             })
             .then(function (el) {
-              console.log("Timeline has been displayed.")
+              //console.log("Timeline has been displayed.")
             });
         });
       }
