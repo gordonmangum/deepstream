@@ -7,7 +7,7 @@ var ISODate = function(date){ // to make copy-paste from Mongo easier
 
 if (Meteor.users.find().count() === 0) {
   curatorId = Accounts.createUser({
-    email: 'curator@example.com',
+    email: 'curator@deepstream.tv',
     username: 'curat0r',
     password: 'password',
     accessPriority: 1,
@@ -17,7 +17,7 @@ if (Meteor.users.find().count() === 0) {
     signupCode: 'civic'
   });
   Accounts.createUser({
-    email: 'test@example.com',
+    email: 'test@deepstream.tv',
     username: 'testuser',
     password: 'password',
     profile: {

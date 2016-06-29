@@ -784,8 +784,6 @@ Meteor.methods({
       timeout: 20000
     });
     
-    console.log(res);
-    
     items = res.data.results;
 
     if (items && items.length) {
@@ -793,7 +791,6 @@ Meteor.methods({
     } else {
       nextPageToken = 'end';
     }
-
 
     return {
       'nextPage': nextPageToken,
