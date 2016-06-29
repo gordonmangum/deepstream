@@ -1,15 +1,33 @@
-Deepstream
-=============
+# Deepstream
 
-Deepstream is currently under development.
+## Getting Started
+To start, run: `./start`. 
 
-To start, run: `./start`. You'll want `elasticsearch` running in another window. If you don't have it installed, `./start` will guide you through that process.
+You'll want `elasticsearch` running in another window. 
+
+If you don't have it installed, `./start` will guide you through that process.
+
 To reset the database, run: `./reset`
 
 
-*Heroku Instructions*
+## Hosting Deepstream
+
+### Heroku Instructions
 
 There should be 1 `stream_worker` dyno
 
 To rebuild the elasticsearch index in production, use the command
 `heroku run reset_es_worker`
+
+## Whitelisted Services
+
+Currently Deepstreams can be complemented by supported providers of embedable streaming and video services.
+
+Supported providers currently:
+
+- Facebook
+- Periscope
+- SoundCloud
+- Tunein Radio
+- Ustream
+- Vimeo
