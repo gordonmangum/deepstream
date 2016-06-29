@@ -779,29 +779,14 @@ Meteor.methods({
 
     requestParams['page'] = page;
     
-    if(process.env.PROXIMO_URL){
-      var proxyUrl = process.env.PROXIMO_URL;
-    } else {
-      var proxyUrl = Meteor.settings.PROXIMO_URL;
-    }
-    var proxy = Url.parse(proxyUrl);
-    
-    // Talk About TODO
-    
-    res = HTTP.get('http://api.ustream.tv/json/' + kindOfThingToSearch + '/' + sortBy + '/search/' + searchString + "?page=" + page + "&limit=100" + "&key=" + USTREAM_DATA_API_KEY, {
+    res = HTTP.get('http://api.ustream.tv/json/' + kindOfThingToSearch + '/' + sortBy + '/search/' + searchString, {
       params: requestParams,
-      timeout: 20000,
-      npmRequestOptions:{
-       hostname: proxy.hostname,
-       headers: {"Proxy-Authorization": "Basic "+ new Buffer(proxy.auth).toString('base64')},
-       port:  proxy.port || 80,
-       path: 'http://api.ustream.tv/json/' + kindOfThingToSearch + '/' + sortBy + '/search/' + searchString
-      }
+      timeout: 20000
     });
     
-   console.log(res);
-    items = [];
-    //items = res.data.results;
+    console.log(res);
+    
+    items = res.data.results;
 
     if (items && items.length) {
       nextPageToken = page + 1;
