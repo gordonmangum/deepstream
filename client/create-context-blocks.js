@@ -1,3 +1,5 @@
+var ustreamConnection = DDP.connect('http://104.131.189.181');
+
 var searchDep = new Tracker.Dependency();
 
 var createBlockHelpers = {
@@ -197,8 +199,8 @@ var searchAPI = function(query) {
   if (integrationDetails.notSearch){ // don't search if it's not a search integration
     return
   }
-
-  Meteor.call(integrationDetails.methodName, query, option, page, function(err, results) {
+  if(source === 'ustream') {
+    ustreamConnection.call(integrationDetails.methodName, query, option, page, function(err, results) {
     that.loadingResults.set(false);
     if (err) {
       that.noMoreResults.set('No more results'); // TO-DO - surface error to user?
@@ -231,6 +233,41 @@ var searchAPI = function(query) {
         SearchResults.insert(item);
       });
   });
+  } else {
+    Meteor.call(integrationDetails.methodName, query, option, page, function(err, results) {
+    that.loadingResults.set(false);
+    if (err) {
+      that.noMoreResults.set('No more results'); // TO-DO - surface error to user?
+      throw(err);
+      return;
+    }
+
+    var items = results.items;
+    var nextPage = results.nextPage;
+
+    if (!items || !items.length) {
+      that.noMoreResults.set('No results found');
+      return;
+    }
+    _.chain(items)
+      .map(integrationDetails.mapFn || _.identity)
+      .each(function(item, i) {
+        _.extend(item, {
+          type : type,
+          searchQuery : query,
+          searchOption : option,
+          nextPage: nextPage,
+          ordinalId: count(),
+          fullDetails: items[i] // include all original details from the api
+        });
+        _.defaults(item, {
+          source: source // for multi-source search, may already have a source
+        });
+
+        SearchResults.insert(item);
+      });
+  });
+  }
 };
 
 var createTemplateNames = [

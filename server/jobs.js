@@ -1,3 +1,4 @@
+var ustreamConnection = DDP.connect('http://104.131.189.181');
 var cheerio = Meteor.npmRequire('cheerio');
 
 
@@ -207,8 +208,18 @@ var generateFetchFunction = function(serviceInfo){
           currentPage = i + startingPage;
           //console.log('Async ' + serviceName + ' call for page: ' + currentPage);
           var localCurrentPage = currentPage;
-
-          Meteor.call(serviceInfo.methodName, undefined, undefined, currentPage, function (err, result) {
+          if(serviceInfo.serviceName === 'ustream'){
+            ustreamConnection.call(serviceInfo.methodName, undefined, undefined, currentPage, function (err, result) {
+              try {
+                streamInsertCallback(err, result, localCurrentPage, cb);
+              } catch (err) {
+                console.log('Error in async ' + serviceName + ' callback page: ' + localCurrentPage)
+                console.error(err)
+                return cb();
+              }
+            });
+          } else {
+            Meteor.call(serviceInfo.methodName, undefined, undefined, currentPage, function (err, result) {
             try {
               streamInsertCallback(err, result, localCurrentPage, cb);
             } catch (err) {
@@ -217,6 +228,7 @@ var generateFetchFunction = function(serviceInfo){
               return cb();
             }
           });
+          }
         }, waitBetweenAsyncCalls * i)
       }, function (err) {
 
@@ -276,14 +288,23 @@ var generateFetchFunction = function(serviceInfo){
 
           while (!allStreamsLoaded && currentPage < maxPages + startingPage) {
             //console.log('Sync ' + serviceName + ' call for page: ' + currentPage);
-
-            Meteor.call(serviceInfo.methodName, undefined, undefined, currentPage, function (err, result) {
+            if(serviceInfo.serviceName === 'ustream'){
+              ustreamConnection.call(serviceInfo.methodName, undefined, undefined, currentPage, function (err, result) {
+                streamInsertCallback(err, result, currentPage, function (err) {
+                  if (err) {
+                    return finalCallback(err);
+                  }
+                })
+              });
+            } else {
+              Meteor.call(serviceInfo.methodName, undefined, undefined, currentPage, function (err, result) {
               streamInsertCallback(err, result, currentPage, function (err) {
                 if (err) {
                   return finalCallback(err);
                 }
               })
             });
+            }
             currentPage += 1;
           }
 
