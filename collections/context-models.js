@@ -159,6 +159,47 @@ ContextBlock.searchMappings = {
     methodName: 'ustreamVideoSearchList',
     mapFn: ustreamMapFn
   },
+  embed: {
+    methodName: 'embedToStreamMagic',
+    mapFn (e) {
+      return {
+        reference: {
+          title: e.title, //'cats rock',//e.channel.status,
+          description: 'No description', //e.channel.game,
+          id: 'custom-embed-' + Random.id(8), //e._id,
+          channelName: 'Custom Embed',//e.channel.name,
+          url: e.url,
+          currentViewers: 0, //e.viewers,
+          totalViews: 0, //e.channel.views,
+          channelId: '0',// e.channel.id,
+          creationDate: new Date()//new Date(e.created_at)
+        },
+        live: false,
+        source: 'embed'
+      }
+    }
+  },
+  meerkat: {
+    methodName: 'meerkatUsernameToStream',
+    mapFn (e) {
+      console.log('made it to Mapfn(e)');
+      return {
+        reference: {
+          title: e.title, //'cats rock',//e.channel.status,
+          description: 'No description', //e.channel.game,
+          id: 'meerkat-embed-' + Random.id(8), //e._id,
+          channelName: 'Meerkat Embed',//e.channel.name,
+          url: e.url,
+          currentViewers: 0, //e.viewers,
+          totalViews: 0, //e.channel.views,
+          channelId: '0',// e.channel.id,
+          creationDate: new Date() //new Date(e.created_at)
+        },
+        live: false,
+        source: 'meerkat'
+      }
+    }
+  },
   twitch: {
     methodName: 'twitchVideoSearchList',
     mapFn: twitchMapFn
@@ -337,21 +378,15 @@ Stream = (function (_super) {
 
   Stream.prototype.currentViewers = function () {
     switch (this.source){
-      case 'youtube':
-        return this.reference.currentViewers;
-      case 'ustream':
-        return this.reference.currentViewers;
       case 'bambuser':
-        return null
+        return null;
+      default:
+        return this.reference.currentViewers;
     }
   };
   Stream.prototype.totalViews = function () {
     switch (this.source){
-      case 'youtube':
-        return this.reference.totalViews;
-      case 'ustream':
-        return this.reference.totalViews;
-      case 'bambuser':
+      default:
         return this.reference.totalViews;
     }
   };
@@ -365,7 +400,7 @@ Stream = (function (_super) {
     if (this.source === 'bambuser') {
       return this.url() + "&autoplay=1";
     } else {
-      return this.url() + "&autoplay=true";
+      return this.url() + "&autoplay=true&auto_play=true&loop=1";
     }
   };
 
@@ -379,25 +414,31 @@ Stream = (function (_super) {
         return this.autoplayUrl() + '&mute=1';
       case 'twitch':
         return this.autoplayUrl() + '&volume=0';
+      default:
+        return this.autoplayUrl() +'&volume=0' + '&mute=1' + '&fs=0' + '&automute=0'
     }
   };
 
   Stream.prototype.url = function () {
-    if (this.source === 'youtube') {
-      return '//www.youtube.com/embed/' + this.reference.id + '?enablejsapi=1&modestbranding=1&rel=0&iv_load_policy=3&autohide=1&loop=1&playlist=' +this.reference.id;
-    } else if (this.source === 'ustream') {
-      return '//www.ustream.tv/embed/' + this.reference.id + '?html5ui';
-    } else if (this.source === 'bambuser') {
-      //if (this.reference.id){
-      //  return '//embed.bambuser.com/broadcast/' + this.reference.id + '?chat=0';
-      //} else {
+    switch (this.source){
+      case 'youtube':
+        return '//www.youtube.com/embed/' + this.reference.id + '?enablejsapi=1&modestbranding=1&rel=0&iv_load_policy=3&autohide=1&loop=1&playlist=' +this.reference.id;
+      case 'ustream':
+        return '//www.ustream.tv/embed/' + this.reference.id + '?html5ui';
+      case 'bambuser':
         return '//embed.bambuser.com/channel/' + this.reference.username + '?chat=0';
-      //}
-    } else if (this.source === 'twitch'){
-
-      return '//www.twitch.tv/' + this.reference.channelName + '/embed?';
-    } else if (this.source === 'ml30'){
-      return 'https://civic.mit.edu/ml30-deepstream/?'
+      case 'twitch':
+        return '//www.twitch.tv/' + this.reference.channelName + '/embed?';
+      case 'ml30':{
+        return 'https://civic.mit.edu/ml30-deepstream/?';
+      }
+      default:
+        url = this.reference.url;
+        if(url.substr(-1) === '/') {
+          url = url.substr(0, url.length - 1);
+          url += '?';
+        }
+        return url;
     }
   };
 
@@ -465,6 +506,8 @@ Stream = (function (_super) {
         return "http://static-cdn.jtvnw.net/previews-ttv/live_user_" + this.reference.channelName + "-80x45.jpg";
       case 'ml30':
         return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/static/MIT_ML_Logo_white';
+      default:
+        return 'http://res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/v1466257562/placeholder_movie_rad2ai.png';
     }
   };
 

@@ -193,7 +193,7 @@ var searchAPI = function(query) {
 
   var that = this;
   searchDep.changed();
-
+  
   integrationDetails = ContextBlock.searchMappings[source];
 
   if (integrationDetails.notSearch){ // don't search if it's not a search integration
@@ -263,7 +263,6 @@ var searchAPI = function(query) {
         _.defaults(item, {
           source: source // for multi-source search, may already have a source
         });
-
         SearchResults.insert(item);
       });
   });
@@ -343,9 +342,8 @@ searchTemplateCreatedBoilerplate = function(type, defaultSource) {
     this.loadingResults = new ReactiveVar();
     this.focusResult = new ReactiveVar();
     this.noMoreResults = new ReactiveVar();
-
-
     this.search = _.bind(searchAPI, this);
+    
     this.existingSearchResults = _.bind(existingSearchResults, this);
     this.getSearchInput = _.bind(getSearchInput, this);
     this.setSearchInput = _.bind(setSearchInput, this);
@@ -509,7 +507,7 @@ Template.create_audio_section.onCreated(searchTemplateCreatedBoilerplate('audio'
 Template.create_audio_section.onRendered(searchTemplateRenderedBoilerplate());
 
 var dataSourcesByType = {
-  'stream': [{source: 'all_streaming_services', 'display': 'Livestreams'}, {source: 'youtube', display: 'Videos'}], //, {source: 'meerkat', display: 'Meerkat'}],
+  'stream': [{source: 'all_streaming_services', 'display': 'Livestreams'}, {source: 'youtube', display: 'Videos'}, {source: 'embed', display: 'Embed Code'}, {source: 'meerkat', display: 'Meerkat'}],
   'image': [{source: 'flickr', 'display': 'Flickr'}, {source: 'imgur', display: 'Imgur'}, {source: 'cloudinary', display: 'Upload Your Own'}],
   //'gif': [{source: 'giphy', display: 'Giphy'}],
   'video': [{source: 'youtube', display: 'Youtube'}, {source: 'vimeo', display: 'Vimeo'}],
@@ -954,7 +952,22 @@ Template.search_form.helpers({
   randomIdPrefix (){
     return Template.instance().randomIdPrefix;
   },
+  customSearchLabel(){
+    switch(Session.get('newContextDataSource')){
+      case 'embed':
+        return 'Paste Code';
+      case 'meerkat':
+        return 'Username';
+    }
+    return false;
+  },
   placeholder () {
+    switch(Session.get('newContextDataSource')){
+      case 'embed':
+        return 'e.g. URL or <iframe src="http://www.ustream.tv/embed/3064708?html5ui"></iframe>';
+      case 'meerkat':
+        return 'e.g. meerkat101';
+    }
     switch(Template.instance().data.placeholderType){
       case 'links':
         return 'e.g. ' +

@@ -770,7 +770,6 @@ Meteor.methods({
       key: USTREAM_DATA_API_KEY
     };
 
-
     var kindOfThingToSearch = 'channel'; // channel, user
     var sortBy = 'popular'; // live, recent
     var searchString = 'all'; //'title:like:' + query; // targetProperty:comparison:targetValue or all
@@ -791,7 +790,97 @@ Meteor.methods({
     } else {
       nextPageToken = 'end';
     }
-
+    
+    return {
+      'nextPage': nextPageToken,
+      'items': items
+    }
+  },
+  embedToStreamMagic (query){
+    check(query, Match.Optional(String));
+    var nextPageToken = 'end';
+    var items = [];
+    var whitelist = ["ustream.tv", "www.ustream.tv", "periscope.tv", "www.periscope.tv", "w.soundcloud.com", "player.vimeo.com", "www.facebook.com", "facebook.com", "tunein.com", "www.tunein.com"];
+    var re = /src="([^"']+)|src='([^"']+)/; 
+    var str = query;
+    var m;
+    if ((m = re.exec(str)) !== null) {
+      if (m.index === re.lastIndex) {
+          re.lastIndex++;
+      }
+    }
+    if(m && m[0]){
+      m = _.filter(m, function(str){ if(typeof str === 'string') { return str.substring(0, 4) === "http"; } else { return false}});
+      if(m[0]){
+        var url = m[0];
+        var host;
+        //find & remove protocol (http, ftp, etc.) and get domain
+        if (url.indexOf("://") > -1) {
+            host = url.split('/')[2];
+        }
+        else {
+            host = url.split('/')[0];
+        }
+        //find & remove port number
+        host = host.split(':')[0];
+        if(_.contains(whitelist, host)){ // CHECK IF DOMAIN IN WHITELIST
+          var title = host + ' embed';
+          items[0] = {
+            kind: 'embed#video',
+            url: url,
+            host: host,
+            title: title
+          }
+        } else {
+          // return empty -- not in whitelist
+        }
+      } else {
+        // return empty
+      }
+    } else if (str.substring(0, 4) === "http"){ //its just a url
+      var url = str;
+      var host;
+      //find & remove protocol (http, ftp, etc.) and get domain
+      if (url.indexOf("://") > -1) {
+          host = url.split('/')[2];
+      }
+      else {
+          host = url.split('/')[0];
+      }
+      //find & remove port number
+      host = host.split(':')[0];
+      if(_.contains(whitelist, host)){ // CHECK IF DOMAIN IN WHITELIST
+        var title = host + ' embed';
+        //use cloudinary default thumbnail
+        items[0] = {
+          kind: 'embed#video',
+          url: url,
+          host: host,
+          title: title
+        }
+      } else {
+        // return empty -- not in whitelist
+      }
+    } else {
+      //return empty results
+    }
+    return {
+      'nextPage': nextPageToken,
+      'items': items
+    }
+  },
+  meerkatUsernameToStream (username){ //username a.k.a. query
+    check(username, Match.Optional(String));
+    var nextPageToken = 'end';
+    var items = [];
+    var url = 'http://meerkatapp.co/social/player/embed/' + username + '?version=1&username=' + username + '&type=bigsquare&social=true&cover=DEFAULT&userid=&source=http%3A%2F%2Fdeepstream.tv';
+    items[0] = {
+      kind: 'meerkat#video',
+      url: url,
+      host: 'meerkat.co',
+      title: username + ' on Meerkat'
+    }
+>>>>>>> whitelist
     return {
       'nextPage': nextPageToken,
       'items': items
@@ -827,7 +916,6 @@ Meteor.methods({
     } else {
       nextPageToken = 'end';
     }
-
     return {
       'nextPage': nextPageToken,
       'items': items
