@@ -880,11 +880,6 @@ Meteor.methods({
       host: 'meerkat.co',
       title: username + ' on Meerkat'
     }
->>>>>>> whitelist
-    return {
-      'nextPage': nextPageToken,
-      'items': items
-    }
   },
   twitchVideoSearchList: searchTwitch,
   youtubeVideoInfo (ids, page) {
