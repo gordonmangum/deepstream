@@ -831,6 +831,9 @@ Meteor.methods({
             host: host,
             title: title
           }
+          if(host === 'player.vimeo.com' || host === 'vimeo.com'){
+            items[0].url += '?';
+          }
         } else {
           // return empty -- not in whitelist
         }
@@ -842,10 +845,10 @@ Meteor.methods({
       var host;
       //find & remove protocol (http, ftp, etc.) and get domain
       if (url.indexOf("://") > -1) {
-          host = url.split('/')[2];
+        host = url.split('/')[2];
       }
       else {
-          host = url.split('/')[0];
+        host = url.split('/')[0];
       }
       //find & remove port number
       host = host.split(':')[0];
@@ -857,12 +860,15 @@ Meteor.methods({
           url: url,
           host: host,
           title: title
+        };
+        if(host === 'player.vimeo.com' || host === 'vimeo.com'){
+          items[0].url += '?';
         }
       } else {
-        // return empty -- not in whitelist
+        // return empty -- not in whitelist (window.notify doesnt work here)
       }
     } else {
-      //return empty results
+      //return empty results (window.notify doesnt work here)
     }
     return {
       'nextPage': nextPageToken,
