@@ -56,6 +56,10 @@ Schema.User = new SimpleSchema({
       }
     }
   },
+  keenScopedKey: {
+    type: String,
+    optional: true
+  },
   tempUsername: {
     type: String,
     optional: true

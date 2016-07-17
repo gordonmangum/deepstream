@@ -102,7 +102,6 @@ Schema.ContextReferenceProfile = new SimpleSchema({
     optional: true
   },
 
-
   artworkUrl: {
     type: String,
     optional: true
@@ -136,7 +135,6 @@ Schema.ContextReferenceProfile = new SimpleSchema({
   },
 
   // Image
-
 
   flickrOwnerId: {
     type: String,
@@ -176,8 +174,6 @@ Schema.ContextReferenceProfile = new SimpleSchema({
     type: Boolean,
     optional: true
   },
-
-
 
   // Image upload, Imgur
   width: {
@@ -320,7 +316,6 @@ Schema.ContextReferenceProfile = new SimpleSchema({
     type: String,
     optional: true
   }
-
 });
 
 Schema.ContextBlocks = new SimpleSchema({

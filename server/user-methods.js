@@ -1,7 +1,43 @@
 var TWITTER_API_KEY = process.env.TWITTER_API_KEY || Meteor.settings.TWITTER_API_KEY;
 var TWITTER_API_SECRET = process.env.TWITTER_API_SECRET || Meteor.settings.TWITTER_API_SECRET;
+var KEEN_PROJECT_ID =  process.env.KEEN_PROJECT_ID || Meteor.settings.KEEN_PROJECT_ID;
+var KEEN_MASTER_KEY =  process.env.KEEN_MASTER_KEY || Meteor.settings.KEEN_MASTER_KEY;
 
 var Twit = Meteor.npmRequire('twit');
+var Keen = Meteor.npmRequire('keen-js');
+
+/* KEEN analytics testing DEFUNCT FOR DELETION
+var scopedKey = Keen.utils.encryptScopedKey(KEEN_MASTER_KEY, {
+  "allowed_operations": ["read"],
+  "filters": [{
+    "property_name": "userPathSegment",
+    "operator": "eq",
+    "property_value": "dwanderton"
+  }]
+});
+
+// Do something with this new scoped key
+var client2 = new Keen({
+  projectId: KEEN_PROJECT_ID,
+  readKey: scopedKey
+});
+
+setTimeout(function(){
+  var extraction = new Keen.Query("count", {
+    event_collection: "View stream",
+    timeframe: "this_14_days"
+  });
+
+  // Send query
+  client2.run(extraction, function(err, response){
+    // if (err) handle the error
+    console.log(err);
+    console.log(response);
+    //console.log('result is: ', response.result);
+  });
+},10000);
+
+*/
 
 var makeTwitterCall = function (apiCall, params) {
   var res;
@@ -27,6 +63,28 @@ var makeTwitterCall = function (apiCall, params) {
 };
 
 Meteor.methods({
+  createKeenScopedKey(){
+    var user = Meteor.user();
+    if(!user.keenScopedKey){
+      var username = user.username;
+      var scopedKey = Keen.utils.encryptScopedKey(KEEN_MASTER_KEY, {
+        "allowed_operations": ["read"],
+        "filters": [{
+          "property_name": "userPathSegment",
+          "operator": "eq",
+          "property_value": username
+        }]
+      });
+      return Meteor.users.update({
+          _id: user._id
+      }, {
+        $set: {
+          "keenScopedKey": scopedKey
+        }
+      });
+    }
+    return;
+  },
   updateInitialTwitterUserInfo (userInfo) {
     check(userInfo, Object);
 
