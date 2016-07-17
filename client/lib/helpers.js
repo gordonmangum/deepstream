@@ -375,9 +375,24 @@ window.isMobile = function(){
 
 window.trackingInfoFromPage = function () {
   var currentRoute = FlowRouter.current();
-  var trackingInfoObject = {};
+  var trackingInfoObject = {
+    embed: false,
+    featured: false
+  };
   if(currentRoute.route.name === 'watch' || currentRoute.route.name === 'curate'){
     trackingInfoObject = _.extend({
+      streamShortId: Session.get('streamShortId'),
+      userPathSegment: currentRoute.params.userPathSegment,
+    }, trackingInfoObject);
+  } else if(currentRoute.route.name === 'embed'){
+    trackingInfoObject = _.extend({
+      embed: true,
+      streamShortId: Session.get('streamShortId'),
+      userPathSegment: currentRoute.params.userPathSegment
+    }, trackingInfoObject);
+  } else if(currentRoute.route.name === 'featured'){
+    trackingInfoObject = _.extend({
+      featured: true,
       streamShortId: Session.get('streamShortId'),
       userPathSegment: currentRoute.params.userPathSegment
     }, trackingInfoObject);
