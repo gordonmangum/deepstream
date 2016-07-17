@@ -60,10 +60,9 @@ throttledSearchScrollFn = _.throttle(searchScrollFn, 20);
 var addFocusResult = function(d, template) {
   var focusResult = template.focusResult.get();
   if (focusResult) {
-
+    analytics.track('Create ' + focusResult.type + ' Context Card', trackingInfoFromPage());
     var textAreaContent = template.$('textarea[name=content]').val();
     focusResult.description = textAreaContent;
-
     template.focusResult.set(focusResult);
     if(template.addingFunction){
       template.addingFunction(focusResult, template);
@@ -286,7 +285,6 @@ _.each(createTemplateNames, function(templateName){
   Template[templateName].events({
     "dblclick .search-results-container li:not(.loading-icon)" (d, template) {
       addContext(this);
-      analytics.track('Create ' + templateName +' Context Card', trackingInfoFromPage());
     }
   });
 });
@@ -331,6 +329,7 @@ Template.create_stream_section.helpers({
 
 searchTemplateCreatedBoilerplate = function(type, defaultSource) {
   return function() {
+    analytics.track('On Add ' + type + ' Context', trackingInfoFromPage());
     var that = this;
 
     this.type = type;
@@ -525,6 +524,7 @@ _.each(dataSourcesByType, function(dataSources, type){
 });
 
 Template.create_news_section.onCreated(function() {
+  analytics.track('On Add News Context', trackingInfoFromPage());
   this.type = 'link';
   Session.set('newContextDataSource', 'news');
   this.loadingResults = new ReactiveVar();
@@ -583,6 +583,7 @@ Template.create_news_section.onRendered(function() {
 });
 
 Template.create_link_section.onCreated(function() {
+  analytics.track('On Add Link Context', trackingInfoFromPage());
   this.type = 'link';
   Session.set('newContextDataSource', 'link');
   this.loadingResults = new ReactiveVar();
@@ -760,6 +761,7 @@ Template.create_link_section.helpers({
 });
 
 Template.create_map_section.onCreated(function() {
+  analytics.track('On Add Map Context', trackingInfoFromPage());
   this.type = 'map';
   Session.set('newContextDataSource', 'google_maps');
   this.loadingResults = new ReactiveVar();
@@ -808,6 +810,7 @@ Template.create_map_section.helpers({
 });
 
 Template.create_text_section.onCreated(function() {
+  analytics.track('On Add Text Context', trackingInfoFromPage());
   this.type = 'text';
   this.focusResult = new ReactiveVar(); // just as a stub
   Session.set('newContextDataSource', 'free_text');
@@ -830,6 +833,7 @@ Template.create_text_section.events({
 });
 
 Template.create_poll_section.onCreated(function() {
+  analytics.track('On Add Poll Context', trackingInfoFromPage());
   this.type = 'poll';
   this.focusResult = new ReactiveVar(); // just as a stub
   Session.set('newContextDataSource', 'pie_poll');
@@ -933,6 +937,9 @@ Template.create_twitter_section.helpers({
     var tweetTextEncoded = encodeURIComponent(tweetTextForTweet);
     return  'https://twitter.com/intent/tweet?text=' + tweetTextEncoded + '&';
   }
+});
+
+Template.search_form.onCreated(function(){
 });
 
 Template.search_form.events({

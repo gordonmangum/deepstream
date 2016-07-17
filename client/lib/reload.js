@@ -9,7 +9,7 @@ Reload._onMigrate('deepstream', function (retry) {
   } else {
     if (Meteor.settings['public'].NODE_ENV !== 'development') { // FlowRouter.getRouteName() === 'curate'
       notifyDeploy("We've just made an improvement! Click here to sync up the latest code.", true);
-      analytics.track('Reload notification happened', {label: 'Reload on click'});
+      analytics.track('Reload notification shown', {label: 'Reload on click'});
       $('.migration-notification').click(function () {
         saveCallback(null, true);
         setTimeout(function () {
@@ -24,7 +24,7 @@ Reload._onMigrate('deepstream', function (retry) {
       return [false];
     } else {
       notifyDeploy("We've just made an improvement! Wait just a moment while we sync up the latest code.", false);
-      analytics.track('Reload notification happened', {label: 'Immediate reload', nonInteraction: 1});
+      analytics.track('Reload notification shown', {label: 'Immediate reload', nonInteraction: 1});
       setTimeout(function () {
         readyToMigrate.set(true);
         retry();

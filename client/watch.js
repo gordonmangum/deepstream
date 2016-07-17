@@ -772,6 +772,7 @@ Template.watch_page.events({
     var streamElement = t.$('[data-stream-id=' + this._id + ']');
     streamElement.addClass('to-delete');
     if (confirm('Are you sure you want to delete this stream?')) {
+      analytics.track('Delete stream from deepstream', trackingInfoFromPage());
       streamElement.fadeOut(500, () => {
         Meteor.call('removeStreamFromStream', Session.get("streamShortId"), this._id, basicErrorHandler);
       });
@@ -795,9 +796,11 @@ Template.watch_page.events({
     Session.set('previousMediaDataType', Session.get('mediaDataType'));
     Session.set('mediaDataType', null);
     Session.set('curateMode', false);
+    analytics.track('Curator clicked preview deepstream', trackingInfoFromPage());
   },
   'click .return-to-curate' (){
     Session.set('curateMode', true);
+    analytics.track('Curator clicked edit deepstream', trackingInfoFromPage());
   },
   'click .suggest-content' (){
     Session.set('mediaDataType', Session.get('previousMediaDataType') || 'image');
@@ -811,6 +814,7 @@ Template.watch_page.events({
   'click .publish' (e, t){
     if (this.creationStep === 'go_on_air') {
       if (!this.streams.length) {
+        analytics.track('Curator attempt to publish deepstream with no streams', trackingInfoFromPage());
         notifyError('Please add a stream before you publish your deepstream');
         Meteor.call('goToFindStreamStep', t.data.shortId(), basicErrorHandler);
       } else {
@@ -821,6 +825,7 @@ Template.watch_page.events({
         if (err) {
           basicErrorHandler(err);
         } else {
+          analytics.track('Curator published deepstream!', trackingInfoFromPage());
           notifySuccess("Congratulations! Your Deep Stream is now on air!");
         }
       });
@@ -828,8 +833,10 @@ Template.watch_page.events({
   },
   'click .unpublish' (e, t){
     Meteor.call('unpublishStream', t.data.shortId(), basicErrorHandler);
+    analytics.track('Curator unpublished deepstream!', trackingInfoFromPage());
   },
   'click .show-stream-search' (e, t){
+    analytics.track('Curator clicked add stream in stream list', trackingInfoFromPage());
     if (this.creationStep && this.creationStep !== 'go_on_air') {
       Meteor.call('goToFindStreamStep', t.data.shortId(), basicErrorHandler);
     } else {
@@ -856,25 +863,31 @@ Template.watch_page.events({
     return Meteor.call('updateStreamDescription', template.data.shortId(), streamDescription, basicErrorHandler);
   },
   'click .director-mode-off' (e, t){
+    analytics.track('Curator turned director mode off', trackingInfoFromPage());
     return Meteor.call('directorModeOff', t.data.shortId(), basicErrorHandler)
   },
   'click .director-mode-on' (e, t){
+    analytics.track('Curator turned director mode on', trackingInfoFromPage());
     return Meteor.call('directorModeOn', t.data.shortId(), basicErrorHandler)
   },
   'click .replay-context-mode-off' (e, t){
     notifyInfo('Replay Context is now off. Your cards will all be visible and in the order you have arranged them.');
+    analytics.track('Curator turned replay context off', trackingInfoFromPage());
     Meteor.call('replayEnabledOff', t.data.shortId(), basicErrorHandler)
   },
   'click .replay-context-mode-on' (e, t){
     notifyInfo('Replay Context is now on. Your cards will appear at the time shown on each card.');
+    analytics.track('Curator turned replay context on', trackingInfoFromPage());
     Meteor.call('replayEnabledOn', t.data.shortId(), basicErrorHandler)
   },
   'click .replay-context-mode-disabled' (e, t){
+    analytics.track('Curator clicked disabled Replay Context', trackingInfoFromPage());
     notifyError('Unfortunately Replay Context is not available for Deepstreams with a livestream or more than one stream');
   },
   'click .show-manage-curators-menu' (e, t){
     Session.set('previousMediaDataType', Session.get('mediaDataType'));
     Session.set('mediaDataType', null);
+    analytics.track('Curator viewed manage curators menu', trackingInfoFromPage());
     return Session.set("showManageCuratorsMenu", true);
   },
   'mouseenter .settings-menu-button' (e, template){
@@ -960,9 +973,11 @@ Template.watch_page.events({
     analytics.track('Click curator card replay context', trackingInfoFromPage());
   },
   'click .about-deepstream-embed, click .deepstream-logo-embed' (e, t){
+    analytics.track('Clicked show Deepstream embed about overlay', trackingInfoFromPage());
     Session.set('showDeepstreamAboutOverlay', true);
   },
   'click .close-deepstream-about-overlay' (e, t){
+    analytics.track('Clicked hide Deepstream embed about overlay', trackingInfoFromPage());
     Session.set('showDeepstreamAboutOverlay', false);
   },
   'click .update-with-new-context' (e, t){
@@ -974,9 +989,11 @@ Template.watch_page.events({
     }
   },
   'click .close-sidebar' (){
+    analytics.track('Clicked close right sidebar', trackingInfoFromPage());
     return Session.set('reducedRightView', true);
   },
   'click .open-sidebar' (){
+    analytics.track('Clicked open right sidebar', trackingInfoFromPage());
     return Session.set('reducedRightView', false);
   },
   'click .close-bottombar' (){
@@ -1176,6 +1193,7 @@ Template.context_browser.events({
   },
   'click .delete-context' (e, t){
     if(confirm('Are you sure you want to delete this ' + singularizeMediaType(this.type) + '? This cannot be undone.')){
+      analytics.track('Delete ' + singularizeMediaType(this.type) + ' context from deepstream', trackingInfoFromPage());
       t.$('.list-item-context-plus-annotation[data-context-id=' + this._id + ']').fadeOut(500, () => {
           Meteor.call('removeContextFromStream', Session.get("streamShortId"), this._id, basicErrorHandler);
       });
@@ -1331,6 +1349,7 @@ Template.title_description_overlay.events({
       if(err){
         basicErrorHandler(err);
       } else {
+        analytics.track('Curator published deepstream!', trackingInfoFromPage());
         notifySuccess("Congratulations! Your Deep Stream is now on air!");
       }
     });

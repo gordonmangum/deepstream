@@ -375,10 +375,17 @@ window.isMobile = function(){
 
 window.trackingInfoFromPage = function () {
   var currentRoute = FlowRouter.current();
-  return {
+  var trackingInfoObject = {};
+  if(currentRoute.route.name === 'watch' || currentRoute.route.name === 'curate'){
+    trackingInfoObject = _.extend({
+      streamShortId: Session.get('streamShortId'),
+      userPathSegment: currentRoute.params.userPathSegment
+    }, trackingInfoObject);
+  }
+  return _.extend({
     currentRouteName: currentRoute.route.name,
     currentRoutePath: currentRoute.path
-  }
+  }, trackingInfoObject);
 };
 
 window.trackingInfoFromContext = function (context) {
