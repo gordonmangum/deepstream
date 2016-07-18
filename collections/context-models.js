@@ -495,6 +495,7 @@ Stream = (function (_super) {
   };
 
   Stream.prototype.thumbnailUrl = function () {
+    //console.log(this);
     switch (this.source){
       case 'youtube':
         return '//i.ytimg.com/vi/' + this.reference.id + '/default.jpg';
@@ -508,30 +509,33 @@ Stream = (function (_super) {
         return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/static/MIT_ML_Logo_white';
       default:
         var cloudinaryLink = 'http://res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/';
-        switch (this.fullDetails.host) {
-          case 'player.vimeo.com':
-            return cloudinaryLink + 'v1468856998/placeholder_vimeomovie_jrmlx7.png';
-          case 'ustream.tv':
-            return cloudinaryLink + 'v1468856997/placeholder_usmovie_gwkpvr.png';
-          case 'www.ustream.tv':
-            return cloudinaryLink + 'v1468856997/placeholder_usmovie_gwkpvr.png';
-          case 'periscope.tv':
-            return cloudinaryLink + 'v1468856997/placeholder_usmovie_gwkpvr.png';
-          case 'soundcloud.com':
-            return cloudinaryLink + 'v1468856998/placeholder_scmovie_lkmct0.png';
-          case 'w.soundcloud.com':
-            return cloudinaryLink + 'v1468856998/placeholder_scmovie_lkmct0.png';
-          case 'facebook.com':
-            return cloudinaryLink + 'v1468856998/placeholder_fbmovie_lgtesc.png';
-          case 'www.facebook.com':
-            return cloudinaryLink + 'v1468856998/placeholder_fbmovie_lgtesc.png';
-          case 'tunein.com':
-            return cloudinaryLink + 'v1468856998/placeholder_timovie_rphufn.png';
-          case 'www.tunein.com':
-            return cloudinaryLink + 'v1468856998/placeholder_timovie_rphufn.png';
-          default:
-            return cloudinaryLink + 'v1466257562/placeholder_movie_rad2ai.png';
+        if(this.fullDetails){
+          switch (this.host) {
+            case 'player.vimeo.com':
+              return cloudinaryLink + 'v1468856998/placeholder_vimeomovie_jrmlx7.png';
+            case 'ustream.tv':
+              return cloudinaryLink + 'v1468856997/placeholder_usmovie_gwkpvr.png';
+            case 'www.ustream.tv':
+              return cloudinaryLink + 'v1468856997/placeholder_usmovie_gwkpvr.png';
+            case 'periscope.tv':
+              return cloudinaryLink + 'v1468856997/placeholder_usmovie_gwkpvr.png';
+            case 'soundcloud.com':
+              return cloudinaryLink + 'v1468856998/placeholder_scmovie_lkmct0.png';
+            case 'w.soundcloud.com':
+              return cloudinaryLink + 'v1468856998/placeholder_scmovie_lkmct0.png';
+            case 'facebook.com':
+              return cloudinaryLink + 'v1468856998/placeholder_fbmovie_lgtesc.png';
+            case 'www.facebook.com':
+              return cloudinaryLink + 'v1468856998/placeholder_fbmovie_lgtesc.png';
+            case 'tunein.com':
+              return cloudinaryLink + 'v1468856998/placeholder_timovie_rphufn.png';
+            case 'www.tunein.com':
+              return cloudinaryLink + 'v1468856998/placeholder_timovie_rphufn.png';
+            default:
+              return cloudinaryLink + 'v1466257562/placeholder_movie_rad2ai.png';
+          }
         }
+        return cloudinaryLink + 'v1466257562/placeholder_movie_rad2ai.png';
     }
   };
 

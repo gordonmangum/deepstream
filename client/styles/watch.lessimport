@@ -31,6 +31,7 @@
     text-shadow: 2px 2px 2px darken(@light-text-color,60%);
   }
   .streams-list{
+    overflow-y: scroll;
     white-space: nowrap;
     width:115px;
     li.add-stream{

@@ -232,22 +232,27 @@ Meteor.methods({
       }
     }
     
-    
     var numberOfStreamsBeforeDelete = deepstream.streams.length;
-    
+  
     // set replay 
     if(numberOfStreamsBeforeDelete > 2 || numberOfStreamsBeforeDelete === 1){
+      updateDeepstream.call(this, {shortId: shortId}, {$set: {'replayContext':false}}); 
+      /* TypeError: Cannot set property 'replayEnabled' of undefined
       _.extend(modifierObject['$set'], {
         replayEnabled : false
       });
+      */
       if(Meteor.isClient){
         window.resetMainPlayer();
         Session.set('replayContext', false);
       }
     } else if (numberOfStreamsBeforeDelete === 2 && !deepstream.streams[0].live) {
+      updateDeepstream.call(this, {shortId: shortId}, {$set: {'replayContext':true}});
+      /* TypeError: Cannot set property 'replayEnabled' of undefined
       _.extend(modifierObject['$set'], {
         replayEnabled : true
       });
+      */
       if(Meteor.isClient){
         Session.set('replayContext', true);
       }
