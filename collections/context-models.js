@@ -495,12 +495,14 @@ Stream = (function (_super) {
   };
 
   Stream.prototype.thumbnailUrl = function () {
-    //console.log(this);
+    console.log(this);  
     switch (this.source){
       case 'youtube':
         return '//i.ytimg.com/vi/' + this.reference.id + '/default.jpg';
       case 'ustream':
         return this.reference.thumbnailUrl;
+      case 'meerkat':
+        return 'http://res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/v1468868234/placeholder_mkmovie_qbnfsn.png';
       case 'bambuser':
         return this.reference.previewUrl;
       case 'twitch':
@@ -510,7 +512,7 @@ Stream = (function (_super) {
       default:
         var cloudinaryLink = 'http://res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/';
         if(this.fullDetails){
-          switch (this.host) {
+          switch (this.fullDetails.host) {
             case 'player.vimeo.com':
               return cloudinaryLink + 'v1468856998/placeholder_vimeomovie_jrmlx7.png';
             case 'ustream.tv':
@@ -518,7 +520,9 @@ Stream = (function (_super) {
             case 'www.ustream.tv':
               return cloudinaryLink + 'v1468856997/placeholder_usmovie_gwkpvr.png';
             case 'periscope.tv':
-              return cloudinaryLink + 'v1468856997/placeholder_usmovie_gwkpvr.png';
+              return cloudinaryLink + 'v1468856998/placeholder_psmovie_ruc7y3.png';
+            case 'www.periscope.tv':
+              return cloudinaryLink + 'v1468856998/placeholder_psmovie_ruc7y3.png';
             case 'soundcloud.com':
               return cloudinaryLink + 'v1468856998/placeholder_scmovie_lkmct0.png';
             case 'w.soundcloud.com':
