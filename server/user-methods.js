@@ -65,7 +65,7 @@ var makeTwitterCall = function (apiCall, params) {
 Meteor.methods({
   createKeenScopedKey(){
     var user = Meteor.user();
-    if(!user.keenScopedKey){
+    if(!user.keenScopedKey || !user.keenProjectId){
       var username = user.username;
       var scopedKey = Keen.utils.encryptScopedKey(KEEN_MASTER_KEY, {
         "allowed_operations": ["read"],
@@ -79,7 +79,8 @@ Meteor.methods({
           _id: user._id
       }, {
         $set: {
-          "keenScopedKey": scopedKey
+          "keenScopedKey": scopedKey,
+          "keenProjectId": KEEN_PROJECT_ID
         }
       });
     }

@@ -256,6 +256,8 @@ Meteor.publish("userData", function () {
       {fields: {
         'accessPriority': 1,
         "services.twitter.id": 1,
+        "keenScopedKey": 1,
+        "keenProjectId": 1,
         "admin": 1,
         "profile": 1
       }});

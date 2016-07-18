@@ -60,6 +60,10 @@ Schema.User = new SimpleSchema({
     type: String,
     optional: true
   },
+  keenProjectId: {
+    type: String,
+    optional: true
+  },
   tempUsername: {
     type: String,
     optional: true
