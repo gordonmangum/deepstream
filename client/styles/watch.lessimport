@@ -33,7 +33,7 @@
   .streams-list{
     overflow-y: scroll;
     white-space: nowrap;
-    width:115px;
+    width:250px;
     li.add-stream{
       background-color: rgba(0, 0, 0, 0.7);
     }
@@ -164,7 +164,7 @@
         }
       }
       &:not(.preview-mode){
-        width:95%;
+        width:115px;
       }
       .mini-live-indicator{
         background-color: @live-color;
