@@ -31,6 +31,10 @@
     text-shadow: 2px 2px 2px darken(@light-text-color,60%);
   }
   .streams-list{
+    direction: rtl;
+    .streams-list-container {
+      direction: ltr;
+    }
     overflow-y: scroll;
     white-space: nowrap;
     width:250px;
@@ -836,6 +840,7 @@
 
   .context-area{
     overflow-y: scroll;
+    overflow-x: hidden;
     flex: auto;
     padding-left: @contextAreaPadding;
     padding-right: @contextAreaPadding;

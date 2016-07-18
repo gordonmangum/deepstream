@@ -81,8 +81,10 @@
                 </div>
               </div>
             </div>
+            
             {{#if curateMode}}
               <div class="streams-list" style="max-height:{{mainStreamHeight 0}}px">
+                <div class="streams-list-container">
                 {{#each livestreams}}
                   {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}       
                   <br/>
@@ -116,10 +118,12 @@
                   </li>
                   <br/>
                 {{/if}}
+                </div>
               </div>
             {{else}}
               {{#unless directorMode}}
                 <div class="streams-list" style="max-height: {{mainStreamHeight 0}}px">
+                  <div class="streams-list-container">
                   {{#each livestreams}}
                     {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}       
                     <br/>
@@ -154,6 +158,7 @@
                     <br/>
                   {{/if}}
                 </div>
+               </div>
               {{/unless}}
             
             {{/if}}
