@@ -43,3 +43,5 @@ BrowserPolicy.content.allowOriginForAll("https://platform.twitter.com");
 BrowserPolicy.content.allowOriginForAll("https://*.twimg.com");
 BrowserPolicy.content.allowOriginForAll("https://twitter.com");
 BrowserPolicy.content.allowOriginForAll("https://*.twitter.com");
+BrowserPolicy.content.allowOriginForAll("http://*.twitcasting.tv");
+BrowserPolicy.content.allowOriginForAll("http://twitcasting.tv");
