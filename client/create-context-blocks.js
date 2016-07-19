@@ -240,7 +240,10 @@ var searchAPI = function(query) {
       throw(err);
       return;
     }
-
+    if(!results){ // almost like an error
+      that.noMoreResults.set('No more results'); 
+      return;
+    }
     var items = results.items;
     var nextPage = results.nextPage;
 

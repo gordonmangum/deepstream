@@ -877,6 +877,7 @@ Meteor.methods({
   },
   meerkatUsernameToStream (username){ //username a.k.a. query
     check(username, Match.Optional(String));
+    console.log(username + 'is the meerkat username');
     var nextPageToken = 'end';
     var items = [];
     var url = 'http://meerkatapp.co/social/player/embed/' + username + '?version=1&username=' + username + '&type=bigsquare&social=true&cover=DEFAULT&userid=&source=http%3A%2F%2Fdeepstream.tv';
@@ -885,6 +886,10 @@ Meteor.methods({
       url: url,
       host: 'meerkat.co',
       title: username + ' on Meerkat'
+    };
+    return {
+      'nextPage': nextPageToken,
+      'items': items
     }
   },
   twitchVideoSearchList: searchTwitch,
