@@ -509,7 +509,7 @@ Template.create_audio_section.onCreated(searchTemplateCreatedBoilerplate('audio'
 Template.create_audio_section.onRendered(searchTemplateRenderedBoilerplate());
 
 var dataSourcesByType = {
-  'stream': [{source: 'all_streaming_services', 'display': 'Livestreams'}, {source: 'youtube', display: 'Videos'}, {source: 'embed', display: 'Embed Code'}, {source: 'meerkat', display: 'Meerkat'}],
+  'stream': [{source: 'all_streaming_services', 'display': 'Livestreams'}, {source: 'youtube', display: 'Videos'}, {source: 'embed', display: 'Embed Code'}, {source: 'meerkat', display: 'Meerkat'}, {source: 'twitcast', display: 'Twitcast'}],
   'image': [{source: 'flickr', 'display': 'Flickr'}, {source: 'imgur', display: 'Imgur'}, {source: 'cloudinary', display: 'Upload Your Own'}],
   //'gif': [{source: 'giphy', display: 'Giphy'}],
   'video': [{source: 'youtube', display: 'Youtube'}, {source: 'vimeo', display: 'Vimeo'}],
@@ -968,6 +968,8 @@ Template.search_form.helpers({
         return 'Paste Code';
       case 'meerkat':
         return 'Username';
+      case 'twitcast':
+        return 'Username';
     }
     return false;
   },
@@ -977,6 +979,8 @@ Template.search_form.helpers({
         return 'e.g. URL or <iframe src="http://www.ustream.tv/embed/3064708?html5ui"></iframe>';
       case 'meerkat':
         return 'e.g. meerkat101';
+      case 'twitcast':
+        return 'e.g. twitcast_fanatic5';
     }
     switch(Template.instance().data.placeholderType){
       case 'links':

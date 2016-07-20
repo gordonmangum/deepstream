@@ -182,7 +182,6 @@ ContextBlock.searchMappings = {
   meerkat: {
     methodName: 'meerkatUsernameToStream',
     mapFn (e) {
-      console.log('made it to Mapfn(e)');
       return {
         reference: {
           title: e.title, //'cats rock',//e.channel.status,
@@ -197,6 +196,26 @@ ContextBlock.searchMappings = {
         },
         live: false,
         source: 'meerkat'
+      }
+    }
+  },
+  twitcast: {
+    methodName: 'twitcastUsernameToStream',
+    mapFn (e) {
+      return {
+        reference: {
+          title: e.title, //'cats rock',//e.channel.status,
+          description: 'No description', //e.channel.game,
+          id: 'twitcast-embed-' + Random.id(8), //e._id,
+          channelName: e.username, //'Twitcast Embed', //e.channel.name,
+          url: e.url,
+          currentViewers: 0, //e.viewers,
+          totalViews: 0, //e.channel.views,
+          channelId: '0',// e.channel.id,
+          creationDate: new Date() //new Date(e.created_at)
+        },
+        live: false,
+        source: 'twitcast'
       }
     }
   },
@@ -448,9 +467,10 @@ Stream = (function (_super) {
       return 'username=' + this.reference.username + '&autostart=yes';
     } else if (this.source === 'twitch') {
       return 'channel=' + this.reference.channelName + '&auto_play=true&start_volume=25';
+    } else if (this.source === 'twitcast') {
+      return 'user=' + this.reference.channelName + '&lang=en&myself=&seed=&pass=&mute=2';
     }
   };
-
   Stream.prototype.hasPreviewImage = function(){
     switch (this.source){
       case 'youtube':
@@ -503,6 +523,8 @@ Stream = (function (_super) {
         return this.reference.thumbnailUrl;
       case 'meerkat':
         return 'http://res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/v1468868234/placeholder_mkmovie_qbnfsn.png';
+      case 'twitcast':
+        return 'http://res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/v1468944027/placeholder_tcmovie_qbnfsn_dlqiki.png';
       case 'bambuser':
         return this.reference.previewUrl;
       case 'twitch':

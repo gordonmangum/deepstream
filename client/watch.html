@@ -210,6 +210,35 @@
                                value='{{mainStreamFlashVars}}'/>
                       </object>
                     {{/if}}
+                    {{#if twitcastPlayer}}
+                      <object id="{{mainStreamFlashPlayerId}}" 
+                              classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" 
+                              codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" 
+                              width="{{windowWidth}}" 
+                              height="{{windowHeight -50}}"
+                              align="middle"
+                              style="margin-left:-20px; ">
+                        <param name="allowScriptAccess" value="always" />
+                        <param name="allowFullScreen" value="true" />
+                        <param name="flashVars" value="{{mainStreamFlashVars}}" />
+                        <param name="movie" value="http://twitcasting.tv/swf/livestreamer2sp.swf" />
+                        <param name="quality" value="high" />
+                        <param name="bgcolor" value="#ffffff" />
+                        <embed src="http://twitcasting.tv/swf/livestreamer2sp.swf" 
+                               quality="high" 
+                               bgcolor="#ffffff" 
+                               width="{{windowWidth}}" 
+                               height="{{windowHeight -50}}" 
+                               name="livestreamer" 
+                               id="livestreamderembed" 
+                               align="middle" 
+                               allowScriptAccess="always" 
+                               allowFullScreen="true" 
+                               type="application/x-shockwave-flash" 
+                               pluginspage="http://www.adobe.com/go/getflashplayer" 
+                               flashVars="{{mainStreamFlashVars}}" >
+                      </object>
+                    {{/if}}
                   {{/if}}
                   {{/unless}}
 

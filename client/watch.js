@@ -595,7 +595,7 @@ Template.watch_page.helpers({
     return _.contains(['ustream', 'youtube', 'ml30', 'embed', 'meerkat'], Template.instance().activeStream.get().source);
   },
   mainStreamInFlashPlayer (){
-    return _.contains(['bambuser', 'twitch'], Template.instance().activeStream.get().source);
+    return _.contains(['bambuser', 'twitch', 'twitcast'], Template.instance().activeStream.get().source);
   },
   onCuratePage (){
     return Template.instance().data.onCuratePage ? Template.instance().data.onCuratePage() : null;
@@ -623,13 +623,16 @@ Template.watch_page.helpers({
   mainStreamFlashVars (){
     var activeStream = Template.instance().activeStream.get();
     var addlParams;
-
+    
     switch(activeStream.source){
       case 'bambuser':
         addlParams='&callback=bambuserPlayerReady';
         break;
       case 'twitch':
         addlParams='&eventsCallback=twitchPlayerEventCallback';
+        break;
+      case 'twitcast':
+        addlParams='';
         break;
     }
     if(activeStream){
@@ -641,6 +644,9 @@ Template.watch_page.helpers({
   },
   twitchPlayer (){
     return Template.instance().activeStream.get().source === 'twitch'
+  },
+  twitcastPlayer (){
+    return Template.instance().activeStream.get().source === 'twitcast'
   },
   removeMainStream (){
     return Session.get('removeMainStream');

@@ -100,8 +100,8 @@ Template.registerHelper("isMainCurator", function() {
   return Meteor.userId() && this.mainCuratorId === Meteor.userId();
 });
 
-Template.registerHelper("windowWidth", function() {
-  return Session.get("windowWidth");
+Template.registerHelper("windowWidth", function(offset) {
+  return Session.get("windowWidth") + (offset || 0);
 });
 
 Template.registerHelper("windowHeight", function(offset) {

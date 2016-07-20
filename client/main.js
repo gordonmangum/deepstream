@@ -28,7 +28,7 @@ Meteor.startup(function(){
     windowSizeDep.changed();
   };
 
-  throttledResize = _.throttle(windowResize, 20, {leading: false});
+  throttledResize = _.throttle(windowResize, 40, {leading: false});
 
   $(window).resize(throttledResize);
 

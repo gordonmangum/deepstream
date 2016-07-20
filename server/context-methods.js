@@ -892,6 +892,24 @@ Meteor.methods({
       'items': items
     }
   },
+  twitcastUsernameToStream (username){ //username a.k.a. query
+    check(username, Match.Optional(String));
+    console.log(username + 'is the twitcast username');
+    var nextPageToken = 'end';
+    var items = [];
+    var embed = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" width="640" height="480" id="livestreamer" align="middle"><param name="allowScriptAccess" value="always" /><param name="allowFullScreen" value="true" /><param name="flashVars" value="user=julianabrown_&lang=en&myself=&seed=&pass=&mute=2" /><param name="movie" value="http://twitcasting.tv/swf/livestreamer2sp.swf" /><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed src="http://twitcasting.tv/swf/livestreamer2sp.swf" quality="high" bgcolor="#ffffff" width="640" height="480" name="livestreamer" id="livestreamderembed" align="middle" allowScriptAccess="always" allowFullScreen="true" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" flashVars="user=' + username + '&lang=en&myself=&seed=&pass=&mute=2" ></object>';
+    items[0] = {
+      kind: 'twitcast#video',
+      url: embed,
+      username: username,
+      host: 'twitcasting.tv',
+      title: username + ' on Twitcasting'
+    };
+    return {
+      'nextPage': nextPageToken,
+      'items': items
+    }
+  },
   twitchVideoSearchList: searchTwitch,
   youtubeVideoInfo (ids, page) {
     var res;
