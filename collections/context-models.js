@@ -515,7 +515,6 @@ Stream = (function (_super) {
   };
 
   Stream.prototype.thumbnailUrl = function () {
-    console.log(this);  
     switch (this.source){
       case 'youtube':
         return '//i.ytimg.com/vi/' + this.reference.id + '/default.jpg';
