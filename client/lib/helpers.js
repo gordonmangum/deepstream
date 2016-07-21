@@ -390,12 +390,14 @@ window.trackingInfoFromPage = function () {
     trackingInfoObject = _.extend({
       streamShortId: Session.get('streamShortId'),
       userPathSegment: currentRoute.params.userPathSegment,
+      elapsedTime: window.mainPlayer.getElapsedTime()
     }, trackingInfoObject);
   } else if(currentRoute.route.name === 'embed'){
     trackingInfoObject = _.extend({
       embed: true,
       streamShortId: Session.get('streamShortId'),
-      userPathSegment: currentRoute.params.userPathSegment
+      userPathSegment: currentRoute.params.userPathSegment,
+      elapsedTime: window.mainPlayer.getElapsedTime()
     }, trackingInfoObject);
   } else if(currentRoute.route.name === 'featured'){
     trackingInfoObject = _.extend({
