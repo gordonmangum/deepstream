@@ -361,28 +361,18 @@ Template.watch_page.onCreated(function () {
     }
   });
 
-  var shortId = this.data.shortId();
-
-  if (Session.get('deepstreamViewed') !== shortId) {
-    Session.set('deepstreamViewed', shortId);
-    if(embedMode()){ // in embed mode, wait for a scroll before counting a view
-      $(window).one('mousemove', function(){
-        Meteor.call('countDeepstreamView', shortId);
-      });
-    } else {
-      Meteor.call('countDeepstreamView', shortId);
-    }
-    analytics.track('View stream', _.extend({
-      label: shortId,
-      onCuratePage: this.data.onCuratePage(),
-      userPathSegment: this.data.userPathSegment(),
-      streamPathSegment: this.data.streamPathSegment(),
-      nonInteraction: 1
-    }, trackingInfoFromPage()));
-  }
 });
 
 Template.watch_page.onRendered(function(){
+  Meteor.call('countDeepstreamView', Session.get('streamShortId'));
+  analytics.track('watch page rendered', _.extend({
+    label: Session.get('streamShortId'),
+    onCuratePage: this.data.onCuratePage(),
+    userPathSegment: this.data.userPathSegment(),
+    streamPathSegment: this.data.streamPathSegment(),
+    nonInteraction: 1
+  }, trackingInfoFromPage()));
+  
   var that = this;
   Session.set('replayEnabled', true);
 

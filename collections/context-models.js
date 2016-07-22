@@ -496,7 +496,6 @@ Stream = (function (_super) {
     }
     return true;
   };
-
   Stream.prototype.previewUrl = function () {
     switch (this.source){
       case 'youtube':
@@ -513,7 +512,6 @@ Stream = (function (_super) {
         return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/static/MIT_ML_Logo_white';
     }
   };
-
   Stream.prototype.thumbnailUrl = function () {
     switch (this.source){
       case 'youtube':
@@ -563,7 +561,6 @@ Stream = (function (_super) {
         return cloudinaryLink + 'v1466257562/placeholder_movie_rad2ai.png';
     }
   };
-
   Stream.prototype.sourceUrl = function () {
     if (this.source === 'youtube') {
       return 'https://www.youtube.com/watch?v=' + this.reference.id;
@@ -575,7 +572,6 @@ Stream = (function (_super) {
       return 'http://www.twitch.tv/' + this.reference.channelName;
     }
   };
-
   Stream.prototype.providerIconUrl = function() {
     switch (this.source) {
       case 'youtube':
@@ -588,7 +584,6 @@ Stream = (function (_super) {
         return 'http://www.twitch.tv/favicon.ico';
     }
   };
-
   Stream.prototype.searchList = true;
   Stream.prototype.searchListTemplate = 'create_stream_section';
   Stream.prototype.searchSoloTemplate = 'create_stream_section';
@@ -936,7 +931,7 @@ ImageBlock = (function (_super) {
         return this.reference.url;
       case 'cloudinary':
         // TO-DO maybe use jpeg instead of png in certain situations
-        return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/c_limit,h_300,w_520/' + this.reference.id;
+        return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/c_limit,h_520,w_520/' + this.reference.id;
     }
   };
 
@@ -1000,7 +995,7 @@ ImageBlock = (function (_super) {
       case 'embedly':
         return this.reference.url;
       case 'cloudinary':
-        return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/c_limit,h_300,w_520/' + this.reference.id;
+        return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/c_limit,h_520,w_520/' + this.reference.id;
     }
   };
 

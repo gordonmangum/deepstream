@@ -53,7 +53,6 @@ Meteor.startup(function() {
       if (user.emails && user.emails.length){
         identificationInfo.email = user.emails[0].address;
       }
-
       if (user._id){
         analytics.identify(user._id, identificationInfo);
       }
