@@ -554,6 +554,10 @@ Stream = (function (_super) {
               return cloudinaryLink + 'v1468856998/placeholder_timovie_rphufn.png';
             case 'www.tunein.com':
               return cloudinaryLink + 'v1468856998/placeholder_timovie_rphufn.png';
+            case 'livestream.com':
+              return cloudinaryLink + 'v1469465261/placeholder_lsmovie_tayglj.png';
+            case 'www.livestream.com':
+              return cloudinaryLink + 'v1469465261/placeholder_lsmovie_tayglj.png';
             default:
               return cloudinaryLink + 'v1466257562/placeholder_movie_rad2ai.png';
           }

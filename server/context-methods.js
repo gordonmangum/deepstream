@@ -800,7 +800,7 @@ Meteor.methods({
     check(query, Match.Optional(String));
     var nextPageToken = 'end';
     var items = [];
-    var whitelist = ["ustream.tv", "www.ustream.tv", "periscope.tv", "www.periscope.tv", "w.soundcloud.com", "player.vimeo.com", "www.facebook.com", "facebook.com", "tunein.com", "www.tunein.com"];
+    var whitelist = ["ustream.tv", "www.ustream.tv", "periscope.tv", "www.periscope.tv", "w.soundcloud.com", "player.vimeo.com", "www.facebook.com", "facebook.com", "tunein.com", "www.tunein.com", "livestream.com", "www.livestream.com"];
     var re = /src="([^"']+)|src='([^"']+)/; 
     var str = query;
     var m;
@@ -809,13 +809,17 @@ Meteor.methods({
           re.lastIndex++;
       }
     }
+    console.log(m);
     if(m && m[0]){
-      m = _.filter(m, function(str){ if(typeof str === 'string') { return str.substring(0, 4) === "http"; } else { return false}});
+      console.log(m)
+      m = _.filter(m, function(str){ if(typeof str === 'string') { return str.substring(0, 4) === "http" || str.substring(0, 2) === "//"; } else { return false}});
+      console.log(444);
+      console.log(m);
       if(m[0]){
         var url = m[0];
         var host;
         //find & remove protocol (http, ftp, etc.) and get domain
-        if (url.indexOf("://") > -1) {
+        if (url.indexOf("//") > -1) {
             host = url.split('/')[2];
         }
         else {
@@ -823,6 +827,8 @@ Meteor.methods({
         }
         //find & remove port number
         host = host.split(':')[0];
+        console.log(url);
+        console.log(host);
         if(_.contains(whitelist, host)){ // CHECK IF DOMAIN IN WHITELIST
           var title = host + ' embed';
           items[0] = {
@@ -835,6 +841,7 @@ Meteor.methods({
             items[0].url += '?';
           }
         } else {
+          console.log('not in whitelist');
           // return empty -- not in whitelist
         }
       } else {

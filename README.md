@@ -26,6 +26,7 @@ Currently Deepstreams can be complemented by supported providers of embedable st
 Supported providers currently:
 
 - Facebook
+- livestream.com
 - Periscope
 - SoundCloud
 - Tunein Radio
