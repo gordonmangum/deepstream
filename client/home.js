@@ -364,7 +364,7 @@ Template.deepstreams.helpers({
           break;
         case 'most_recent':
           _.extend(sort, {
-            createdAt: -1
+            savedAt: -1
           });
           break;
         case 'search':
