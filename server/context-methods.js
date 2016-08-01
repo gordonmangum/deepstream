@@ -800,7 +800,11 @@ Meteor.methods({
     check(query, Match.Optional(String));
     var nextPageToken = 'end';
     var items = [];
-    var whitelist = ["ustream.tv", "www.ustream.tv", "periscope.tv", "www.periscope.tv", "w.soundcloud.com", "player.vimeo.com", "www.facebook.com", "facebook.com", "tunein.com", "www.tunein.com", "livestream.com", "www.livestream.com"];
+    var notice = null;
+    var whitelist = ["ustream.tv", "www.ustream.tv", "periscope.tv", "www.periscope.tv", "w.soundcloud.com","www.soundcloud.com", "soundcloud.com", "player.vimeo.com", "vimeo.com", "www.vimeo.com", "www.facebook.com", "facebook.com", "tunein.com", "www.tunein.com", "livestream.com", "www.livestream.com"];
+    var urlOnlyList = ["periscope.tv", "www.periscope.tv"];
+    var embedOnlyList =  _.reject(whitelist, function(url){ return _.contains(urlOnlyList, url); });
+    
     var re = /src="([^"']+)|src='([^"']+)/; 
     var str = query;
     var m;
@@ -809,12 +813,8 @@ Meteor.methods({
           re.lastIndex++;
       }
     }
-    console.log(m);
     if(m && m[0]){
-      console.log(m)
       m = _.filter(m, function(str){ if(typeof str === 'string') { return str.substring(0, 4) === "http" || str.substring(0, 2) === "//"; } else { return false}});
-      console.log(444);
-      console.log(m);
       if(m[0]){
         var url = m[0];
         var host;
@@ -827,25 +827,29 @@ Meteor.methods({
         }
         //find & remove port number
         host = host.split(':')[0];
-        console.log(url);
-        console.log(host);
         if(_.contains(whitelist, host)){ // CHECK IF DOMAIN IN WHITELIST
-          var title = host + ' embed';
-          items[0] = {
-            kind: 'embed#video',
-            url: url,
-            host: host,
-            title: title
-          }
-          if(host === 'player.vimeo.com' || host === 'vimeo.com'){
-            items[0].url += '?';
+          if(_.contains(embedOnlyList, host)){
+            var title = host + ' embed';
+            items[0] = {
+              kind: 'embed#video',
+              url: url,
+              host: host,
+              title: title
+            }
+            if(host === 'player.vimeo.com' || host === 'vimeo.com'){
+              items[0].url += '?';
+            }
+          } else {
+            // not an embed code embed need a link - send a warning.
+            notice = 'For ' + host + ' you will need to use a url rather than an embed code';
           }
         } else {
-          console.log('not in whitelist');
           // return empty -- not in whitelist
+          notice = 'Unfortunately ' + host + ' is not currently supported.';
         }
       } else {
         // return empty
+        notice = 'Unfortunately there seems to be an issue with your url / embed code';
       }
     } else if (str.substring(0, 4) === "http"){ //its just a url
       var url = str;
@@ -860,26 +864,31 @@ Meteor.methods({
       //find & remove port number
       host = host.split(':')[0];
       if(_.contains(whitelist, host)){ // CHECK IF DOMAIN IN WHITELIST
-        var title = host + ' embed';
-        //use cloudinary default thumbnail
-        items[0] = {
-          kind: 'embed#video',
-          url: url,
-          host: host,
-          title: title
-        };
-        if(host === 'player.vimeo.com' || host === 'vimeo.com'){
-          items[0].url += '?';
+        if(_.contains(urlOnlyList, host)){ 
+          var title = host + ' embed';
+          //use cloudinary default thumbnail
+          items[0] = {
+            kind: 'embed#video',
+            url: url,
+            host: host,
+            title: title
+          };
+        } else {
+          // not a link embed - send a warning.
+          notice = 'For ' + host + ' you will need to use an embed code rather than a url';
         }
       } else {
         // return empty -- not in whitelist (window.notify doesnt work here)
+        notice = 'Unfortunately ' + host + ' is not currently supported.';
       }
     } else {
       //return empty results (window.notify doesnt work here)
+      notice = 'Unfortunately there seems to be an issue with your url / embed code';
     }
     return {
       'nextPage': nextPageToken,
-      'items': items
+      'items': items,
+      'notice': notice
     }
   },
   meerkatUsernameToStream (username){ //username a.k.a. query

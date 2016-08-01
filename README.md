@@ -25,10 +25,12 @@ Currently Deepstreams can be complemented by supported providers of embedable st
 
 Supported providers currently:
 
-- Facebook
-- livestream.com
-- Periscope
-- SoundCloud
-- Tunein Radio
-- Ustream
-- Vimeo
+- Facebook(embed code)
+- livestream.com (embed code)
+- Periscope (url)
+- SoundCloud (embed code)
+- Tunein Radio (embed code)
+- Ustream (embed code)
+- Vimeo (embed code)
+- Meerkat (username)
+- Twitcast (username)

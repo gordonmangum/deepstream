@@ -209,6 +209,10 @@ var searchAPI = function(query) {
 
     var items = results.items;
     var nextPage = results.nextPage;
+    var notice = results.notice;
+    if(notice){
+      window.notifyError(notice);
+    }
 
     if (!items || !items.length) {
       that.noMoreResults.set('No results found');
@@ -246,6 +250,10 @@ var searchAPI = function(query) {
     }
     var items = results.items;
     var nextPage = results.nextPage;
+    var notice = results.notice;
+    if(notice){
+      window.notifyError(notice);
+    }
 
     if (!items || !items.length) {
       that.noMoreResults.set('No results found');
