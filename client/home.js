@@ -379,17 +379,6 @@ Template.deepstreams.helpers({
           });
           break;
       }
-      console.log('selector');
-      console.log(selector);
-      console.log('regExp');
-      console.log(regExp);
-      console.log('streams');      
-      console.log(Deepstreams.find(selector, {
-        sort: sort
-      }, {
-        reactive: false
-      }));
-      
       return Deepstreams.find(selector, {
         sort: sort
       }, {
