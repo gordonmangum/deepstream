@@ -367,6 +367,11 @@
   }
 }
 
+.main-stream-iframe.facebook {
+  width: 50%;
+  left: 25%;
+}
+
 @contentIconWidth: 50px;
 
 

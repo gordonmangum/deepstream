@@ -575,6 +575,15 @@ Template.watch_page.helpers({
     return true;
     //return Session.get('curateMode') && Deepstreams.findOne({shortId: Template.instance().data.shortId()}, {fields: {'directorMode': 1}}).directorMode
   },
+  facebookIframe (){
+    var activeStream = Template.instance().activeStream.get();
+    if(activeStream){
+      if (activeStream.fullDetails.host === 'www.facebook.com' || activeStream.fullDetails.host === 'facebook.com'){
+        return true;
+      }
+    }
+    return false;
+  },
   mainStreamIFrameId (){
     return Template.instance().mainStreamIFrameId;
   },
