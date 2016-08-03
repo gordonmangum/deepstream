@@ -1,499 +1,383 @@
-<template name="top_banner">
-  <div class="home-top {{#if border}}{{border}}{{/if}}">
-    <div class="top-row">
-      {{> logo_title}}
-    </div>
-    {{#if showFilters}}
-      <div class="filter-row">
-        <div class="tabs">
-          <ul>
-            <li class="{{#if showBestStreams}}selected{{/if}}"><button class="show-best-streams">BEST OF</button></li>
-            <li class="{{#if showMostRecentStreams}}selected{{/if}}"><button class="show-most-recent-streams">MOST RECENT</button></li>
-          </ul>
-        </div>
-        <div class="stream-search">
-          <form class="stream-search-form" autocomplete="off">
-            <label for="stream-search-input">
-
-              <div class="stream-search-icon">
-                  {{> search_icon}}
-              </div>
-            </label>
-
-            <input id="stream-search-input" type="search"/>
-
-            <div id="checkboxes" hidden="hidden">
-              <div>
-                <p>Filters</p>
-              </div>
-
-              <div class="wrapper">
-                <input id="deepstream-checkbox" type="checkbox" checked="true">
-                <label for="deepstream-checkbox"></label>
-                <div>DeepStreams</div>
-              </div>
-
-              <div class="wrapper">
-                <input id="livestreams-checkbox" type="checkbox" checked="true"/>
-                <label for="livestreams-checkbox"></label>
-                <div>LiveStreams</div>
-              </div>
-
-              <div class="lswrapper">
-                <input id="youtube-checkbox" type="checkbox" checked="true"/>
-                <label for="youtube-checkbox"></label>
-                <div>YouTube</div>
-              </div>
-
-              <div class="lswrapper">
-                <input id="twitch-checkbox" type="checkbox"/>
-                <label for="twitch-checkbox" ></label>
-                <div>Twitch</div>
-              </div>
-
-              <div class="lswrapper">
-                <input id="ustream-checkbox" type="checkbox" checked="true"/>
-                <label for="ustream-checkbox"></label>
-                <div>uStream</div>
-              </div>
-
-              <div class="lswrapper">
-                <input id="bambuser-checkbox" type="checkbox" checked="true"/>
-                <label for="bambuser-checkbox"></label>
-                <div>Bambuser</div>
-              </div>
-            </div>
-
-          </form>
-        </div>
-      </div>
-    {{/if}}
-    {{> banner_buttons}}
-  </div>
-  {{> signin_overlay}}
-</template>
-
-<template name="signin_overlay">
-  {{#if signingIn}}
-    <div class="signin-overlay" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
-      <button class="close">{{> close_circle}}</button>
-      {{#if showLoginForm}}
-        {{> login_form}}
-      {{else}}
-        <div class="mailchimp-signup-form-on-signin">
-          <!-- Begin MailChimp Signup Form -->
-          <!--<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">-->
-          <div id="mc_embed_signup">
-            <form action="//deepstream.us11.list-manage.com/subscribe/post?u=c5bb61c940fb52c8906a972c7&amp;id=d1c5471edf" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-              <div id="mc_embed_signup_scroll">
-                <label for="mce-EMAIL">Thanks for visiting us! We're currently in closed Beta, but if you'd like to be notified when you can search, view livestreams, and create DeepStreams, please sign up below!</label>
-                <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
-                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                <div style="position: absolute; left: -5000px;"><input type="text" name="b_c5bb61c940fb52c8906a972c7_d1c5471edf" tabindex="-1" value=""></div>
-                <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-              </div>
-            </form>
-          </div>
-
-          <div class="existing-account">
-            <div class="text">OR</div>
-            <button class="show-login-form">Click Here if You Have a Secret Code or an Existing Account</button>
-          </div>
-        </div>
-      {{/if}}
-      <!--<div class="signin-buttons">-->
-        <!--<ol class="user-menu">-->
-          <!--<li>-->
-            <!--<button class="twitter-signin">Log in with Twitter</button>-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<button class="email-signin">Log in with email</button>-->
-          <!--</li>-->
-        <!--</ol>-->
-      <!--</div>-->
-    </div>
-  {{/if}}
-</template>
-
-<template name="top_banner_simple_no_links">
-  <div class="home-top not-sticky">
-    <div class="top-row">
-      <div class="logo-title">
-          <div class="title">
-            <div class="home-icons">
-              <ol>
-                <li class="home-icon-li">
-                  {{#if embedMode}}
-                    <button class="deepstream-logo-embed">
-                      <span class="icon">
-                        {{> square_logo}}
-                      </span>
-                    </button>
-                  {{else}}
-                    <a href="/" class="svg">
-                      <span class="icon">{{> square_logo}}</span>
-                    </a>
-                  {{/if}}
-                </li>
-              </ol>
-            </div>
-          </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<template name="top_banner_simple">
-  <div class="home-top">
-    <div class="top-row">
-      {{> logo_title}}
-    </div>
-  </div>
-</template>
-
-<template name="banner_buttons">
-  <div class="action-items">
-    <ol>
-      {{#if embedMode}}
-        <li class="about-deepstream-embed">
-          <button>
-            <span class="text">About</span>
-          </button>
-        </li>
-      {{else}}
-        {{#unless isPhone}}
-          <li class="about-deepstream">
-            <a href="/about">
-              <button>
-                <span class="text">About</span>
-              </button>
-            </a>
-          </li>
-        {{/unless}}
-        {{> login_buttons }}
-        {{#unless isPhone}}
-          <li class="create-deepstream">
-            {{> create_deepstream}}
-          </li>
-        {{/unless}}
-      {{/if}}
-    </ol>
-  </div>
-
-</template>
-
-<template name="login_buttons">
-  <li class="user-action">
-    {{#if loggingOut}}
-      <button>
-        Logging out...
-      </button>
-    {{else}}
-      {{#if currentUser}}
-        <!--<a href="/profile/{{currentUser.username}}">-->
-        <a>
-
-          <button>
-              {{#if profileImage currentUser}}
-                <img class="profile-picture" src="{{profileImage currentUser}}"/>
-              {{/if}}
-            <span class="text">{{currentUser.profile.name}}</span><span class="arrow">&#9662;</span>
-          </button>
-        </a>
-        {{#if showUserInfo}}
-          <ol class="user-menu">
-            <li>
-              <a href="/my_streams"><button>My streams</button></a>
-            </li>
-            <li>
-              <button class="logout">Logout</button>
-            </li>
-          </ol>
-        {{/if}}
-      {{else}}
-        <button class="signin"> Log in / Sign up</button>
-      {{/if}}
-    {{/if}}
-  </li>
-</template>
-
-
-
-<!--DEEPSTREAM-->
-
 <template name="home">
-  {{#if isMobile}}
-    {{> mobile_progress_overlay}}
-  {{/if}}
-  <div class="home">
-    {{> top_banner showFilters=true}}
-    <div class="deepstreams-and-streams-and-selector">
-      <div class="stream-type-selector-container">
-      </div>
-      <div class="deepstreams-and-streams">
-      <!--START OF FEATURED DEEPSTREAM-->
-      <!-- start deepstream peek -->
-          <script>
-            //scroller
-            // scroll handler
-            var scrollToAnchor = function( id ) {
-              // grab the element to scroll to based on the name
-              var elem = $("a[name='"+ id +"']"); 
-              // if that didn't work, look for an element with our ID
-              if ( typeof( elem.offset() ) === "undefined" ) {
-                elem = $("#"+id);
-              }
-              // if the destination element exists
-              if ( typeof( elem.offset() ) !== "undefined" ) {
-                // do the scroll
-                $('html, body').animate({
-                        scrollTop: elem.offset().top
-                }, 1000 );
-              }
-            };
-            
-            //deepstream peek script 
-            $(document).ready(function() {
-              
+  <!--
+	Dopetrope by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+  -->
+  <div id="page-wrapper">
 
-              $("#vidContainer").hover(function () {$("#vidContainer").not('.clicked').animate({paddingBottom: "34.8%"}, 200);},function () {     $("#vidContainer").not('.clicked').animate({paddingBottom: "23.2%"}, 400);});
-            });
-            
-            // function to detect click on iframe
-            var monitorFeaturedIframe = setInterval(function(){
-              var elem = document.activeElement;
-              if(elem && elem.tagName == 'IFRAME' && elem.id == 'featured-home-stream'){
-                $("#videoOverlay").addClass('clicked');
-                $("#vidContainer").addClass('clicked');
-                scrollToAnchor('vidTop');
-                $('#vidContainer').animate({paddingBottom: "58%"}, 1000,   'swing',function(){});
-                clearInterval(monitorFeaturedIframe);
-              }
-            }, 100);
+    <!-- Header -->
+      <div id="header-wrapper">
+        <div id="header">
 
+          <!-- Logo -->
+            <h1><a href="index.html">DeepStream</a></h1>
 
-            </script>
+          <!-- Nav -->
+            <nav id="nav">
+              <ul>
+                <li class="current"><a href="index.html">What's DeepStream?</a></li>
+                <li><a href="left-sidebar.html">Gallery</a>
+                  <!--<ul>-->
+                  <!--<li><a href="#">Who is DeepStream For?</a></li>-->
+                  <!--</ul>-->
+                </li>
+                <li>
+                  <a href="#">How To</a>
+                  <ul>
+                    <li><a href="#"></a>Documentation</li>
+                    <li><a href="#"></a>FAQ</li>
+                    <!--<li>-->
+                      <!--<a href="#">Phasellus consequat</a>-->
+                      <!--<ul>-->
+                        <!--<li><a href="#">Magna phasellus</a></li>-->
+                        <!--<li><a href="#">Etiam dolore nisl</a></li>-->
+                        <!--<li><a href="#">Veroeros feugiat</a></li>-->
+                        <!--<li><a href="#">Nisl sed aliquam</a></li>-->
+                        <!--<li><a href="#">Dolore adipiscing</a></li>-->
+                      <!--</ul>-->
+                    <!--</li>-->
+                    <!--<li><a href="#">Veroeros feugiat</a></li>-->
+                  </ul>
+                </li>
 
-            <div id="vidContainer" style="clear:both">
-              <a name="vidTop"></a>
-              <div id="baseVideo">
-                <div style="position: relative; padding-bottom: 56.25%; padding-top: 25px; height: 0;"> <iframe src="http://deepstream.tv/featured/gordon/pandas-7DWjq6wL" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" id="featured-home-stream"></iframe></div>
-              </div>
-              <a href="http://deepstream.tv/watch/gordon/pandas-7DWjq6wL">
-                <div id="videoOverlay">
-                  <div class="activate-featured-hover">
-                    <p style="display:none;">Click to Explore!</p>
-                  </div>
+                <li><a href="no-sidebar.html">Contact Us</a></li>
+
+              </ul>
+            </nav>
+
+          <!-- Banner -->
+            <section id="banner">
+              <video width="854" height="480" controls>
+                <source src="homepage/images/Mobile_DS.mp4" type="video/mp4">
+              </video>
+              <header>
+                <h2>Turn Your Viewers into Your Fans</h2>
+                <p>Let DeepStream get you there easily and quickly</p>
+              </header>
+            </section>
+
+          <!-- Intro -->
+            <section id="intro" class="container">
+              <div class="row">
+                <div class="4u 12u(mobile)">
+                  <section class="first">
+                    <i class="icon featured fa-eye"></i>
+                    <header>
+                      <h2>Boost Engagement Metrics</h2>
+                    </header>
+                    <p>Viewers watch DeepStreams 100% longer than normal videos & click 20% more often</p>
+                  </section>
                 </div>
-              </a>
-            </div>
-            <!-- end deepstream peek -->
-        <ol>
-          {{#if showDeepstreams}}
-            <li>
-              <div class="deepstreams-container container">
-                <h2>DEEPSTREAMS</h2>
-                <h3>Deepstreams are livestreams that people have enhanced with great content like images, tweets, and news stories.</h3>
-                {{> deepstreams}}
+                <div class="4u 12u(mobile)">
+                  <section class="middle">
+                    <i class="icon featured fa-hand-o-up"></i>
+                    <!--<i class="icon featured alt fa-hand-o-up"></i>-->
+                    <header>
+                      <h2>Future Proofing Included</h2>
+                    </header>
+                    <p>Don't get left behind! We make sure your DeepStreams are integrated with the latest and greatest possible</p>
+                  </section>
+                </div>
+                <div class="4u 12u(mobile)">
+                  <section class="last">
+                    <i class="icon featured fa-star"></i>
+                    <!--<i class="icon featured alt2 fa-star"></i>-->
+                    <header>
+                      <h2>Reinforce Your Brand</h2>
+                    </header>
+                    <p>Give your viewers the full experience of your content offering in a platform they see as novel, forward, and explorative.</p>
+                  </section>
+                </div>
               </div>
-            </li>
-          {{/if}}
-          <!--END OF FEATURED DEEPSTREAM-->
-          {{#if showLivestreams}}
-            <li>
-              <div class="streams-container container">
-                <h2>LIVESTREAMS</h2>
-                {{#if loadingStreamResults}}
-                  Loading...
-                {{/if}}
-                {{#if noMoreStreamResults}}
-                  {{noMoreStreamResults}}
-                {{/if}}
-                {{> streams}}
-              </div>
-            </li>
-          {{/if}}
-        </ol>
-      </div>
-    </div>
-  </div>
-</template>
+              <footer>
+                <ul class="actions">
+                  <li><a href="#" class="button big">Get Started</a></li>
+                  <li><a href="#" class="button alt big">Learn More</a></li>
+                </ul>
+              </footer>
+            </section>
 
-<template name="logo_title">
-  <div class="logo-title">
-    <div class="home-icons">
-      <ol>
-        <li class="home-icon-li">
-          {{#if embedMode}}
-            <button class="deepstream-logo-embed">
-              <span class="icon">
-                {{> square_logo}}
-              </span>
-            </button>
-          {{else}}
-            <a href="/" class="svg">
-              <span class="icon">{{> square_logo}}</span>
-            </a>
-          {{/if}}
-        </li>
-      </ol>
-    </div>
-  </div>
-</template>
-
-<template name="logo_only">
-  <div class="logo-only">
-    {{#if embedMode}}
-      <button class="deepstream-logo-embed">
-        <div class="title">
-          <div class="name">  <img src="http://res.cloudinary.com/deepstream/image/upload/v1/static/logo_transparent.png" /></div>
-        </div>
-      </button>
-    {{else}}
-      <a href="/">
-        <div class="title">
-          <div class="name">  <img src="http://res.cloudinary.com/deepstream/image/upload/v1/static/logo_transparent.png" /></div>
-        </div>
-      </a>
-    {{/if}}
-  </div>
-</template>
-
-<template name="deepstreams">
-  {{#each streams}}
-    {{> deepstream_preview deepstream=this}}
-  {{else}}
-    {{#if subsReady}}
-      <div class="no-results">No results found.</div>
-
-    {{/if}}
-  {{/each}}
-</template>
-
-<template name="streams">
-  {{#each streams}}
-    {{> stream_preview }}
-  {{/each}}
-</template>
-
-<template name="my_streams">
-  <h1>Your Deep Streams</h1>
-  {{#each streams}}
-      {{> deepstream_preview linkToCurate=true deepstream=this showDeleteButton=true }}
-  {{/each}}
-</template>
-
-<template name="deepstream_preview">
-<div class="deepstream-preview">
-
-  {{#with deepstream}}
-    <div class="deepstream">
-      <div class="image-and-content">
-        <a href="{{linkPath}}">
-          <div class="stream-image">
-            <img src="{{previewUrl}}"/>
-            {{> play_video_icon}}
-          </div>
-          {{#if live}}
-            <div class="live-indicator">LIVE</div>
-          {{/if}}
-        </a>
-        <div class="content">
-          {{#each contentPreviews}}
-            {{> homepage_content_preview}}
-          {{/each}}
         </div>
       </div>
-      <a href="{{linkPath}}">
-        <div class="title-and-views">
-          <span class="title">{{title}}</span>
-          <span class="views">{{formatNumber viewCount}} Views</span>
-        </div>
-        <div class="small-stream-info">
-          <div>
-            <span class="stream-count">Tracking {{streams.length}} streamers</span>
-            <span class="favorited">{{formatNumber favoritedTotal}} {{> favorite_icon}}</span>
-          </div>
-          <div>
-            <span class="date">Updated {{dateInPast savedAt}}</span>
-            <span class="curator-name">{{curatorName}}</span>
-          </div>
 
-        </div>
-      </a>
-      {{#if showEditorsPickButton}}
-        {{> editors_pick_button}}
-      {{/if}}
-    </div>
-  {{/with}}
+    <!-- Main -->
+      <div id="main-wrapper">
+        <div class="container">
+          <div class="row">
+            <div class="12u">
 
-  {{#if showDeleteButton}}
-    {{#with deepstream}}
-      <button class="delete-deepstream">{{> close_circle}}</button>
-    {{/with}}
-  {{/if}}
-</div>
+              <!-- Portfolio -->
+                <section>
+                  <header class="major">
+                    <h2>My Portfolio</h2>
+                  </header>
+                  <div class="row">
+                    <div class="4u 12u(mobile)">
+                      <section class="box">
+                        <a href="#" class="image featured"><img src="homepage/images/pic02.jpg" alt="" /></a>
+                        <header>
+                          <h3>Ipsum feugiat et dolor</h3>
+                        </header>
+                        <p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
+                        <footer>
+                          <a href="#" class="button alt">Find out more</a>
+                        </footer>
+                      </section>
+                    </div>
+                    <div class="4u 12u(mobile)">
+                      <section class="box">
+                        <a href="#" class="image featured"><img src="homepage/images/pic03.jpg" alt="" /></a>
+                        <header>
+                          <h3>Sed etiam lorem nulla</h3>
+                        </header>
+                        <p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
+                        <footer>
+                          <a href="#" class="button alt">Find out more</a>
+                        </footer>
+                      </section>
+                    </div>
+                    <div class="4u 12u(mobile)">
+                      <section class="box">
+                        <a href="#" class="image featured"><img src="homepage/images/pic04.jpg" alt="" /></a>
+                        <header>
+                          <h3>Consequat et tempus</h3>
+                        </header>
+                        <p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
+                        <footer>
+                          <a href="#" class="button alt">Find out more</a>
+                        </footer>
+                      </section>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="4u 12u(mobile)">
+                      <section class="box">
+                        <a href="#" class="image featured"><img src="homepage/images/pic05.jpg" alt="" /></a>
+                        <header>
+                          <h3>Blandit sed adipiscing</h3>
+                        </header>
+                        <p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
+                        <footer>
+                          <a href="#" class="button alt">Find out more</a>
+                        </footer>
+                      </section>
+                    </div>
+                    <div class="4u 12u(mobile)">
+                      <section class="box">
+                        <a href="#" class="image featured"><img src="homepage/images/pic06.jpg" alt="" /></a>
+                        <header>
+                          <h3>Etiam nisl consequat</h3>
+                        </header>
+                        <p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
+                        <footer>
+                          <a href="#" class="button alt">Find out more</a>
+                        </footer>
+                      </section>
+                    </div>
+                    <div class="4u 12u(mobile)">
+                      <section class="box">
+                        <a href="#" class="image featured"><img src="homepage/images/pic07.jpg" alt="" /></a>
+                        <header>
+                          <h3>Dolore nisl feugiat</h3>
+                        </header>
+                        <p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
+                        <footer>
+                          <a href="#" class="button alt">Find out more</a>
+                        </footer>
+                      </section>
+                    </div>
+                  </div>
+                </section>
 
-</template>
-
-<template name="homepage_content_preview">
-  <div class="homepage-content-preview">
-    {{> Template.dynamic template=homepagePreviewTemplate}}
-  </div>
-</template>
-
-
-<template name="stream_preview">
-  <div class="stream-preview">
-    <button class="show-preview-overlay">
-      <div class="stream">
-        <div class="provider-source">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}</div>
-        <div class="stream-image">
-          <img src="{{thumbnailUrl}}"/>
-          {{> play_video_icon}}
-        </div>
-        <div class="stream-info">
-          <div class="title">{{title}}</div>
-          <div class="small-stream-info">
-            <div class="username">{{username}}</div>
-            {{#if showViews}}
-              <div class="views">{{formatNumber totalViews}} Views</div>
-            {{/if}}
-          </div>
-        </div>
-      </div>
-    </button>
-    {{#if showPreviewOverlay}}
-      <div class="stream-preview-screen-overlay" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
-        <button class="close">{{> close_circle}}</button>
-        <div class="preview-box">
-          <div class="text-prompt">Click CREATE and add some content to start DeepStreaming this livestream</div>
-          <div class="main-stream">
-            <div class="main-stream-container">
-              <iframe id="{{mainStreamElementId}}" class="main-stream-iframe" src="{{autoplayUrl}}" frameborder="0"
-                      allowfullscreen></iframe>
             </div>
           </div>
-          <div class="right-section">
-            <div class="text">Add great content like news stories, pictures, tweets and more to this livestream</div>
-            {{> create_deepstream}}
-            <div class="text">After you add content you'll have the option to publish your page and start DeepStreaming</div>
-          </div>
-          <div class="video-info">
-            <div class="title">{{title}}</div>
-            <div class="description">{{description}}</div>
-            <div class="username">{{username}}</div>
-            <div class="date">{{createdAtString}}</div>
+          <div class="row">
+            <div class="12u">
+
+              <!-- Blog -->
+                <section>
+                  <header class="major">
+                    <h2>The Blog</h2>
+                  </header>
+                  <div class="row">
+                    <div class="6u 12u(mobile)">
+                      <section class="box">
+                        <a href="#" class="image featured"><img src="homepage/images/pic08.jpg" alt="" /></a>
+                        <header>
+                          <h3>Magna tempus consequat lorem</h3>
+                          <p>Posted 45 minutes ago</p>
+                        </header>
+                        <p>Lorem ipsum dolor sit amet sit veroeros sed et blandit consequat sed veroeros lorem et blandit  adipiscing feugiat phasellus tempus hendrerit, tortor vitae mattis tempor, sapien sem feugiat sapien, id suscipit magna felis nec elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos lorem ipsum dolor sit amet.</p>
+                        <footer>
+                          <ul class="actions">
+                            <li><a href="#" class="button icon fa-file-text">Continue Reading</a></li>
+                            <li><a href="#" class="button alt icon fa-comment">33 comments</a></li>
+                          </ul>
+                        </footer>
+                      </section>
+                    </div>
+                    <div class="6u 12u(mobile)">
+                      <section class="box">
+                        <a href="#" class="image featured"><img src="homepage/images/pic09.jpg" alt="" /></a>
+                        <header>
+                          <h3>Aptent veroeros et aliquam</h3>
+                          <p>Posted 45 minutes ago</p>
+                        </header>
+                        <p>Lorem ipsum dolor sit amet sit veroeros sed et blandit consequat sed veroeros lorem et blandit  adipiscing feugiat phasellus tempus hendrerit, tortor vitae mattis tempor, sapien sem feugiat sapien, id suscipit magna felis nec elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos lorem ipsum dolor sit amet.</p>
+                        <footer>
+                          <ul class="actions">
+                            <li><a href="#" class="button icon fa-file-text">Continue Reading</a></li>
+                            <li><a href="#" class="button alt icon fa-comment">33 comments</a></li>
+                          </ul>
+                        </footer>
+                      </section>
+                    </div>
+                  </div>
+                </section>
+
+            </div>
           </div>
         </div>
       </div>
-    {{/if}}
+
+    <!-- Footer -->
+      <div id="footer-wrapper">
+        <section id="footer" class="container">
+          <div class="row">
+            <div class="8u 12u(mobile)">
+              <section>
+                <header>
+                  <h2>Blandit nisl adipiscing</h2>
+                </header>
+                <ul class="dates">
+                  <li>
+                    <span class="date">Jan <strong>27</strong></span>
+                    <h3><a href="#">Lorem dolor sit amet veroeros</a></h3>
+                    <p>Ipsum dolor sit amet veroeros consequat blandit ipsum phasellus lorem consequat etiam.</p>
+                  </li>
+                  <li>
+                    <span class="date">Jan <strong>23</strong></span>
+                    <h3><a href="#">Ipsum sed blandit nisl consequat</a></h3>
+                    <p>Blandit phasellus lorem ipsum dolor tempor sapien tortor hendrerit adipiscing feugiat lorem.</p>
+                  </li>
+                  <li>
+                    <span class="date">Jan <strong>15</strong></span>
+                    <h3><a href="#">Magna tempus lorem feugiat</a></h3>
+                    <p>Dolore consequat sed phasellus lorem sed etiam nullam dolor etiam sed amet sit consequat.</p>
+                  </li>
+                  <li>
+                    <span class="date">Jan <strong>12</strong></span>
+                    <h3><a href="#">Dolore tempus ipsum feugiat nulla</a></h3>
+                    <p>Feugiat lorem dolor sed nullam tempus lorem ipsum dolor sit amet nullam consequat.</p>
+                  </li>
+                  <li>
+                    <span class="date">Jan <strong>10</strong></span>
+                    <h3><a href="#">Blandit tempus aliquam?</a></h3>
+                    <p>Feugiat sed tempus blandit tempus adipiscing nisl lorem ipsum dolor sit amet dolore.</p>
+                  </li>
+                </ul>
+              </section>
+            </div>
+            <div class="4u 12u(mobile)">
+              <section>
+                <header>
+                  <h2>What's this all about?</h2>
+                </header>
+                <a href="#" class="image featured"><img src="homepage/images/pic10.jpg" alt="" /></a>
+                <p>
+                  This is <strong>Dopetrope</strong> a free, fully responsive HTML5 site template by
+                  <a href="http://twitter.com/ajlkn">AJ</a> for <a href="http://html5up.net/">HTML5 UP</a> It's released for free under
+                  the <a href="http://html5up.net/license/">Creative Commons Attribution</a> license so feel free to use it for any personal or commercial project &ndash; just don't forget to credit us!
+                </p>
+                <footer>
+                  <a href="#" class="button">Find out more</a>
+                </footer>
+              </section>
+            </div>
+          </div>
+          <div class="row">
+            <div class="4u 12u(mobile)">
+              <section>
+                <header>
+                  <h2>Tempus consequat</h2>
+                </header>
+                <ul class="divided">
+                  <li><a href="#">Lorem ipsum dolor sit amet sit veroeros</a></li>
+                  <li><a href="#">Sed et blandit consequat sed tlorem blandit</a></li>
+                  <li><a href="#">Adipiscing feugiat phasellus sed tempus</a></li>
+                  <li><a href="#">Hendrerit tortor vitae mattis tempor sapien</a></li>
+                  <li><a href="#">Sem feugiat sapien id suscipit magna felis nec</a></li>
+                  <li><a href="#">Elit class aptent taciti sociosqu ad litora</a></li>
+                </ul>
+              </section>
+            </div>
+            <div class="4u 12u(mobile)">
+              <section>
+                <header>
+                  <h2>Ipsum et phasellus</h2>
+                </header>
+                <ul class="divided">
+                  <li><a href="#">Lorem ipsum dolor sit amet sit veroeros</a></li>
+                  <li><a href="#">Sed et blandit consequat sed tlorem blandit</a></li>
+                  <li><a href="#">Adipiscing feugiat phasellus sed tempus</a></li>
+                  <li><a href="#">Hendrerit tortor vitae mattis tempor sapien</a></li>
+                  <li><a href="#">Sem feugiat sapien id suscipit magna felis nec</a></li>
+                  <li><a href="#">Elit class aptent taciti sociosqu ad litora</a></li>
+                </ul>
+              </section>
+            </div>
+            <div class="4u 12u(mobile)">
+              <section>
+                <header>
+                  <h2>Vitae tempor lorem</h2>
+                </header>
+                <ul class="social">
+                  <li><a class="icon fa-facebook" href="#"><span class="label">Facebook</span></a></li>
+                  <li><a class="icon fa-twitter" href="#"><span class="label">Twitter</span></a></li>
+                  <li><a class="icon fa-dribbble" href="#"><span class="label">Dribbble</span></a></li>
+                  <li><a class="icon fa-linkedin" href="#"><span class="label">LinkedIn</span></a></li>
+                  <li><a class="icon fa-google-plus" href="#"><span class="label">Google+</span></a></li>
+                </ul>
+                <ul class="contact">
+                  <li>
+                    <h3>Address</h3>
+                    <p>
+                      Untitled Incorporated<br />
+                      1234 Somewhere Road Suite<br />
+                      Nashville, TN 00000-0000
+                    </p>
+                  </li>
+                  <li>
+                    <h3>Mail</h3>
+                    <p><a href="#">someone@untitled.tld</a></p>
+                  </li>
+                  <li>
+                    <h3>Phone</h3>
+                    <p>(800) 000-0000</p>
+                  </li>
+                </ul>
+              </section>
+            </div>
+          </div>
+          <div class="row">
+            <div class="12u">
+
+              <!-- Copyright -->
+                <div id="copyright">
+                  <ul class="links">
+                    <li>&copy; Deepstream. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+                  </ul>
+                </div>
+
+            </div>
+          </div>
+        </section>
+      </div>
+			<script src="homepage/js/jquery.dropotron.min.js"></script>
+			<script src="homepage/js/skel.min.js"></script>
+			<script src="homepage/js/skel-viewport.min.js" async></script>
+			<script src="homepage/js/util.js"></script>
+			<script src="homepage/js/main.js"></script>
   </div>
-</template>
-
-
-<template name="create_deepstream">
-  <button class="create-deepstream">
-    <span class="text">Create</span>
-  </button>
 </template>

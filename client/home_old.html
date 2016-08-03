@@ -1,0 +1,499 @@
+<template name="top_banner">
+  <div class="home-top {{#if border}}{{border}}{{/if}}">
+    <div class="top-row">
+      {{> logo_title}}
+    </div>
+    {{#if showFilters}}
+      <div class="filter-row">
+        <div class="tabs">
+          <ul>
+            <li class="{{#if showBestStreams}}selected{{/if}}"><button class="show-best-streams">BEST OF</button></li>
+            <li class="{{#if showMostRecentStreams}}selected{{/if}}"><button class="show-most-recent-streams">MOST RECENT</button></li>
+          </ul>
+        </div>
+        <div class="stream-search">
+          <form class="stream-search-form" autocomplete="off">
+            <label for="stream-search-input">
+
+              <div class="stream-search-icon">
+                  {{> search_icon}}
+              </div>
+            </label>
+
+            <input id="stream-search-input" type="search"/>
+
+            <div id="checkboxes" hidden="hidden">
+              <div>
+                <p>Filters</p>
+              </div>
+
+              <div class="wrapper">
+                <input id="deepstream-checkbox" type="checkbox" checked="true">
+                <label for="deepstream-checkbox"></label>
+                <div>DeepStreams</div>
+              </div>
+
+              <div class="wrapper">
+                <input id="livestreams-checkbox" type="checkbox" checked="true"/>
+                <label for="livestreams-checkbox"></label>
+                <div>LiveStreams</div>
+              </div>
+
+              <div class="lswrapper">
+                <input id="youtube-checkbox" type="checkbox" checked="true"/>
+                <label for="youtube-checkbox"></label>
+                <div>YouTube</div>
+              </div>
+
+              <div class="lswrapper">
+                <input id="twitch-checkbox" type="checkbox"/>
+                <label for="twitch-checkbox" ></label>
+                <div>Twitch</div>
+              </div>
+
+              <div class="lswrapper">
+                <input id="ustream-checkbox" type="checkbox" checked="true"/>
+                <label for="ustream-checkbox"></label>
+                <div>uStream</div>
+              </div>
+
+              <div class="lswrapper">
+                <input id="bambuser-checkbox" type="checkbox" checked="true"/>
+                <label for="bambuser-checkbox"></label>
+                <div>Bambuser</div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    {{/if}}
+    {{> banner_buttons}}
+  </div>
+  {{> signin_overlay}}
+</template>
+
+<template name="signin_overlay">
+  {{#if signingIn}}
+    <div class="signin-overlay" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
+      <button class="close">{{> close_circle}}</button>
+      {{#if showLoginForm}}
+        {{> login_form}}
+      {{else}}
+        <div class="mailchimp-signup-form-on-signin">
+          <!-- Begin MailChimp Signup Form -->
+          <!--<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">-->
+          <div id="mc_embed_signup">
+            <form action="//deepstream.us11.list-manage.com/subscribe/post?u=c5bb61c940fb52c8906a972c7&amp;id=d1c5471edf" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+              <div id="mc_embed_signup_scroll">
+                <label for="mce-EMAIL">Thanks for visiting us! We're currently in closed Beta, but if you'd like to be notified when you can search, view livestreams, and create DeepStreams, please sign up below!</label>
+                <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                <div style="position: absolute; left: -5000px;"><input type="text" name="b_c5bb61c940fb52c8906a972c7_d1c5471edf" tabindex="-1" value=""></div>
+                <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+              </div>
+            </form>
+          </div>
+
+          <div class="existing-account">
+            <div class="text">OR</div>
+            <button class="show-login-form">Click Here if You Have a Secret Code or an Existing Account</button>
+          </div>
+        </div>
+      {{/if}}
+      <!--<div class="signin-buttons">-->
+        <!--<ol class="user-menu">-->
+          <!--<li>-->
+            <!--<button class="twitter-signin">Log in with Twitter</button>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<button class="email-signin">Log in with email</button>-->
+          <!--</li>-->
+        <!--</ol>-->
+      <!--</div>-->
+    </div>
+  {{/if}}
+</template>
+
+<template name="top_banner_simple_no_links">
+  <div class="home-top not-sticky">
+    <div class="top-row">
+      <div class="logo-title">
+          <div class="title">
+            <div class="home-icons">
+              <ol>
+                <li class="home-icon-li">
+                  {{#if embedMode}}
+                    <button class="deepstream-logo-embed">
+                      <span class="icon">
+                        {{> square_logo}}
+                      </span>
+                    </button>
+                  {{else}}
+                    <a href="/" class="svg">
+                      <span class="icon">{{> square_logo}}</span>
+                    </a>
+                  {{/if}}
+                </li>
+              </ol>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="top_banner_simple">
+  <div class="home-top">
+    <div class="top-row">
+      {{> logo_title}}
+    </div>
+  </div>
+</template>
+
+<template name="banner_buttons">
+  <div class="action-items">
+    <ol>
+      {{#if embedMode}}
+        <li class="about-deepstream-embed">
+          <button>
+            <span class="text">About</span>
+          </button>
+        </li>
+      {{else}}
+        {{#unless isPhone}}
+          <li class="about-deepstream">
+            <a href="/about">
+              <button>
+                <span class="text">About</span>
+              </button>
+            </a>
+          </li>
+        {{/unless}}
+        {{> login_buttons }}
+        {{#unless isPhone}}
+          <li class="create-deepstream">
+            {{> create_deepstream}}
+          </li>
+        {{/unless}}
+      {{/if}}
+    </ol>
+  </div>
+
+</template>
+
+<template name="login_buttons">
+  <li class="user-action">
+    {{#if loggingOut}}
+      <button>
+        Logging out...
+      </button>
+    {{else}}
+      {{#if currentUser}}
+        <!--<a href="/profile/{{currentUser.username}}">-->
+        <a>
+
+          <button>
+              {{#if profileImage currentUser}}
+                <img class="profile-picture" src="{{profileImage currentUser}}"/>
+              {{/if}}
+            <span class="text">{{currentUser.profile.name}}</span><span class="arrow">&#9662;</span>
+          </button>
+        </a>
+        {{#if showUserInfo}}
+          <ol class="user-menu">
+            <li>
+              <a href="/my_streams"><button>My streams</button></a>
+            </li>
+            <li>
+              <button class="logout">Logout</button>
+            </li>
+          </ol>
+        {{/if}}
+      {{else}}
+        <button class="signin"> Log in / Sign up</button>
+      {{/if}}
+    {{/if}}
+  </li>
+</template>
+
+
+
+<!--DEEPSTREAM-->
+
+<template name="home_old">
+  {{#if isMobile}}
+    {{> mobile_progress_overlay}}
+  {{/if}}
+  <div class="home">
+    {{> top_banner showFilters=true}}
+    <div class="deepstreams-and-streams-and-selector">
+      <div class="stream-type-selector-container">
+      </div>
+      <div class="deepstreams-and-streams">
+      <!--START OF FEATURED DEEPSTREAM-->
+      <!-- start deepstream peek -->
+          <script>
+            //scroller
+            // scroll handler
+            var scrollToAnchor = function( id ) {
+              // grab the element to scroll to based on the name
+              var elem = $("a[name='"+ id +"']"); 
+              // if that didn't work, look for an element with our ID
+              if ( typeof( elem.offset() ) === "undefined" ) {
+                elem = $("#"+id);
+              }
+              // if the destination element exists
+              if ( typeof( elem.offset() ) !== "undefined" ) {
+                // do the scroll
+                $('html, body').animate({
+                        scrollTop: elem.offset().top
+                }, 1000 );
+              }
+            };
+            
+            //deepstream peek script 
+            $(document).ready(function() {
+              
+
+              $("#vidContainer").hover(function () {$("#vidContainer").not('.clicked').animate({paddingBottom: "34.8%"}, 200);},function () {     $("#vidContainer").not('.clicked').animate({paddingBottom: "23.2%"}, 400);});
+            });
+            
+            // function to detect click on iframe
+            var monitorFeaturedIframe = setInterval(function(){
+              var elem = document.activeElement;
+              if(elem && elem.tagName == 'IFRAME' && elem.id == 'featured-home-stream'){
+                $("#videoOverlay").addClass('clicked');
+                $("#vidContainer").addClass('clicked');
+                scrollToAnchor('vidTop');
+                $('#vidContainer').animate({paddingBottom: "58%"}, 1000,   'swing',function(){});
+                clearInterval(monitorFeaturedIframe);
+              }
+            }, 100);
+
+
+            </script>
+
+            <div id="vidContainer" style="clear:both">
+              <a name="vidTop"></a>
+              <div id="baseVideo">
+                <div style="position: relative; padding-bottom: 56.25%; padding-top: 25px; height: 0;"> <iframe src="http://deepstream.tv/featured/gordon/pandas-7DWjq6wL" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" id="featured-home-stream"></iframe></div>
+              </div>
+              <a href="http://deepstream.tv/watch/gordon/pandas-7DWjq6wL">
+                <div id="videoOverlay">
+                  <div class="activate-featured-hover">
+                    <p style="display:none;">Click to Explore!</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <!-- end deepstream peek -->
+        <ol>
+          {{#if showDeepstreams}}
+            <li>
+              <div class="deepstreams-container container">
+                <h2>DEEPSTREAMS</h2>
+                <h3>Deepstreams are livestreams that people have enhanced with great content like images, tweets, and news stories.</h3>
+                {{> deepstreams}}
+              </div>
+            </li>
+          {{/if}}
+          <!--END OF FEATURED DEEPSTREAM-->
+          {{#if showLivestreams}}
+            <li>
+              <div class="streams-container container">
+                <h2>LIVESTREAMS</h2>
+                {{#if loadingStreamResults}}
+                  Loading...
+                {{/if}}
+                {{#if noMoreStreamResults}}
+                  {{noMoreStreamResults}}
+                {{/if}}
+                {{> streams}}
+              </div>
+            </li>
+          {{/if}}
+        </ol>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="logo_title">
+  <div class="logo-title">
+    <div class="home-icons">
+      <ol>
+        <li class="home-icon-li">
+          {{#if embedMode}}
+            <button class="deepstream-logo-embed">
+              <span class="icon">
+                {{> square_logo}}
+              </span>
+            </button>
+          {{else}}
+            <a href="/" class="svg">
+              <span class="icon">{{> square_logo}}</span>
+            </a>
+          {{/if}}
+        </li>
+      </ol>
+    </div>
+  </div>
+</template>
+
+<template name="logo_only">
+  <div class="logo-only">
+    {{#if embedMode}}
+      <button class="deepstream-logo-embed">
+        <div class="title">
+          <div class="name">  <img src="http://res.cloudinary.com/deepstream/image/upload/v1/static/logo_transparent.png" /></div>
+        </div>
+      </button>
+    {{else}}
+      <a href="/">
+        <div class="title">
+          <div class="name">  <img src="http://res.cloudinary.com/deepstream/image/upload/v1/static/logo_transparent.png" /></div>
+        </div>
+      </a>
+    {{/if}}
+  </div>
+</template>
+
+<template name="deepstreams">
+  {{#each streams}}
+    {{> deepstream_preview deepstream=this}}
+  {{else}}
+    {{#if subsReady}}
+      <div class="no-results">No results found.</div>
+
+    {{/if}}
+  {{/each}}
+</template>
+
+<template name="streams">
+  {{#each streams}}
+    {{> stream_preview }}
+  {{/each}}
+</template>
+
+<template name="my_streams">
+  <h1>Your Deep Streams</h1>
+  {{#each streams}}
+      {{> deepstream_preview linkToCurate=true deepstream=this showDeleteButton=true }}
+  {{/each}}
+</template>
+
+<template name="deepstream_preview">
+<div class="deepstream-preview">
+
+  {{#with deepstream}}
+    <div class="deepstream">
+      <div class="image-and-content">
+        <a href="{{linkPath}}">
+          <div class="stream-image">
+            <img src="{{previewUrl}}"/>
+            {{> play_video_icon}}
+          </div>
+          {{#if live}}
+            <div class="live-indicator">LIVE</div>
+          {{/if}}
+        </a>
+        <div class="content">
+          {{#each contentPreviews}}
+            {{> homepage_content_preview}}
+          {{/each}}
+        </div>
+      </div>
+      <a href="{{linkPath}}">
+        <div class="title-and-views">
+          <span class="title">{{title}}</span>
+          <span class="views">{{formatNumber viewCount}} Views</span>
+        </div>
+        <div class="small-stream-info">
+          <div>
+            <span class="stream-count">Tracking {{streams.length}} streamers</span>
+            <span class="favorited">{{formatNumber favoritedTotal}} {{> favorite_icon}}</span>
+          </div>
+          <div>
+            <span class="date">Updated {{dateInPast savedAt}}</span>
+            <span class="curator-name">{{curatorName}}</span>
+          </div>
+
+        </div>
+      </a>
+      {{#if showEditorsPickButton}}
+        {{> editors_pick_button}}
+      {{/if}}
+    </div>
+  {{/with}}
+
+  {{#if showDeleteButton}}
+    {{#with deepstream}}
+      <button class="delete-deepstream">{{> close_circle}}</button>
+    {{/with}}
+  {{/if}}
+</div>
+
+</template>
+
+<template name="homepage_content_preview">
+  <div class="homepage-content-preview">
+    {{> Template.dynamic template=homepagePreviewTemplate}}
+  </div>
+</template>
+
+
+<template name="stream_preview">
+  <div class="stream-preview">
+    <button class="show-preview-overlay">
+      <div class="stream">
+        <div class="provider-source">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}</div>
+        <div class="stream-image">
+          <img src="{{thumbnailUrl}}"/>
+          {{> play_video_icon}}
+        </div>
+        <div class="stream-info">
+          <div class="title">{{title}}</div>
+          <div class="small-stream-info">
+            <div class="username">{{username}}</div>
+            {{#if showViews}}
+              <div class="views">{{formatNumber totalViews}} Views</div>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </button>
+    {{#if showPreviewOverlay}}
+      <div class="stream-preview-screen-overlay" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
+        <button class="close">{{> close_circle}}</button>
+        <div class="preview-box">
+          <div class="text-prompt">Click CREATE and add some content to start DeepStreaming this livestream</div>
+          <div class="main-stream">
+            <div class="main-stream-container">
+              <iframe id="{{mainStreamElementId}}" class="main-stream-iframe" src="{{autoplayUrl}}" frameborder="0"
+                      allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="right-section">
+            <div class="text">Add great content like news stories, pictures, tweets and more to this livestream</div>
+            {{> create_deepstream}}
+            <div class="text">After you add content you'll have the option to publish your page and start DeepStreaming</div>
+          </div>
+          <div class="video-info">
+            <div class="title">{{title}}</div>
+            <div class="description">{{description}}</div>
+            <div class="username">{{username}}</div>
+            <div class="date">{{createdAtString}}</div>
+          </div>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+</template>
+
+
+<template name="create_deepstream">
+  <button class="create-deepstream">
+    <span class="text">Create</span>
+  </button>
+</template>
