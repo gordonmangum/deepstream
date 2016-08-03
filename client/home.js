@@ -349,12 +349,12 @@ Template.home.events({
 });
 
 Template.deepstreams.helpers({
-  streams () {
+  deepstreamsToDisplay () {
     if (FlowRouter.subsReady()) {
       var selector = {onAir: true};
       var sort = {}; //{ live: -1 }; this is penalising newly created youtube streams that are not live
       switch (Session.get('homeStreamListMode')) {
-        case 'best':
+        case 'most_recent':
           _.extend(selector, {
             editorsPick: true
           });
@@ -362,7 +362,7 @@ Template.deepstreams.helpers({
             editorsPickAt: -1
           });
           break;
-        case 'most_recent':
+        case 'best':
           _.extend(sort, {
             savedAt: -1
           });
@@ -379,6 +379,12 @@ Template.deepstreams.helpers({
           });
           break;
       }
+      console.info(selector);
+      console.info(Deepstreams.find(selector, {
+        sort: sort
+      }, {
+        reactive: false
+      }).fetch());
       return Deepstreams.find(selector, {
         sort: sort
       }, {
@@ -393,7 +399,6 @@ Template.deepstreams.helpers({
 
 Template.deepstream_preview.onCreated(function(){
   this.subscribe('deepstreamPreviewContext', this.data.deepstream.shortId);
-
 });
 
 Template.deepstream_preview.helpers({

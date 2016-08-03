@@ -359,17 +359,6 @@
   </div>
 </template>
 
-<template name="deepstreams">
-  {{#each streams}}
-    {{> deepstream_preview deepstream=this}}
-  {{else}}
-    {{#if subsReady}}
-      <div class="no-results">No results found.</div>
-
-    {{/if}}
-  {{/each}}
-</template>
-
 <template name="streams">
   {{#each streams}}
     {{> stream_preview }}
@@ -381,59 +370,6 @@
   {{#each streams}}
       {{> deepstream_preview linkToCurate=true deepstream=this showDeleteButton=true }}
   {{/each}}
-</template>
-
-<template name="deepstream_preview">
-<div class="deepstream-preview">
-
-  {{#with deepstream}}
-    <div class="deepstream">
-      <div class="image-and-content">
-        <a href="{{linkPath}}">
-          <div class="stream-image">
-            <img src="{{previewUrl}}"/>
-            {{> play_video_icon}}
-          </div>
-          {{#if live}}
-            <div class="live-indicator">LIVE</div>
-          {{/if}}
-        </a>
-        <div class="content">
-          {{#each contentPreviews}}
-            {{> homepage_content_preview}}
-          {{/each}}
-        </div>
-      </div>
-      <a href="{{linkPath}}">
-        <div class="title-and-views">
-          <span class="title">{{title}}</span>
-          <span class="views">{{formatNumber viewCount}} Views</span>
-        </div>
-        <div class="small-stream-info">
-          <div>
-            <span class="stream-count">Tracking {{streams.length}} streamers</span>
-            <span class="favorited">{{formatNumber favoritedTotal}} {{> favorite_icon}}</span>
-          </div>
-          <div>
-            <span class="date">Updated {{dateInPast savedAt}}</span>
-            <span class="curator-name">{{curatorName}}</span>
-          </div>
-
-        </div>
-      </a>
-      {{#if showEditorsPickButton}}
-        {{> editors_pick_button}}
-      {{/if}}
-    </div>
-  {{/with}}
-
-  {{#if showDeleteButton}}
-    {{#with deepstream}}
-      <button class="delete-deepstream">{{> close_circle}}</button>
-    {{/with}}
-  {{/if}}
-</div>
-
 </template>
 
 <template name="homepage_content_preview">
