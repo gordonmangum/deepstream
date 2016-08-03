@@ -354,7 +354,7 @@ Template.deepstreams.helpers({
       var selector = {onAir: true};
       var sort = {}; //{ live: -1 }; this is penalising newly created youtube streams that are not live
       switch (Session.get('homeStreamListMode')) {
-        case 'most_recent':
+        case 'best':
           _.extend(selector, {
             editorsPick: true
           });
@@ -362,7 +362,7 @@ Template.deepstreams.helpers({
             editorsPickAt: -1
           });
           break;
-        case 'best':
+        case 'most_recent':
           _.extend(sort, {
             savedAt: -1
           });

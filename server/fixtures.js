@@ -47,6 +47,7 @@ if (Deepstreams.find().count() === 0) {
     live: true,
     onAir: true,
     directorMode: false,
+    editorsPick: true,
     createdAt: ISODate("2015-09-17T15:50:56.352Z"),
 
     streams: [
@@ -175,6 +176,7 @@ if (Deepstreams.find().count() === 0) {
     live: true,
     onAir: true,
     directorMode: false,
+    editorsPick: true,
     createdAt: ISODate("2015-09-17T16:15:53.119Z"),
 
     streams: [
