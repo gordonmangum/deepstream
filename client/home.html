@@ -1,6 +1,6 @@
 <template name="header_section">
   <!-- Logo -->
-  <h1><a href="index.html">DeepStream</a></h1>
+  <h1><a href="/">DeepStream</a></h1>
 
   <!-- Nav -->
   <nav id="nav">
@@ -11,8 +11,8 @@
       <li>
         <a href="#">How To</a>
         <ul>
-          <li><a href="#"></a>Documentation</li>
-          <li><a href="#"></a>FAQ</li>
+          <li><a href="/docs"></a>Documentation</li>
+          <li><a href="/faq"></a>FAQ</li>
           <!--<li>-->
             <!--<a href="#">Phasellus consequat</a>-->
             <!--<ul>-->
@@ -26,7 +26,7 @@
           <!--<li><a href="#">Veroeros feugiat</a></li>-->
         </ul>
       </li>
-      <li><a href="no-sidebar.html">Contact Us</a></li>
+      <li><a href="/contact">Contact Us</a></li>
     </ul>
   </nav>
 </template>
@@ -245,7 +245,7 @@
 </template>
 
 <template name="deepstreams">
-  {{#each deepstreamsToDisplay}}
+  {{#each deepstreamsToDisplay type}}
     {{> deepstream_preview deepstream=this}}
   {{else}}
     {{#if subsReady}}
@@ -287,7 +287,7 @@
                     <header>
                       <h2>Boost Engagement Metrics</h2>
                     </header>
-                    <p>Viewers watch DeepStreams 100% longer than normal videos & click 20% more often</p>
+                    <p>Viewers watch DeepStreams 100% longer than normal videos &amp; click 20% more often</p>
                   </section>
                 </div>
                 <div class="4u 12u(mobile)">
@@ -330,10 +330,23 @@
               <!-- Deepstreams -->
                 <section>
                   <header class="major">
-                    <h2>Deepstreams</h2>
+                    <h2>Top Picks</h2>
                   </header>
                   <div class="row">
-                    {{> deepstreams}}
+                    {{> deepstreams type="best"}}
+                  </div>
+                </section>
+            </div>
+          </div>
+          <div class="row">
+            <div class="12u">
+              <!-- Deepstreams -->
+                <section>
+                  <header class="major">
+                    <h2>Most Recent</h2>
+                  </header>
+                  <div class="row">
+                    {{> deepstreams type="most_recent"}}
                   </div>
                 </section>
             </div>
