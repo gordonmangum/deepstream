@@ -1,3 +1,38 @@
+<template name="header_section">
+  <!-- Logo -->
+  <h1><a href="index.html">DeepStream</a></h1>
+
+  <!-- Nav -->
+  <nav id="nav">
+    <ul>
+      <li class="current"><a href="#">What's DeepStream?</a></li>
+      <li><a href="/team">Team</a></li>
+      <li><a href="/about">About</a></li>
+      <li>
+        <a href="#">How To</a>
+        <ul>
+          <li><a href="#"></a>Documentation</li>
+          <li><a href="#"></a>FAQ</li>
+          <!--<li>-->
+            <!--<a href="#">Phasellus consequat</a>-->
+            <!--<ul>-->
+              <!--<li><a href="#">Magna phasellus</a></li>-->
+              <!--<li><a href="#">Etiam dolore nisl</a></li>-->
+              <!--<li><a href="#">Veroeros feugiat</a></li>-->
+              <!--<li><a href="#">Nisl sed aliquam</a></li>-->
+              <!--<li><a href="#">Dolore adipiscing</a></li>-->
+            <!--</ul>-->
+          <!--</li>-->
+          <!--<li><a href="#">Veroeros feugiat</a></li>-->
+        </ul>
+      </li>
+
+      <li><a href="no-sidebar.html">Contact Us</a></li>
+
+    </ul>
+  </nav>
+</template>
+
 <template name="deepstream_preview">
     {{#with deepstream}}
       <div class="4u 12u(mobile)">
@@ -82,42 +117,8 @@
     <!-- Header -->
       <div id="header-wrapper">
         <div id="header">
-
-          <!-- Logo -->
-            <h1><a href="index.html">DeepStream</a></h1>
-
-          <!-- Nav -->
-            <nav id="nav">
-              <ul>
-                <li class="current"><a href="index.html">What's DeepStream?</a></li>
-                <li><a href="left-sidebar.html">Gallery</a>
-                  <!--<ul>-->
-                  <!--<li><a href="#">Who is DeepStream For?</a></li>-->
-                  <!--</ul>-->
-                </li>
-                <li>
-                  <a href="#">How To</a>
-                  <ul>
-                    <li><a href="#"></a>Documentation</li>
-                    <li><a href="#"></a>FAQ</li>
-                    <!--<li>-->
-                      <!--<a href="#">Phasellus consequat</a>-->
-                      <!--<ul>-->
-                        <!--<li><a href="#">Magna phasellus</a></li>-->
-                        <!--<li><a href="#">Etiam dolore nisl</a></li>-->
-                        <!--<li><a href="#">Veroeros feugiat</a></li>-->
-                        <!--<li><a href="#">Nisl sed aliquam</a></li>-->
-                        <!--<li><a href="#">Dolore adipiscing</a></li>-->
-                      <!--</ul>-->
-                    <!--</li>-->
-                    <!--<li><a href="#">Veroeros feugiat</a></li>-->
-                  </ul>
-                </li>
-
-                <li><a href="no-sidebar.html">Contact Us</a></li>
-
-              </ul>
-            </nav>
+          {{> header_section}}
+          
 
           <!-- Banner -->
             <section id="banner">
@@ -165,7 +166,7 @@
               </div>
               <footer>
                 <ul class="actions">
-                  <li><a href="#" class="button big">Get Started</a></li>
+                  <!--<li><a href="#" class="button big">Get Started</a></li> -->
                   <li><a href="/about" class="button alt big">Learn More</a></li>
                 </ul>
               </footer>
@@ -210,11 +211,12 @@
                         <footer>
                           <ul class="actions">
                             <li><a href="#" class="button icon fa-file-text">Continue Reading</a></li>
-                            <li><a href="#" class="button alt icon fa-comment">33 comments</a></li>
+                            <!--<li><a href="#" class="button alt icon fa-comment">33 comments</a></li>-->
                           </ul>
                         </footer>
                       </section>
                     </div>
+                    <!--
                     <div class="6u 12u(mobile)">
                       <section class="box">
                         <a href="#" class="image featured"><img src="homepage/images/pic09.jpg" alt="" /></a>
@@ -231,6 +233,7 @@
                         </footer>
                       </section>
                     </div>
+                    -->
                   </div>
                 </section>
 
