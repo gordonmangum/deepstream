@@ -125,7 +125,7 @@ Meteor.methods({
     
     modifierObject['$set'] = {};
     
-    //console.log(stream);
+    console.log(stream);
     // set replay 
     if(numberOfStreamsBeforeAdd > 0){
       _.extend(modifierObject['$set'], {
@@ -134,7 +134,7 @@ Meteor.methods({
       if(Meteor.isClient){
         Session.set('replayContext', false);
       }
-    } else if (numberOfStreamsBeforeAdd === 0 && !stream.live) {
+    } else if (numberOfStreamsBeforeAdd === 0 && !stream.live && stream.source === 'youtube') {
       _.extend(modifierObject['$set'], {
         replayEnabled : true
       });
