@@ -268,18 +268,24 @@
           {{> header_section}}
           
           <!-- Banner -->
-            <section id="banner">
-              <video width="854" height="480" controls>
-                <source src="homepage/images/Mobile_DS.mp4" type="video/mp4">
-              </video>
-              <header>
-                <h2>Turn Your Viewers into Your Fans</h2>
-                <p>Let DeepStream get you there easily and quickly</p>
-              </header>
-            </section>
+          <section id="banner">
+            <h2>Turn Your Viewers into Your Fans. Let DeepStream get you there easily and quickly.</h2>
+            <video width="854" height="480" autoplay muted>
+              <source src="homepage/images/Mobile_DS.mp4" type="video/mp4">
+            </video>
+          </section>
 
           <!-- Intro -->
             <section id="intro" class="container">
+
+              <div id="description-wrapper">
+                <section class="box">
+                  <p>DeepStream takes your video, live or on-demand, and gives you an easy way to add multimedia cards that provide your viewers with more informative content in just the right context. Your viewers can read, expand, and share these cards all without leaving the video experience. </p>
+                  <br />
+                  <p>By providing the option to engage further with your content and even be a contributor, DeepStream turns your passive viewers into active fan communities who will stay longer and come back for more.</p>
+                </section>
+              </div>
+
               <div class="row">
                 <div class="4u 12u(mobile)">
                   <section class="first">
@@ -313,7 +319,9 @@
               </div>
               <footer>
                 <ul class="actions">
-                  <!--<li><a href="#" class="button big">Get Started</a></li> -->
+                  <!--Get started == should it be an 'email us' type of a button?-->
+                  <li><a href="/contact" class="button big">Get Started</a></li>
+
                   <li><a href="/about" class="button alt big">Learn More</a></li>
                 </ul>
               </footer>
@@ -410,4 +418,7 @@
 			<script src="homepage/js/util.js"></script>
 			<script src="homepage/js/main.js"></script>
   </div>
+</template>
+<template name="gallery">
+
 </template>
