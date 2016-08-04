@@ -1704,8 +1704,7 @@ ol.default li {
   height: auto;
   /*text-align:left;*/
   padding: 0em;
-  margin:0em 1em;
-  top:0px;
+  margin:2em 1em;
 
 }
 
