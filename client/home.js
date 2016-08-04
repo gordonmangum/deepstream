@@ -380,8 +380,8 @@ Template.deepstreams.helpers({
           break;
       }
       return Deepstreams.find(selector, {
-        sort: sort
-      }, {
+        sort: sort,
+        limit: 6,
         reactive: false
       });
     }
@@ -396,14 +396,17 @@ Template.deepstream_preview.onCreated(function(){
 });
 
 Template.deepstream_preview.helpers({
+  contentPreviews (){
+    return this.topContextsOfTypes(HOMEPAGE_PREVIEW_CONTEXT_TYPES, 2);
+  },
+  description () {
+    return this.description || 'Description not currently provided.;
+  },
   title () {
     return this.title || '(untitled)';
   },
   linkPath () {
     return Template.instance().data.linkToCurate ? this.curatePath() : this.watchPath();
-  },
-  contentPreviews (){
-    return this.topContextsOfTypes(HOMEPAGE_PREVIEW_CONTEXT_TYPES, 2);
   }
 });
 
