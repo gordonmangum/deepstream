@@ -218,6 +218,7 @@ Template.watch_page.onCreated(function () {
 
       setTitle(stream.title);
       setMetaDescription(stream.description);
+      setMetaImage(stream.previewUrl());
       setStatusCode();
 
       if (that.data.onCuratePage()){
