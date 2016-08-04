@@ -504,12 +504,51 @@ Stream = (function (_super) {
       case 'ustream':
         // TO-DO - if contains /images/defaults, show something nice instead of blank ustream thing
         return this.reference.previewUrl;
+      case 'meerkat':
+        return 'http://res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/v1468868234/placeholder_mkmovie_qbnfsn.png';
+      case 'twitcast':
+        return 'http://res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/v1468944027/placeholder_tcmovie_qbnfsn_dlqiki.png';
       case 'bambuser':
         return this.reference.previewUrl;
       case 'twitch':
         return "http://static-cdn.jtvnw.net/previews-ttv/live_user_" + this.reference.channelName + "-320x180.jpg";
       case 'ml30':
         return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/static/MIT_ML_Logo_white';
+      default:
+        var cloudinaryLink = 'http://res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/';
+        if(this.fullDetails){
+          switch (this.fullDetails.host) {
+            case 'player.vimeo.com':
+              return cloudinaryLink + 'v1468856998/placeholder_vimeomovie_jrmlx7.png';
+            case 'ustream.tv':
+              return cloudinaryLink + 'v1468856997/placeholder_usmovie_gwkpvr.png';
+            case 'www.ustream.tv':
+              return cloudinaryLink + 'v1468856997/placeholder_usmovie_gwkpvr.png';
+            case 'periscope.tv':
+              return cloudinaryLink + 'v1468856998/placeholder_psmovie_ruc7y3.png';
+            case 'www.periscope.tv':
+              return cloudinaryLink + 'v1468856998/placeholder_psmovie_ruc7y3.png';
+            case 'soundcloud.com':
+              return cloudinaryLink + 'v1468856998/placeholder_scmovie_lkmct0.png';
+            case 'w.soundcloud.com':
+              return cloudinaryLink + 'v1468856998/placeholder_scmovie_lkmct0.png';
+            case 'facebook.com':
+              return cloudinaryLink + 'v1468856998/placeholder_fbmovie_lgtesc.png';
+            case 'www.facebook.com':
+              return cloudinaryLink + 'v1468856998/placeholder_fbmovie_lgtesc.png';
+            case 'tunein.com':
+              return cloudinaryLink + 'v1468856998/placeholder_timovie_rphufn.png';
+            case 'www.tunein.com':
+              return cloudinaryLink + 'v1468856998/placeholder_timovie_rphufn.png';
+            case 'livestream.com':
+              return cloudinaryLink + 'v1469465261/placeholder_lsmovie_tayglj.png';
+            case 'www.livestream.com':
+              return cloudinaryLink + 'v1469465261/placeholder_lsmovie_tayglj.png';
+            default:
+              return cloudinaryLink + 'v1466257562/placeholder_movie_rad2ai.png';
+          }
+        }
+        return cloudinaryLink + 'v1466257562/placeholder_movie_rad2ai.png';
     }
   };
   Stream.prototype.thumbnailUrl = function () {
