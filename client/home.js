@@ -400,7 +400,7 @@ Template.deepstream_preview.helpers({
     return this.topContextsOfTypes(HOMEPAGE_PREVIEW_CONTEXT_TYPES, 2);
   },
   description () {
-    return this.description || 'Description not currently provided.;
+    return this.description || 'Description not currently provided';
   },
   title () {
     return this.title || '(untitled)';
