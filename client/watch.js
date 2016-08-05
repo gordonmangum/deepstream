@@ -215,7 +215,7 @@ Template.watch_page.onCreated(function () {
         setStatusCode(404);
         return BlazeLayout.render("stream_not_found");
       }
-
+      setMetaImage(stream.previewUrl());
       setTitle(stream.title);
       setMetaDescription(stream.description);
       setMetaImage(stream.previewUrl());
