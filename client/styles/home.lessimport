@@ -1624,7 +1624,6 @@ ol.default li {
   /*border-top-left-radius: 5px;*/
   /*border-top-right-radius: 5px;*/
   margin: 0 0 4.5em 0;
-  cursor: default;
   position: relative;
   display: inline-block;
   background-color:#252122;
