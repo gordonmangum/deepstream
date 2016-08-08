@@ -804,6 +804,7 @@ Template.watch_page.events({
     analytics.track('Curator clicked edit deepstream', trackingInfoFromPage());
   },
   'click .suggest-content' (){
+    analytics.track('Clicked suggest context button', trackingInfoFromPage());
     Session.set('mediaDataType', Session.get('previousMediaDataType') || 'image');
   },
   'click .got-it-context' (){
