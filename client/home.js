@@ -496,3 +496,253 @@ Template.my_streams.events({
     }
   }
 });
+
+
+Template.chart_home_banner.onRendered(function(){
+  /* New Chart */
+  var width = 1200;
+  var height = 350;
+  var randomLength = function(len){
+    return Math.floor(Math.random() * len) + 1;
+  }
+  var data = {
+   nodes: [{
+     name: "A",
+     x: randomLength(width),
+     y: randomLength(height)
+   }, {
+     name: "B",
+     x: randomLength(width),
+     y: randomLength(height)
+   }, {
+     name: "C",
+     x: randomLength(width),
+     y: randomLength(height)
+   }, {
+     name: "D",
+     x: randomLength(width),
+     y: randomLength(height)
+   },
+   {
+     name: "A",
+     x: randomLength(width),
+     y: randomLength(height)
+   }, {
+     name: "B",
+     x: randomLength(width),
+     y: randomLength(height)
+   }, {
+     name: "C",
+     x: randomLength(width),
+     y: randomLength(height)
+   }, {
+     name: "D",
+     x: randomLength(width),
+     y: randomLength(height)
+   },
+  {
+     name: "A",
+     x: randomLength(width),
+     y: randomLength(height)
+   }, {
+     name: "B",
+     x: randomLength(width),
+     y: randomLength(height)
+   }, {
+     name: "C",
+     x: randomLength(width),
+     y: randomLength(height)
+   }, {
+     name: "D",
+     x: randomLength(width),
+     y: randomLength(height)
+   }],
+   links: [{
+     source: 0,
+     target: 1
+   }, {
+     source: 1,
+     target: 2
+   }, {
+     source: 2,
+     target: 3
+   }, ]
+ };
+
+ var c10 = d3.scale.category10();
+ var svg = d3.select("#banner")
+   .append("svg")
+   .attr("width", 1200)
+   .attr("height", 350);
+
+ var drag = d3.behavior.drag()
+   .on("drag", function(d, i) {
+     d.x += d3.event.dx
+     d.y += d3.event.dy
+     d3.select(this).attr("cx", d.x).attr("cy", d.y);
+     links.each(function(l, li) {
+       if (l.source == i) {
+         d3.select(this).attr("x1", d.x).attr("y1", d.y);
+       } else if (l.target == i) {
+         d3.select(this).attr("x2", d.x).attr("y2", d.y);
+       }
+     });
+   });
+
+ var links = svg.selectAll("link")
+   .data(data.links)
+   .enter()
+   .append("line")
+   .attr("class", "link")
+   .attr("x1", function(l) {
+     var sourceNode = data.nodes.filter(function(d, i) {
+       return i == l.source
+     })[0];
+     d3.select(this).attr("y1", sourceNode.y);
+     return sourceNode.x
+   })
+   .attr("x2", function(l) {
+     var targetNode = data.nodes.filter(function(d, i) {
+       return i == l.target
+     })[0];
+     d3.select(this).attr("y2", targetNode.y);
+     return targetNode.x
+   })
+   .attr("fill", "none")
+   .attr("stroke", "white");
+
+ var nodes = svg.selectAll("node")
+   .data(data.nodes)
+   .enter()
+   .append("circle")
+   .attr("class", "node")
+   .attr("cx", function(d) {
+     return d.x
+   })
+   .attr("cy", function(d) {
+     return d.y
+   })
+   .attr("r", 15)
+   .attr("fill", function(d, i) {
+     return c10(i);
+   })
+   .call(drag);
+  
+  /* new chart end */
+  /*
+  //Width and height
+  var w = 200;
+  var h = 200;
+  var outerRadius = w / 2;
+  var innerRadius = 0;
+  var arc = d3.svg.arc()
+    .innerRadius(innerRadius)
+    .outerRadius(outerRadius);
+  var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d)
+    {
+      return d.value;
+    });
+  //Easy colors accessible via a 10-step ordinal scale
+  var color = d3.scale.category10();
+  
+  //access to contextId
+  var contextId = this.data._id;
+  
+  //Create SVG element add the context block id to it -----------------------------------------
+  var svg = d3.select("#pieChart-" + this.data._id)
+    .attr("width", w)
+    .attr("height", h);
+  var key = function(d)
+  {
+    return d.data.name; //._id;
+  };
+  Tracker.autorun(function(){
+    if(contextId){
+      var modifier = {
+        fields:
+        {
+          value: 1
+        }
+      };
+      var query = {};
+      query._id = contextId;
+      var dataset = ContextBlocks.find(query, {data: 1}).fetch()[0];
+      if(dataset){
+        dataset = dataset.data; 
+        var totalVotes = 0;
+        dataset.forEach(function(value, index, array){
+          totalVotes += value.value; 
+        });
+        var arcs = svg.selectAll("g.arc")
+          .data(pie(dataset), key);
+        var newGroups = arcs.enter()
+          .append("g")
+          .attr("class", "arc")
+          .attr("transform", "translate(" + outerRadius + "," + outerRadius +
+            ")");
+        //Draw arc paths
+        newGroups.append("path")
+          .attr("fill", function(d, i)
+          {
+            return color(i);
+          })
+          .attr("d", arc);
+        //Labels
+        newGroups.append("text")
+          .attr("transform", function(d)
+          {
+            return "translate(" + arc.centroid(d) + ")";
+          })
+          .attr("text-anchor", "middle")
+          .text(function(d)
+          {
+            if(totalVotes < 1){
+              //don't annotate small values
+              return '0%';
+            }
+            var percentage = Math.round((d.value/totalVotes)*100);
+            if(percentage<10){
+              //don't annotate small values
+              return '';
+            }
+            return percentage + '%';
+          });
+        arcs.transition()
+          .select('path')
+          .attrTween("d", function(d)
+          {
+            this._current = this._current || d;
+            var interpolate = d3.interpolate(this._current, d);
+            this._current = interpolate(0);
+            return function(t)
+            {
+              return arc(interpolate(t));
+            };
+          });
+        arcs.transition()
+          .select('text')
+          .attr("transform", function(d)
+          {
+            return "translate(" + arc.centroid(d) + ")";
+          })
+          .text(function(d)
+          {
+            if(totalVotes < 1){
+              return '0%';
+            }
+            var percentage = Math.round((d.value/totalVotes)*100);
+            if(percentage<10){
+              //don't annotate small values
+              return '';
+            }
+            return percentage + '%';
+          });
+        arcs.exit()
+          .remove();
+      }
+    }
+  });
+  */
+});

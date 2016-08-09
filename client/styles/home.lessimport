@@ -1685,16 +1685,41 @@ ol.default li {
 
 /* Banner */
 
-#banner {
-  background-color: #FFF;
-  /*background: #FFF url("../../images/mobile_1.png");*/
-  /*background: #CCE8F4 url("../../images/pic01.jpg");*/
-  /*background-position: left center;*/
-  /*background-position: center center;*/
-  /*background-size: auto 80%;*/
-  /*background-repeat: no-repeat;*/
+.banner {
+  #banner-h1 {
+    color: #ffffff;
+  }
+  margin-top: 35px;
+  padding: 160px 20px;
+  background: linear-gradient(270deg, #2eff07, #790cff, #ff0735);
+  background-size: 400% 400%;
+
+  -webkit-animation: AnimationName 14s ease infinite;
+  -moz-animation: AnimationName 14s ease infinite;
+  -o-animation: AnimationName 14s ease infinite;
+  animation: AnimationName 14s ease infinite;
+
+  @-webkit-keyframes AnimationName {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+  }
+  @-moz-keyframes AnimationName {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+  }
+  @-o-keyframes AnimationName {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+  }
+  @keyframes AnimationName { 
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+  }
   text-align: center;
-  padding: 0em;
 }
 
 #banner video{

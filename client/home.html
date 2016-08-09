@@ -1,3 +1,9 @@
+<template name="chart_home_banner">
+  <div class="banner">
+    <h1 id="banner-h1">New Dimensions in Video Engagement</h1>
+  </div>
+</template>
+
 <template name="header_section">
   <!-- Logo -->
   <h1><a href="/">DeepStream</a></h1>
@@ -129,13 +135,7 @@
           {{> header_section}}
           
           <!-- Banner -->
-          <section id="banner">
-            <h2>New Dimensions in Video Engagement</h2>
-            <!--<h2>Turn Your Viewers into Your Fans. Let DeepStream get you there easily and quickly.</h2>-->
-            <video width="854" height="480" autoplay muted>
-              <source src="homepage/images/panda_demo.mp4" type="video/mp4">
-            </video>
-          </section>
+          {{> chart_home_banner}}
 
           <!-- Intro -->
             <section id="intro" class="container">
