@@ -604,14 +604,13 @@ div.logo-title {
     }
   }
 
-  ol.user-menu {
-    li {
-      float: none;
-      display: block;
-      margin:0;
-      border-top: 1px solid @light-text-color;
-    }
+  li.user-menu {
+    float: none;
+    display: block;
+    margin:0;
+    border-top: 1px solid @light-text-color;
   }
+  
 }
 
 

@@ -8,10 +8,14 @@
 */
 
 /* Reset */
-.homepage2016, .about2016, .team2016 {
+.homepage2016, .about2016, .team2016, .mystreams2016 {
   color: #5d5d5d;
   word-wrap: break-word;
-  
+  .delete-deepstream {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
   div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   margin: 0;
   padding: 0;
@@ -1981,6 +1985,16 @@ ol.default li {
   #footer-wrapper header h2 {
 	font-size: 1.75em;
   }
+  
+  .login-left, .login-right {
+    color: #fff;
+    form label{
+      color: #fff;
+    }
+    button {
+      padding: 0;
+    }
+  }
 
   /* Header */
 
@@ -1988,12 +2002,16 @@ ol.default li {
 	text-align: center;
   }
 
-  #header h1 {
+  #header h1:not(.login-header) {
 	color: #252122;
 	font-weight: 900;
 	font-size: 2.5em;
 	letter-spacing: -0.035em;
 	margin: 0 0 1em 0;
+  }
+  
+  #header h1.login-header {
+	color: #fff;
   }
 
   /* Nav */
@@ -2013,6 +2031,7 @@ ol.default li {
   }
 
   .nav > ul > li > a {
+  cursor: pointer;
 	border-radius: 0px;
 	/*border-radius: 5px;*/
 	color: #5d5d5d;
@@ -2237,6 +2256,11 @@ ol.default li {
   #header h1 {
 	margin: 0.25em 0 1em 0;
   }
+  
+  #header h1.login-header {
+    color: #fff;
+    line-height: 1;
+  }
 
   /* Banner */
 
@@ -2364,6 +2388,7 @@ ol.default li {
   }
 
   .nav > ul > li > a {
+  cursor: pointer;
 	border-radius: 0px;
 	/*border-radius: 5px;*/
 	color: #5d5d5d;
@@ -2627,7 +2652,7 @@ ol.default li {
 	text-align: center;
   }
 
-  #header h1 {
+  #header h1:not(.login-header) {
 	color: #252122;
 	font-weight: 900;
 	font-size: 1.75em;
@@ -2666,4 +2691,5 @@ ol.default li {
   }
 
 }
+  
 }

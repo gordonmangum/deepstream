@@ -22,6 +22,43 @@ loginWithTwitter = function () {
 loginWithEmail = function () {
   FlowRouter.go('login')
 };
+Template.login_buttons2016.helpers({
+  showUserInfo () {
+    return Template.instance().showUserInfo.get();
+  },
+  loggingOut () {
+    return Template.instance().loggingOut.get();
+  }
+});
+
+Template.login_buttons2016.onCreated(function () {
+  this.showUserInfo = new ReactiveVar(false);
+  this.loggingOut = new ReactiveVar(false);
+});
+
+Template.login_buttons2016.events({
+  "mouseenter .user-action" (d) {
+    Template.instance().showUserInfo.set(true);
+  },
+  "mouseleave .user-action" (d) {
+    Template.instance().showUserInfo.set(false);
+  },
+  "click .signin" (d) {
+    Session.set('signingIn', true);
+    analytics.track('Click login signup button', trackingInfoFromPage());
+  },
+  "click .logout" (e, t) {
+    e.preventDefault();
+    t.showUserInfo.set(false);
+    t.loggingOut.set(true);
+    Meteor.logout(() => {
+      if(window.mainPlayer){
+        window.resetMainPlayer();
+      }
+      t.loggingOut.set(false)
+    });
+  }
+});
 
 Template.login_buttons.helpers({
   showUserInfo () {
@@ -480,13 +517,16 @@ Template.stream_preview.helpers({
 Template.my_streams.helpers({
   streams () {
     if (FlowRouter.subsReady()) {
-      return Deepstreams.find({curatorIds: Meteor.user()._id});
+      var deepstreams = Deepstreams.find({curatorIds: Meteor.user()._id}).fetch();
+      deepstreams.forEach(function(val, index, arr){ arr[index] = _.extend(arr[index], {showDeleteButton: true})});
+      return deepstreams;
     }
   }
 });
 
 Template.my_streams.events({
-  'click .delete-deepstream': function(){
+  'click .delete-deepstream': function(event){
+    event.preventDefault();
     if (confirm('Are you sure you want to delete this deepstream? This cannot be undone.')){
       Meteor.call('deleteDeepstream', this.shortId, function(err, result) {
         if(err || !result){
