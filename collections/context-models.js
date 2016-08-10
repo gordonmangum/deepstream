@@ -597,6 +597,10 @@ Stream = (function (_super) {
               return cloudinaryLink + 'v1469465261/placeholder_lsmovie_tayglj.png';
             case 'www.livestream.com':
               return cloudinaryLink + 'v1469465261/placeholder_lsmovie_tayglj.png';
+            case 'vine.co':
+              return cloudinaryLink + 'v1470795484/placeholder_vnmovie_oerxhe.png';
+            case 'www.vine.co':
+              return cloudinaryLink + 'v1470795484/placeholder_vnmovie_oerxhe.png';
             default:
               return cloudinaryLink + 'v1466257562/placeholder_movie_rad2ai.png';
           }

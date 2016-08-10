@@ -34,3 +34,4 @@ Supported providers currently:
 - Vimeo (embed code)
 - Meerkat (username)
 - Twitcast (username)
+- Vine (embed code)
