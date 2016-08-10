@@ -515,9 +515,14 @@ Template.stream_preview.helpers({
 });
 
 Template.my_streams.helpers({
-  streams () {
+  streams (published) {
     if (FlowRouter.subsReady()) {
-      var deepstreams = Deepstreams.find({curatorIds: Meteor.user()._id}).fetch();
+      if(published) {
+        var deepstreams = Deepstreams.find({curatorIds: Meteor.user()._id, onAir: true}).fetch();
+      } else {
+        var deepstreams = Deepstreams.find({curatorIds: Meteor.user()._id, onAir: false}).fetch();
+      }
+      
       deepstreams.forEach(function(val, index, arr){ arr[index] = _.extend(arr[index], {showDeleteButton: true})});
       return deepstreams;
     }

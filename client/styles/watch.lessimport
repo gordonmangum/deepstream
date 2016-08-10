@@ -1668,10 +1668,11 @@ a.svg:after {
     ol{
       //float:right;
     }
-    ol.user-menu {
+    div.user-menu {
+      height: 100%;
       li {
         border-top: none;
-        padding-top: 1px;
+        padding-top: 3px;
         background-color: transparent;
       }
     }
