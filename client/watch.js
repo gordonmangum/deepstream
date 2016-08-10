@@ -895,6 +895,12 @@ Template.watch_page.events({
   'mouseenter .settings-menu-button' (e, template){
     template.settingsMenuOpen.set(true);
   },
+  'mouseleave .settings-menu-button' (e, template){
+    template.settingsMenuOpen.set(false);
+  },
+  'mouseenter .settings-menu' (e, template){
+    template.settingsMenuOpen.set(true);
+  },
   'mouseleave .settings-menu' (e, template){
     template.settingsMenuOpen.set(false);
   },
