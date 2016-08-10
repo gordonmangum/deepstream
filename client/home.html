@@ -8,6 +8,9 @@
     {{else}}
       {{#if currentUser}}
         <li>
+          {{> create_deepstream2016}}
+        </li>
+        <li>
           <a href="/my_streams">My streams</a>
         </li>
         <li>
@@ -53,6 +56,12 @@
       {{/if}}
     {{/if}}
   </li>
+</template>
+
+<template name="create_deepstream2016">
+  <a>
+    Create
+  </a>
 </template>
 
 <template name="signin_overlay">
@@ -193,12 +202,13 @@
 <template name="deepstream_preview">
     {{#with deepstream}}
       <div class="4u 12u(mobile)">
-        <section class="box">
+        <section class="box deepstream-preview-box">
           <a href="{{linkPath}}" class="image featured">
           {{#if showDeleteButton}}
             <button class="delete-deepstream">X</button>
           {{/if}}
-            <img src="{{previewUrl}}" alt="" /></a>
+            <div class="imgWrapper" style="background-image: url({{previewUrl}});background-repeat:no-repeat;background-position: center center;background-size:cover"></div>
+          </a>
           <header>
             <h3>{{title}}</h3>
           </header>
@@ -272,14 +282,14 @@
                     <header>
                       <h2>Reinforce Your Brand</h2>
                     </header>
-                    <p>Give your viewers the full experience of your content offering in a platform they see as novel, forward, and explorative.</p>
+                    <p>Give your viewers the full experience of your content offering in a platform they see as novel, forward, and explorative</p>
                   </section>
                 </div>
               </div>
               <footer>
                 <ul class="actions">
-                  <!--Get started == should it be an 'email us' type of a button?-->
-                  <li><a href="/contact" class="button big">Get Started</a></li>
+                  <!--Get started 
+                  <li><a href="/contact" class="button big">Get Started</a></li>-->
 
                   <li><a href="/about" class="button alt big">Learn More</a></li>
                 </ul>

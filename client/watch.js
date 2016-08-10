@@ -902,7 +902,8 @@ Template.watch_page.events({
     notifyFeature('Live audio broadcast: coming soon!');
   },
   'click .webcam' (e, t){
-    Session.set('mediaDataType', 'webcam');
+    window.notifyInfo('Webcam narration feature coming soon!');
+    //Session.set('mediaDataType', 'webcam');
   },
   'click .end-curator-webcam-stream' (e, t){
     Meteor.call('stopCuratorWebcam', t.data.shortId(), basicErrorHandler);

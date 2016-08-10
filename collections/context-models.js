@@ -544,6 +544,10 @@ Stream = (function (_super) {
               return cloudinaryLink + 'v1469465261/placeholder_lsmovie_tayglj.png';
             case 'www.livestream.com':
               return cloudinaryLink + 'v1469465261/placeholder_lsmovie_tayglj.png';
+            case 'vine.co':
+              return cloudinaryLink + 'v1470843170/placeholder_vn2movie_h7qqi7.png';
+            case 'www.vine.co':
+              return cloudinaryLink + 'v1470843170/placeholder_vn2movie_h7qqi7.png';
             default:
               return cloudinaryLink + 'v1466257562/placeholder_movie_rad2ai.png';
           }
@@ -598,9 +602,9 @@ Stream = (function (_super) {
             case 'www.livestream.com':
               return cloudinaryLink + 'v1469465261/placeholder_lsmovie_tayglj.png';
             case 'vine.co':
-              return cloudinaryLink + 'v1470795484/placeholder_vnmovie_oerxhe.png';
+              return cloudinaryLink + 'v1470843170/placeholder_vn2movie_h7qqi7.png';
             case 'www.vine.co':
-              return cloudinaryLink + 'v1470795484/placeholder_vnmovie_oerxhe.png';
+              return cloudinaryLink + 'v1470843170/placeholder_vn2movie_h7qqi7.png';
             default:
               return cloudinaryLink + 'v1466257562/placeholder_movie_rad2ai.png';
           }
