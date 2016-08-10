@@ -2401,6 +2401,7 @@ ol.default li {
   }
 
   .nav > ul {
+  line-height:3;
 	margin: 0;
   }
 
