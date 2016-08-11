@@ -30,7 +30,7 @@
     <form id="signup-form" action="action">
       <!-- Email -->
       <label for="email"> Enter your e-mail </label>
-      {{#if emailError}}<span class="error">{{emailError}}</span>{{/if}}
+      {{#if emailError}}<div class="error">{{emailError}}</div>{{/if}}
       <input id="signup-email"
         name="email"
         type="email"
@@ -42,7 +42,7 @@
 
       <!-- Name -->
       <label for="name"> Enter your first and last name </label>
-      {{#if nameError}}<span class="error">{{nameError}}</span>{{/if}}
+      {{#if nameError}}<div class="error">{{nameError}}</div>{{/if}}
       <input id="signup-name"
         name="name"
         type="text"
@@ -55,7 +55,7 @@
 
       <!-- Username -->
       <label for="username"> Pick a username </label>
-      {{#if usernameError}}<span class="error">{{usernameError}}</span>{{/if}}
+      {{#if usernameError}}<div class="error">{{usernameError}}</div>{{/if}}
       <input id="signup-username"
         name="username"
         type="text"
@@ -69,7 +69,7 @@
       <!-- Password -->
       {{#if emailUser}}
         <label for="password"> Enter a password </label>
-        {{#if passwordError}}<span class="error">{{passwordError}}</span>{{/if}}
+        {{#if passwordError}}<div class="error">{{passwordError}}</div>{{/if}}
         <input id="signup-password"
           name="password"
           type="password"
@@ -79,7 +79,7 @@
           required
         >
         <label for="password2"> Confirm your password </label>
-        {{#if password2Error}}<span class="error">{{password2Error}}</span>{{/if}}
+        {{#if password2Error}}<div class="error">{{password2Error}}</div>{{/if}}
         <input id="signup-password2"
           name="password2"
           type="password"

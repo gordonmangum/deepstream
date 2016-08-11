@@ -11,6 +11,17 @@
 .homepage2016, .about2016, .team2016, .mystreams2016 {
   color: #5d5d5d;
   word-wrap: break-word;
+  
+  .signin-overlay {
+    color: #fff;
+    form label{
+      color: #fff;
+    }
+    button {
+      padding: 0!important;
+    }
+  }
+  
   .delete-deepstream {
     position: absolute;
     top: 0;
@@ -2017,16 +2028,6 @@ ol.default li {
 
   #footer-wrapper header h2 {
 	font-size: 1.75em;
-  }
-  
-  .login-left, .login-right {
-    color: #fff;
-    form label{
-      color: #fff;
-    }
-    button {
-      padding: 0;
-    }
   }
 
   /* Header */
