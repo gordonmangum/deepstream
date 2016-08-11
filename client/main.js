@@ -501,7 +501,9 @@ Template.favorite_button.events({
 });
 
 Template.editors_pick_button.events({
-  "click .pick" () {
+  "click .pick" (event) {
+    console.log('clicked');
+    event.preventDefault();
     return Meteor.call('designateEditorsPick', this.shortId, function(err) {
       if (err) {
         notifyError(err);
@@ -509,7 +511,9 @@ Template.editors_pick_button.events({
       }
     });
   },
-  "click .unpick" () {
+  "click .unpick" (event) {
+    event.preventDefault();
+    console.log('unclicked');
     return Meteor.call('stripEditorsPick', this.shortId, function(err) {
       if (err) {
         notifyError(err);
@@ -645,14 +649,15 @@ Meteor.startup(function(){
   $( window ).konami({
     code : [38,38,40,40,37,39,37,39, 66, 65], // you know...
     cheat: function() {
-      Session.set('showEditorsPickButton', true); // we still check for admin
+      Session.set('showEditorsPickButton', true); // we still check for admin ;)
     }
   });
 
   $( window ).konami({
     code : [68,69,69,80], //deep
     cheat: function() {
-      Session.set('showEditorsPickButton', true); // we still check for admin
+      console.info('so you think you can do this');
+      Session.set('showEditorsPickButton', true); // we still check for admin ;)
     }
   });
 });

@@ -208,6 +208,9 @@
             {{#if showDeleteButton}}
               <button class="delete-deepstream">X</button>
             {{/if}}
+            {{#if showEditorsPickButton}}
+              {{> editors_pick_button}}
+            {{/if}}
               <div class="imgWrapper" style="background-image: url({{previewUrl}});background-repeat:no-repeat;background-position: center center;background-size:cover"></div>
             </a>
             <header>
