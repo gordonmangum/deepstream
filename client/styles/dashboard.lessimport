@@ -5,6 +5,23 @@
   **/
   
   .dashboard {
+  
+    .chart-stage {
+      height: 200px;
+    }
+    .keen-widget.keen-metric{
+      
+      font-weight: bold;
+      height: 200px;
+      line-height: 1.5;
+      .keen-metric-value{
+        font-size: 72px;
+      }
+      .keen-metric-title{
+        font-size: 48px;
+      }
+      
+    }
     .second-row {
       padding-top: 55px;
       width: 100%;

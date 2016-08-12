@@ -1,27 +1,30 @@
 <template name="dashboard">
-  <div class="dashboard">
-    {{> top_banner showFilters=false}}
-    <div class="second-row">
-      {{> keen_dashboard}}
+  <div id="page-wrapper" class="homepage2016">
+  <!-- Header -->
+    <div id="header-wrapper">
+      <div id="header">
+        {{> header_section}}
+      </div>
+    </div>
+    <div id="main-wrapper">
+      <div class="dashboard">
+        <div class="second-row">
+          {{> keen_dashboard}}
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <template name="keen_dashboard">
-  <link rel="stylesheet" type="text/css" href="http://keen.github.io/dashboards/assets/lib/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="http://keen.github.io/dashboards/assets/css/keen-dashboards.css" />
-
-  <div class="container-fluid">
+  
+  <div class="container">
     <div class="row">
-      <div class="col-sm-12">
-        <h2>Welcome to your Dashboard!</h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-8">
+      <div class="4u 12u(mobile)">
         <div class="chart-wrapper">
           <div class="chart-title">
-            Watch page rendered (past 30days)
+            Watch page rendered (past 30days - excluding curator)
           </div>
           <div class="chart-stage">
             <div id="chart-01"></div>
@@ -31,10 +34,10 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-4">
+      <div class="8u 12u(mobile)">
         <div class="chart-wrapper">
           <div class="chart-title">
-            Total clicks on cards (past 30days)
+             Watch page rendered (past 30days - excluding curator)
           </div>
           <div class="chart-stage">
             <div id="chart-02"></div>
@@ -47,13 +50,54 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-6 col-md-4">
+      <div class="4u 12u(mobile)">
         <div class="chart-wrapper">
           <div class="chart-title">
-            Switch mini-stream to main stream
+            Total clicks on cards  (past 30days - excluding curator)
           </div>
           <div class="chart-stage">
             <div id="chart-03"></div>
+          </div>
+          <div class="chart-notes">
+            Notes about this chart
+          </div>
+        </div>
+      </div>
+       <div class="8u 12u(mobile)">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Total clicks on cards  (past 30days - excluding curator)
+          </div>
+          <div class="chart-stage">
+            <div id="chart-04"></div>
+          </div>
+          <div class="chart-notes">
+            Notes about this chart
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="row">
+      <div class="4u 12u(mobile)">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Switch mini-stream to main stream  (past 30days - excluding curator)
+          </div>
+          <div class="chart-stage">
+            <div id="chart-05"></div>
+          </div>
+          <div class="chart-notes">
+            Notes about this chart
+          </div>
+        </div>
+      </div>
+       <div class="8u 12u(mobile)">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Switch mini-stream to main stream  (past 30days - excluding curator)
+          </div>
+          <div class="chart-stage">
+            <div id="chart-06"></div>
           </div>
           <div class="chart-notes">
             Notes about this chart
