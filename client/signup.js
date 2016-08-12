@@ -181,6 +181,7 @@ Template.signup_form.events({
           }
 
         } else {
+          analytics.track('Click signup with email');
           returnFromSignIn();
           notifyLogin();
         }

@@ -45,7 +45,7 @@ Template.login_buttons2016.events({
   },
   "click .signin" (d) {
     Session.set('signingIn', true);
-    analytics.track('Click login signup button', trackingInfoFromPage());
+    analytics.track('Click login & signup button on top navigation', trackingInfoFromPage());
   },
   "click .logout" (e, t) {
     e.preventDefault();
@@ -83,7 +83,7 @@ Template.login_buttons.events({
   },
   "click .signin" (d) {
     Session.set('signingIn', true);
-    analytics.track('Click login signup button', trackingInfoFromPage());
+    analytics.track('Click login & signup button on top navigation', trackingInfoFromPage());
   },
   "click .logout" (e, t) {
     e.preventDefault();
@@ -129,11 +129,17 @@ Template.signin_overlay.events({
     t.showLoginForm.set(false);
     analytics.track('Click close sign-in overlay');
   },
-  "click .twitter-signin, click .twitter-signup" (e, t) {
+  "click .twitter-signin" (e, t) {
     closeSignInOverlay();
     t.showLoginForm.set(false);
     loginWithTwitter();
     analytics.track('Click login with Twitter');
+  },
+  "click .twitter-signup" (e, t) {
+    closeSignInOverlay();
+    t.showLoginForm.set(false);
+    loginWithTwitter();
+    analytics.track('Click signup with Twitter');
   },
   "click .email-signin" (e, t) {
     closeSignInOverlay();
