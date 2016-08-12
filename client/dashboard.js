@@ -1,14 +1,23 @@
 Template.dashboard.helpers({});
 Template.dashboard.events({});
-Template.dashboard.onCreated(function(){
+Template.dashboard.onCreated(function(){});
+Template.dashboard.onRendered(function(){
+  var throttledResize;
+  var windowSizeDep = new Tracker.Dependency();
+  var windowResize = function() {
+    windowSizeDep.changed();
+  };
+  throttledResize = _.throttle(windowResize, 500, {leading: false});
+  $(window).resize(throttledResize);
   var dashboardReadKey = Meteor.user().keenScopedKey;
   var projectId = Meteor.user().keenProjectId;
-  var client = new Keen({
-    projectId: projectId,
-    readKey: dashboardReadKey
-  });
-  
+
   Keen.ready(function(){
+    var client = new Keen({
+      projectId: projectId,
+      readKey: dashboardReadKey
+    });
+
     var arrayOfKeenCharts= [];
     drawKeenCharts = function(arrayOfChartObjects){
       arrayOfChartObjects.forEach(function(val, index, arr){
@@ -48,7 +57,7 @@ Template.dashboard.onCreated(function(){
         }
       }
     });
-    
+
     arrayOfKeenCharts.push({
       query: 
         new Keen.Query("count",{
@@ -212,11 +221,14 @@ Template.dashboard.onCreated(function(){
         }
       }
     });
-    
     drawKeenCharts(arrayOfKeenCharts);
 
-   
+    Tracker.autorun(function(){
+      windowSizeDep.depend();
+      drawKeenCharts(arrayOfKeenCharts);
+    });
+
+
   });
 });
-Template.dashboard.onRendered(function(){});
 Template.dashboard.onDestroyed(function(){});
