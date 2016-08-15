@@ -1,0 +1,17 @@
+
+<template name="favorite_button">
+    {{#if userFavorited}}
+      <button type='button' class='favorite-button unfavorite'>{{> favorite_icon }}</button>
+    {{else}}
+      <button type='button' class='favorite-button favorite'>{{> favorite_icon }}</button>
+    {{/if}}
+    <!--{{favoritedTotal}}-->
+</template>
+
+<template name="editors_pick_button">
+    {{#if editorsPick}}
+      <button type='button' class='unpick editors-pick-button'>♥</button>
+    {{else}}
+      <button type='button' class='pick editors-pick-button'>♥</button>
+    {{/if}}
+</template>

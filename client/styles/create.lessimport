@@ -1,0 +1,568 @@
+input[type=file] {
+  height: 40px;
+  width: 165px;
+
+  &::-webkit-file-upload-button {
+    display:none;
+  }
+  &::before {
+    display: inline-block;
+    background: @dark-color;
+    color: @medium-color;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    padding: 5px;
+    text-align: center;
+    font-size: 14px;
+    width: 100%;
+    line-height: 30px;
+
+  }
+  &:hover::before {
+    background-color: @action-color;
+    color: @dark-color;
+  }
+
+  &.change-header-upload{
+    &::before {
+      content: 'Change Header Image';
+    }
+  }
+
+  &.do-header-upload{
+    &::before {
+      content: 'Upload Header Image';
+    }
+  }
+
+  &.image-upload{
+    &::before {
+      content: 'Upload Image';
+    }
+  }
+
+  &.overlay{
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    z-index: 10;
+    background-color: @black-color;
+    opacity: 0.7;
+
+    &::-webkit-file-upload-button {
+      display:none;
+    }
+    &::before {
+      display: inline-block;
+      color: @medium-color;
+      outline: none;
+      -webkit-user-select: none;
+      cursor: pointer;
+      padding: 85px 15px;
+      text-align: center;
+      font-size: 14px;
+      width: 100%;;
+      content: 'Upload Image';
+    }
+    &:hover::before {
+      background-color: @dark-color;
+      color: @medium-color;
+    }
+  }
+}
+
+svg{
+  transition: fill 0.25s ease;
+}
+
+div.create-section.link-twitter{
+  text-align: center;
+  button{
+    .action-button;
+    height: 50px;
+    padding: 8px;
+  }
+}
+
+.create-section .text-result-container {
+  textarea{
+    height: 100%;
+  }
+  padding: 1px; // so textarea outline can be seen
+}
+
+.create-image-section{
+  .single-result{
+    img{
+      max-width: 100%;
+      max-height: 70%;
+    }
+  }
+}
+
+@newCardBottomButtonHeight: 35px;
+
+div.add-context {
+  display: flex;
+  flex-flow: column;
+  position: relative;
+  section {
+    padding: 0;
+  }
+
+  @contentIconBannerHeight: 80px;
+
+  div.create-section {
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    flex: auto;
+    height:80%;
+    .transparency-rounded;
+    .transparency-fade-strong(background-color, @light-background-color);
+    .search-section {
+      height: 100%;
+    }
+    .hiding-div{
+      height: 100%;
+    }
+    .stream-provider-image{
+      float: left;
+      margin-right: 3px;
+      height: 15px;
+    }
+  }
+
+  div.tabs {
+    margin-bottom: 15px;
+    ul {
+      margin: 0;
+      padding-left: 0;
+      li {
+        &:first-child {
+          padding-left: 5px;
+        }
+        padding-left: 5px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        display: inline-block;
+        min-width: 80px;
+        color: darken(@deemphasized-dark-text-color, 25%);
+        border-bottom: 2px solid darken(@deemphasized-dark-text-color, 25%);
+
+        &.selected, &:hover {
+          color: @dark-text-color;
+          border-bottom: 2px solid @dark-text-color;
+        }
+      }
+    }
+  }
+
+    
+  @searchFormHeight: 120px; // this is a guess
+  @innerElementPadding: 9px;   
+     
+  div.search-outside-input-container {
+
+    @searchTriggerWidth: 77px;
+    @searchButtonWidth: 30px;
+    @searchInputHeight: 35px; 
+    @searchInputWidth: calc(100% ~"-" @searchTriggerWidth ~"-" @innerElementPadding);
+
+    position: relative;
+    overflow: hidden;
+    min-width: calc(@searchTriggerWidth+@innerElementPadding);
+    height: @searchInputHeight;
+    width: 100%;
+    -webkit-backface-visibility: hidden;        
+
+    .search-trigger, .search-input-container, input, .search-button {
+      font-size: 12px;
+      height: @searchInputHeight;
+      position: absolute;
+      float: left;
+    }
+
+    .search-trigger {
+      color: @white-color;
+      z-index: 10;
+      text-align: center;
+      line-height: @searchInputHeight;
+      width: @searchTriggerWidth;
+      background: @black-color;
+    }
+
+    .search-input-container {
+      background: @dark-color;
+      width: calc(100% ~"-" @searchButtonWidth);
+      padding-left: 10px;
+    }
+
+    input {     
+      background: @dark-color;
+      width: @searchInputWidth;
+      left: @searchTriggerWidth+10px;
+    }
+
+    .search-button {
+      background: @dark-color;
+      right: 0px;
+      padding: 7.5px 13px 7.5px 10px;
+      &:hover{
+        .fg{
+          fill: @white-icon-color;
+        }
+      }
+    }
+
+  }
+  .search-form{
+    text-align: center;
+  }
+  .search-radios{
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    .pill-radios;
+  }
+
+  .twitter .search-radios {
+    margin-bottom: 0px
+  }
+
+  .news-preview.search-results-container {
+    height: calc(100% ~"-" @searchFormHeight ~"-" 100px);
+  }
+  .twitter .search-results-container {
+    height: calc(100% ~"-" @searchFormHeight ~"-" 126px);
+  }
+
+  div.map-result-container {
+    max-height: calc(100% ~"-" @searchFormHeight ~"-" 125px);
+    margin-top: -20px;
+    overflow-y: scroll;
+  }
+
+  div.text-result-container {
+    height: calc(100% ~"-" @searchFormHeight ~"-" 40px);
+    overflow-y: scroll;
+  }
+
+  div.viz-result-container {
+    max-height: calc(100% ~"-" @searchFormHeight ~"-" 75px);
+    margin-top: 20px;
+    overflow-y: scroll;
+  }
+
+  .link-section.preview-section {
+    max-height: calc(100% ~"-" @searchFormHeight ~"-" 105px);
+    margin-top: 20px;
+    overflow-y: scroll;
+  }
+
+  .search-results-container{
+    margin-top: 15px;
+    background-color: @transparent-color;
+  }
+
+  ol.search-results-container {   
+    width: 100%;
+    max-height: calc(100% ~"-" @searchFormHeight);
+    overflow-y: scroll;
+    overflow-x: ellipsis;
+    list-style-type: none;
+     
+    @aspectRatio: 4/3;
+    @searchResultHeight: 94px;
+    @thumbnailHeight: 90px;    
+    @thumbnailWidth: 120px;
+    
+    li {
+      white-space: normal;
+      cursor: pointer;
+
+      &:not(.loading-icon){
+        &:nth-child(even){
+          background: transparent; 
+        }
+        &:nth-child(odd){
+          background: transparent; 
+        }
+        &:hover {
+          .transparency-fade(background-color, @light-background-color);
+        }
+      }
+
+    }
+
+    li.loading-icon{
+      text-align: center;
+      height: 60px;
+      padding-top: 20px;
+      &:hover {
+        background: inherit;
+      }
+    }
+
+    @tileHeight: 85px;
+
+    li.tile {
+      height: @tileHeight;
+      display: inline-block;
+      margin: 2px;
+
+      img {
+        height: 100%;
+        max-width: 100%;
+      }
+
+      &.focused {
+        outline: 2px solid @action-color;
+      }
+    }
+       
+    div.search-result {    
+      cursor: pointer;
+      height: @searchResultHeight;   
+      &.image {
+        height:250px;
+      }
+
+      a:hover {
+        color: @action-color
+      }
+    }
+    
+    @searchResultWidth: @aspectRatio * (@searchResultHeight - (2 * @innerElementPadding));
+    @smallThumbnailWidth: .8*@searchResultHeight - (2 * @innerElementPadding);
+    div.thumbnail { // link-section
+      img{   
+        width: @searchResultWidth;
+        height: @searchResultHeight - @innerElementPadding;
+        padding-top: @innerElementPadding;
+        margin-left: 10px;
+
+        &.square {
+          width: @searchResultHeight - (2 * @innerElementPadding);
+        }
+
+        &.small {
+          width:  @smallThumbnailWidth;
+          height: auto;
+        }
+
+        &.overlay {
+          margin-left: -@searchResultWidth;
+        }
+      }    
+    }
+
+    @textAreaHeight: 75px;   
+    div.info{    
+      position: relative;   
+      top:  -@searchResultHeight+@innerElementPadding;  
+      left: @thumbnailWidth;   
+      max-width: calc(100% ~"-" 10px ~"-" @thumbnailWidth);
+      max-height: @searchResultHeight - 10px;   
+
+      &.twitter {
+        top: -64px;
+        left: 78px;
+        max-width: calc(100% ~"-" 20px ~"-" @smallThumbnailWidth);
+      }
+      div.content-title {    
+        font-weight: bold; 
+        font-size: 12px;
+        margin-bottom: 5px;    
+        overflow: hidden;    
+        height: @textAreaHeight*0.2;  // 15px
+        line-height: 16px;
+      }    
+         
+      .date, .user {   
+        font-size: 10px;    
+        height: @textAreaHeight*0.32;   
+        z-index: 100;
+      }    
+     
+      .date { 
+        text-align: right; 
+        position: relative;
+        top: -@textAreaHeight*0.32;   
+      }    
+      .descr, .tweet {   
+        overflow: hidden; 
+        font-size: 11px;   
+        line-height: 16px;
+      }
+      .descr{
+        height: @textAreaHeight*0.4533333;  // 34px
+      }
+
+      .tweet {
+        height: @textAreaHeight*0.64;
+      }
+
+      .descr {
+        margin-bottom: 6px;
+      }   
+      .tweet-image {
+        max-height:150px; width:auto;
+      }
+    }
+
+    .info.focused {
+      top: 10px;
+      left: 10px;
+      width: calc(100% ~"-" 30px);
+      max-width: 100%;
+      .descr {
+        height: 50px;
+        overflow: hidden;
+        margin-bottom: 0px;
+      }
+    }  
+  }
+  .single-result{
+    .info{
+      .content-title {
+        font-weight: 500;
+        font-size: 20px;
+        margin-bottom: 5px;
+        overflow: hidden;
+        line-height: normal;
+      }
+
+      .date, .user {
+        font-size: 14px;
+        display: inline-block;
+      }
+
+      .date {
+        float: right;
+        position: relative;
+        //top: -@textAreaHeight*0.32;
+      }
+      .descr{
+        @lineHeight: 16px;
+        overflow: hidden;
+        font-size: 14px;
+        line-height: @lineHeight;
+        max-height: @lineHeight * 8;
+      }
+    }
+  }
+
+
+}
+img.profile-picture {
+  margin:auto;
+  margin-right: 2px;
+  margin-bottom: -7.5px;
+  z-index: 10;
+  border-radius: @profile-picture-size/4;
+  width: @profile-picture-size/2;
+  height: auto;
+}
+
+.create-link-section {
+  .preview-section {
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    &.image-section {
+      background-color: @background-color;
+    }
+
+    &.link-section {
+      border: 1px solid @medium-color;
+    }
+
+    &.placeholder{
+      border: 1px solid @medium-color;
+    }
+
+    img.image {
+      width: auto;
+      max-width: 100%;
+      margin: auto;
+      vertical-align: middle;
+      display: inline-block;
+      max-height: 100%;
+    }
+  }
+  .transparent-cover{
+    opacity: 0;
+    .size-to-fit;
+    position: absolute;
+    left:0;
+    top:0;
+    z-index: 100;
+  }
+}
+
+.tweet-area {
+  width: 80%;
+}
+
+div.video-marker {
+  position: absolute;
+  bottom: 0;
+  input {
+    text-align: center;
+    width: 105px;
+    height: auto;
+    padding: 0;
+  }
+}
+
+.video-marker-section {
+  background-color: rgba(244, 244, 244, 0.8);
+  border-radius: 5px;
+  padding: 7px 3px;
+  display: flex;
+  flex-direction: row;
+  flex-flow: row;
+  span {
+    margin-left: 10px;
+  }
+  svg {
+    height: 18px;
+    width: 18px;
+    .fg {
+      fill: #000;
+    }
+  }
+  textarea {
+   padding: 0;
+  }
+}
+
+button.add-button {
+  position: absolute;
+  right: 30px;
+  bottom: 15px;
+  &.relative-button{
+    position: relative;
+    right: initial;
+    bottom: initial;
+  }
+  text-transform: uppercase;
+  .action-button;
+  height: @newCardBottomButtonHeight;
+  width: 90px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 35px;
+  &.negative-button{
+    .dark-action-button-no-rounding;
+  }
+  &.tweet-button{
+    background-color: #55acee;
+    color: #ffffff;
+  }
+}

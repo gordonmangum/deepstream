@@ -1,0 +1,393 @@
+<template name="display_text_section">
+  <div class="text-section" dir="auto">
+    {{{annotation}}}
+  </div>
+</template>
+
+<template name="homepage_preview_text_section">
+  <div class="homepage-preview-text-section" dir="auto">
+    {{{content}}}
+  </div>
+</template>
+
+<template name="display_poll_section">
+  <div class="poll-section" dir="auto">
+    {{{annotation}}}
+  </div>
+</template>
+
+<template name="pieChart">
+  {{#if isCuratorInTemplate}}
+    {{> chart_container}}
+  {{/if}}
+  {{#unless isCuratorInTemplate}}
+    {{#unless hasVoted _id}}
+    <span>
+      {{#each option in options}}
+        <div class="padded">
+          <input type="radio" name="vote-{{_id}}" value="{{@index}}" id="radio-{{_id}}-option-{{@index}}"><label class="vote-option" for="radio-{{_id}}-option-{{@index}}">{{option.name}}</label>
+        </div>
+      {{/each}}
+      <div class="center" style="padding:15px;">
+        <button class="add-button relative-button">
+          Vote
+        </button>
+      </div>
+    </span>
+    {{/unless}}
+    {{#if hasVoted _id}}
+     {{> chart_container}}
+    {{/if}}
+  {{/unless}}
+</template>
+
+<template name="chart_container">
+    <span>
+    <div class="center" style="padding:15px;">
+      <svg id="pieChart-{{_id}}" data-contextid="{{_id}}"></svg>
+    </div>
+    <div class="center" style="padding:15px;">
+      {{totalVotes}} people voted
+    </div>
+    
+    {{#each option in options}}
+    <div class='padded-top'>
+      <span style="color: {{colorFromIndex @index}};font-size: x-large;"><b>{{{percentageVote option.value}}}</b></span><p class="vote-description"><label class="vote-option">{{option.name}}</label></p>
+    </div>
+    {{/each}}
+  </span>
+</template>
+
+<template name="homepage_preview_poll_section">
+  <div class="homepage-preview-poll-section" dir="auto">
+    {{{content}}}
+  </div>
+</template>
+
+<template name="display_image_section">
+  <div class="image-section">
+    {{#if showVideo}}
+      {{> looping_video}}
+    {{else}}
+      <div class="image-container" style="height: {{mainStreamHeight}}px; width: {{leftSectionWidth}}px; max-width: {{overlayContentMaxWidth}}px;">
+        {{#if lgUrl}}
+          <img src="{{lgUrl}}" />
+          <!-- lgUrl -->
+        {{else}}
+          <img src="{{url}}" />
+          <!-- no lgUrl -->
+        {{/if}}
+      </div>
+      {{#if isGiphy}}<img class="giphy-logo" src="{{c.url 'static/giphy_logo.png'}}" />{{/if}}
+      {{#if isFlickr}}
+        <div class="attribution">
+          <i class="fa fa-flickr"></i>
+          {{#if ownerName}}<a href="//flickr.com/{{ownerName}}" target="_blank">{{ownerName}}</a><span class="separator">·</span>{{/if}}<a href="{{webUrl}}" target="_blank">{{#if uploadDate}}{{uploadDate}}{{else}}source{{/if}}</a>
+        </div>
+      {{/if}}
+    {{/if}}
+    {{#if suggestedByUsername}}
+      <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
+    {{/if}}
+    {{> annotation_section }}
+  </div>
+</template>
+
+<template name="looping_video">
+  <div class="looping-video">
+    <video autoplay loop muted="muted"
+           poster="{{previewUrl}}">
+
+      <source type="video/mp4"
+              src="{{mp4Url}}">
+
+      <source type="video/webm"
+              src="{{webMUrl}}">
+      Your browser does not support the HTML5 video tag.
+    </video>
+  </div>
+</template>
+
+<template name="display_map_section">
+  <div class="map-section">
+    <div class="active-display" style="height: {{mainStreamHeight}}px; width: {{leftSectionWidth}}px; max-width: {{overlayContentMaxWidth}}px;">
+      <iframe width="100%" height="100%" frameborder="0" style="border:0" src="{{url}}"></iframe>
+    </div>
+    {{#if suggestedByUsername}}
+      <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
+    {{/if}}
+    {{> annotation_section }}
+  </div>
+</template>
+
+
+<template name="display_audio_section">
+  <div class="audio-section">
+    {{#if selected}}
+      <div class="active-display">
+        <iframe width="100%" height="100%" frameborder="0" style="border:0" src="{{url}}" allowfullscreen></iframe>
+      </div>
+    {{/if}}
+    <div class="preview">
+      <img src="{{previewUrl}}"/>
+    </div>
+  </div>
+</template>
+
+<template name="display_video_section">
+  <div class="video-section">
+    <div class="active-display" style="height: {{mainStreamHeight}}px; width: {{leftSectionWidth}}px; max-width: {{overlayContentMaxWidth}}px;">
+      <iframe id="6666666" width="100%" height="100%" frameborder="0" style="border:0" src="{{autoplayUrl}}" allowfullscreen></iframe>
+    </div>
+    <div class="preview">
+      <img src="{{previewUrl}}"/>
+    </div>
+    {{#if suggestedByUsername}}
+      <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
+    {{/if}}
+    {{> annotation_section }}
+  </div>
+</template>
+
+
+<template name="display_news_section">
+  <div class="news-section">
+    <div class="news-source">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}{{providerName}}</div>
+    {{#if headerImageUrl}}
+      <img class="news-header-image" src="{{headerImageUrl}}"/>
+    {{/if}}
+    <h4 class="news-title">{{title}}</h4>
+    <div class="news-date">{{formatDate publicationDate}}</div>
+    <div class="news-author">{{primaryAuthor}}</div>
+    <div class="news-html">{{{html}}}</div>
+    <div class="news-link"><a class="read-more" href="{{url}}" target="_blank">Read more on {{providerTruncatedUrl}} ></a></div>
+  </div>
+  {{#if suggestedByUsername}}
+    <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
+  {{/if}}
+  {{#if showAnnotationSection}}
+    {{> annotation_section}}
+  {{/if}}
+</template>
+
+<template name="homepage_preview_news_section">
+  <div class="homepage-preview-news-section">
+    <div class="news-source">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}<span>{{providerName}}</span></div>
+    <div class="preview">{{title}}</div>
+  </div>
+</template>
+
+<template name="display_link_section">
+  <div class="link-section">
+    <a href="{{url}}" target="_blank">
+      <div class="top">
+        {{#if thumbnailUrl}}
+          {{#if imageOnLeft}}
+            <img class="thumbnail left" src="{{thumbnailUrl}}" />
+          {{else}}
+            <div class="thumbnail top" style='background-image: url("{{thumbnailUrl}}")'></div>
+          {{/if}}
+          <div class="link-title {{#if imageOnLeft}}image-on-left{{else}}image-on-top{{/if}}">{{title}}</div>
+        {{/if}}
+      </div>
+    </a>
+    <div class="link-description {{#if imageOnLeft}}image-on-left{{else}}image-on-top{{/if}}">{{linkDescription}}</div>
+    <div class="bottom">
+      <a class="read-more" href="{{url}}" target="_blank">Read more on {{providerTruncatedUrl}} ></a>
+    </div>
+  </div>
+</template>
+
+<template name="display_twitter_section">
+  <div class="twitter-section">
+    <div class="active-display">
+      <div class="twitter-text-section {{#if selected}} selected {{/if}} {{#if imgUrl}}image{{/if}} ">
+        <div class='tweet-card'>
+          <div class='title'>
+            <div class='prof_pic'>
+              <a href="{{user_url}}" target="_blank">
+                <img src="{{userpic}}">
+              </a>
+            </div>
+            <div class='username'>
+              <div>{{username}}
+              </div>
+              <div class="screenname"><a href="{{user_url}}" target="_blank">@{{screenname}}</a>
+              </div>
+            </div>
+          </div>
+          <div class="tweet" dir="auto">{{{formattedTweet}}}
+          </div>
+          <div class="info">
+            <span>
+              <a href="{{twitter_url}}" target="_blank"><i class="fa fa-twitter"></i>
+              </a>
+              {{#if retweetUser}}
+                <a href="{{retweet_url}}" target="_blank">
+                  <i class="fa fa-retweet"></i>@{{retweetUser}}</a>
+              {{/if}}
+              <a href="{{tweet_url}}" target="_blank">{{creationDateString}}</a>
+            </span>
+          </div>
+          <div class="actions">
+            <span>
+              <a href="{{reply_action}}" target="_blank">
+                <i class="fa fa-reply"></i>
+              </a>
+              <a href="{{retweet_action}}" target="_blank">
+                <i class="fa fa-retweet"></i>
+              </a>
+              <a href="{{favorite_action}}" target="_blank">
+                <i class="fa fa-star"></i>
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{#if imgUrl}}
+      <div class='image-section'>
+        <img src='{{imgUrl}}'>
+      </div>
+    {{/if}}
+  </div>
+</template>
+
+
+<template name="homepage_preview_twitter_section">
+  <div class="homepage-preview-twitter-section">
+    <div class='user-info'>
+      <div class='prof-pic'>
+        <a href="{{user_url}}" target="_blank">
+          <img src="{{userpic}}">
+        </a>
+      </div>
+      <div class='username'>
+        <div>{{username}}
+        </div>
+        <div class="screenname"><a href="{{user_url}}" target="_blank">@{{screenname}}</a>
+        </div>
+      </div>
+    </div>
+    <div class="tweet" dir="auto">{{{formattedTweet}}}
+    </div>
+    <div class="info">
+      <span>
+        <a href="{{twitter_url}}" target="_blank"><i class="fa fa-twitter"></i>
+        </a>
+        {{#if retweetUser}}
+          <a href="{{retweet_url}}" target="_blank">
+            <i class="fa fa-retweet"></i>@{{retweetUser}}</a>
+        {{/if}}
+        <a href="{{tweet_url}}" target="_blank">{{creationDateString}}</a>
+      </span>
+    </div>
+    <div class="actions">
+      <span>
+        <a href="{{reply_action}}" target="_blank">
+          <i class="fa fa-reply"></i>
+        </a>
+        <a href="{{retweet_action}}" target="_blank">
+          <i class="fa fa-retweet"></i>
+        </a>
+        <a href="{{favorite_action}}" target="_blank">
+          <i class="fa fa-star"></i>
+        </a>
+      </span>
+    </div>
+  </div>
+</template>
+
+
+
+<template name="preview_image_section">
+  <div class="show-full">
+    <div class="image-preview {{#if usePlaceholder}}has-placeholder{{/if}}">
+      {{#if showVideo}}
+        {{> looping_video}}
+      {{else}}
+        <div class="image-container">
+          <img src="{{url}}" />
+        </div>
+        {{#if isGiphy}}<img class="giphy-logo" src="{{c.url 'static/giphy_logo.png'}}" />{{/if}}
+        {{#if isFlickr}}
+          <div class="attribution">
+            <i class="fa fa-flickr"></i>
+            {{#if ownerName}}<a href="{{ownerUrl}}" target="_blank">{{ownerName}}</a><span class="separator">·</span>{{/if}}<a href="{{webUrl}}" target="_blank">{{#if uploadDate}}{{uploadDate}}{{else}}source{{/if}}</a>
+          </div>
+        {{/if}}
+      {{/if}}
+    </div>
+    {{#if usePlaceholder}}
+      <div class="preview-placeholder" style="height: {{height}}px; width: {{width}}px;">
+      </div>
+    {{/if}}
+  </div>
+</template>
+
+<template name="preview_video_section">
+  <div class="show-full">
+    <div class="video-preview">
+      <img src="{{previewUrl}}"/>
+      {{> play_video_icon}}
+      <div class="info">
+        <div class="title">{{title}}</div>
+      </div>
+    </div>
+    <div class="preview-placeholder" style="height: {{height}}px; width: {{width}}px;">
+    </div>
+  </div>
+</template>
+
+<template name="homepage_preview_video_section">
+  <div class="homepage-preview-video-section">
+    <div class="provider-source">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}{{providerName}}</div>
+    <div class="preview">{{title}}</div>
+  </div>
+</template>
+
+<template name="preview_map_section">
+  <div class="show-full">
+    <div class="map-preview">
+      <img src="{{previewUrl height width}}"/>
+    </div>
+    <div class="preview-placeholder" style="height: {{height}}px; width: {{width}}px;">
+    </div>
+  </div>
+</template>
+
+<template name="preview_text_section">
+  <div class="show-full">
+    <div class="text-preview" dir="auto">
+      {{content}}
+    </div>
+  </div>
+</template>
+
+<template name="preview_poll_section">
+  <div class="show-full">
+    <div class="text-preview" dir="auto">
+      <h3 class="poll-question">{{content}}</h3>
+    </div>
+    <div class="chart-container">
+      {{> pieChart}}
+    </div>
+  </div>
+</template>
+
+<template name="preview_news_section">
+  <div class="news-preview-top">
+    <div class="news-author">{{primaryAuthor}}</div>
+    <div class="news-date">{{formatDateNice publicationDate}}</div>
+    {{#if headerImageUrl}}
+      <img class="news-header-image" src="{{headerImageUrl}}"/>
+    {{/if}}
+  </div>
+
+  <div class="show-full">
+    <h4 class="news-title">{{title}}</h4>
+    <div class="news-preview">
+      {{introduction}}
+    </div>
+  </div>
+</template>

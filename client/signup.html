@@ -1,0 +1,106 @@
+<template name="signup">
+  {{> top_banner_simple_no_links}}
+  <div class="signup">
+    <section>
+      {{> signup_form}}
+      <!--{{> contact_footer}}-->
+    </section>
+  </div>
+</template>
+
+<template name="signup_page">
+  {{> top_banner_simple_no_links}}
+  <div class="signup">
+    <div class="login-left">
+      <h1 class="login-header">CREATE YOUR ACCOUNT</h1>
+      <button class="twitter-signin">CREATE ACCOUNT USING TWITTER</button>
+      <div>(allows you to interact with and embed tweets)</div>
+    </div>
+    <div class="divider">
+      OR
+    </div>
+
+    <div class="login-right">
+      {{> signup_form}}
+    </div>
+  </div>
+</template>
+
+<template name="signup_form">
+    <form id="signup-form" action="action">
+      <!-- Email -->
+      <label for="email"> Enter your e-mail </label>
+      {{#if emailError}}<div class="error">{{emailError}}</div>{{/if}}
+      <input id="signup-email"
+        name="email"
+        type="email"
+        placeholder="Email"
+        dir="auto"
+        class="{{#if emailError}}error{{/if}}"
+        required
+      >
+
+      <!-- Name -->
+      <label for="name"> Enter your first and last name </label>
+      {{#if nameError}}<div class="error">{{nameError}}</div>{{/if}}
+      <input id="signup-name"
+        name="name"
+        type="text"
+        placeholder="Full Name"
+        dir="auto"
+        value="{{#if currentUser.profile.name}}{{currentUser.profile.name}}{{/if}}"
+        class="{{#if nameError}}error{{/if}}"
+        required
+      >
+
+      <!-- Username -->
+      <label for="username"> Pick a username </label>
+      {{#if usernameError}}<div class="error">{{usernameError}}</div>{{/if}}
+      <input id="signup-username"
+        name="username"
+        type="text"
+        placeholder="Username"
+        dir="auto"
+        value="{{#if currentUser.tempUsername}}{{currentUser.tempUsername}}{{/if}}"
+        class="{{#if usernameError}}error{{/if}}"
+        required
+      >
+
+      <!-- Password -->
+      {{#if emailUser}}
+        <label for="password"> Enter a password </label>
+        {{#if passwordError}}<div class="error">{{passwordError}}</div>{{/if}}
+        <input id="signup-password"
+          name="password"
+          type="password"
+          placeholder="Password"
+          dir="auto"
+          class="{{#if passwordError}}error{{/if}}"
+          required
+        >
+        <label for="password2"> Confirm your password </label>
+        {{#if password2Error}}<div class="error">{{password2Error}}</div>{{/if}}
+        <input id="signup-password2"
+          name="password2"
+          type="password"
+          placeholder="Confirm Password"
+          dir="auto"
+          class="{{#if password2Error}}error{{/if}}"
+          required
+        >
+        <!-- profile image here -->
+      {{/if}}
+
+      <!--&lt;!&ndash;TO-DO LAUNCH REMOVE&ndash;&gt;-->
+      <!--<label for="signupCode"> Signup code </label>-->
+      <!--<input name="signupCode" type="text" placeholder="Secret code for Beta">-->
+
+      {{#if signupError}}<div class="error">{{signupError}}</div>{{/if}}
+
+      <p>By creating an account, I accept Deepstream’s <a href="/terms" target='_blank' class='green'>Terms of Service</a> and <a href="/privacy" target='_blank' class='green'>Privacy Policy</a>.</p>
+      <div class="signup-button-container"><button type="submit" class="signup-button">{{#if emailUser}}SIGN UP{{else}}CREATE ACCOUNT USING TWITTER{{/if}}</button></div>
+      {{#if disableSignup}}
+        {{>loading_icon}}
+      {{/if}}
+    </form>
+</template>

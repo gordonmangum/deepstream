@@ -1,0 +1,415 @@
+<template name="login_buttons2016">
+    {{#if loggingOut}}
+      <li>
+        <a>
+        Logging out...
+        </a>
+      </li>
+    {{else}}
+      {{#if currentUser}}
+        <li>
+          {{> create_deepstream2016}}
+        </li>
+        <li>
+          <a href="/my_streams">My streams</a>
+        </li>
+        <li>
+          <a class="logout">Logout</a>
+        </li>
+        
+      {{else}}
+        <li class="signin"><a>Log in / Sign up</a></li>
+      {{/if}}
+    {{/if}}
+</template>
+
+<template name="login_buttons">
+  <li class="user-action">
+    {{#if loggingOut}}
+      <button>
+        Logging out...
+      </button>
+    {{else}}
+      {{#if currentUser}}
+        <!--<a href="/profile/{{currentUser.username}}">-->
+        <a>
+
+          <button>
+              {{#if profileImage currentUser}}
+                <img class="profile-picture" src="{{profileImage currentUser}}"/>
+              {{/if}}
+            <span class="text">{{currentUser.profile.name}}</span><span class="arrow">&#9662;</span>
+          </button>
+        </a>
+        {{#if showUserInfo}}
+          <div class="user-menu">
+            <li>
+              <a href="/my_streams"><button>My streams</button></a>
+            </li>
+            <li>
+              <button class="logout">Logout</button>
+            </li>
+          </div>
+        {{/if}}
+      {{else}}
+        <button class="signin"> Log in / Sign up</button>
+      {{/if}}
+    {{/if}}
+  </li>
+</template>
+
+<template name="create_deepstream2016">
+  <a>
+    Create
+  </a>
+</template>
+
+<template name="signin_overlay">
+  {{#if signingIn}}
+    <div class="signin-overlay" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
+      <button class="close">{{> close_circle}}</button>
+      {{#if showLoginForm}}
+        {{> login_form}}
+      {{else}}
+        <div class="mailchimp-signup-form-on-signin">
+          <!-- Begin MailChimp Signup Form -->
+          <!--<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">-->
+          <div id="mc_embed_signup">
+            <form action="//deepstream.us11.list-manage.com/subscribe/post?u=c5bb61c940fb52c8906a972c7&amp;id=d1c5471edf" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+              <div id="mc_embed_signup_scroll">
+                <label for="mce-EMAIL">Thanks for visiting us! We're currently in closed Beta, but if you'd like to be notified when you can search, view livestreams, and create DeepStreams, please sign up below!</label>
+                <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                <div style="position: absolute; left: -5000px;"><input type="text" name="b_c5bb61c940fb52c8906a972c7_d1c5471edf" tabindex="-1" value=""></div>
+                <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+              </div>
+            </form>
+          </div>
+
+          <div class="existing-account">
+            <div class="text">OR</div>
+            <button class="show-login-form">Click Here if You Have a Secret Code or an Existing Account</button>
+          </div>
+        </div>
+      {{/if}}
+      <!--<div class="signin-buttons">-->
+        <!--<ol class="user-menu">-->
+          <!--<li>-->
+            <!--<button class="twitter-signin">Log in with Twitter</button>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<button class="email-signin">Log in with email</button>-->
+          <!--</li>-->
+        <!--</ol>-->
+      <!--</div>-->
+    </div>
+  {{/if}}
+</template>
+
+
+<template name="chart_home_banner">
+  <a href="/contest">
+    <div class="banner">
+      <h1 id="banner-h1" style="color:#fff">Win $250 using DeepStream on a topic of your choice! Click for details!<!--New Dimensions in Video Engagement--></h1>
+    </div>
+  </a>
+</template>
+
+<template name="header_section">
+  <!-- Logo -->
+  <h1><a href="/">DeepStream</a></h1>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <ul>
+      <li><a href="/">Home</a></li> <!--can use class="current" on li -->
+      <li><a href="/about">About</a></li>
+      <li><a href="/about#faq">FAQ</a></li>
+      <li><a href="/about#contact">Contact</a></li>
+      {{> login_buttons2016 }}
+    </ul>
+  </nav>
+  {{> signin_overlay}}
+</template>
+<template name="footer_section">
+  <div id="footer-wrapper">
+    <section id="footer" class="container">
+      <div class="row">
+        <div class="4u 12u(mobile)">
+          <section>
+            <header>
+              <h2>What's this all about?</h2>
+            </header>
+            <a href="/about" class="image featured"><img src="homepage/images/whatisdeepstream.png" alt="" /></a>
+            <p>
+              <b>DeepStream</b> turns passive video audiences into engaged communities through a suite of tools that works with any livestream or on-demand video player. When you add related media to videos using DeepStream, you create new ways to tell your story and new ways for viewers to explore your content. 
+            </p>
+            <footer>
+              <a href="/about" class="button">Find out more</a>
+            </footer>
+          </section>
+        </div>
+        <div class="4u 12u(mobile)">
+        </div>
+        <div class="4u 12u(mobile)">
+          <a name="contact"></a> 
+          <section>
+            <header>
+              <h2>Connect with Us</h2>
+            </header>
+            <ul class="social">
+              <li><a class="icon fa-facebook" href="https://fb.me/deepstream.tv" target="_blank"><span class="label">Facebook</span></a></li>
+              <li><a class="icon fa-twitter" href="https://twitter.com/streamdeeper" target="_blank"><span class="label">Twitter</span></a></li>
+             <!-- <li><a class="icon fa-dribbble" href="#"><span class="label">Dribbble</span></a></li>
+              <li><a class="icon fa-linkedin" href="#"><span class="label">LinkedIn</span></a></li>
+              <li><a class="icon fa-google-plus" href="#"><span class="label">Google+</span></a></li>-->
+            </ul>
+            <ul class="contact">
+              <li>
+                <h3>Address</h3>
+                <p>
+                  Deepstream<br />
+                  1 Amherst St<br />
+                  Cambridge, MA 02142
+                </p>
+              </li>
+              <li>
+                <h3>Mail</h3>
+                <p><a href="#">deepstream@media.mit.edu</a></p>
+              </li>
+              <li>
+                <h3>Phone</h3>
+                <p>(617) 528 9843</p>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+      <div class="row">
+        <div class="12u">
+
+          <!-- Copyright -->
+            <div id="copyright">
+              <ul class="links">
+                <li>&copy; Deepstream. All rights reserved. <a href="/terms">Terms of Use</a> &amp; <a href="/privacy">Privacy Policy</a></li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+              </ul>
+            </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+</template>
+
+<template name="deepstream_preview">
+    {{#with deepstream}}
+      <div class="4u 12u(mobile)">
+        <a  href="{{linkPath}}">
+          <section class="box deepstream-preview-box">
+            <a class="image featured">
+            {{#if showDeleteButton}}
+              <button class="delete-deepstream">X</button>
+            {{/if}}
+            {{#if showEditorsPickButton}}
+              {{> editors_pick_button}}
+            {{/if}}
+              <div class="imgWrapper" style="background-image: url({{previewUrl}});background-repeat:no-repeat;background-position: center center;background-size:cover"></div>
+            </a>
+            <header>
+              <h3>{{title}}</h3>
+            </header>
+            <p>{{description}}</p>
+          </section>
+        </a>
+      </div>
+    {{/with}}
+</template>
+
+<template name="deepstreams">
+  {{#each deepstreamsToDisplay type}}
+    {{> deepstream_preview deepstream=this}}
+  {{else}}
+    {{#if subsReady}}
+      <div class="no-results">No results found.</div>
+    {{/if}}
+  {{/each}}
+</template>
+
+<template name="home">
+  <!--
+	Dopetrope by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+  -->
+  <div id="page-wrapper" class="homepage2016">
+
+    <!-- Header -->
+      <div id="header-wrapper">
+        <div id="header">
+          {{> header_section}}
+          
+          <!-- Banner -->
+          {{> chart_home_banner}}
+
+          <!-- Intro -->
+            <section id="intro" class="container">
+              <div class="row">
+                <div class="4u 12u(mobile)">
+                  <section class="first">
+                    <a href="/about#engagement">
+                      <i class="icon featured fa-eye"></i>
+                    </a>
+                    <header>
+                      <h2>Boost Engagement Metrics</h2>
+                    </header>
+                    <p>Viewers watch DeepStreams 100% longer than normal videos &amp; click 20% more often</p>
+                  </section>
+                </div>
+                <div class="4u 12u(mobile)">
+                  <section class="middle">
+                    <a href="/about#future-proofing">
+                      <i class="icon featured fa-calendar-check-o"></i>
+                    </a>
+                    <!--<i class="icon featured alt fa-hand-o-up"></i>-->
+                    <header>
+                      <h2>Future Proofing Included</h2>
+                    </header>
+                    <p>Don't get left behind! We make sure your DeepStreams are integrated with the latest and greatest media platforms so you are always up-to-date</p>
+                  </section>
+                </div>
+                <div class="4u 12u(mobile)">
+                  <section class="last">
+                    <a href="/about#brand">
+                      <i class="icon featured fa-star"></i>
+                    </a>
+                    <!--<i class="icon featured alt2 fa-star"></i>-->
+                    <header>
+                      <h2>Reinforce Your Brand</h2>
+                    </header>
+                    <p>Give viewers the opportunity to explore more of your content during the video experience instead of watching and leaving</p>
+                  </section>
+                </div>
+              </div>
+              <footer>
+                <ul class="actions">
+                  <!--Get started 
+                  <li><a href="/contact" class="button big">Get Started</a></li>-->
+
+                  <li><a href="/about" class="button alt big">Learn More</a></li>
+                </ul>
+              </footer>
+            </section>
+
+        </div>
+      </div>
+
+    <!-- Main -->
+      <div id="main-wrapper">
+        <div class="container">
+          <div class="row">
+            <div class="12u">
+              <!-- Deepstreams -->
+                <section>
+                  <header class="major">
+                    <h2>Top Picks</h2>
+                  </header>
+                  <div class="row">
+                    {{> deepstreams type="best"}}
+                  </div>
+                </section>
+            </div>
+          </div>
+          <div class="row">
+            <div class="12u">
+              <!-- Deepstreams -->
+                <section>
+                  <header class="major">
+                    <h2>Most Recent</h2>
+                  </header>
+                  <div class="row">
+                    {{> deepstreams type="most_recent"}}
+                  </div>
+                </section>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Footer -->
+    {{> footer_section}}
+			<script src="homepage/js/jquery.dropotron.min.js"></script>
+			<script src="homepage/js/skel.min.js"></script>
+			<script src="homepage/js/skel-viewport.min.js" async></script>
+			<script src="homepage/js/util.js"></script>
+			<script src="homepage/js/main.js"></script>
+  </div>
+</template>
+
+
+<template name="my_streams">
+  <!--
+	Dopetrope by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+  -->
+  <div id="page-wrapper" class="mystreams2016">
+
+    <!-- Header -->
+      <div id="header-wrapper">
+        <div id="header">
+          {{> header_section}}
+        </div>
+      </div>
+
+    <!-- Main -->
+      <div id="main-wrapper">
+        <div class="container">
+          <div class="row">
+            <div class="12u">
+                <section style="padding: 40px 0px;">
+                  <li style="text-align: center;"><a href="/dashboard" class="button big">View Statistics</a></li>
+                </section>
+            </div>
+          </div>
+          <div class="row">
+            <div class="12u">
+              <!-- Deepstreams -->
+                <section>
+                  <header class="major">
+                    <h2>Published Deepstreams</h2>
+                  </header>
+                  <div class="row">
+                    {{#each streams true}}
+                      {{> deepstream_preview linkToCurate=true deepstream=this}}
+                    {{/each}}
+                  </div>
+                </section>
+            </div>
+          </div>
+          <div class="row">
+            <div class="12u">
+              <!-- Deepstreams -->
+                <section>
+                  <header class="major">
+                    <h2>Unpublished Deepstreams</h2>
+                  </header>
+                  <div class="row">
+                    {{#each streams}}
+                      {{> deepstream_preview linkToCurate=true deepstream=this}}
+                    {{/each}}
+                  </div>
+                </section>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Footer -->
+    {{> footer_section}}
+			<script src="homepage/js/jquery.dropotron.min.js"></script>
+			<script src="homepage/js/skel.min.js"></script>
+			<script src="homepage/js/skel-viewport.min.js" async></script>
+			<script src="homepage/js/util.js"></script>
+			<script src="homepage/js/main.js"></script>
+  </div>
+</template>

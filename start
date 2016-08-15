@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -e
+#checking for ES
+
+if curl localhost:9200 2>&1 | grep "tagline" 2>&1 >/dev/null
+then
+	echo "ElasticSearch is working on Localhost:9200"
+else
+	if command -v elasticsearch >/dev/null 2>&1
+	then
+		echo "Please start Elasticsearch in a separate terminal window with the command: elasticsearch"
+		exit 1
+	else
+		echo "You don't have ElasticSearch installed on your system"
+		echo "For best results on a Mac you can install it yourself using homebrew. First run 'brew update', then 'brew doctor', then 'brew install elasticsearch17'"
+		exit 1
+	fi
+fi
+
+
+# Meteor handling block
+if meteor --settings settings.json
+then
+	if [ $? == 127 ] # BASH command not found errno
+	then 
+		echo "You don't have meteor installed "
+		echo "Do you want to install it?[y/N]"
+		read answer
+		if [ "${answer,,}" == 'y' ] 
+		then 
+			curl https://install.meteor.com/ | sh
+        		echo "You should have Meteor installed by now"
+		fi
+	fi
+fi
+
+exit 
