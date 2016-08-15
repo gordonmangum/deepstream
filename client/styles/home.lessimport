@@ -1737,6 +1737,7 @@ ol.default li {
 /* Banner */
 
 .banner {
+  line-height: 1;
   margin-top: 35px;
   padding: 160px 20px;
   background: linear-gradient(270deg, #2eff07, #790cff, #ff0735);
