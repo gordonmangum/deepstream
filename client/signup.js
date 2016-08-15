@@ -156,7 +156,9 @@ Template.signup_form.events({
         if (err) {
           t.signupError.set(err.reason || err.error);
         } else {
-          returnFromSignIn();
+          if(!Session.get('redirectAfterLogin')){
+            returnFromSignIn();
+          }
           notifyLogin();
         }
       });
