@@ -113,6 +113,7 @@ Meteor.publish("deepstreamsOnAir", function(options) {
   options = options ? options : {};
   _.defaults(options, {page: 0});
 
+  console.log(111);
   return Deepstreams.find({
     onAir: true
   }, {
@@ -124,6 +125,54 @@ Meteor.publish("deepstreamsOnAir", function(options) {
     limit: PUB_SIZE
   });
 });
+
+
+Meteor.publish('deepstreamsForAdmin', function( search, published ) {
+  check(search, Match.OneOf( String, null, undefined ));
+  let query      = {onAir: false},
+      projection = { 
+                     limit: 10, 
+                     sort: { createdAt: -1 },
+                     fields: deepstreamFields,
+                   };
+  if (search) {
+    let regex = new RegExp( search, 'i' );
+    query = {
+      $or: [
+        { title: regex },
+        { description: regex },
+        { curatorName: regex },
+        { streamPathSegment: regex },
+        { curatorUsername: regex }
+      ]
+    };
+    projection.limit = 100;
+  }
+  if(published){
+    query.onAir = true;
+  } else {
+    query.onAir = false;
+  }
+  return Deepstreams.find( query, projection );
+});
+/*
+Meteor.publish("deepstreamsForAdmin", function(options) {
+  this.unblock();
+  options = options ? options : {};
+  _.defaults(options, {page: 0});
+
+  return Deepstreams.find({
+    onAir: true
+  }, {
+    sort: {
+      createdAt: -1
+    },
+    fields: deepstreamFields,
+    skip: options.page * PUB_SIZE,
+    limit: PUB_SIZE
+  });
+});
+*/
 
 //Meteor.publish("curatedStoriesPub", function(options) {
 //  this.unblock();

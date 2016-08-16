@@ -1,0 +1,76 @@
+<template name="admin_dashboard">
+ <div id="page-wrapper" class="homepage2016">
+  <!-- Header -->
+    <div id="header-wrapper">
+      <div id="header">
+        {{> admin_header_section}}
+      </div>
+    </div>
+    <div id="main-wrapper">
+      {{> admin_dash_content }}
+    </div>
+    {{> admin_footer_section}}
+  </div>
+  
+</template>
+
+
+<template name="admin_header_section">
+  <!-- Logo -->
+  <h1><a href="/">DeepStream Admin</a></h1>
+  <!-- Nav -->
+  <nav class="nav">
+    <ul>
+      <li><a href="/">Home</a></li> <!--can use class="current" on li -->
+      <li><a href="/about">About</a></li>
+      <li><a href="/about#faq">FAQ</a></li>
+      <li><a href="/about#contact">Contact</a></li>
+      {{> login_buttons2016 }}
+    </ul>
+  </nav>
+</template>
+<template name="admin_footer_section">
+  <div id="footer-wrapper">
+    <section id="footer" class="container">
+      <div class="row">
+        <div class="12u">
+          <!-- Copyright -->
+            <div id="copyright">
+              <ul class="links">
+                <li>&copy; Deepstream. All rights reserved. <a href="/terms">Terms of Use</a> &amp; <a href="/privacy">Privacy Policy</a></li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+              </ul>
+            </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+</template>
+<template name="admin_dash_content">
+    <div class="container">
+      <div class="12u">
+          <section>
+            <div class="row">
+              <div class="4u 12u(mobile)">
+                <section class="box" style="text-align: center; cursor: not-allowed;">
+                  <i class="fa fa-users icon" aria-hidden="true" style="font-size:100px;line-height: 2;"></i>
+                </section>
+              </div>
+              <div class="4u 12u(mobile)">
+                <a href="/4dm1n/deepstreams">
+                  <section class="box" style="text-align: center;">
+                    <i class="fa fa-television icon" aria-hidden="true" style="font-size:100px;line-height: 2;"></i>
+                  </section>
+                </a>
+              </div>
+              <div class="4u 12u(mobile)">
+                <section class="box" style="text-align: center; cursor: not-allowed;">
+                  <i class="fa fa-tachometer icon" aria-hidden="true" style="font-size:100px;line-height: 2;"></i>
+                </section>
+              </div>
+            </div>
+          </section>
+      </div>
+    </div>
+</template>
+

@@ -656,7 +656,6 @@ Meteor.startup(function(){
   $( window ).konami({
     code : [68,69,69,80], //deep
     cheat: function() {
-      console.info('so you think you can do this');
       Session.set('showEditorsPickButton', true); // we still check for admin ;)
     }
   });
