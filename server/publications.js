@@ -112,8 +112,6 @@ Meteor.publish("deepstreamsOnAir", function(options) {
   this.unblock();
   options = options ? options : {};
   _.defaults(options, {page: 0});
-
-  console.log(111);
   return Deepstreams.find({
     onAir: true
   }, {
