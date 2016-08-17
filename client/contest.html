@@ -45,9 +45,14 @@
                     
                     <h2 style="line-height:2.5;">How to Enter:</h2>
                     <ol style="font-size: 25px; line-height: 1.3;">
+                      {{#if currentUser}}
+                      <li style="cursor:pointer">1. {{> create_deepstream2016}} your Deepstream!</li>
+                      <li style="">2. <a href="/contest#form"> Fill out</a> the submission form</li>
+                      {{else}}
                       <li class="signin" style=" cursor:pointer;">1. <a>Sign up</a> for an account</li>
                       <li style="cursor:pointer">2. {{> create_deepstream2016}} your Deepstream!</li>
                       <li style="">3. <a href="/contest#form"> Fill out</a> the submission form</li>
+                      {{/if}}
                     </ol>
                   </footer>
                 </section>
@@ -128,19 +133,24 @@
                   </header>
                    
                   <ol>
-                      <li class="signin" style="list-style-type: decimal;margin-left:50px; cursor:pointer;"><a>Sign up for an account</a></li>
-                      <li style="list-style-type: decimal;margin-left:50px;cursor:pointer">{{> create_deepstream2016}}<a> your Deepstream!</a></li>
-                      <li style="list-style-type: decimal;margin-left:50px;"><a href="/contest#form">Fill out the submission form</a></li>
+                    {{#if currentUser}}
+                      <li style="cursor:pointer">1. {{> create_deepstream2016}} your Deepstream!</li>
+                      <li style="">2. <a href="/contest#form"> Fill out</a> the submission form</li>
+                      {{else}}
+                      <li class="signin" style=" cursor:pointer;">1. <a>Sign up</a> for an account</li>
+                      <li style="cursor:pointer">2. {{> create_deepstream2016}} your Deepstream!</li>
+                      <li style="">3. <a href="/contest#form"> Fill out</a> the submission form</li>
+                    {{/if}}
                   </ol>
 
 
-
+                  {{#unless currentUser}}
                   <h4>1. Sign up:</h4>
                   <p>First, sign up for an account by clicking Log in/Sign Up at the top of this page. You can use your Twitter account or make your own DeepStream account.</p>
-                  
+                  {{/unless}}
                   
 
-                  <h4>2. Create something!</h4>
+                  <h4>{{#if currentUser}}1.{{else}}2.{{/if}} Create something!</h4>
                   <p>Find a video source by clicking “Create” in the top menu. You will be prompted to find a livestream or video upload. Then add related media. The two videos below walk you through the basic and advanced features of DeepStream. Click Publish to make your creation public.</p>
                   
                   <p><i>Tutorial videos below:</i></p>
@@ -151,7 +161,7 @@
                   <a name="form"></a>
                   <br/>
                   <br/>
-                  <h4>3. Fill out the submission form right here:</h4>
+                  <h4>{{#if currentUser}}2.{{else}}3.{{/if}} Fill out the submission form right here:</h4>
                   <br/>
                     <div class="row">
                       <iframe class="12u" src="https://docs.google.com/forms/d/e/1FAIpQLSfzmkq_4YouXwf5uXOSfStkTLYacdc1OcULiQr_rcE-Vul_9Q/viewform?embedded=true" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
