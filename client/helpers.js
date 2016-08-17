@@ -71,7 +71,11 @@ Template.registerHelper("signingIn", function() {
 });
 
 Template.registerHelper("showEditorsPickButton", function(){
-  return Session.get('showEditorsPickButton') && Meteor.user().admin;
+  if(Meteor.user()){
+    return Session.get('showEditorsPickButton') && Meteor.user().admin;
+  } else {
+    return false;
+  }
 });
 
 Template.registerHelper("isContextOfType", function(type) {
