@@ -131,14 +131,14 @@ a.green {
 
 }
 
-.login-button, .signup-button, .save-profile-button, .reset-button, .twitter-signin, .twitter-signup {
+.login-button, .signup-button, .save-profile-button, .reset-button, .twitter-signin-old, .twitter-signup-old {
   margin-top: 20px;
   width: 180px;
   height: @button-height;
   .action-button;
 }
 
-.twitter-signup{
+.twitter-signup-old{
   font-size: 14px;
   margin-bottom: 10px;
 }
@@ -148,10 +148,6 @@ a.green {
 
 .signup{
   font-weight: bold;
-  .twitter-signin{
-    width: auto;
-    margin-bottom: 10px;
-  }
   .signup-button{
     width: auto;
     margin-top: 0;
