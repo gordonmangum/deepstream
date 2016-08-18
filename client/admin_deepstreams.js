@@ -10,7 +10,7 @@ Template.admin_deepstreams_content.onCreated( () => {
     template.subscribe('deepstreamsForAdmin', template.searchQuery.get(), template.searchPublished.get(), () => {
       Meteor.setTimeout(() => {
         template.searching.set( false );
-      }, 2500); // delay cause users dont like super responsive interface
+      }, 1000); // delay cause users dont like super responsive interface
     });
   });
 });

@@ -126,6 +126,7 @@ Meteor.publish("deepstreamsOnAir", function(options) {
 
 
 Meteor.publish('deepstreamsForAdmin', function( search, published ) {
+  this.unblock();
   check(search, Match.OneOf( String, null, undefined ));
   let query      = {onAir: false},
       projection = { 
@@ -311,6 +312,39 @@ Meteor.publish("userData", function () {
   } else {
     this.ready();
   }
+});
+
+Meteor.publish('usersForAdmin', function( search ) {
+  console.log(search);
+  check(search, Match.OneOf( String, null, undefined ));
+  let query      = {onAir: false},
+      projection = { 
+                     limit: 10, 
+                     sort: { createdAt: -1 },
+                     fields: {
+                       'profile': 1,
+                       'username': 1,
+                       'createdAt': 1,
+                       'services.resume.loginTokens.when' : 1,
+                       'services.twitter.id' : 1,
+                       'emails.address' : 1
+                     },
+                   };
+  if (search) {
+    let regex = new RegExp( search, 'i' );
+    query = {
+      $or: [
+        { "profile.name": regex },
+        { emails: { $elemMatch: {address: regex}}},
+        { username: regex },
+        { "twitter.screename": regex }
+      ]
+    };
+    projection.limit = 100;
+  }
+  
+  console.log(Meteor.users.find( query, projection ).fetch());
+  return Meteor.users.find( query, projection );
 });
 
 
