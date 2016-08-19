@@ -22,9 +22,8 @@ Template.admin_users_content.helpers({
     return Template.instance().searchQuery.get();
   },
   users() {
-    let users = Meteor.users.find();
+    let users = Meteor.users.find({},{sort: { createdAt: -1 }});
     if (users) {
-      console.info(users.fetch());
       return users;
     }
   }
@@ -55,16 +54,6 @@ Template.admin_users_content.events({
 });
 
 Template.admin_user_row.helpers({
-  lastLogin(services){
-    if(services.resume){
-      if(services.resume.loginTokens){
-        if(services.resume.loginTokens[0]){
-          return services.resume.loginTokens[0].when;
-        }
-      }
-    }
-    return '-';
-  },
   isUserFromTwitter(services){
     if(services.twitter && services.twitter.id){
       return 'Twitter';

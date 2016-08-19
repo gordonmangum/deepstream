@@ -315,17 +315,15 @@ Meteor.publish("userData", function () {
 });
 
 Meteor.publish('usersForAdmin', function( search ) {
-  console.log(search);
   check(search, Match.OneOf( String, null, undefined ));
-  let query      = {onAir: false},
+  let query      = {},
       projection = { 
-                     limit: 10, 
+                     limit: 100, 
                      sort: { createdAt: -1 },
                      fields: {
                        'profile': 1,
                        'username': 1,
                        'createdAt': 1,
-                       'services.resume.loginTokens.when' : 1,
                        'services.twitter.id' : 1,
                        'emails.address' : 1
                      },
@@ -342,8 +340,6 @@ Meteor.publish('usersForAdmin', function( search ) {
     };
     projection.limit = 100;
   }
-  
-  console.log(Meteor.users.find( query, projection ).fetch());
   return Meteor.users.find( query, projection );
 });
 
