@@ -506,8 +506,11 @@ Template.editors_pick_button.events({
     event.preventDefault();
     return Meteor.call('designateEditorsPick', this.shortId, function(err) {
       if (err) {
+        window.notifyError('There was an error making this an editors pick - please speak to dev team');
         notifyError(err);
         throw(err);
+      } else {
+        window.notifySuccess('This deepstream is now an editors pick!');
       }
     });
   },
@@ -516,8 +519,11 @@ Template.editors_pick_button.events({
     console.log('unclicked');
     return Meteor.call('stripEditorsPick', this.shortId, function(err) {
       if (err) {
+        window.notifyError('There was an error removing this as an editors pick - please speak to dev team');
         notifyError(err);
         throw(err);
+      } else {
+        window.notifySuccess('This deepstream is no longer an editors pick.');
       }
     });
   }
