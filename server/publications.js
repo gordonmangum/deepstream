@@ -110,7 +110,7 @@ var contextFields = {
 
 Meteor.publish("deepstreamsOnAir", function(options) {
   this.unblock();
-  return Deepstreams.find({});
+  return Deepstreams.find({}, {fields: deepstreamFields});
   /*
   options = options ? options : {};
   _.defaults(options, {page: 0});
