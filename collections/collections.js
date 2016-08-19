@@ -567,7 +567,6 @@ this.Deepstreams = new Mongo.Collection("deepstreams", {
   }
 });
 
-
 Schema.Deepstreams = new SimpleSchema({
   shortId: {
     type: String

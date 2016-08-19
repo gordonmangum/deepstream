@@ -110,6 +110,8 @@ var contextFields = {
 
 Meteor.publish("deepstreamsOnAir", function(options) {
   this.unblock();
+  return Deepstreams.find({});
+  /*
   options = options ? options : {};
   _.defaults(options, {page: 0});
   return Deepstreams.find({
@@ -122,6 +124,7 @@ Meteor.publish("deepstreamsOnAir", function(options) {
     skip: options.page * PUB_SIZE,
     limit: PUB_SIZE
   });
+  */
 });
 
 
