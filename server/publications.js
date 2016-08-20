@@ -51,6 +51,7 @@ var contextFields = {
   'searchQuery': 0
 };
 
+/* now defunct? delete soon
 Meteor.publish("deepstreamsOnAir", function() {
   this.unblock();
   return Deepstreams.find({
@@ -58,6 +59,31 @@ Meteor.publish("deepstreamsOnAir", function() {
   }, {
     sort: { createdAt: -1 },
     fields: deepstreamFields,
+    limit: PUB_SIZE
+  });
+});
+*/
+
+Meteor.publish("deepstreamsMostRecent", function() {
+  this.unblock();
+  return Deepstreams.find({
+    onAir: true
+  }, {
+    sort: { createdAt: -1 },
+    fields: deepstreamFields,
+    limit: 8
+  });
+});
+
+Meteor.publish("deepstreamsEditorsPick", function() {
+  this.unblock();
+  return Deepstreams.find({
+    onAir: true,
+    editorsPick: true
+  }, {
+    sort: { editorsPickAt: -1 },
+    fields: deepstreamFields,
+    limit: 8
   });
 });
 
