@@ -51,19 +51,6 @@ var contextFields = {
   'searchQuery': 0
 };
 
-/* now defunct? delete soon
-Meteor.publish("deepstreamsOnAir", function() {
-  this.unblock();
-  return Deepstreams.find({
-    onAir: true
-  }, {
-    sort: { createdAt: -1 },
-    fields: deepstreamFields,
-    limit: PUB_SIZE
-  });
-});
-*/
-
 Meteor.publish("deepstreamsMostRecent", function() {
   this.unblock();
   return Deepstreams.find({
