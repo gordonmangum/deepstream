@@ -481,14 +481,90 @@ var runJobs = function () {
   //collect and collate all data on users.
   
   //1. get list of all users
+  let users = Meteor.users.find({},{fields: {profile: 1, createdAt:1, username: 1, emails: 1}, sort: { createdAt: -1 }});
+  if (users) {
+    //2. remove all users that don't have email addresses
+    var userDetails = users.fetch();
+    var usersWithEmail = _.filter(userDetails, function(val){ if(val.emails && val.emails[0] && val.emails[0].address){ return true; } else { return false;} });
+    
+    var deepstreamsWithMailChimpDetails = Deepstreams.find({}, {fields: { mainCuratorId: 1, streams: 1}, sort: { mainCuratorId: 1}}).fetch();
+    
+    var curatorIdsFromDeepstreams = _.pluck(deepstreamsWithMailChimpDetails, 'mainCuratorId');
+    var curatorWithDeepstreamIdList = _.uniq(curatorIdsFromDeepstreams, true);
+    
+    var splitByHavingDeepstreams = _.partition(usersWithEmail, function(val){
+      return _.contains(curatorWithDeepstreamIdList, val._id);
+    });
+    
+    //3. which users have no deepstreams
+    var usersWhoHaveNotCreatedADeepstream = splitByHavingDeepstreams[1];
+    
+    var suggestionsWithMailChimpDetails = SuggestedContextBlocks.find({}, {fields: { suggestedBy: 1}, sort: { suggestedBy: 1}}).fetch();
+    
+    var suggestorIdsFromDeepstreams = _.pluck(suggestionsWithMailChimpDetails, 'suggestedBy');
+    var suggestorWithoutDeepstreamIdList = _.uniq(suggestorIdsFromDeepstreams, true);
+    
+    var splitByHavingSuggestions = _.partition(usersWhoHaveNotCreatedADeepstream, function(val){
+      return _.contains(suggestorWithoutDeepstreamIdList, val._id);
+    });
+    
+    //4. which users have no deepstreams and have made suggestions
+    //console.log(splitByHavingSuggestions[0])
+    //5. which users have no deepstreams and no suggestions
+    //console.log(splitByHavingSuggestions[1])
+    
+
+    //6. which users have 1 deepstream
+    var countOfDeepstreamsPerUser = _.countBy(curatorIdsFromDeepstreams);
+    // console.log(JSON.stringify(_.groupBy(countOfDeepstreamsPerUser,)));
+    //console.log(JSON.stringify(countOfDeepstreamsPerUser));
+    
+    var usersWhoHaveCreatedADeepstream = splitByHavingDeepstreams[0];
+    
+   // console.log(JSON.stringify(usersWhoHaveCreatedADeepstream));
+    
+    //7. which users have >1 deepstream
+    _.mapObject( countOfDeepstreamsPerUser, function(val, key) {
+      // console.log(key + ' has ' + val + ' deepstreams!');
+    });
+    
+    
+    //8. which users have never added a context card
+    
+    var contextWithMailChimpDetails = ContextBlocks.find({}, {fields: { authorId: 1}, sort: {authorId: 1}}).fetch();
+    
+    var contextAuthorIdsFromContextBlocks = _.pluck(contextWithMailChimpDetails, 'authorId');
+    var contextAuthorIdList = _.uniq(contextAuthorIdsFromContextBlocks, true);
+    
+    var splitByHavingContext = _.partition(usersWhoHaveCreatedADeepstream, function(val){
+      return _.contains(contextAuthorIdList, val._id);
+    });
+   // console.log(splitByHavingContext[1]);
+    
+    
+    //9. which users have never added a second stream
+    var deepstreamsWithNoMoreThanOneStreamMailChimpDetails = 
+        _.partition(deepstreamsWithMailChimpDetails, function(val){
+      return val.streams.length < 2;
+    })[0];
+    
+    console.log(deepstreamsWithNoMoreThanOneStreamMailChimpDetails[0])
+    var curatorIdsFromDeepstreamsWithNoMoreThanOneStream = _.pluck(deepstreamsWithNoMoreThanOneStreamMailChimpDetails, 'mainCuratorId');
+    var curatorWithDeepstreamWithNoMoreThanOneStreamIdList = _.uniq(curatorIdsFromDeepstreamsWithNoMoreThanOneStream, true);
+    
+    var splitByHavingDeepstreamsWithNoMoreThanOneStream = _.partition(usersWhoHaveCreatedADeepstream, function(val){
+      return _.contains(curatorWithDeepstreamWithNoMoreThanOneStreamIdList, val._id);
+    });
+    console.log( splitByHavingDeepstreamsWithNoMoreThanOneStream[0]);
+
+  }
   
-  //2. remove all users that don't have email addresses
   
-  //3. which users have no deepstreams
-  //4. which users have 1 deepstream
-  //5. which users have >1 deepstream
-  //6. which users have never added a context card
-  //7. which users have never added a second stream
+  
+  
+  
+  
+  
   //8. which emails in the newsletter signup list do not have an account
   
   
@@ -499,7 +575,12 @@ var runJobs = function () {
           email: {
             email: 'dwanderton+batch1@gmail.com',
           },
-          emailType: 'html'
+          emailType: 'html',
+          mergeVars: {
+            groupings: [
+              { name: "" }
+            ]
+          }
         }
       ];
   mailchimpApiContainer.call('lists', 'batch-subscribe', 
