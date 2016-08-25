@@ -1,6 +1,9 @@
+var MAILCHIMP_API_KEY =  process.env.MAILCHIMP_API_KEY || Meteor.settings.MAILCHIMP_API_KEY;
+var MAILCHIMP_LIST_ID =  process.env.MAILCHIMP_LIST_ID || Meteor.settings.MAILCHIMP_LIST_ID;
+
 var ustreamConnection = DDP.connect('http://104.131.189.181');
 var cheerio = Meteor.npmRequire('cheerio');
-
+var mailChimpAPI = Meteor.npmRequire('mailchimp').MailChimpAPI;
 
 // ustream apparently uses timestamps that match whatever time it happened to be in SF, but contain no timezone or dst info
 
@@ -43,7 +46,6 @@ var convertUStreamDateToUTC = function(ustreamDateString){
 
   return new Date(ustreamDateString + " " + (dst ? 'PDT' : 'PST'))
 };
-
 
 var servicesToFetch = [
   {
@@ -128,7 +130,6 @@ var servicesToFetch = [
   //  }
   //}
 ];
-
 
 var generateFetchFunction = function(serviceInfo){
 
@@ -442,7 +443,6 @@ var updateStreamStatuses = function () {
   Deepstreams.find({}, {fields: {streams: 1}}).forEach(updateStreamStatus); // TO-DO perf. Only get necessary fields for live checking
 };
 
-
 var runJobs = function () {
   console.log('Running jobs...');
   var startTime = Date.now();
@@ -467,6 +467,78 @@ var runJobs = function () {
   updateDeepstreamStatuses({logging: true});
   timeLogs.push('deepstream update time: ' + ((Date.now() - previousTimepoint) / 1000) + ' seconds');
   previousTimepoint = Date.now();
+  
+  
+  // Now update email lists in MailChimp
+  try {
+    var mailchimpApiContainer = new mailChimpAPI(MAILCHIMP_API_KEY, { version : '2.0' });
+    console.log('MailChimp successfully initiated');
+  } catch (error) {
+    console.log(error.message);
+  }
+  
+  
+  //collect and collate all data on users.
+  
+  //1. get list of all users
+  
+  //2. remove all users that don't have email addresses
+  
+  //3. which users have no deepstreams
+  //4. which users have 1 deepstream
+  //5. which users have >1 deepstream
+  //6. which users have never added a context card
+  //7. which users have never added a second stream
+  //8. which emails in the newsletter signup list do not have an account
+  
+  
+  //batch add users to mailchimp
+  var mailChimpBatchUpdate = 
+      [
+        {
+          email: {
+            email: 'dwanderton+batch1@gmail.com',
+          },
+          emailType: 'html'
+        }
+      ];
+  mailchimpApiContainer.call('lists', 'batch-subscribe', 
+    { 
+      id: MAILCHIMP_LIST_ID, 
+      double_optin: false, 
+      update_existing: true,
+      replace_interests: true,
+      batch: mailChimpBatchUpdate
+    }, function (error, data) {
+    if (error) {
+        console.log(error.message);
+    } else {
+       console.log('MailChimp subscribers added: ' + data.add_count);
+       console.log('MailChimp subscribers updated: ' + data.update_count);
+       if(data.error_count > 0 || data.errors.length > 0){
+         console.error('MailChimp number of errors: ' + data.error_count);
+         console.error(JSON.stringify(data.errors));
+       }
+       // console.log(JSON.stringify(data)); // Do something with your data!
+    }
+  });
+  
+  
+  /*
+  mailchimpApiContainer.call('campaigns', 'list', { start: 0, limit: 25 }, function (error, data) {
+    if (error)
+        console.log(error.message);
+    else
+        console.log(JSON.stringify(data)); // Do something with your data!
+  });
+
+  mailchimpApiContainer.call('campaigns', 'template-content', { cid: '123456' }, function (error, data) {
+    if (error)
+        console.log(error.message);
+    else
+        console.log(JSON.stringify(data)); // Do something with your data!
+  });
+  */
 
   _.each(timeLogs, function(str){
     console.log(str);
@@ -477,7 +549,6 @@ var runJobs = function () {
 };
 
 var jobWaitInSeconds = parseInt(process.env.JOB_WAIT) || 5 * 60; // default is every 5 minutes
-
 
 if (process.env.PROCESS_TYPE === 'stream_worker') { // if a worker process
   Meteor.startup(function () {
