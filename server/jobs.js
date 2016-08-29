@@ -443,6 +443,191 @@ var updateStreamStatuses = function () {
   Deepstreams.find({}, {fields: {streams: 1}}).forEach(updateStreamStatus); // TO-DO perf. Only get necessary fields for live checking
 };
 
+var mailChimpBatchUpdate = {};
+
+var addMailChimpGroupToEmail = function(userGroup, category, groupName){
+  userGroup.forEach(function(val, index, arr){
+    if(mailChimpBatchUpdate[val.emails[0].address]){
+      var currentCategories = _.pluck(mailChimpBatchUpdate[val.emails[0].address].merge_vars.groupings, 'name');
+      var categoryPostion = false;
+      currentCategories.forEach(function(val, index, arr){
+       if(category === val){
+         categoryPostion = index;
+       } 
+      });
+      if(categoryPostion){
+        mailChimpBatchUpdate[val.emails[0].address].merge_vars.groupings[categoryPostion].groups.push(groupName);
+      } else {
+        mailChimpBatchUpdate[val.emails[0].address].merge_vars.groupings.push(
+          { name: category, groups: [groupName] }
+        );
+      }
+    } else {
+      mailChimpBatchUpdate[val.emails[0].address] = {
+        email: { email: val.emails[0].address},
+        emailType: 'html',
+        merge_vars:{
+          groupings	: [
+            { name: category, groups: [groupName] }
+          ]
+        }
+      };
+    }
+  });
+};
+
+var updateMailChimpEmails = function(){
+// Now update email lists in MailChimp
+  try {
+    var mailchimpApiContainer = new mailChimpAPI(MAILCHIMP_API_KEY, { version : '2.0' });
+    console.log('MailChimp successfully initiated');
+  } catch (error) {
+    console.log(error.message);
+  }
+
+  //collect and collate all data on users.
+  
+  //1. get list of all users
+  let users = Meteor.users.find({},{fields: {profile: 1, createdAt:1, username: 1, emails: 1}, sort: { createdAt: -1 }});
+  if (users) {
+    
+    //2. remove all users that don't have email addresses
+    var userDetails = users.fetch();
+    var usersWithEmail = _.filter(userDetails, function(val){ if(val.emails && val.emails[0] && val.emails[0].address){ return true; } else { return false;} });
+    
+    var deepstreamsWithMailChimpDetails = Deepstreams.find({}, {fields: { mainCuratorId: 1, streams: 1}, sort: { mainCuratorId: 1}}).fetch();
+    
+    var curatorIdsFromDeepstreams = _.pluck(deepstreamsWithMailChimpDetails, 'mainCuratorId');
+    var curatorWithDeepstreamIdList = _.uniq(curatorIdsFromDeepstreams, true);
+    
+    var splitByHavingDeepstreams = _.partition(usersWithEmail, function(val){
+      return _.contains(curatorWithDeepstreamIdList, val._id);
+    });
+    
+    //3. which users have no deepstreams
+    var usersWhoHaveNotCreatedADeepstream = splitByHavingDeepstreams[1];
+    
+    addMailChimpGroupToEmail(usersWhoHaveNotCreatedADeepstream, "Curators", "Signed up no deepstream");
+    
+    var suggestionsWithMailChimpDetails = SuggestedContextBlocks.find({}, {fields: { suggestedBy: 1}, sort: { suggestedBy: 1}}).fetch();
+    
+    var suggestorIdsFromDeepstreams = _.pluck(suggestionsWithMailChimpDetails, 'suggestedBy');
+    var suggestorWithoutDeepstreamIdList = _.uniq(suggestorIdsFromDeepstreams, true);
+    
+    var splitByHavingSuggestions = _.partition(usersWhoHaveNotCreatedADeepstream, function(val){
+      return _.contains(suggestorWithoutDeepstreamIdList, val._id);
+    });
+    
+    //4. which users have no deepstreams and have made suggestions
+    addMailChimpGroupToEmail(splitByHavingSuggestions[0], "Viewers", "Have suggested content");
+
+    //5. which users have no deepstreams and no suggestions
+    addMailChimpGroupToEmail(splitByHavingSuggestions[1], "Viewers", "Have not suggested content");
+
+    //6. which users have 1 deepstream
+    var countOfDeepstreamsPerUser = _.countBy(curatorIdsFromDeepstreams);
+   
+    var usersWhoHaveCreatedADeepstream = splitByHavingDeepstreams[0];
+    
+    //7. which users have >1 deepstream
+    var curatorsWithOneDeepstreamIdList = []
+    var curatorsWithMultipleDeepstreamIdList = []
+    _.mapObject( countOfDeepstreamsPerUser, function(val, key) {
+      if(val === 1) {
+        curatorsWithOneDeepstreamIdList.push(key);
+      } else {
+        curatorsWithMultipleDeepstreamIdList.push(key);
+      }
+    });
+    
+    var splitByHavingOneDeepstream = _.partition(usersWhoHaveCreatedADeepstream, function(val){
+      return _.contains(curatorsWithOneDeepstreamIdList, val._id);
+    });
+    
+    addMailChimpGroupToEmail(splitByHavingOneDeepstream[0], "Curators", "Created one deepstream");
+    addMailChimpGroupToEmail(splitByHavingOneDeepstream[1], "Curators", "Created multiple deepstreams");  
+    
+    //8. which users have never added a context card
+    
+    var contextWithMailChimpDetails = ContextBlocks.find({}, {fields: { authorId: 1}, sort: {authorId: 1}}).fetch();
+    
+    var contextAuthorIdsFromContextBlocks = _.pluck(contextWithMailChimpDetails, 'authorId');
+    var contextAuthorIdList = _.uniq(contextAuthorIdsFromContextBlocks, true);
+    
+    var splitByHavingContext = _.partition(usersWhoHaveCreatedADeepstream, function(val){
+      return _.contains(contextAuthorIdList, val._id);
+    });
+    
+    addMailChimpGroupToEmail(splitByHavingContext[0], "Curators", "Has deepstreams with context");
+    addMailChimpGroupToEmail(splitByHavingContext[1], "Curators", "Has no deepstreams with context");
+    
+    //9. which users have never added a second stream
+    var deepstreamsWithStreamMailChimpDetails = 
+        _.partition(deepstreamsWithMailChimpDetails, function(val){
+          if(val.streams.length > 1) {
+            return false;
+          }
+          return true;
+    });
+    
+    var deepstreamsWithNoMoreThanOneStreamMailChimpDetails = deepstreamsWithStreamMailChimpDetails[0];
+    var deepstreamsWithMoreThanOneStreamMailChimpDetails = deepstreamsWithStreamMailChimpDetails[1];
+    
+    var curatorIdsFromDeepstreamsWithNoMoreThanOneStream = _.pluck(deepstreamsWithNoMoreThanOneStreamMailChimpDetails, 'mainCuratorId');
+    var curatorWithDeepstreamWithNoMoreThanOneStreamIdList = _.uniq(curatorIdsFromDeepstreamsWithNoMoreThanOneStream);
+    
+    var curatorIdsFromDeepstreamsWithMoreThanOneStream = _.pluck(deepstreamsWithMoreThanOneStreamMailChimpDetails, 'mainCuratorId');
+    var curatorWithDeepstreamWithMoreThanOneStreamIdList = _.uniq(curatorIdsFromDeepstreamsWithMoreThanOneStream);
+    
+    curatorWithDeepstreamWithNoMoreThanOneStreamIdList = _.reject(curatorWithDeepstreamWithNoMoreThanOneStreamIdList, function(curatorId){ return _.contains(curatorWithDeepstreamWithMoreThanOneStreamIdList, curatorId) });
+    
+    var splitByHavingDeepstreamsWithNoMoreThanOneStream = _.partition(usersWhoHaveCreatedADeepstream, function(val){
+      return _.contains(curatorWithDeepstreamWithNoMoreThanOneStreamIdList, val._id);
+    });
+    
+    addMailChimpGroupToEmail(splitByHavingDeepstreamsWithNoMoreThanOneStream[0], "Curators", "Deepstreams with only one stream");
+    addMailChimpGroupToEmail(splitByHavingDeepstreamsWithNoMoreThanOneStream[1], "Curators", "Deepstreams with more than one stream");
+    
+
+  }
+  
+  //8. which emails in the newsletter signup list do not have an account TODO
+  
+  
+  //batch add users to mailchimp
+  mailChimpBatchUpdate = _.toArray(mailChimpBatchUpdate);
+  
+  mailchimpApiContainer.call('lists', 'batch-subscribe', 
+    { 
+      id: MAILCHIMP_LIST_ID, 
+      double_optin: false, 
+      update_existing: true,
+      replace_interests: true,
+      batch: mailChimpBatchUpdate
+    }, function (error, data) {
+    if (error) {
+        console.log(error.message);
+    } else {
+       console.log('MailChimp subscribers added: ' + data.add_count);
+       console.log('MailChimp subscribers updated: ' + data.update_count);
+       if(data.error_count > 0 || data.errors.length > 0){
+         console.error('MailChimp number of errors: ' + data.error_count);
+         console.error(JSON.stringify(data.errors));
+       }
+       //console.log(JSON.stringify(data)); // Do something with your data!
+    }
+  });
+  
+  mailchimpApiContainer.call('lists', 'interest-groupings', { id: MAILCHIMP_LIST_ID, counts: true }, function (error, data) {
+    if (error)
+        console.log(error.message);
+    else {
+       // console.log(JSON.stringify(data)); // Do something with your data!
+    }
+  });
+
+};
+
 var runJobs = function () {
   console.log('Running jobs...');
   var startTime = Date.now();
@@ -468,158 +653,9 @@ var runJobs = function () {
   timeLogs.push('deepstream update time: ' + ((Date.now() - previousTimepoint) / 1000) + ' seconds');
   previousTimepoint = Date.now();
   
-  
-  // Now update email lists in MailChimp
-  try {
-    var mailchimpApiContainer = new mailChimpAPI(MAILCHIMP_API_KEY, { version : '2.0' });
-    console.log('MailChimp successfully initiated');
-  } catch (error) {
-    console.log(error.message);
-  }
-  
-  
-  //collect and collate all data on users.
-  
-  //1. get list of all users
-  let users = Meteor.users.find({},{fields: {profile: 1, createdAt:1, username: 1, emails: 1}, sort: { createdAt: -1 }});
-  if (users) {
-    //2. remove all users that don't have email addresses
-    var userDetails = users.fetch();
-    var usersWithEmail = _.filter(userDetails, function(val){ if(val.emails && val.emails[0] && val.emails[0].address){ return true; } else { return false;} });
-    
-    var deepstreamsWithMailChimpDetails = Deepstreams.find({}, {fields: { mainCuratorId: 1, streams: 1}, sort: { mainCuratorId: 1}}).fetch();
-    
-    var curatorIdsFromDeepstreams = _.pluck(deepstreamsWithMailChimpDetails, 'mainCuratorId');
-    var curatorWithDeepstreamIdList = _.uniq(curatorIdsFromDeepstreams, true);
-    
-    var splitByHavingDeepstreams = _.partition(usersWithEmail, function(val){
-      return _.contains(curatorWithDeepstreamIdList, val._id);
-    });
-    
-    //3. which users have no deepstreams
-    var usersWhoHaveNotCreatedADeepstream = splitByHavingDeepstreams[1];
-    
-    var suggestionsWithMailChimpDetails = SuggestedContextBlocks.find({}, {fields: { suggestedBy: 1}, sort: { suggestedBy: 1}}).fetch();
-    
-    var suggestorIdsFromDeepstreams = _.pluck(suggestionsWithMailChimpDetails, 'suggestedBy');
-    var suggestorWithoutDeepstreamIdList = _.uniq(suggestorIdsFromDeepstreams, true);
-    
-    var splitByHavingSuggestions = _.partition(usersWhoHaveNotCreatedADeepstream, function(val){
-      return _.contains(suggestorWithoutDeepstreamIdList, val._id);
-    });
-    
-    //4. which users have no deepstreams and have made suggestions
-    //console.log(splitByHavingSuggestions[0])
-    //5. which users have no deepstreams and no suggestions
-    //console.log(splitByHavingSuggestions[1])
-    
-
-    //6. which users have 1 deepstream
-    var countOfDeepstreamsPerUser = _.countBy(curatorIdsFromDeepstreams);
-    // console.log(JSON.stringify(_.groupBy(countOfDeepstreamsPerUser,)));
-    //console.log(JSON.stringify(countOfDeepstreamsPerUser));
-    
-    var usersWhoHaveCreatedADeepstream = splitByHavingDeepstreams[0];
-    
-   // console.log(JSON.stringify(usersWhoHaveCreatedADeepstream));
-    
-    //7. which users have >1 deepstream
-    _.mapObject( countOfDeepstreamsPerUser, function(val, key) {
-      // console.log(key + ' has ' + val + ' deepstreams!');
-    });
-    
-    
-    //8. which users have never added a context card
-    
-    var contextWithMailChimpDetails = ContextBlocks.find({}, {fields: { authorId: 1}, sort: {authorId: 1}}).fetch();
-    
-    var contextAuthorIdsFromContextBlocks = _.pluck(contextWithMailChimpDetails, 'authorId');
-    var contextAuthorIdList = _.uniq(contextAuthorIdsFromContextBlocks, true);
-    
-    var splitByHavingContext = _.partition(usersWhoHaveCreatedADeepstream, function(val){
-      return _.contains(contextAuthorIdList, val._id);
-    });
-   // console.log(splitByHavingContext[1]);
-    
-    
-    //9. which users have never added a second stream
-    var deepstreamsWithNoMoreThanOneStreamMailChimpDetails = 
-        _.partition(deepstreamsWithMailChimpDetails, function(val){
-      return val.streams.length < 2;
-    })[0];
-    
-    console.log(deepstreamsWithNoMoreThanOneStreamMailChimpDetails[0])
-    var curatorIdsFromDeepstreamsWithNoMoreThanOneStream = _.pluck(deepstreamsWithNoMoreThanOneStreamMailChimpDetails, 'mainCuratorId');
-    var curatorWithDeepstreamWithNoMoreThanOneStreamIdList = _.uniq(curatorIdsFromDeepstreamsWithNoMoreThanOneStream, true);
-    
-    var splitByHavingDeepstreamsWithNoMoreThanOneStream = _.partition(usersWhoHaveCreatedADeepstream, function(val){
-      return _.contains(curatorWithDeepstreamWithNoMoreThanOneStreamIdList, val._id);
-    });
-    console.log( splitByHavingDeepstreamsWithNoMoreThanOneStream[0]);
-
-  }
-  
-  
-  
-  
-  
-  
-  
-  //8. which emails in the newsletter signup list do not have an account
-  
-  
-  //batch add users to mailchimp
-  var mailChimpBatchUpdate = 
-      [
-        {
-          email: {
-            email: 'dwanderton+batch1@gmail.com',
-          },
-          emailType: 'html',
-          mergeVars: {
-            groupings: [
-              { name: "" }
-            ]
-          }
-        }
-      ];
-  mailchimpApiContainer.call('lists', 'batch-subscribe', 
-    { 
-      id: MAILCHIMP_LIST_ID, 
-      double_optin: false, 
-      update_existing: true,
-      replace_interests: true,
-      batch: mailChimpBatchUpdate
-    }, function (error, data) {
-    if (error) {
-        console.log(error.message);
-    } else {
-       console.log('MailChimp subscribers added: ' + data.add_count);
-       console.log('MailChimp subscribers updated: ' + data.update_count);
-       if(data.error_count > 0 || data.errors.length > 0){
-         console.error('MailChimp number of errors: ' + data.error_count);
-         console.error(JSON.stringify(data.errors));
-       }
-       // console.log(JSON.stringify(data)); // Do something with your data!
-    }
-  });
-  
-  
-  /*
-  mailchimpApiContainer.call('campaigns', 'list', { start: 0, limit: 25 }, function (error, data) {
-    if (error)
-        console.log(error.message);
-    else
-        console.log(JSON.stringify(data)); // Do something with your data!
-  });
-
-  mailchimpApiContainer.call('campaigns', 'template-content', { cid: '123456' }, function (error, data) {
-    if (error)
-        console.log(error.message);
-    else
-        console.log(JSON.stringify(data)); // Do something with your data!
-  });
-  */
+  updateMailChimpEmails();
+  timeLogs.push('Mailchimp update time: ' + ((Date.now() - previousTimepoint) / 1000) + ' seconds');
+  previousTimepoint = Date.now();
 
   _.each(timeLogs, function(str){
     console.log(str);
