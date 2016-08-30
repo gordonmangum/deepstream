@@ -12,6 +12,22 @@
 
 @mainStreamExpandedHeight: 645px;
 
+.navbar-collapse.collapse.in {
+  display: block!important;
+}
+
+.new-watch{
+  .inverse-brand {
+    height: 30px;
+    width: 30px;
+    padding: 4px;
+    background-color: #fff;
+    margin-top: -4px;
+    display: inline;
+  }
+
+}
+
 
 .watch{
   background-color: @watch-background-color;
