@@ -107,8 +107,10 @@
 </template>
 
 <template name="videoMarkerInput">
-  <label>Appear at </label>
-  <input id="video-marker-input" type="text" value="{{videoMarkerEstimate}}"/>
+  {{#if replayEnabled}}
+    <label>Appear at </label>
+    <input id="video-marker-input" type="text" value="{{videoMarkerEstimate}}"/>
+  {{/if}}
 </template>
 
 <template name="create_text_section">
