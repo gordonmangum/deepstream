@@ -3,7 +3,6 @@
     {{> minimal_navbar fixed=showRightSection}}
     
     {{#with thisDeepstream}}
-    
       {{#if streamUrl}}
         {{#if showRightSection}}
           <div class="main-stream-container">
@@ -305,18 +304,49 @@
           </div>
           <div class="portrait-context-container">
             {{#with deepstreamForContext}}
-              {{> context_browser contextBlocks=orderedContext deepstream=deepstreamForContext}}
+              {{> context_browser_portrait contextBlocks=orderedContext deepstream=deepstreamForContext}}
             {{/with}}
           </div>
         {{/if}}
       {{/if}}
     {{/with}}
-    
-    
-    
-    
+  </div>
+</template>
 
-
+<template name="context_browser_portrait">
+  <div class="context-browser" style="height:{{mainStreamHeight}}px">
+      <div class="context-area list-mode {{#if soloSidebarContextMode}}hide{{/if}}">
+        {{#each contextBlocks}}
+          {{> list_item_context_section}}
+        {{/each}}
+          <div class="narrative-section context-section list-item-context-section news-card curator-card">
+            <div class="news-preview-top">
+            <div class="news-author"><small>Curated By</small></div>
+            <div class="news-date">
+              {{curatorNames}}
+            </div>
+            <div class="user-pic">
+              {{> default_user_pic }}
+            </div>
+           </div>
+           
+            <div class="show-full">
+              <center>
+                <button class="curator-card-like favorite-button {{#if userFavorited}}unfavorite{{else}}favorite{{/if}}">{{> favorite_icon}} Show some love</button>
+              </center>
+              {{#if replayEnabled}}
+                {{#if replayAvailable}}
+                <center>
+                  <button class="curator-card-replay {{#if replayContextOn}}replay{{/if}}">{{> replay_icon}} Replay Context</button>
+                </center>
+                {{/if}}
+              {{/if}}
+              <center>
+                <button class="curator-card-create create">{{> create_icon}} Make your own</button>
+              </center>
+            </div>
+          </div>
+      </div>
   </div>
 </template>
 
