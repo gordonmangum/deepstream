@@ -35,3 +35,4 @@ Supported providers currently:
 - Meerkat (username)
 - Twitcast (username)
 - Vine (embed code)
+- wral.com (videoJs in iFrame)
