@@ -1,74 +1,324 @@
 <template name="watch_page">
   <div class="new-watch">
-    <nav class="navbar navbar-inverse navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button class="navbar-brand collapsed pull-left" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <img alt="Logo" src="/images/logo.svg" class="inverse-brand img-circle">
-            <i class="fa fa-caret-down"></i>
-          </button>
-        </div>
-        
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-            <!--
-            <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-              
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">One more separated link</a></li>
-                
-              </ul>
-            </li>
-            -->
-          </ul>
-          <!--
-          <form class="navbar-form navbar-left">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search">
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-          </form>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Link</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-              </ul>
-            </li>
-          </ul>
-          -->
-        </div><!-- /.navbar-collapse -->
-      </div>
-    </nav>  
-   
+    {{> minimal_navbar fixed=showRightSection}}
     
+    {{#with thisDeepstream}}
     
-    <!-- 16:9 portrait aspect ratio -->
-    <div class="embed-responsive embed-responsive-16by9">
-      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/LwhlV2o5tlI"></iframe>
-    </div>
-    <h1>watch page!</h1>
+      {{#if streamUrl}}
+        {{#if showRightSection}}
+          <div class="main-stream-container">
+            <iframe id="{{mainStreamIFrameId}}"
+                    class="main-stream-iframe  {{#unless mainStreamInIFrame}}hide{{/unless}} {{#if facebookIframe}}facebook{{/if}}"
+                    src="{{#if mainStreamInIFrame}}{{streamUrl}}{{/if}}" frameborder="0"
+                    allowfullscreen></iframe>
+            {{#if mainStreamInFlashPlayer}}
+              {{#unless removeMainStream}}
+              {{#if bambuserPlayer}}
+                <object id="{{mainStreamFlashPlayerId}}" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+                        class="main-stream-flash-object ">
+                  <embed name="{{mainStreamFlashPlayerId}}" src="//static.bambuser.com/r/player.swf"
+                         type="application/x-shockwave-flash" flashvars="{{mainStreamFlashVars}}" allowfullscreen="true"
+                         allowscriptaccess="always" wmode="opaque"/>
+                  <param name="movie" value="//static.bambuser.com/r/player.swf"/>
+                  <param name="flashvars" value="{{#if mainStreamInFlashPlayer}}{{mainStreamFlashVars}}{{/if}}"/>
+                  <param name="allowfullscreen" value="true"/>
+                  <param name="allowscriptaccess" value="always"/>
+                  <param name="wmode" value="opaque"/>
+                </object>
+              {{else}}
+                {{#if twitchPlayer}}
+                  <object id="{{mainStreamFlashPlayerId}}"
+                          bgcolor='#000000'
+                          data='//www-cdn.jtvnw.net/swflibs/TwitchPlayer.swf'
+                          class="main-stream-flash-object "
+                          type='application/x-shockwave-flash'>
 
+                    <param name="allowFullScreen"
+                           value="true"/>
+                    <param name="allowNetworking"
+                           value="all"/>
+                    <param name="allowScriptAccess"
+                           value="always"/>
+                    <param name='movie'
+                           value='//www-cdn.jtvnw.net/swflibs/TwitchPlayer.swf'/>
+                    <param name='flashvars'
+                           value='{{mainStreamFlashVars}}'/>
+                  </object>
+                {{/if}}
+                {{#if twitcastPlayer}}
+                  {{#if PiP}}
+                  <div id="twitcastOverlay" style="width:285px; height:160px;"></div>
+                  <object id="{{mainStreamFlashPlayerId}}" 
+                          classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"  codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" 
+                          width="285" 
+                          height="160"
+                          align="middle"
+                          style="margin-left:-20px; ">
+                    <param name="allowScriptAccess" value="always" />
+                    <param name="allowFullScreen" value="true" />
+                    <param name="flashVars" value="{{mainStreamFlashVars}}" />
+                    <param name="movie" value="http://twitcasting.tv/swf/livestreamer2sp.swf" />
+                    <param name="quality" value="high" />
+                    <param name="bgcolor" value="#ffffff" />
+                    <embed src="http://twitcasting.tv/swf/livestreamer2sp.swf" 
+                           quality="high" 
+                           bgcolor="#ffffff" 
+                           width="285" 
+                           height="160" 
+                           name="livestreamer" 
+                           id="livestreamderembed" 
+                           align="middle" 
+                           allowScriptAccess="always" 
+                           allowFullScreen="true" 
+                           type="application/x-shockwave-flash" 
+                           pluginspage="http://www.adobe.com/go/getflashplayer" 
+                           flashVars="{{mainStreamFlashVars}}" >
+                  </object>
+                  {{else}}
+                  <div id="twitcastOverlay" style="width:{{windowWidth}}px; height:{{windowHeight -100}}px;"></div>
+                  <object id="{{mainStreamFlashPlayerId}}" 
+                          classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"  codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" 
+                          width="{{windowWidth}}" 
+                          height="{{windowHeight -50}}"
+                          align="middle"
+                          style="margin-left:-20px; ">
+                    <param name="allowScriptAccess" value="always" />
+                    <param name="allowFullScreen" value="true" />
+                    <param name="flashVars" value="{{mainStreamFlashVars}}" />
+                    <param name="movie" value="http://twitcasting.tv/swf/livestreamer2sp.swf" />
+                    <param name="quality" value="high" />
+                    <param name="bgcolor" value="#ffffff" />
+                    <embed src="http://twitcasting.tv/swf/livestreamer2sp.swf" 
+                           quality="high" 
+                           bgcolor="#ffffff" 
+                           width="{{windowWidth}}" 
+                           height="{{windowHeight -50}}" 
+                           name="livestreamer" 
+                           id="livestreamderembed" 
+                           align="middle" 
+                           allowScriptAccess="always" 
+                           allowFullScreen="true" 
+                           type="application/x-shockwave-flash" 
+                           pluginspage="http://www.adobe.com/go/getflashplayer" 
+                           flashVars="{{mainStreamFlashVars}}" >
+                  </object>
+                  {{/if}}
+                {{/if}}
+              {{/if}}
+              {{/unless}}
+            {{/if}}
+          </div>
+          <div class="right-section {{#unless showRightSection}}collapsed{{/unless}}">
+        {{#if showOpenSidebarIcon}}
+          <div class="bar-open-close fadeIn fadeOut animated-fast">
+            <button class="open-sidebar">
+              {{> close_left_icon}}
+            </button>
+          </div>
+        {{else}}
+          {{#if showCloseSidebarIcon}}
+          <!-- close button on menu bar -->
+          {{/if}}
+        {{/if}}
+
+        {{#with deepstreamForContext}}
+
+          {{#if showContextSearch}}
+            {{> content_icons}}
+            {{> add_context}}
+          {{else}}
+            {{#if showWebcamSetup}}
+              {{> webcam_setup}}
+            {{else}}
+              {{#if showManageCuratorsMenu}}
+                {{> manage_curators_menu}}
+              {{else}}
+                {{> context_browser_area deepstreamForContext}}
+              {{/if}}
+            {{/if}}
+          {{/if}}
+        {{/with}}
+
+        {{#with thisDeepstream}}
+         {{#if isCurator}}
+         <div class="settings-bar {{#unless curateMode}}wide-menu short-margin-top{{/unless}}  {{#if showContextBrowser}}short-margin-top{{/if}}">
+            
+           {{#if curateMode}}
+            <div class="button-container icon-button">
+              <button title="Set up webcam narration" class="webcam">{{> webcam_icon}}</button>
+            </div>
+          {{/if}}
+
+          {{#if isCurator}}
+            {{#if onCuratePage}}
+              <div class="button-container">
+              {{#if curateMode}}
+                {{#if showPreviewEditButton}}
+                  <button class="preview">Preview</button>
+                {{/if}}
+              {{else}}
+                {{#if showPreviewEditButton}}
+                  <button class="return-to-curate">Edit</button>
+                {{/if}}
+              {{/if}}
+              </div>
+            {{/if}}
+          {{/if}}
+           
+           
+          {{#if curateMode}}
+          <div class="button-container icon-button">
+              <button class="settings-menu-button {{#if settingsMenuOpen}}active{{/if}}">{{> setting_icon}}</button>
+              {{#if settingsMenuOpen}}
+                {{> settings_menu}}
+              {{/if}}
+          </div>
+          {{/if}}
+
+        </div>
+        {{/if}}
+      
+        {{#unless isCurator}}
+          {{#if showHighlightContext}}
+            <div class="highlight-context-container fadeIn fadeOut">
+              <div class="highlight-context-content">
+                <p>Click context cards to expand them.</p>
+                <p>You can learn more about the topic while watching the video!</p>
+                <center>
+                  <button class="got-it-context">Got it!</button>
+                </center>
+              </div>
+            </div>
+          {{/if}}
+          {{#unless showContextSearch}}
+            <button class="suggest-content">Suggest great context</button>
+          {{/unless}}
+        {{/unless}}
+      {{/with}}
+    </div>
+        {{else}}
+          <!-- 16:9 portrait aspect ratio -->
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe id="{{mainStreamIFrameId}}"
+                    class="embed-responsive-item main-stream-iframe  {{#unless mainStreamInIFrame}}hide{{/unless}} {{#if facebookIframe}}facebook{{/if}}"
+                    src="{{#if mainStreamInIFrame}}{{streamUrl}}{{/if}}" frameborder="0"
+                    allowfullscreen></iframe>
+            {{#if mainStreamInFlashPlayer}}
+              {{#unless removeMainStream}}
+              {{#if bambuserPlayer}}
+                <object id="{{mainStreamFlashPlayerId}}" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+                        class="embed-responsive-item main-stream-flash-object ">
+                  <embed name="{{mainStreamFlashPlayerId}}" src="//static.bambuser.com/r/player.swf"
+                         type="application/x-shockwave-flash" flashvars="{{mainStreamFlashVars}}" allowfullscreen="true"
+                         allowscriptaccess="always" wmode="opaque"/>
+                  <param name="movie" value="//static.bambuser.com/r/player.swf"/>
+                  <param name="flashvars" value="{{#if mainStreamInFlashPlayer}}{{mainStreamFlashVars}}{{/if}}"/>
+                  <param name="allowfullscreen" value="true"/>
+                  <param name="allowscriptaccess" value="always"/>
+                  <param name="wmode" value="opaque"/>
+                </object>
+              {{else}}
+                {{#if twitchPlayer}}
+                  <object id="{{mainStreamFlashPlayerId}}"
+                          bgcolor='#000000'
+                          data='//www-cdn.jtvnw.net/swflibs/TwitchPlayer.swf'
+                          class="embed-responsive-item main-stream-flash-object "
+                          type='application/x-shockwave-flash'>
+
+                    <param name="allowFullScreen"
+                           value="true"/>
+                    <param name="allowNetworking"
+                           value="all"/>
+                    <param name="allowScriptAccess"
+                           value="always"/>
+                    <param name='movie'
+                           value='//www-cdn.jtvnw.net/swflibs/TwitchPlayer.swf'/>
+                    <param name='flashvars'
+                           value='{{mainStreamFlashVars}}'/>
+                  </object>
+                {{/if}}
+                {{#if twitcastPlayer}}
+                  {{#if PiP}}
+                  <div id="twitcastOverlay" style="width:285px; height:160px;"></div>
+                  <object id="{{mainStreamFlashPlayerId}}" 
+                          classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" 
+                          class="embed-responsive-item" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" 
+                          width="285" 
+                          height="160"
+                          align="middle"
+                          style="margin-left:-20px; ">
+                    <param name="allowScriptAccess" value="always" />
+                    <param name="allowFullScreen" value="true" />
+                    <param name="flashVars" value="{{mainStreamFlashVars}}" />
+                    <param name="movie" value="http://twitcasting.tv/swf/livestreamer2sp.swf" />
+                    <param name="quality" value="high" />
+                    <param name="bgcolor" value="#ffffff" />
+                    <embed src="http://twitcasting.tv/swf/livestreamer2sp.swf" 
+                           quality="high" 
+                           bgcolor="#ffffff" 
+                           width="285" 
+                           height="160" 
+                           name="livestreamer" 
+                           id="livestreamderembed" 
+                           align="middle" 
+                           allowScriptAccess="always" 
+                           allowFullScreen="true" 
+                           type="application/x-shockwave-flash" 
+                           pluginspage="http://www.adobe.com/go/getflashplayer" 
+                           flashVars="{{mainStreamFlashVars}}" >
+                  </object>
+                  {{else}}
+                  <div id="twitcastOverlay" style="width:{{windowWidth}}px; height:{{windowHeight -100}}px;"></div>
+                  <object id="{{mainStreamFlashPlayerId}}" 
+                          classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" 
+                          class="embed-responsive-item" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" 
+                          width="{{windowWidth}}" 
+                          height="{{windowHeight -50}}"
+                          align="middle"
+                          style="margin-left:-20px; ">
+                    <param name="allowScriptAccess" value="always" />
+                    <param name="allowFullScreen" value="true" />
+                    <param name="flashVars" value="{{mainStreamFlashVars}}" />
+                    <param name="movie" value="http://twitcasting.tv/swf/livestreamer2sp.swf" />
+                    <param name="quality" value="high" />
+                    <param name="bgcolor" value="#ffffff" />
+                    <embed src="http://twitcasting.tv/swf/livestreamer2sp.swf" 
+                           quality="high" 
+                           bgcolor="#ffffff" 
+                           width="{{windowWidth}}" 
+                           height="{{windowHeight -50}}" 
+                           name="livestreamer" 
+                           id="livestreamderembed" 
+                           align="middle" 
+                           allowScriptAccess="always" 
+                           allowFullScreen="true" 
+                           type="application/x-shockwave-flash" 
+                           pluginspage="http://www.adobe.com/go/getflashplayer" 
+                           flashVars="{{mainStreamFlashVars}}" >
+                  </object>
+                  {{/if}}
+                {{/if}}
+              {{/if}}
+              {{/unless}}
+
+            {{/if}}
+          </div>
+          <div class="portrait-context-container">
+            {{#with deepstreamForContext}}
+              {{> context_browser contextBlocks=orderedContext deepstream=deepstreamForContext}}
+            {{/with}}
+          </div>
+        {{/if}}
+      {{/if}}
+    {{/with}}
+    
+    
+    
+    
 
 
   </div>
 </template>
-
 
 
 
@@ -77,6 +327,7 @@
   {{#if isMobile}}
     {{> mobile_progress_overlay}}
   {{/if}}
+
   {{#if showDeepstreamAboutOverlay}}
     {{> deepstream_about_overlay}}
   {{/if}}
@@ -241,21 +492,21 @@
         </div>
         <div class="main-section {{#if expandMainSection}}expanded{{/if}}">
 
-          <div class="main-stream {{#if expandMainSection}}expanded{{/if}} {{#if PiP}}PiP{{/if}}" style="height: {{mainStreamHeight}}px">
+          <div class="main-stream {{#if expandMainSection}}expanded{{/if}}" style="height: {{mainStreamHeight}}px">
             {{#if showTutorial}}
               {{> creation_tutorial}}
             {{/if}}
             {{#if streamUrl}}
-              <div class="main-stream-container {{#if PiP}}PiP{{/if}}">
+              <div class="main-stream-container">
                 <iframe id="{{mainStreamIFrameId}}"
-                        class="main-stream-iframe {{#if featuredMode}}featured{{/if}} {{#unless mainStreamInIFrame}}hide{{/unless}} {{#if PiP}}PiP{{/if}} {{#if facebookIframe}}facebook{{/if}}"
+                        class="main-stream-iframe  {{#unless mainStreamInIFrame}}hide{{/unless}} {{#if facebookIframe}}facebook{{/if}}"
                         src="{{#if mainStreamInIFrame}}{{streamUrl}}{{/if}}" frameborder="0"
                         allowfullscreen></iframe>
                 {{#if mainStreamInFlashPlayer}}
                   {{#unless removeMainStream}}
                   {{#if bambuserPlayer}}
                     <object id="{{mainStreamFlashPlayerId}}" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-                            class="main-stream-flash-object {{#if featuredMode}}featured{{/if}} {{#if PiP}}PiP{{/if}}">
+                            class="main-stream-flash-object ">
                       <embed name="{{mainStreamFlashPlayerId}}" src="//static.bambuser.com/r/player.swf"
                              type="application/x-shockwave-flash" flashvars="{{mainStreamFlashVars}}" allowfullscreen="true"
                              allowscriptaccess="always" wmode="opaque"/>
@@ -270,7 +521,7 @@
                       <object id="{{mainStreamFlashPlayerId}}"
                               bgcolor='#000000'
                               data='//www-cdn.jtvnw.net/swflibs/TwitchPlayer.swf'
-                              class="main-stream-flash-object {{#if featuredMode}}featured{{/if}} {{#if PiP}}PiP{{/if}}"
+                              class="main-stream-flash-object "
                               type='application/x-shockwave-flash'>
 
                         <param name="allowFullScreen"
@@ -745,7 +996,6 @@
   {{/if}}
 </template>
 
-
 <template name="context_card_column">
   <div class="card-column">
     <div class="previews-container">
@@ -839,7 +1089,6 @@
   </div>
 </template>
 
-
 <template name="solo_context_section">
   <div class="narrative-section context-section solo-context-section {{#if type}}{{type}}-card{{/if}}" data-context-id="{{_id}}">
     <button title="close" class="close">{{> close_circle}}</button>
@@ -851,7 +1100,7 @@
 </template>
 
 <template name="list_item_context_section_featured">
-  <div class="list-item-context-plus-annotation {{#if featuredMode}}featured{{/if}}" data-context-id="{{_id}}">
+  <div class="list-item-context-plus-annotation " data-context-id="{{_id}}">
     <div class="narrative-section context-section list-item-context-section {{#if type}}{{type}}-card{{/if}} {{#if hasSoloMode}}isClickable{{/if}}" data-context-id="{{_id}}">
       <div class="clickable">
         <div class="provider">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}{{providerName}}</div>
