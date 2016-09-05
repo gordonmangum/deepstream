@@ -325,7 +325,6 @@
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
-    {{#with deepstreamForContext}}
     <div class="item active">
       <img src="..." alt="...">
       <div class="carousel-caption">
@@ -338,7 +337,50 @@
         ...
       </div>
     </div>
-    {{/with}}
+    <div class="item">
+      <div class="embedly-card">
+        <div class="embedly-card-hug" style="width: 600px; padding: 0px; position: relative; max-width: 100%; margin: 5px auto;">
+          <div class="card article">
+            <div class="hdr">
+              <div class="provider provider-gt-35">
+                <img class="provider-favicon" height="16" src=
+                "https://s.ytimg.com/yts/img/favicon-vflz7uhzw.ico" width="16"><a class=
+                "provider-name" href="https://www.youtube.com/" target=
+                "_blank">YouTube</a><span class="author">&nbsp;<a href=
+                "https://www.youtube.com/user/calacademy" tabindex="-1" target=
+                "_blank">California Academy of Sciences</a></span>
+              </div>
+            </div>
+            <div class="bd" style="border-left-color: rgb(224, 42, 25);">
+              <div class="pair-bd">
+                <div class="art-bd">
+                  <a class="" href="https://youtu.be/DyOYBUKxhlA" style=
+                  "padding-bottom: 46.8553%; background-color: rgb(255, 255, 255);"
+                  target="_blank"><img class="art-bd-img" src=
+                  "http://i-cdn.embed.ly/1/display/crop?height=300&amp;key=fd92ebbc52fc43fb98f69e50e7893c13&amp;url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FDyOYBUKxhlA%2Fhqdefault.jpg&amp;width=636"
+                  style="opacity: 1;"></a>
+                </div>
+                <div class="txt-bd">
+                  <h1 class="title"><a href="https://youtu.be/DyOYBUKxhlA" target=
+                  "_blank">YouTube Sharks</a>
+                  </h1>
+                  <p class="description">Enjoy the videos and music you love, upload
+                  original content, and share it all with friends, family, and the world
+                  on YouTube.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <blockquote class="embedly-card" data-card-key="5fa9c971d51442c7971c6cd2485272cd" data-card-controls="0" data-card-type="article-full"><h4><a href="https://youtu.be/DyOYBUKxhlA">YouTube Sharks</a></h4><p>Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.</p></blockquote>
+       <script async src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
+    </div>
+      {{#each contextBlocks}}
+        {{> portrait_item_context_section}}
+      {{/each}}
   </div>
 
   <!-- Controls -->
@@ -351,42 +393,46 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-  <!--
-  <div class="context-browser" style="height:{{mainStreamHeight}}px">
-    <div class="context-area list-mode {{#if soloSidebarContextMode}}hide{{/if}}">
-      {{#each contextBlocks}}
-        {{> list_item_context_section}}
-      {{/each}}
-        <div class="narrative-section context-section list-item-context-section news-card curator-card">
-          <div class="news-preview-top">
-          <div class="news-author"><small>Curated By</small></div>
-          <div class="news-date">
-            {{curatorNames}}
-          </div>
-          <div class="user-pic">
-            {{> default_user_pic }}
-          </div>
-         </div>
-
-          <div class="show-full">
-            <center>
-              <button class="curator-card-like favorite-button {{#if userFavorited}}unfavorite{{else}}favorite{{/if}}">{{> favorite_icon}} Show some love</button>
-            </center>
-            {{#if replayEnabled}}
-              {{#if replayAvailable}}
-              <center>
-                <button class="curator-card-replay {{#if replayContextOn}}replay{{/if}}">{{> replay_icon}} Replay Context</button>
-              </center>
-              {{/if}}
-            {{/if}}
-            <center>
-              <button class="curator-card-create create">{{> create_icon}} Make your own</button>
-            </center>
-          </div>
-        </div>
+</template>
+  
+<template name="portrait_item_context_section">
+  <div class="item">
+    
+    
+    <div class="list-item-context-plus-annotation" data-context-id="{{_id}}">
+    <div class="narrative-section context-section list-item-context-section {{#if type}}{{type}}-card{{/if}} {{#if hasSoloMode}}isClickable{{/if}}" data-context-id="{{_id}}">
+      <div class="clickable">
+        <div class="provider">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}{{providerName}}</div>
+        {{> Template.dynamic template=listModeItemTemplate}}
+        {{#unless curateMode}}
+          {{#if hoverIconTemplate}}<button class="hover-icon">{{> Template.dynamic template=hoverIconTemplate}}</button>{{/if}}
+        {{/unless}}
+      </div>
+      {{#if curateMode}}
+        {{#unless browseSuggestionsMode}}
+          <button title="delete" class="delete-context">{{> close_circle}}</button>
+        {{/unless}}
+      {{/if}}
     </div>
+    {{#if showAnnotationSection}}
+      {{> annotation_section}}
+    {{/if}}
+    {{#if replayEnabled}}
+      {{#if showVideoMarkerSection}}
+        {{> video_marker_section}}
+      {{/if}}
+    {{/if}}
+    {{#if suggestedByUsername}}
+      <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
+    {{/if}}
+    {{#if browseSuggestionsMode}}
+      <div class="moderation-buttons">
+        <button class="approve-suggestion">{{> approve_icon}}Approve</button>
+        <button class="reject-suggestion">{{> reject_icon}}Reject</button>
+      </div>
+    {{/if}}
   </div>
--->
+  </div>
 </template>
 
 
