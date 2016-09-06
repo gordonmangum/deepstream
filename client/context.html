@@ -22,7 +22,7 @@
   {{/if}}
   {{#unless isCuratorInTemplate}}
     {{#unless hasVoted _id}}
-    <span>
+    <span style="text-align:center;">
       {{#each option in options}}
         <div class="padded">
           <input type="radio" name="vote-{{_id}}" value="{{@index}}" id="radio-{{_id}}-option-{{@index}}"><label class="vote-option" for="radio-{{_id}}-option-{{@index}}">{{option.name}}</label>
@@ -366,13 +366,10 @@
     {{/if}}
   </div>
   <div class="txt-bd">
-    <h1 class="title">
-      {{#if ownerName}}
-      <a href="{{ownerUrl}}" target="_blank">{{ownerName}}</a>
+    <p class="description"><b>{{#if ownerName}}<a href="{{ownerUrl}}" target="_blank">{{ownerName}}</a>
       <span class="separator">·</span>
-      {{/if}}
-    </h1>
-    <p class="description"><a href="{{webUrl}}" target="_blank">{{#if uploadDate}}{{uploadDate}}{{/if}}</a></p>
+      {{/if}}<a href="{{webUrl}}" target="_blank">{{#if uploadDate}}{{uploadDate}}{{/if}}</a></b></p>
+    <p class="description">{{annotation}}</p>
   </div>
 </template>
 
@@ -393,24 +390,16 @@
 
 <template name="portrait_preview_video_section">
   <div class="art-bd">
-    <!-- {{> play_video_icon}}-->
-    <img class="art-bd-img" src="{{previewUrl}}" style="opacity: 1;">
-    <!-- 
-    <a class="" href="https://youtu.be/DyOYBUKxhlA" style=
-    "padding-bottom: 46.8553%; background-color: rgb(255, 255, 255);"
-    target="_blank">
-      <img class="art-bd-img" src="{{previewUrl}}" style="opacity: 1;">
-    </a>
-    -->
+    <!-- 16:9 aspect ratio -->
+    <div class="embed-responsive embed-responsive-16by9">
+      <iframe class="embed-responsive-item" src="{{url}}" frameborder="0" allowfullscreen></iframe>
+    </div>
   </div>
   <div class="txt-bd">
     <h1 class="title">
       {{title}}
-      <!--<a href="https://youtu.be/DyOYBUKxhlA" target="_blank">
-        {{title}}
-      </a> -->
     </h1>
-    <p class="description">{{description}}</p>
+    <p class="description">{{caption}}</p>
   </div>
 </template>
 
@@ -528,6 +517,6 @@
       </a> -->
     </h1>
     <p class="description"><b>{{primaryAuthor}}{{#if primaryAuthor}}{{#if publicationDate}} - {{/if}}{{/if}}{{formatDateNice publicationDate}}</b></p>
-    <p class="description">{{introduction}}</p>
+    <p class="description">{{{html}}}</p>
   </div>
 </template>

@@ -1070,6 +1070,16 @@ ImageBlock = (function (_super) {
         return '//res.cloudinary.com/' + Meteor.settings['public'].CLOUDINARY_CLOUD_NAME + '/image/upload/f_auto,c_limit,h_150,w_260/' + this.reference.id;
     }
   };
+  
+  ImageBlock.prototype.annotation = function() {
+    switch (this.source) {
+      case 'flickr':
+        return this.annotation;
+      default:
+        return false;
+    }
+  };
+  
 
   ImageBlock.prototype.anchorMenuSnippet = function () {
     return this.description || this.reference.title || this.reference.description || this.reference.id;
