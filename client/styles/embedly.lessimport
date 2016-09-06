@@ -216,6 +216,10 @@ em {
 img {
     max-width: 100%
 }
+
+twitterwidget {
+  margin: 0 auto;
+}
 @font-face {
     font-family: Oxygen;
     src: url(/libs/fonts/oxygen/oxygen-bold-webfont.eot);

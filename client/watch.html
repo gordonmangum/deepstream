@@ -397,41 +397,32 @@
   
 <template name="portrait_item_context_section">
   <div class="item">
-    
-    
-    <div class="list-item-context-plus-annotation" data-context-id="{{_id}}">
-    <div class="narrative-section context-section list-item-context-section {{#if type}}{{type}}-card{{/if}} {{#if hasSoloMode}}isClickable{{/if}}" data-context-id="{{_id}}">
-      <div class="clickable">
-        <div class="provider">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}{{providerName}}</div>
-        {{> Template.dynamic template=listModeItemTemplate}}
-        {{#unless curateMode}}
-          {{#if hoverIconTemplate}}<button class="hover-icon">{{> Template.dynamic template=hoverIconTemplate}}</button>{{/if}}
-        {{/unless}}
+    <div class="embedly-card" data-context-id="{{_id}}">
+      <div class="embedly-card-hug" style="width: 600px; padding: 0px; position: relative; max-width: 100%; margin: 5px auto;">
+        <div class="card article">
+          <div class="hdr">
+            <div class="provider provider-gt-35">
+              {{#if providerIconUrl}}
+                <img class="provider-favicon" height="16" src="{{providerIconUrl}}" width="16">
+              {{/if}}
+              <a class="provider-name" href="{{providerUrl}}" target="_blank">{{providerName}}</a>
+              <!-- <span class="author">&nbsp;<a href="https://www.youtube.com/user/calacademy" tabindex="-1" target="_blank">California Academy of Sciences</a></span> -->
+            </div>
+          </div>
+          <div class="bd" style="border-left-color: rgb(224, 42, 25);">
+            <div class="pair-bd">
+              {{> Template.dynamic template=portraitListModeItemTemplate}}
+            </div>
+          </div>
+        </div>
       </div>
-      {{#if curateMode}}
-        {{#unless browseSuggestionsMode}}
-          <button title="delete" class="delete-context">{{> close_circle}}</button>
-        {{/unless}}
-      {{/if}}
     </div>
     {{#if showAnnotationSection}}
       {{> annotation_section}}
     {{/if}}
-    {{#if replayEnabled}}
-      {{#if showVideoMarkerSection}}
-        {{> video_marker_section}}
-      {{/if}}
-    {{/if}}
     {{#if suggestedByUsername}}
       <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
     {{/if}}
-    {{#if browseSuggestionsMode}}
-      <div class="moderation-buttons">
-        <button class="approve-suggestion">{{> approve_icon}}Approve</button>
-        <button class="reject-suggestion">{{> reject_icon}}Reject</button>
-      </div>
-    {{/if}}
-  </div>
   </div>
 </template>
 

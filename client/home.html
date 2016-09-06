@@ -1,26 +1,26 @@
 <template name="login_buttons2016">
-    {{#if loggingOut}}
+  {{#if loggingOut}}
+    <li>
+      <a>
+      Logging out...
+      </a>
+    </li>
+  {{else}}
+    {{#if currentUser}}
       <li>
-        <a>
-        Logging out...
-        </a>
+        {{> create_deepstream2016}}
       </li>
+      <li>
+        <a href="/my_streams">My streams</a>
+      </li>
+      <li>
+        <a class="logout">Logout</a>
+      </li>
+
     {{else}}
-      {{#if currentUser}}
-        <li>
-          {{> create_deepstream2016}}
-        </li>
-        <li>
-          <a href="/my_streams">My streams</a>
-        </li>
-        <li>
-          <a class="logout">Logout</a>
-        </li>
-        
-      {{else}}
-        <li class="signin"><a>Log in / Sign up</a></li>
-      {{/if}}
+      <li class="signin"><a>Log in / Sign up</a></li>
     {{/if}}
+  {{/if}}
 </template>
 
 <template name="login_buttons">

@@ -133,6 +133,11 @@
     </div>
   </div>
 </template>
+<template name="portrait_display_audio_section">
+   <div class="art-bd">
+     <iframe class="art-bd-img" width="100%" height="100%" frameborder="0" style="border:0" src="{{url}}" allowfullscreen></iframe>
+  </div>
+</template>
 
 <template name="display_video_section">
   <div class="video-section">
@@ -198,6 +203,26 @@
   </div>
 </template>
 
+<template name="portrait_display_link_section">
+   <div class="art-bd">
+    <a class="" href="{{url}}" style=
+    "padding-bottom: 46.8553%; background-color: rgb(255, 255, 255);"
+    target="_blank">
+      <img class="art-bd-img" src="{{thumbnailUrl}}" style="opacity: 1;">
+    </a>
+  </div>
+  <div class="txt-bd">
+    <h1 class="title">
+      {{title}}
+      <!--<a href="https://youtu.be/DyOYBUKxhlA" target="_blank">
+        {{title}}
+      </a> -->
+    </h1>
+    <p class="description">{{linkDescription}}</p>
+    <a class="action" target="_blank" href="{{url}}">Read this on {{providerTruncatedUrl}} &gt;</a>
+  </div>
+</template>
+
 <template name="display_twitter_section">
   <div class="twitter-section">
     <div class="active-display">
@@ -253,6 +278,14 @@
   </div>
 </template>
 
+<template name="portrait_display_twitter_section">
+  <div class="art-bd">
+    <div class="art-bd-img">
+      <blockquote class="art-bd-img twitter-tweet" data-lang="en"><p lang="en" dir="ltr">{{{formattedTweet}}} {{#if imgUrl}}<a href="{{imgUrl}}" target="_blank">{{imgUrl}}</a>{{/if}}</p>&mdash; {{username}} (@{{screenname}}) <a href="{{tweet_url}}">{{creationDateString}}</a></blockquote>
+    </div>
+  </div>
+  <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</template>
 
 <template name="homepage_preview_twitter_section">
   <div class="homepage-preview-twitter-section">
@@ -324,6 +357,25 @@
     {{/if}}
   </div>
 </template>
+<template name="portrait_preview_image_section">
+  <div class="art-bd">
+    {{#if showVideo}}
+      {{> looping_video}}
+    {{else}}
+    <img class="art-bd-img" src="{{url}}" style="opacity: 1;">
+    {{/if}}
+  </div>
+  <div class="txt-bd">
+    <h1 class="title">
+      {{#if ownerName}}
+      <a href="{{ownerUrl}}" target="_blank">{{ownerName}}</a>
+      <span class="separator">·</span>
+      {{/if}}
+    </h1>
+    <p class="description"><a href="{{webUrl}}" target="_blank">{{#if uploadDate}}{{uploadDate}}{{/if}}</a></p>
+  </div>
+</template>
+
 
 <template name="preview_video_section">
   <div class="show-full">
@@ -336,6 +388,29 @@
     </div>
     <div class="preview-placeholder" style="height: {{height}}px; width: {{width}}px;">
     </div>
+  </div>
+</template>
+
+<template name="portrait_preview_video_section">
+  <div class="art-bd">
+    <!-- {{> play_video_icon}}-->
+    <img class="art-bd-img" src="{{previewUrl}}" style="opacity: 1;">
+    <!-- 
+    <a class="" href="https://youtu.be/DyOYBUKxhlA" style=
+    "padding-bottom: 46.8553%; background-color: rgb(255, 255, 255);"
+    target="_blank">
+      <img class="art-bd-img" src="{{previewUrl}}" style="opacity: 1;">
+    </a>
+    -->
+  </div>
+  <div class="txt-bd">
+    <h1 class="title">
+      {{title}}
+      <!--<a href="https://youtu.be/DyOYBUKxhlA" target="_blank">
+        {{title}}
+      </a> -->
+    </h1>
+    <p class="description">{{description}}</p>
   </div>
 </template>
 
@@ -356,11 +431,40 @@
   </div>
 </template>
 
+<template name="portrait_preview_map_section">
+  <div class="art-bd">
+    <!-- {{> play_video_icon}}-->
+    <img class="art-bd-img" src="{{previewUrl}}" style="opacity: 1;">
+    <!-- 
+    <a class="" href="https://youtu.be/DyOYBUKxhlA" style=
+    "padding-bottom: 46.8553%; background-color: rgb(255, 255, 255);"
+    target="_blank">
+      <img class="art-bd-img" src="{{previewUrl}}" style="opacity: 1;">
+    </a>
+    -->
+  </div>
+  <div class="txt-bd">
+    <h1 class="title">
+      {{title}}
+      <!--<a href="https://youtu.be/DyOYBUKxhlA" target="_blank">
+        {{title}}
+      </a> -->
+    </h1>
+    <p class="description">{{description}}</p>
+  </div>
+</template>
+
 <template name="preview_text_section">
   <div class="show-full">
     <div class="text-preview" dir="auto">
       {{content}}
     </div>
+  </div>
+</template>
+
+<template name="portrait_preview_text_section">
+  <div class="txt-bd">
+    <p class="description">{{content}}</p>
   </div>
 </template>
 
@@ -372,6 +476,17 @@
     <div class="chart-container">
       {{> pieChart}}
     </div>
+  </div>
+</template>
+
+<template name="portrait_preview_poll_section">
+  <div class="txt-bd">
+    <h1 class="title">
+      {{content}}
+    </h1>
+  </div>
+  <div class="art-bd">
+    {{> pieChart}}
   </div>
 </template>
 
@@ -389,5 +504,30 @@
     <div class="news-preview">
       {{introduction}}
     </div>
+  </div>
+</template>
+
+<template name="portrait_preview_news_section">
+  <div class="art-bd">
+    {{#if headerImageUrl}}
+      <img class="art-bd-img" src="{{headerImageUrl}}" style="opacity: 1;">
+    {{/if}} 
+    <!-- 
+    <a class="" href="https://youtu.be/DyOYBUKxhlA" style=
+    "padding-bottom: 46.8553%; background-color: rgb(255, 255, 255);"
+    target="_blank">
+      <img class="art-bd-img" src="{{previewUrl}}" style="opacity: 1;">
+    </a>
+    -->
+  </div>
+  <div class="txt-bd">
+    <h1 class="title">
+      {{title}}
+      <!--<a href="https://youtu.be/DyOYBUKxhlA" target="_blank">
+        {{title}}
+      </a> -->
+    </h1>
+    <p class="description"><b>{{primaryAuthor}}{{#if primaryAuthor}}{{#if publicationDate}} - {{/if}}{{/if}}{{formatDateNice publicationDate}}</b></p>
+    <p class="description">{{introduction}}</p>
   </div>
 </template>
