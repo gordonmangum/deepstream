@@ -22,7 +22,7 @@
   {{/if}}
   {{#unless isCuratorInTemplate}}
     {{#unless hasVoted _id}}
-    <span style="text-align:center;">
+    <span>
       {{#each option in options}}
         <div class="padded">
           <input type="radio" name="vote-{{_id}}" value="{{@index}}" id="radio-{{_id}}-option-{{@index}}"><label class="vote-option" for="radio-{{_id}}-option-{{@index}}">{{option.name}}</label>

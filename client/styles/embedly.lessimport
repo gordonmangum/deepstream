@@ -1976,6 +1976,9 @@ body#embed .overlay-close {
 #embedly-color {
     background-color: #09bad4
 }
+.embedly-card {
+ padding: 5%;
+}
 .btn {
     border: 0;
     outline: 0;
