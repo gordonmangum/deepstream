@@ -1073,6 +1073,11 @@ Template.context_browser_portrait.onRendered(function(){
     Session.set('windowHeightForCarousel', $(window).height());
     Session.set('windowWidthForCarousel', $(window).width());
   });
+  
+  $('#carousel-portrait-context').on('slide.bs.carousel', function () {
+    $2('.item').animate({scrollTop: 0});
+  });
+  
 });
 
 
