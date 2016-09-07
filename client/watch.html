@@ -354,6 +354,9 @@
                 <img class="provider-favicon" height="16" src="{{providerIconUrl}}" width="16">
               {{/if}}
               <a class="provider-name" href="{{providerUrl}}" target="_blank">{{providerName}}</a>
+              {{#if suggestedByUsername}}
+                <span class="author">Suggested by {{suggestedByUsername}}</span>
+              {{/if}}
               <!-- <span class="author">&nbsp;<a href="https://www.youtube.com/user/calacademy" tabindex="-1" target="_blank">California Academy of Sciences</a></span> -->
             </div>
           </div>
@@ -367,9 +370,6 @@
     </div>
     {{#if showAnnotationSection}}
       {{> annotation_section}}
-    {{/if}}
-    {{#if suggestedByUsername}}
-      <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
     {{/if}}
   </div>
 </template>

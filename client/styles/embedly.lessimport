@@ -335,7 +335,6 @@ body#cards {
     display: block;
     float: left;
     letter-spacing: .2px;
-    margin-right: -80px
 }
 .rtl .card .provider {
     float: right;
