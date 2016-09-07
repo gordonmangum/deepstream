@@ -1977,7 +1977,7 @@ body#embed .overlay-close {
     background-color: #09bad4
 }
 .embedly-card {
- padding: 5%;
+ padding: 8%;
 }
 .btn {
     border: 0;

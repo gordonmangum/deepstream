@@ -325,7 +325,7 @@
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
-    <div class="item active"></div>
+    <div class="item active" style="height: {{carouselHeight}}px"></div>
     {{#each contextBlocks}}
       {{> portrait_item_context_section}}
     {{/each}}
@@ -344,7 +344,7 @@
 </template>
   
 <template name="portrait_item_context_section">
-  <div class="item">
+  <div class="item" style="height: {{carouselHeight}}px">
     <div class="embedly-card" data-context-id="{{_id}}">
       <div class="embedly-card-hug" style="width: 600px; padding: 0px; position: relative; max-width: 100%; margin: 5px auto;">
         <div class="card article">

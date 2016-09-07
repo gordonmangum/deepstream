@@ -1039,6 +1039,21 @@ Template.stream_li.events({
   }
 });
 
+
+Template.context_browser_portrait.helpers({
+  carouselHeight(){
+    var videoSpace = ($(window).width()/16)*9;
+    return $(window).height() - 45 - videoSpace;
+  }
+});
+
+Template.portrait_item_context_section.helpers({
+  carouselHeight(){
+    var videoSpace = ($(window).width()/16)*9;
+    return $(window).height() - 45 - videoSpace;
+  }
+});
+
 Template.context_browser_area.helpers({
   orderedContext (){
     /*
