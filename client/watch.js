@@ -171,7 +171,7 @@ window.resetMainPlayer = function(){
 window.resetMainPlayer();
 
 Template.watch_page.onCreated(function () {
-
+  Session.set('replayEnabled', true);
   if(!ytScriptLoaded){
     $.getScript('https://www.youtube.com/iframe_api', function () {});
     ytScriptLoaded = true;
@@ -365,6 +365,7 @@ Template.watch_page.onCreated(function () {
 });
 
 Template.watch_page.onRendered(function(){
+  Session.set('replayEnabled', true);
   Meteor.call('countDeepstreamView', Session.get('streamShortId'));
   analytics.track('watch page rendered', _.extend({
     label: Session.get('streamShortId'),
@@ -375,8 +376,19 @@ Template.watch_page.onRendered(function(){
   }, trackingInfoFromPage()));
   
   var that = this;
-  Session.set('replayEnabled', true);
-
+  
+  var throttledResize;
+  var windowSizeDep = new Tracker.Dependency();
+  var windowResize = function() {
+    windowSizeDep.changed();
+  };
+  throttledResize = _.throttle(windowResize, 500, {leading: false});
+  $(window).resize(throttledResize);
+  Tracker.autorun(function(){
+    windowSizeDep.depend();
+    Session.set('windowHeightForCarousel', $(window).height());
+    Session.set('windowWidthForCarousel', $(window).width());
+  });
   
   this.checkTime = setInterval(()=>{
     if(mainPlayer && mainPlayer.getElapsedTime){
@@ -561,7 +573,6 @@ Template.watch_page.onDestroyed(function () {
 var titleMax = 60;
 var descriptionMax = 270;
 
-
 Template.watch_page.helpers({
   activeStream (){
     return Template.instance().activeStream.get();
@@ -656,6 +667,15 @@ Template.watch_page.helpers({
   },
   showTutorial (){
     return _.contains(['find_stream', 'add_cards', 'go_on_air'], this.creationStep) && Session.get('curateMode');
+  },
+  showDesktopMode(){
+    var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
+    var cardSpaceAvailable = Session.get('windowHeightForCarousel') - 51 - videoSpace;
+    if(cardSpaceAvailable > 120 && Session.get('windowWidthForCarousel') < 890){
+      return false;
+    } else {
+      return true;
+    }
   },
   showRightSection (){
     return !soloOverlayContextModeActive() && !Session.get('reducedRightView');
@@ -1040,17 +1060,33 @@ Template.stream_li.events({
 });
 
 
+Template.context_browser_portrait.onRendered(function(){
+  var throttledResize;
+  var windowSizeDep = new Tracker.Dependency();
+  var windowResize = function() {
+    windowSizeDep.changed();
+  };
+  throttledResize = _.throttle(windowResize, 500, {leading: false});
+  $(window).resize(throttledResize);
+  Tracker.autorun(function(){
+    windowSizeDep.depend();
+    Session.set('windowHeightForCarousel', $(window).height());
+    Session.set('windowWidthForCarousel', $(window).width());
+  });
+});
+
+
 Template.context_browser_portrait.helpers({
   carouselHeight(){
-    var videoSpace = ($(window).width()/16)*9;
-    return $(window).height() - 45 - videoSpace;
+    var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
+    return Session.get('windowHeightForCarousel') - 51 - videoSpace;
   }
 });
 
 Template.portrait_item_context_section.helpers({
   carouselHeight(){
-    var videoSpace = ($(window).width()/16)*9;
-    return $(window).height() - 45 - videoSpace;
+    var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
+    return Session.get('windowHeightForCarousel') - 51 - videoSpace;
   }
 });
 
