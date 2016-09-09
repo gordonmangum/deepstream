@@ -2017,6 +2017,7 @@ ol.default li {
 #footer-wrapper {
   position: relative;
   color: #858484;
+  background-color: #030303
 }
 
 #footer-wrapper:before {

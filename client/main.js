@@ -651,6 +651,70 @@ Template.context_browser.events({
   
 });
 
+Template.context_browser_portrait.helpers({
+  userFavorited () {
+    return Meteor.user() && _.contains(Meteor.user().profile.favorites, Session.get('streamShortId'));
+  }
+});
+
+Template.context_browser_portrait.events({
+  'click .create' (){
+    if (Meteor.user()){
+      var accessPriority = Meteor.user().accessPriority;
+      if (accessPriority && accessPriority <= window.createAccessLevel){
+
+        var shortId = Random.id(8);
+
+        var initialStream = (this instanceof Stream) ? this : null;
+
+        Meteor.call('createDeepstream',shortId, initialStream, function(err, pathObject){
+          if (err) {
+            notifyError(err);
+            throw(err);
+          }
+          analytics.track('User clicked create and created deepstream');
+
+        })
+      } else {
+        notifyInfo("Due to high demand, we had to turn off new curation functionality for a moment. Stay tuned for updates!");
+      }
+    } else {
+      Session.set('signingIn', true);
+      analytics.track('User clicked create and needs to sign in', trackingInfoFromPage());
+    }
+  },
+  "click .favorite" () {
+    if(!Meteor.user()){
+      return notifyInfo('Please sign up or log in to favorite DeepStreams');
+    }
+    return Meteor.call('favoriteDeepstream', Session.get("streamShortId"), function(err) {
+      if (err) {
+        notifyError(err);
+        throw(err);
+      } else {
+        analytics.track('Favorite deepstream', trackingInfoFromPage());
+      }
+
+    });
+  },
+  "click .unfavorite" () {
+    if(!Meteor.user()){
+      return notifyInfo('Please sign up or log in to favorite DeepStreams');
+    }
+    return Meteor.call('unfavoriteDeepstream', Session.get("streamShortId"), function(err) {
+      if (err) {
+        notifyError(err);
+        throw(err);
+      } else {
+        analytics.track('Favorite deepstream', trackingInfoFromPage());
+      }
+
+    });
+  }
+  
+});
+
+
 Meteor.startup(function(){
   $( window ).konami({
     code : [38,38,40,40,37,39,37,39, 66, 65], // you know...

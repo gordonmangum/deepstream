@@ -46,6 +46,7 @@ Template.login_buttons2016.events({
   "click .signin" (d) {
     Session.set('signingIn', true);
     analytics.track('Click login & signup button on top navigation', trackingInfoFromPage());
+    Meteor.setTimeout(function(){$2('.signin-overlay').scrollTop(0);},100);
   },
   "click .logout" (e, t) {
     e.preventDefault();
@@ -84,6 +85,7 @@ Template.login_buttons.events({
   "click .signin" (d) {
     Session.set('signingIn', true);
     analytics.track('Click login & signup button on top navigation', trackingInfoFromPage());
+    Meteor.setTimeout(function(){$2('.signin-overlay').scrollTop(0);},100);
   },
   "click .logout" (e, t) {
     e.preventDefault();

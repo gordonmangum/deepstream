@@ -126,7 +126,7 @@ window.textContentHelper = function() {
     if (textContent.length){
       return '<div class="text-content" dir="auto">' + _.escape(textContent).replace(/\n/g, "<br>") + '</div>';
     } else {
-      return ''
+      return '';
     }
   } else {
     return '<textarea name="content" class="text-content editable ' + additionalClasses + '" rows="' + rows + '" placeholder="' + placeholder +  '" dir="auto">' + _.escape(textContent) + '</textarea>';
