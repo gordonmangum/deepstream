@@ -55,7 +55,7 @@
     .streams-list-container {
       direction: ltr;
     }
-    overflow-y: scroll;
+    overflow-y:scroll; -webkit-overflow-scrolling: touch;
     white-space: nowrap;
     width:250px;
     li.add-stream{
@@ -867,7 +867,7 @@
   }
 
   .context-area{
-    overflow-y: scroll;
+    overflow-y:scroll; -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
     flex: auto;
     padding-left: @contextAreaPadding;
@@ -1816,7 +1816,7 @@ a.svg:after {
   .news-section {
     height: 100%;
     line-height: normal;
-    overflow-y: scroll;
+    overflow-y:scroll; -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -1931,7 +1931,7 @@ a.svg:after {
   &.hide{
     display: none;
   }
-  overflow-y:scroll;
+  overflow-y:scroll; -webkit-overflow-scrolling: touch;
   display: flex;
   flex-flow: column;
   margin-left: 10px;
@@ -1971,7 +1971,7 @@ a.svg:after {
 }
 
 .add-webcam-section{
-  overflow-y: scroll;
+  overflow-y:scroll; -webkit-overflow-scrolling: touch;
   padding-bottom: 20px;
 }
 
@@ -1982,7 +1982,7 @@ a.svg:after {
   button{
     .action-button;
   }
-  overflow-y: scroll;
+  overflow-y:scroll; -webkit-overflow-scrolling: touch;
   padding-bottom: 20px;
   li {
     white-space: normal;
