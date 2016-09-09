@@ -625,6 +625,9 @@ Template.watch_page.helpers({
   showContextBrowser (){
     return Session.equals('contextMode', 'context');
   },
+  showTimeline (){
+    return Session.equals('contextMode', 'timeline');
+  },
   streamUrl (){
     var activeStream = Template.instance().activeStream.get();
     if(activeStream){
@@ -771,6 +774,13 @@ var saveStreamTitle = function(template){
 };
 
 Template.watch_page.events({
+  'click .portrait-mode-switch' (e,t){
+    if(Session.equals('contextMode', 'timeline')){
+      Session.set('contextMode', 'context');
+    }else{
+      Session.set('contextMode', 'timeline');
+    }
+  },
   'click #videoOverlay' (e,t){
     // now not in use
     $('.right-section.featured-context-container').fadeOut(1000, function(){

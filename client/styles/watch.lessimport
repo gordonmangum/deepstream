@@ -316,6 +316,7 @@
 
 
 .left-section{
+  margin-top: 50px
   height: 100%;
   float: left;
   width: calc(100% ~"-" @right-section-width);
@@ -325,7 +326,8 @@
 
   .header-section{
     position: fixed;
-    top: 0;
+    top: 50px;
+    color: #fff;
     left:0;
     z-index: 1;
   }
