@@ -522,12 +522,20 @@
               {{/if}}
               {{/if}}
             </div>
+            {{#if showPortraitShowTimelineButton}}
             <div style=" position: absolute; bottom:4%; right: 8%; cursor: pointer; z-index: 1;" class="portrait-mode-switch">
               <i class="fa fa-{{#if showTimeline}}clone{{else}}twitter{{/if}} fa-2x fa-border" style="  border-color: #525252; background-color: #fff;"></i>
             </div>
+            {{/if}}
             <div class="portrait-context-container">
-              {{#if showTimeline}}
-               {{> timeline_section show=showTimeline portrait=true}}
+              {{#if showPortraitShowTimelineButton}}
+                {{#if showTimeline}}
+                 {{> timeline_section show=showTimeline portrait=true}}
+                {{else}}
+                  {{#with deepstreamForContext}}
+                    {{> context_browser_portrait contextBlocks=orderedContext deepstream=deepstreamForContext}}
+                  {{/with}}
+                {{/if}}
               {{else}}
                 {{#with deepstreamForContext}}
                   {{> context_browser_portrait contextBlocks=orderedContext deepstream=deepstreamForContext}}
@@ -1494,7 +1502,7 @@
         </form>
       {{/if}}
       {{/unless}}
-      <div id='twitter-timeline' class="timeline-container"></div>
+      <div id='twitter-timeline' class="timeline-container" style="max-width:100%;"></div>
     </div>
 </template>
 

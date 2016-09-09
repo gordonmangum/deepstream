@@ -628,6 +628,12 @@ Template.watch_page.helpers({
   showTimeline (){
     return Session.equals('contextMode', 'timeline');
   },
+  showShowTimelineButton (){
+    return Session.get('curateMode') || Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
+  },
+  showPortraitShowTimelineButton (){
+    return Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
+  },
   streamUrl (){
     var activeStream = Template.instance().activeStream.get();
     if(activeStream){
