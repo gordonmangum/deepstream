@@ -1931,6 +1931,7 @@ a.svg:after {
   &.hide{
     display: none;
   }
+  overflow-y:scroll;
   display: flex;
   flex-flow: column;
   margin-left: 10px;
