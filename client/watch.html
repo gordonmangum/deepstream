@@ -532,7 +532,7 @@
             <div class="portrait-context-container">
               {{#if showPortraitShowTimelineButton}}
                 {{#if showTimeline}}
-                 {{> timeline_section_portrait show=showTimeline portrait=true}}
+                 {{> timeline_section show=showTimeline portrait=true}}
                 {{else}}
                   {{#with deepstreamForContext}}
                     {{> context_browser_portrait contextBlocks=orderedContext deepstream=deepstreamForContext}}
@@ -1497,21 +1497,6 @@
 
 <template name="timeline_section">
     <div class="timeline-section {{#unless show}}hide{{/unless}}" style="height:{{#if curateMode}}{{mainStreamHeight}}{{else}} {{mainStreamHeight 35}}{{/if}}px">
-      {{#unless portrait}}
-      {{#if curateMode}}
-        <form id="timeline-embed" action="" autocomplete="off">
-          <label for="timeline-embed-code-input"><a href="https://twitter.com/settings/widgets/new/search" target="_blank">Create a new Timeline widget</a> and enter the generated embed code or url here</label>
-          <input id="timeline-embed-code-input" name="timeline-embed-code" type="text"/>
-          <div class="button-container"><button type="submit" class="submit-timeline-embed-code">Update Timeline</button></div>
-        </form>
-      {{/if}}
-      {{/unless}}
-      <div id='twitter-timeline' class="timeline-container" style="max-width:100%;"></div>
-    </div>
-</template>
-
-<template name="timeline_section_portrait">
-    <div class="timeline-section {{#unless show}}hide{{/unless}}" style="height:{{#if curateMode}}{{mainStreamHeight}}{{else}} {{mainStreamHeight 35}}{{/if}}px; margin-left: 0px; margin-right: 0px;">
       {{#unless portrait}}
       {{#if curateMode}}
         <form id="timeline-embed" action="" autocomplete="off">
