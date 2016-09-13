@@ -1511,7 +1511,7 @@
 </template>
 
 <template name="timeline_section_portrait">
-    <div class="timeline-section-portrait {{#unless show}}hide{{/unless}}" style="height:{{#if curateMode}}{{mainStreamHeight}}{{else}} {{mainStreamHeight 35}}{{/if}}px">
+    <div class="timeline-section {{#unless show}}hide{{/unless}}" style="height:{{#if curateMode}}{{mainStreamHeight}}{{else}} {{mainStreamHeight 35}}{{/if}}px; margin-left: 0px; margin-right: 0px;">
       {{#unless portrait}}
       {{#if curateMode}}
         <form id="timeline-embed" action="" autocomplete="off">

@@ -1927,37 +1927,7 @@ a.svg:after {
   }
 }
 
-.timeline-section-portrait{
-  &.hide{
-    display: none;
-  }
-  overflow-y:scroll; -webkit-overflow-scrolling: touch;
-  display: flex;
-  flex-flow: column;
-  form{
-    margin-bottom: 15px;
-    input{
-      margin-bottom: 10px;
-    }
-  }
-  label{
-    a {
-      color:  @dark-text-color; //@action-color;
-      text-decoration: underline!important;
-      &:hover {
-        color: @hover-action-color;
-        text-decoration: underline!important;
-      }
-    }
-  }
-  .button-container{
-    text-align: right;
 
-    button{
-      .action-button;
-    }
-  }
-}
 
 .timeline-section{
   &.hide{
