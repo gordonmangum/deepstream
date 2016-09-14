@@ -581,8 +581,16 @@
                       {{deepstream.title}}
                     </h1>
                     <p class="description">{{deepstream.description}}</p>
-                    <p class="description">{{formatNumber deepstream.viewCount}} views</p>
-                    <p class="description">Curated by: {{curatorNames}}</p>
+                    <p class="description">{{formatNumber deepstream.viewCount}} views. Curated by: {{curatorNames}}</p>
+                    <div class="stream-stats-and-share">
+                      <div class="share-and-favorite">
+                        {{> favorite_button}}
+                        <button class="twitter-share-button">{{> twitter_share_icon}}</button>
+                        <button class="facebook-share-button">{{> facebook_share_icon}}</button>
+                        <button class="email-share-button">{{> email_share_icon}}</button>
+                        <button class="embed-code-button" data-clipboard-text='true'>{{> embed_code_icon}}</button>
+                      </div>
+                    </div> 
                   </div>
               </div>
             </div>

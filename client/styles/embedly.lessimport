@@ -1982,6 +1982,27 @@ body#embed .overlay-close {
    .card.article {
      color: #fff;
    }
+   
+   .stream-stats-and-share{
+      .share-and-favorite{
+        padding: 3px 10px;
+      }
+      .fg {
+        fill: @light-icon-color;
+      }
+      button{
+        text-align: center;
+        .size(25px);
+        padding: 3px;
+        color: @light-icon-color;
+        &:hover {
+          color: @white-icon-color;
+        }
+        &.embed-code-button{
+          width: 30px;
+        }
+      }
+    }
  }
 }
 .btn {

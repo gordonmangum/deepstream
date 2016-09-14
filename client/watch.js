@@ -955,15 +955,17 @@ Template.watch_page.events({
     var height = 400;
     var left = ($(window).width() - width) / 2;
     var top = ($(window).height() - height) / 2;
+    var title = this.title || this.deepstream.title;
+    var shortId = this.shortId || this.deepstream.shortId;
     var deepstreamUrl = encodeURIComponent(location.href).replace(/%2Fcurate%2F/, "%2Fwatch%2F");
-    var url = 'mailto:?subject=Check out '+ this.title + ' On DeepStream&body=' + deepstreamUrl;
+    var url = 'mailto:?subject=Check out '+ title + ' On DeepStream&body=' + deepstreamUrl;
     var opts = 'status=1' +
       ',width=' + width +
       ',height=' + height +
       ',top=' + top +
       ',left=' + left;
     window.open(url, 'facebook', opts);
-    Meteor.call('countDeepstreamShare', this.shortId, 'email');
+    Meteor.call('countDeepstreamShare', shortId, 'email');
     analytics.track('Click email share', trackingInfoFromPage());
   },
   'click .twitter-share-button' (e, t){
@@ -971,14 +973,16 @@ Template.watch_page.events({
     var height = 400;
     var left = ($(window).width() - width) / 2;
     var top = ($(window).height() - height) / 2;
-    var url = '//twitter.com/intent/tweet?text=Check out "' + encodeURIComponent(this.title) + '" on DeepStream&url=' + encodeURIComponent(location.href).replace(/%2Fcurate%2F/, "%2Fwatch%2F");
+    var title = this.title || this.deepstream.title;
+    var shortId = this.shortId || this.deepstream.shortId;
+    var url = '//twitter.com/intent/tweet?text=Check out "' + encodeURIComponent(title) + '" on DeepStream&url=' + encodeURIComponent(location.href).replace(/%2Fcurate%2F/, "%2Fwatch%2F");
     var opts = 'status=1' +
       ',width=' + width +
       ',height=' + height +
       ',top=' + top +
       ',left=' + left;
     window.open(url, 'twitter', opts);
-    Meteor.call('countDeepstreamShare', this.shortId, 'twitter');
+    Meteor.call('countDeepstreamShare', shortId, 'twitter');
     analytics.track('Click twitter share', trackingInfoFromPage());
   },
   'click .facebook-share-button' (e, t){
@@ -986,6 +990,7 @@ Template.watch_page.events({
     var height = 400;
     var left = ($(window).width() - width) / 2;
     var top = ($(window).height() - height) / 2;
+    var shortId = this.shortId || this.deepstream.shortId;
     var url = "//facebook.com/sharer/sharer.php?u=" + encodeURIComponent(location.href).replace(/%2Fcurate%2F/, "%2Fwatch%2F");
     var opts = 'status=1' +
       ',width=' + width +
@@ -993,7 +998,7 @@ Template.watch_page.events({
       ',top=' + top +
       ',left=' + left;
     window.open(url, 'facebook', opts);
-    Meteor.call('countDeepstreamShare', this.shortId, 'facebook');
+    Meteor.call('countDeepstreamShare', shortId, 'facebook');
     analytics.track('Click facebook share', trackingInfoFromPage());
   },
   'click .PiP-overlay' (e, t){
