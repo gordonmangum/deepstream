@@ -494,7 +494,7 @@ body#cards {
     display: block;
 }
 .card .title {
-    margin-bottom: 3px;
+    margin-bottom: 10px;
 }
 .card .author {
     display: block;
@@ -522,7 +522,7 @@ body#cards {
 }
 .card .description {
     display: block;
-    margin-bottom: 4px
+    margin: 10px 0;
 }
 .card .meta {
     display: block;
@@ -1977,6 +1977,12 @@ body#embed .overlay-close {
 }
 .embedly-card {
  padding: 1% 8%;
+ &.title-card {
+   background-color: #000d1a;
+   .card.article {
+     color: #fff;
+   }
+ }
 }
 .btn {
     border: 0;

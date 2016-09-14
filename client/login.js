@@ -1,6 +1,9 @@
 Template.login_form.onCreated(function() {
   this.loginError = new ReactiveVar(false);
 });
+Template.login_form.onRendered(function() {
+  Meteor.setTimeout(function(){$2('body').scrollTop(0);},10);
+});
 
 Template.login_form.helpers({
   loginError () {

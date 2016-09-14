@@ -1101,6 +1101,31 @@ Template.context_browser_portrait.helpers({
   carouselHeight(){
     var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
     return Session.get('windowHeightForCarousel') - 51 - videoSpace;
+  },
+  curatorNames () {
+    console.log('curatorNames called');
+    var curatorIds = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {curatorIds: 1}}).curatorIds;
+    if(curatorIds.length < 2){
+      console.log(curatorIds);
+      return this.deepstream.curatorName;
+    }
+    Meteor.call('returnCuratorNames', curatorIds, function(error, results){
+      var nameList = results;
+      var curatorNames = '';
+      nameList.forEach(function(value, index, array){
+        if(value !== undefined){
+          if(index === (array.length-2)){
+            curatorNames += value + ' and '
+          } else if(index === (array.length-1)){
+            curatorNames += value + '.'
+          } else {
+            curatorNames += value + ', '
+          }
+        }
+      });
+      Session.set('curatorNames', curatorNames);
+    });
+    return Session.get('curatorNames');
   }
 });
 

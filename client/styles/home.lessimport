@@ -8,7 +8,7 @@
 */
 
 /* Reset */
-.homepage2016, .about2016, .team2016, .mystreams2016 {
+.homepage2016, .about2016, .team2016, .mystreams2016, .login2016 {
   color: #5d5d5d;
   word-wrap: break-word;
   
