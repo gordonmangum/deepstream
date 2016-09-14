@@ -1108,10 +1108,8 @@ Template.context_browser_portrait.helpers({
     return Session.get('windowHeightForCarousel') - 51 - videoSpace;
   },
   curatorNames () {
-    console.log('curatorNames called');
     var curatorIds = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {curatorIds: 1}}).curatorIds;
     if(curatorIds.length < 2){
-      console.log(curatorIds);
       return this.deepstream.curatorName;
     }
     Meteor.call('returnCuratorNames', curatorIds, function(error, results){
