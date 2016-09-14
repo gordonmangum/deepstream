@@ -1091,7 +1091,7 @@ Template.context_browser_portrait.onRendered(function(){
   });
   
   $('#carousel-portrait-context').on('slide.bs.carousel', function () {
-    $2('.item').animate({scrollTop: 0});
+    setTimeout(function(){ $2('.item').animate({ scrollTop: -100 },100)},300);
   });
   
 });
