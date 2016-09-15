@@ -234,6 +234,8 @@
 </template>
 
 <template name="home">
+  <!-- Modal -->
+  {{> login_modal}}
   <!--
 	Dopetrope by HTML5 UP
 	html5up.net | @ajlkn
@@ -248,6 +250,10 @@
           
           <!-- Banner -->
           {{> chart_home_banner}}
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#login-modal">
+            Launch demo modal
+          </button>
 
           <!-- Intro -->
             <section id="intro" class="container">

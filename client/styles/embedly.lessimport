@@ -2012,7 +2012,6 @@ body#embed .overlay-close {
     margin: 0;
     background-color: #09bad4;
     font-family: "Helvetica Neue", Arial, sans-serif;
-    height: 20px;
     -webkit-appearance: none;
     -moz-appearance: none;
     -ms-appearance: none;
