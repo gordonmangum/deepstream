@@ -230,7 +230,6 @@ Template.signup_modal.events({
   },
   'submit #signup-modal-form' (e, t) {
     e.preventDefault();
-
     if(t.disableSignup.get()){
       return
     } else {
@@ -262,6 +261,7 @@ Template.signup_modal.events({
           if(!Session.get('redirectAfterLogin')){
             returnFromSignIn();
           }
+          $('#signup-modal').modal('hide');
           notifyLogin();
         }
       });
@@ -284,7 +284,6 @@ Template.signup_modal.events({
           } else {
             t.signupError.set(err.reason || err.error);
           }
-
         } else {
           $('#signup-modal').modal('hide');
           analytics.track('Click signup with email');

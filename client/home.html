@@ -18,7 +18,8 @@
       </li>
 
     {{else}}
-      <li class="signin"><a>Log in / Sign up</a></li>
+      <!-- Button trigger modal -->
+      <li><a data-toggle="modal" data-target="#login-modal">Log in / Sign up</a></li>
     {{/if}}
   {{/if}}
 </template>
@@ -124,6 +125,7 @@
       <li><a href="/about">About</a></li>
       <li><a href="/about#faq">FAQ</a></li>
       <li><a href="/about#contact">Contact</a></li>
+      
       {{> login_buttons2016 }}
     </ul>
   </nav>
@@ -251,10 +253,6 @@
           
           <!-- Banner -->
           {{> chart_home_banner}}
-          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#login-modal">
-            Launch demo modal
-          </button>
 
           <!-- Intro -->
             <section id="intro" class="container">
