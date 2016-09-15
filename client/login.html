@@ -15,33 +15,41 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Login / Sign-up</h4>
+          <h4 class="modal-title" id="myModalLabel">Login &amp; Sign-up</h4>
         </div>
         <div class="modal-body">
           <div class="row">
             <div class="col-md-6">
+              <h4>Twitter</h4>
               <div class="form-group">
-                <label for="sign-in-with-twitter">Sign-in with Twitter</label>
-                <button class="btn btn-default form-control" id="sign-in-with-twitter">Sign in</button>
+                <label for="sign-in-with-twitter"></label>
+                <button class="btn btn-twitter form-control" id="sign-in-with-twitter">Login/Sign-up with Twitter <i class="fa fa-twitter"></i></button>
               </div>
-              <div class="form-group">
-                <label for="sign-up-with-twitter">Create account with Twitter</label>
-                <button class="btn btn-default form-control" id="sign-up-with-twitter">Create account</button>
-              </div>b 
+              <p class="text-primary">Using Twitter allows you to interact with and embed tweets, and also add a dynamic twitter timeline</p>
             </div>
+            <hr class="visible-xs visible-sm">
             <div class="col-md-6">
+              <form id="login-modal-form" action="action">
+               <h4>Email</h4>
                <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                <label for="exampleInputEmail1"></label>
+                <input name="username" type="text" class="form-control" id="exampleInputEmail1" placeholder="Username or Email">
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <label for="exampleInputPassword1"></label>
+                <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
               </div>
               <p>
                 <button type="submit" class="btn btn-default form-control">Sign in with Email</button>
               </p>
-              <p>Or <a href="#">create an email account here.</a></p>
+              <p class="text-muted"><a href="/recover-password" class="recover-password-link">Lost password?</a></p>
+              {{#if loginError}}
+                <p class="text-danger">
+                  {{loginError}}
+                </p>
+              {{/if}}
+              <p>Or <a class="create-email-account js-link">create an email account here.</a></p>
+              </form>
             </div>
           </div>
         </div>
@@ -49,6 +57,115 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary">Save changes</button>
         </div>-->
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="signup_modal">
+   <div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form id="signup-modal-form" action="action">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Email Sign-up</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+          
+      <!-- Email -->
+      <label for="email"> Enter your e-mail </label>
+      {{#if emailError}}<div class="error">{{emailError}}</div>{{/if}}
+      <input id="signup-email"
+        name="email"
+        type="email"
+        placeholder="Email"
+        dir="auto"
+        class="{{#if emailError}}error{{/if}}"
+        required
+      >
+
+      <!-- Name -->
+      <label for="name"> Enter your first and last name </label>
+      {{#if nameError}}<div class="error">{{nameError}}</div>{{/if}}
+      <input id="signup-name"
+        name="name"
+        type="text"
+        placeholder="Full Name"
+        dir="auto"
+        value="{{#if currentUser.profile.name}}{{currentUser.profile.name}}{{/if}}"
+        class="{{#if nameError}}error{{/if}}"
+        required
+      >
+
+      <!-- Username -->
+      <label for="username"> Pick a username </label>
+      {{#if usernameError}}<div class="error">{{usernameError}}</div>{{/if}}
+      <input id="signup-username"
+        name="username"
+        type="text"
+        placeholder="Username"
+        dir="auto"
+        value="{{#if currentUser.tempUsername}}{{currentUser.tempUsername}}{{/if}}"
+        class="form-control {{#if usernameError}}error{{/if}}"
+        required
+      >
+
+      <!-- Password -->
+        <label for="password"> Enter a password </label>
+        {{#if passwordError}}<div class="error">{{passwordError}}</div>{{/if}}
+        <input id="signup-password"
+          name="password"
+          type="password"
+          placeholder="Password"
+          dir="auto"
+          class="form-control {{#if passwordError}}error{{/if}}"
+          required
+        >
+        <label for="password2"> Confirm your password </label>
+        {{#if password2Error}}<div class="error">{{password2Error}}</div>{{/if}}
+        <input id="signup-password2"
+          name="password2"
+          type="password"
+          placeholder="Confirm Password"
+          dir="auto"
+          class="form-control {{#if password2Error}}error{{/if}}"
+          required
+        >
+
+      <!--&lt;!&ndash;TO-DO LAUNCH REMOVE&ndash;&gt;-->
+      <!--<label for="signupCode"> Signup code </label>-->
+      <!--<input name="signupCode" type="text" placeholder="Secret code for Beta">-->
+
+      {{#if signupError}}<div class="error">{{signupError}}</div>{{/if}}
+
+      <p>By creating an account, I accept Deepstream’s <a href="/terms" target='_blank'>Terms of Service</a> and <a href="/privacy" target='_blank'>Privacy Policy</a>.</p>
+      <p>Or <a class="open-login-modal js-link">login with an existing account here.</a></p>
+  
+  </div>
+</div>
+          <!--
+               <h4>Email</h4>
+               <div class="form-group">
+                <label for="exampleInputEmail1"></label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1"></label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              </div>
+              <p>
+                <button type="submit" class="btn btn-default form-control">Sign in with Email</button>
+              </p>
+              -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Create Account</button>
+        </div>
+        </form>
       </div>
     </div>
   </div>
