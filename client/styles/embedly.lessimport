@@ -1975,6 +1975,12 @@ body#embed .overlay-close {
 #embedly-color {
     background-color: #09bad4
 }
+.title-card-portrait {
+  background-color: #000d1a;
+ .card.article {
+   color: #fff;
+ }
+}
 .embedly-card {
  padding: 1% 8%;
  &.title-card {
@@ -1995,6 +2001,7 @@ body#embed .overlay-close {
         .size(25px);
         padding: 3px;
         color: @light-icon-color;
+        margin: 5px 20px 5px 0px;
         &:hover {
           color: @white-icon-color;
         }

@@ -562,7 +562,7 @@
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
-    <div class="item active" style="height: {{carouselHeight}}px">
+    <div class="item active title-card-portrait" style="height: {{carouselHeight}}px">
       <div class="embedly-card title-card">
         <div class="embedly-card-hug" style="width: 600px; padding: 0px; position: relative; max-width: 100%; margin: 5px auto;">
           <div class="card article">
@@ -572,8 +572,6 @@
                     <h1 class="title">
                       {{deepstream.title}}
                     </h1>
-                    <p class="description">{{deepstream.description}}</p>
-                    <p class="description">{{formatNumber deepstream.viewCount}} views. Curated by: {{curatorNames}}</p>
                     <div class="stream-stats-and-share">
                       <div class="share-and-favorite">
                         {{> favorite_button}}
@@ -582,28 +580,9 @@
                         <button class="email-share-button">{{> email_share_icon}}</button>
                         <button class="embed-code-button" data-clipboard-text='true'>{{> embed_code_icon}}</button>
                       </div>
-                    </div> 
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="embedly-card">
-        <div class="embedly-card-hug" style="width: 600px; padding: 0px; position: relative; max-width: 100%; margin: 5px auto;">
-          <div class="card article">
-            <div class="hdr"></div>
-            <div class="bd" style="border-left-color: rgb(224, 42, 25);">
-              <div class="pair-bd">
-                  <div class="art-bd">
-                    <!--
-                    <div class="embed-responsive embed-responsive-16by9">
-                      <iframe class="embed-responsive-item" src="{{url}}" frameborder="0" allowfullscreen></iframe>
                     </div>
-                    -->
-                  </div>
-                  <div class="txt-bd">
-                    <p class="description"><i><b>Explore context cards by scrolling this section left and right. You can learn more about the topic while watching the video!</b></i></p>
+                    <p class="description">{{deepstream.description}}</p>
+                    <p class="description">{{formatNumber deepstream.viewCount}} views. Curated by: {{curatorNames}}</p>
                   </div>
               </div>
             </div>

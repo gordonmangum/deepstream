@@ -303,6 +303,7 @@
         text-align: center;
         .size(20px);
         padding: 3px;
+        margin: 5px 20px 5px 0px;
         color: @light-icon-color;
         &:hover {
           color: @white-icon-color;
