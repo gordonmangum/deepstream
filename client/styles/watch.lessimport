@@ -1316,7 +1316,7 @@
     max-height: 300px;
   }
   .news-preview {
-    max-height: @lineHeight * 3 + @padding * 2 - 3px;
+    max-height: 18px * 3 + 6px * 2 - 3px;
   }
   .map-preview, .image-preview.has-placeholder, .video-preview{
     position: absolute;
