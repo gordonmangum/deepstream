@@ -1306,12 +1306,17 @@
     font-size: 14px;
     line-height: @lineHeight;
     min-height: @lineHeight * 1 + @padding*2;
-    max-height: @lineHeight * 3 + @padding * 2 - 3px;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  .text-preview{
+    max-height: 300px;
+  }
+  .news-preview {
+    max-height: @lineHeight * 3 + @padding * 2 - 3px;
   }
   .map-preview, .image-preview.has-placeholder, .video-preview{
     position: absolute;
