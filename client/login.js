@@ -47,7 +47,7 @@ Template.login_modal.events({
     $('#login-modal').modal('hide');
     Meteor.setTimeout(function(){
       $('#signup-modal').modal('show');
-    },425);
+    },525);
   },
   'keypress input' (e, template) {
     template.loginError.set(false);
@@ -205,7 +205,7 @@ Template.signup_modal.events({
     $('#signup-modal').modal('hide');
     Meteor.setTimeout(function(){
       $('#login-modal').modal('show');
-    },425)
+    },525)
   },
   'blur input#signup-email': checkEmailField,
   'keypress input#signup-email' (e,t) {
