@@ -2,6 +2,7 @@
   <!-- Modals -->
   {{> login_modal}}
   {{> signup_modal}}
+  {{> embed_about_modal}}
 </template>
 
 <template name="minimal_navbar">
@@ -17,13 +18,16 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="/"><i class="fa fa-home" style="margin-right: 25px;"></i> Home</a></li>
-            <!--<li><a href="/about"><i class="fa fa-info-circle"></i> About</a></li>-->
+            {{#if embedMode}}
+            <li><a class="js-link" data-toggle="modal" data-target="#embed-about-modal"><i class="fa fa-info-circle" style="margin-right: 25px;"></i> Learn about Deepstream</a></li>
+            {{else}}
+              <li><a href="/"><i class="fa fa-home" style="margin-right: 25px;"></i> Home</a></li>
+            {{/if}}
             {{#if loggedIn}}
             <li><a href="/my_streams"><i class="fa fa-user" style="  margin-right: 25px;"></i> My Account</a></li>
             <li class="logout"><a href="#"><i class="fa fa-power-off" style="  margin-right: 25px;"></i> Logout</a></li>
             {{else}}
-              <li><a data-toggle="modal" data-target="#login-modal"><i class="fa fa-user" style="  margin-right: 25px;"></i> Login / Create Account</a></li>
+              <li><a class="js-link" data-toggle="modal" data-target="#login-modal"><i class="fa fa-user" style="  margin-right: 25px;"></i> Login / Create Account</a></li>
             {{/if}}
             <!--<li><a href="#"><i class="fa fa-home"></i> More Info</a></li>-->
             <!--
