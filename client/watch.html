@@ -59,6 +59,8 @@
     {{> minimal_navbar fixed=showRightSection showDesktopMode=showDesktopMode}}
     
     {{#with thisDeepstream}}
+      {{#if loadingScreen}} {{else}}
+      
         {{#if showDesktopMode}}
           <div class="watch {{#if thisDeepstream.onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}}" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
           {{#if showTutorial}}
@@ -546,6 +548,7 @@
           </div>
           {{/if}}
         {{/if}}
+       {{/if}}
     {{/with}}
   </div>
 </template>

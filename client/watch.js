@@ -677,6 +677,13 @@ Template.watch_page.helpers({
   showTutorial (){
     return _.contains(['find_stream', 'add_cards', 'go_on_air'], this.creationStep) && Session.get('curateMode');
   },
+  loadingScreen (){
+    var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
+    var cardSpaceAvailable = Session.get('windowHeightForCarousel') - 51 - videoSpace;
+    if(isNaN(videoSpace) || isNaN(cardSpaceAvailable))
+      return true;
+    return false;
+  },
   showDesktopMode(){
     var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
     var cardSpaceAvailable = Session.get('windowHeightForCarousel') - 51 - videoSpace;
