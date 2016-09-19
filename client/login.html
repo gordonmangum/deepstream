@@ -1,4 +1,5 @@
 <template name="login">
+  {{> modals}}
   <div class="new-watch">
    {{> minimal_navbar}}
   </div>
@@ -42,7 +43,7 @@
               <p>
                 <button type="submit" class="btn btn-default form-control">Sign in with Email</button>
               </p>
-              <p class="text-muted"><a href="/recover-password" class="recover-password-link">Lost password?</a></p>
+              <p class="text-muted"><a class="recover-password-link js-link">Lost password?</a></p>
               {{#if loginError}}
                 <p class="text-danger">
                   {{loginError}}

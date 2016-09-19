@@ -1313,7 +1313,7 @@
     text-overflow: ellipsis;
   }
   .text-preview{
-    max-height: 300px;
+    max-height: 500px;
   }
   .news-preview {
     max-height: 18px * 3 + 6px * 2 - 3px;

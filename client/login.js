@@ -68,7 +68,6 @@ Template.login_modal.events({
         if(window.mainPlayer){
           window.resetMainPlayer();
         }
-        returnFromSignIn();
         $('#login-modal').modal('hide');
         notifyLogin();
       }
@@ -80,6 +79,10 @@ Template.login_modal.events({
     loginWithTwitter();
     analytics.track('Click login/signup with Twitter');
   },
+  "click .recover-password-link" (e, t) {
+    $('#login-modal').modal('hide');
+    Meteor.setTimeout(function(){FlowRouter.go('/recover-password');},450);
+  }
 });
 
 Template.login_modal.onCreated(function() {
@@ -258,9 +261,6 @@ Template.signup_modal.events({
         if (err) {
           t.signupError.set(err.reason || err.error);
         } else {
-          if(!Session.get('redirectAfterLogin')){
-            returnFromSignIn();
-          }
           $('#signup-modal').modal('hide');
           notifyLogin();
         }
@@ -287,7 +287,6 @@ Template.signup_modal.events({
         } else {
           $('#signup-modal').modal('hide');
           analytics.track('Click signup with email');
-          returnFromSignIn();
           notifyLogin();
         }
       });

@@ -1,3 +1,9 @@
+<template name="modals">
+  <!-- Modals -->
+  {{> login_modal}}
+  {{> signup_modal}}
+</template>
+
 <template name="minimal_navbar">
   <nav class="navbar navbar-inverse navbar-{{#if fixed}}fixed{{else}}static{{/if}}-top">
       <div class="container">
@@ -17,7 +23,7 @@
             <li><a href="/my_streams"><i class="fa fa-user" style="  margin-right: 25px;"></i> My Account</a></li>
             <li class="logout"><a href="#"><i class="fa fa-power-off" style="  margin-right: 25px;"></i> Logout</a></li>
             {{else}}
-              <li><a href="/login"><i class="fa fa-user" style="  margin-right: 25px;"></i> Login / Create Account</a></li>
+              <li><a data-toggle="modal" data-target="#login-modal"><i class="fa fa-user" style="  margin-right: 25px;"></i> Login / Create Account</a></li>
             {{/if}}
             <!--<li><a href="#"><i class="fa fa-home"></i> More Info</a></li>-->
             <!--

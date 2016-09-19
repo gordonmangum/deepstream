@@ -32,8 +32,8 @@ Meteor.startup(function(){
 
   $(window).resize(throttledResize);
 
+  /* defunct - delete shortly
   var justReloaded = window.codeReloaded;
-
   Tracker.autorun(function(){
     if (Session.get('signingIn') && !justReloaded){
       setSigningInFrom();
@@ -41,6 +41,7 @@ Meteor.startup(function(){
     }
     justReloaded = false;
   })
+  */
 });
 
 Meteor.startup(function(){
@@ -469,16 +470,17 @@ Template.chart_container.helpers({
 
 Template.favorite_button.helpers({
   userFavorited () {
-    return Meteor.user() && _.contains(Meteor.user().profile.favorites, this.shortId);
+    return Meteor.user() && _.contains(Meteor.user().profile.favorites, Session.get("streamShortId"));
   }
 });
 
 Template.favorite_button.events({
   "click .favorite" () {
     if(!Meteor.user()){
-      return notifyInfo('Please sign up or log in to favorite DeepStreams');
+      $('#login-modal').modal('show'); 
+      return;
     }
-    return Meteor.call('favoriteDeepstream', this.shortId, function(err) {
+    return Meteor.call('favoriteDeepstream', Session.get("streamShortId"), function(err) {
       if (err) {
         notifyError(err);
         throw(err);
@@ -489,7 +491,7 @@ Template.favorite_button.events({
     });
   },
   "click .unfavorite" () {
-    return Meteor.call('unfavoriteDeepstream', this.shortId, function(err) {
+    return Meteor.call('unfavoriteDeepstream', Session.get("streamShortId"), function(err) {
       if (err) {
         notifyError(err);
         throw(err);
@@ -622,7 +624,8 @@ Template.context_browser.events({
   },
   "click .favorite" () {
     if(!Meteor.user()){
-      return notifyInfo('Please sign up or log in to favorite DeepStreams');
+      $('#login-modal').modal('show'); 
+      return;
     }
     return Meteor.call('favoriteDeepstream', Session.get("streamShortId"), function(err) {
       if (err) {
@@ -636,7 +639,8 @@ Template.context_browser.events({
   },
   "click .unfavorite" () {
     if(!Meteor.user()){
-      return notifyInfo('Please sign up or log in to favorite DeepStreams');
+      $('#login-modal').modal('show'); 
+      return;
     }
     return Meteor.call('unfavoriteDeepstream', Session.get("streamShortId"), function(err) {
       if (err) {
@@ -653,6 +657,7 @@ Template.context_browser.events({
 
 Template.context_browser_portrait.helpers({
   userFavorited () {
+    console.log(Session.get('streamShortId'))
     return Meteor.user() && _.contains(Meteor.user().profile.favorites, Session.get('streamShortId'));
   }
 });
@@ -685,21 +690,23 @@ Template.context_browser_portrait.events({
   },
   "click .favorite" () {
     if(!Meteor.user()){
-      return notifyInfo('Please sign up or log in to favorite DeepStreams');
+      $('#login-modal').modal('show'); 
+      return;
     }
     return Meteor.call('favoriteDeepstream', Session.get("streamShortId"), function(err) {
       if (err) {
+        console.error(err);
         notifyError(err);
         throw(err);
       } else {
         analytics.track('Favorite deepstream', trackingInfoFromPage());
       }
-
     });
   },
   "click .unfavorite" () {
     if(!Meteor.user()){
-      return notifyInfo('Please sign up or log in to favorite DeepStreams');
+      $('#login-modal').modal('show'); 
+      return;
     }
     return Meteor.call('unfavoriteDeepstream', Session.get("streamShortId"), function(err) {
       if (err) {

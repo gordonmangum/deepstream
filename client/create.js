@@ -124,8 +124,7 @@ window.addContext = function(contextBlock) { // add or suggest
       }
     }
   } else {
-    notifyInfo('Please log in to suggest content');
-    Session.set('signingIn', true);
+    $('#login-modal').modal('show');
     return;
   }
 

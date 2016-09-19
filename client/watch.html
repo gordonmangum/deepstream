@@ -42,8 +42,8 @@
 
 
 <template name="watch_page">
+  {{> modals}}
   <div class="new-watch">
-    
     {{#if showDeepstreamAboutOverlay}}
       {{> deepstream_about_overlay}}
     {{/if}}
@@ -608,7 +608,7 @@
 </template>
   
 <template name="portrait_item_context_section">
-  <div class="item" style="height: {{carouselHeight}}px">
+    <div class="item" style="height: {{carouselHeight}}px">
     <div class="embedly-card" data-context-id="{{_id}}">
       <div class="embedly-card-hug" style="width: 600px; padding: 0px; position: relative; max-width: 100%; margin: 5px auto;">
         <div class="card article">
