@@ -586,6 +586,14 @@
                     </div>
                     <p class="description">{{deepstream.description}}</p>
                     <p class="description">{{formatNumber deepstream.viewCount}} views. Curated by: {{curatorNames}}</p>
+                    <br/>
+                    {{#if replayEnabled}}
+                      {{#if replayAvailable}}
+                      <div class="col-xs-12" style="text-align: center;">
+                        <button class="btn curator-card-replay {{#if replayContextOn}}btn-success{{else}}btn-primary{{/if}}"><i class="fa fa-play-circle-o"></i> Replay Context {{#if replayContextOn}}On{{else}}Off{{/if}}</button>
+                      </div>
+                      {{/if}}
+                    {{/if}}
                   </div>
               </div>
             </div>

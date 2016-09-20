@@ -1143,10 +1143,6 @@ Template.portrait_item_context_section.helpers({
     return Session.get('windowHeightForCarousel') - 51 - videoSpace;
   },
   showContext(){
-    console.log(this.videoMarker);
-    console.log(Session.get('replayContext'));
-    console.log(Session.get('replayEnabled'));
-    console.log(Session.get('curateMode'));
     if(!this.videoMarker){
       return true;
     }

@@ -60,6 +60,10 @@ html {
   cursor: pointer;
 }
 
+button:focus{
+ outline:none !important;
+}
+
 .transparency-fade(@property; @value){
   @{property}: fade(@value, 50%);
 }
