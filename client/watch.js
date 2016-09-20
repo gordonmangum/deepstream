@@ -1129,7 +1129,11 @@ Template.context_browser_portrait.onRendered(function(){
 Template.context_browser_portrait.helpers({
   carouselHeight(){
     var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
-    return Session.get('windowHeightForCarousel') - 51 - videoSpace;
+    if(Session.get('expandedPortraitCards')){
+      return Session.get('windowHeightForCarousel') - 51
+    } else {
+      return Session.get('windowHeightForCarousel') - 51 - videoSpace;
+    }
   },
   curatorNames () {
     var curatorIds = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {curatorIds: 1}}).curatorIds;
@@ -1159,7 +1163,11 @@ Template.context_browser_portrait.helpers({
 Template.portrait_item_context_section.helpers({
   carouselHeight(){
     var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
-    return Session.get('windowHeightForCarousel') - 51 - videoSpace;
+    if(Session.get('expandedPortraitCards')){
+      return Session.get('windowHeightForCarousel') - 51
+    } else {
+      return Session.get('windowHeightForCarousel') - 51 - videoSpace;
+    }
   },
   showContext(){
     if(!this.videoMarker){

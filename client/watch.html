@@ -419,7 +419,7 @@
     
           {{else}}
             <!-- 16:9 portrait aspect ratio -->
-            <div class="embed-responsive embed-responsive-16by9">
+            <div class="embed-responsive embed-responsive-16by9 not-expanded">
               {{#if streamUrl}}
               <iframe id="{{mainStreamIFrameId}}"
                       class="embed-responsive-item main-stream-iframe  {{#unless mainStreamInIFrame}}hide{{/unless}} {{#if facebookIframe}}facebook{{/if}}"
@@ -569,6 +569,13 @@
       <div class="embedly-card title-card">
         <div class="embedly-card-hug" style="width: 600px; padding: 0px; position: relative; max-width: 100%; margin: 5px auto;">
           <div class="card article">
+            <div class="hdr">
+              <div class="pull-right provider provider-gt-35">
+                <a class="js-link toggle-card-expansion">
+                  <i class="fa fa-arrows-v fa-inverse" style="padding: 0 8px;"></i>
+                </a>
+              </div>
+            </div>
             <div class="bd" style="border-left-color: rgb(224, 42, 25);">
               <div class="pair-bd">
                   <div class="txt-bd">
@@ -625,6 +632,11 @@
       <div class="embedly-card-hug" style="width: 600px; padding: 0px; position: relative; max-width: 100%; margin: 5px auto;">
         <div class="card article">
           <div class="hdr">
+            <div class="pull-right provider provider-gt-35">
+              <a class="js-link toggle-card-expansion">
+                <i class="fa fa-arrows-v" style="padding: 0 8px;"></i>
+              </a>
+            </div>
             <div class="provider provider-gt-35">
               {{#if providerIconUrl}}
                 <img class="provider-favicon" height="16" src="{{providerIconUrl}}" width="16">
