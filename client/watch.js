@@ -1087,7 +1087,6 @@ Template.stream_li.events({
   }
 });
 
-
 Template.context_browser_portrait.onRendered(function(){
   var throttledResize;
   var windowSizeDep = new Tracker.Dependency();
@@ -1107,7 +1106,6 @@ Template.context_browser_portrait.onRendered(function(){
   });
   
 });
-
 
 Template.context_browser_portrait.helpers({
   carouselHeight(){
@@ -1143,7 +1141,36 @@ Template.portrait_item_context_section.helpers({
   carouselHeight(){
     var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
     return Session.get('windowHeightForCarousel') - 51 - videoSpace;
-  }
+  },
+  showContext(){
+    console.log(this.videoMarker);
+    console.log(Session.get('replayContext'));
+    console.log(Session.get('replayEnabled'));
+    console.log(Session.get('curateMode'));
+    if(!this.videoMarker){
+      return true;
+    }
+    if(Session.get('replayContext') === false){
+      return true;
+    }
+    if(Session.get('curateMode')){
+      return true;
+    }
+    if(!Session.get('replayEnabled')){
+      return true;
+    } else {
+      if(Session.get('replayContext') === undefined){
+        return false;
+      }
+      if(!Session.get("currentTimeElapsed") || Session.get("currentTimeElapsed") === 0){
+          return false;
+      }
+      if(parseFloat(Session.get("currentTimeElapsed")) < this.videoMarker){
+        return false;
+      }
+      return true;
+    }
+  },
 });
 
 Template.context_browser_area.helpers({
@@ -1257,7 +1284,6 @@ Template.context_card_column.onRendered(function(){
     })
   });
 });
-
 
 Template.context_browser.onRendered(function() {
   Tracker.autorun(() => {
@@ -1394,25 +1420,27 @@ Template.solo_context_section.helpers({
 Template.list_item_context_section.helpers(horizontalBlockHelpers);
 Template.list_item_context_section.helpers({
   showContext(){
-    if(Session.get('replayEnabled')){
-      if(Session.get('replayContext') === true){
-        if(Session.get("curateMode") === true){
-          return true;
-        }
-        if(!this.videoMarker){
-          return true;
-        }
-        if(!Session.get("currentTimeElapsed") || Session.get("currentTimeElapsed") === 0){
-          return false;
-        }
-        if(parseFloat(Session.get("currentTimeElapsed")) < this.videoMarker){
-          return false;
-        }
-        return true;
-      } else {
-        return true;
-      }
+    if(!this.videoMarker){
+      return true;
+    }
+    if(Session.get('replayContext') === false){
+      return true;
+    }
+    if(Session.get('curateMode')){
+      return true;
+    }
+    if(!Session.get('replayEnabled')){
+      return true;
     } else {
+      if(Session.get('replayContext') === undefined){
+        return false;
+      }
+      if(!Session.get("currentTimeElapsed") || Session.get("currentTimeElapsed") === 0){
+          return false;
+      }
+      if(parseFloat(Session.get("currentTimeElapsed")) < this.videoMarker){
+        return false;
+      }
       return true;
     }
   },
