@@ -146,13 +146,9 @@ window.resetMainPlayer = function(){
       }
     },
     getElapsedTime(){
-      console.info(this.activeStreamSource);
-      if(this._youTubePlayer){
-        console.info(this._youTubePlayer.getCurrentTime());
-      }
       switch(this.activeStreamSource){
         case 'youtube':
-          if(this._youTubePlayer.getCurrentTime){
+          if(this._youTubePlayer && this._youTubePlayer.getCurrentTime){
             return this._youTubePlayer.getCurrentTime();
           } else {
             return 0;
@@ -398,7 +394,16 @@ Template.watch_page.onRendered(function(){
   
   this.checkTime = setInterval(()=>{
     if(mainPlayer && mainPlayer.getElapsedTime){
-      Session.set('currentTimeElapsed', mainPlayer.getElapsedTime());
+      var elapsedTime = mainPlayer.getElapsedTime();
+      // ensure the carousel still works after losing a card
+      if(Session.get('currentTimeElapsed') > elapsedTime){
+        Meteor.setTimeout(function(){
+          if(!$('.item').hasClass('active')){
+            $('.item').filter(":first").addClass('active');
+          };
+        },150);
+      }
+      Session.set('currentTimeElapsed', elapsedTime);
     }
   },800);
   
@@ -421,7 +426,7 @@ Template.watch_page.onRendered(function(){
       switch(activeStream.source){
         case 'youtube':
           if ( !mainPlayer.YTApiActivated ){
-            console.log('activate the yt api!!')
+            //console.log('activate the yt api!!')
             mainPlayer.YTApiActivated = true;
             Meteor.setTimeout(function(){ // TODO this is a hack. Why does it need to wait?
               var youTubePlayer = new YT.Player(that.mainStreamIFrameId, {
