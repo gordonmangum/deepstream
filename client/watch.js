@@ -1,6 +1,7 @@
 var ytScriptLoaded = false;
 var ytApiReady = new ReactiveVar(false);
 var newContextDep = new Tracker.Dependency;
+var windowResetMainplayerDependency = new Tracker.Dependency;
 var embedEventsSet =false;
 
 window.resetMainPlayer = function(){
@@ -145,6 +146,10 @@ window.resetMainPlayer = function(){
       }
     },
     getElapsedTime(){
+      console.info(this.activeStreamSource);
+      if(this._youTubePlayer){
+        console.info(this._youTubePlayer.getCurrentTime());
+      }
       switch(this.activeStreamSource){
         case 'youtube':
           if(this._youTubePlayer.getCurrentTime){
@@ -166,6 +171,7 @@ window.resetMainPlayer = function(){
     YTApiActivated: false,
     USApiActivated : false
   };
+  windowResetMainplayerDependency.changed();
 };
 
 window.resetMainPlayer();
@@ -405,6 +411,7 @@ Template.watch_page.onRendered(function(){
  
   // activate jsAPIs for main stream
   this.autorun(function(){
+    windowResetMainplayerDependency.depend();
     if(ytApiReady.get() && FlowRouter.subsReady()){
       var activeStream = that.activeStream.get();
       mainPlayer.activeStream.set(that.activeStream.get());
@@ -413,7 +420,6 @@ Template.watch_page.onRendered(function(){
       }
       switch(activeStream.source){
         case 'youtube':
-
           if ( !mainPlayer.YTApiActivated ){
             console.log('activate the yt api!!')
             mainPlayer.YTApiActivated = true;
@@ -688,8 +694,16 @@ Template.watch_page.helpers({
     var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
     var cardSpaceAvailable = Session.get('windowHeightForCarousel') - 51 - videoSpace;
     if(cardSpaceAvailable > 120 && Session.get('windowWidthForCarousel') < 890){
+      if(Session.get('showDesktopMode')){
+        Session.set('showDesktopMode', false);
+        window.resetMainPlayer();
+      }
       return false;
     } else {
+      if(!Session.get('showDesktopMode')){
+        Session.set('showDesktopMode', true);
+        window.resetMainPlayer();
+      }
       return true;
     }
   },
