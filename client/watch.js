@@ -1698,6 +1698,16 @@ Template.portrait_timeline_section.events({
   }
 });
 
+Template.portrait_timeline_section.helpers({
+  carouselHeight(){
+    var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
+    if(Session.get('expandedPortraitCards')){
+      return Session.get('windowHeightForCarousel') - 51
+    } else {
+      return Session.get('windowHeightForCarousel') - 51 - videoSpace;
+    }
+  }
+});
 
 Template.manage_curators_menu.onCreated(function() {
   this.subscribe('minimalUsersPub', this.data.curatorIds);
