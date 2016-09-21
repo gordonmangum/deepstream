@@ -1650,6 +1650,47 @@ Template.timeline_section.events({
   }
 });
 
+Template.portrait_timeline_section.onRendered(function(){
+  this.autorun(() => {
+    if (FlowRouter.subsReady()) {
+      var timelineId = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
+      this.$('#twitter-timeline iframe').remove();
+      if(timelineId){
+        twttr.ready((twttr) => {
+          twttr.widgets.createTimeline(
+            timelineId,
+            this.$('#twitter-timeline')[0],
+            {
+              theme: 'dark',
+              height: 'auto',
+              width: 'auto'
+            })
+            .then(function (el) {
+              //console.log("Timeline has been displayed.")
+            });
+        });
+      }
+    }
+  });
+});
+
+Template.portrait_timeline_section.events({
+  'submit #timeline-embed' (e, t){
+    e.preventDefault();
+    var timelineWidgetCode = t.$('input[name=timeline-embed-code]').val();
+    if(!timelineWidgetCode){
+      return notifyError('Please enter your timeline widget code');
+    }
+    analytics.track('Curator added Twitter timeline widget', trackingInfoFromPage());
+    Meteor.call('addTimelineWidget', Session.get("streamShortId"), timelineWidgetCode, function(err, result){
+      if(err){
+        return basicErrorHandler(err);
+      }
+    });
+  }
+});
+
+
 Template.manage_curators_menu.onCreated(function() {
   this.subscribe('minimalUsersPub', this.data.curatorIds);
 });

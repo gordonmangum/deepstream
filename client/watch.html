@@ -534,7 +534,7 @@
             <div class="portrait-context-container">
               {{#if showPortraitShowTimelineButton}}
                 {{#if showTimeline}}
-                 {{> timeline_section show=showTimeline portrait=true}}
+                 {{> portrait_timeline_section show=showTimeline}}
                 {{else}}
                   {{#with deepstreamForContext}}
                     {{> context_browser_portrait contextBlocks=orderedContext deepstream=deepstreamForContext}}
@@ -1534,6 +1534,16 @@
       <div id='twitter-timeline' class="timeline-container" style="max-width:100%;"></div>
     </div>
 </template>
+
+<template name="portrait_timeline_section">
+    <div class="timeline-section {{#unless show}}hide{{/unless}}" style="height:{{mainStreamHeight -31}}px; margin: 0px; padding-top: 0px; background-color: #000;">
+      <a class="js-link toggle-card-expansion" style="position: fixed; right: 36px;">
+        <i class="fa fa-arrows-v fa-inverse" style="padding: 19px;"></i>
+      </a>
+      <div id='twitter-timeline' class="timeline-container" style="max-width:100%;"></div>
+    </div>
+</template>
+
 
 <template name="curator_webcam_display">
   <object id="curator-webcam-stream" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
