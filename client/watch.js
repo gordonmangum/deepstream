@@ -1687,6 +1687,14 @@ Template.portrait_timeline_section.events({
         return basicErrorHandler(err);
       }
     });
+  },
+  "click .toggle-card-expansion" () {
+    if($('.embed-responsive-16by9').hasClass('not-expanded')){
+      Session.set('expandedPortraitCards', true);
+      $('.embed-responsive-16by9').removeClass('not-expanded').addClass('expanded').animate({'padding-bottom': 0 });
+    } else {
+      $('.embed-responsive-16by9').removeClass('expanded').addClass('not-expanded').animate({'padding-bottom': '56.25%' }, 400, 'swing', function(){Session.set('expandedPortraitCards', false);});
+    }
   }
 });
 
