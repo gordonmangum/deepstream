@@ -1689,11 +1689,11 @@ Template.portrait_timeline_section.events({
     });
   },
   "click .toggle-card-expansion" () {
-    if($('.embed-responsive-16by9.main-stream').hasClass('not-expanded')){
+    if($('.embed-responsive-16by9.main-stream-mobile').hasClass('not-expanded')){
       Session.set('expandedPortraitCards', true);
-      $('.embed-responsive-16by9.main-stream').removeClass('not-expanded').addClass('expanded').animate({'padding-bottom': 0 });
+      $('.embed-responsive-16by9.main-stream-mobile').removeClass('not-expanded').addClass('expanded').animate({'padding-bottom': 0 });
     } else {
-      $('.embed-responsive-16by9.main-stream.main-stream').removeClass('expanded').addClass('not-expanded').animate({'padding-bottom': '56.25%' }, 400, 'swing', function(){Session.set('expandedPortraitCards', false);});
+      $('.embed-responsive-16by9.main-stream-mobile').removeClass('expanded').addClass('not-expanded').animate({'padding-bottom': '56.25%' }, 400, 'swing', function(){Session.set('expandedPortraitCards', false);});
     }
   }
 });
