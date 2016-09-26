@@ -284,6 +284,7 @@ div.add-context {
     li {
       white-space: normal;
       cursor: pointer;
+      margin: 5px 0;
 
       &:not(.loading-icon){
         &:nth-child(even){
@@ -339,11 +340,11 @@ div.add-context {
     
     @searchResultWidth: @aspectRatio * (@searchResultHeight - (2 * @innerElementPadding));
     @smallThumbnailWidth: .8*@searchResultHeight - (2 * @innerElementPadding);
-    div.thumbnail { // link-section
+    div.thumbnail-link-section { // link-section
       img{   
         width: @searchResultWidth;
         height: @searchResultHeight - @innerElementPadding;
-        padding-top: @innerElementPadding;
+        // padding-top: @innerElementPadding;
         margin-left: 10px;
 
         &.square {
@@ -364,13 +365,13 @@ div.add-context {
     @textAreaHeight: 75px;   
     div.info{    
       position: relative;   
-      top:  -@searchResultHeight+@innerElementPadding;  
+      top:  -@searchResultHeight+@innerElementPadding;
       left: @thumbnailWidth;   
       max-width: calc(100% ~"-" 10px ~"-" @thumbnailWidth);
       max-height: @searchResultHeight - 10px;   
 
       &.twitter {
-        top: -64px;
+        top:  -64px;
         left: 78px;
         max-width: calc(100% ~"-" 20px ~"-" @smallThumbnailWidth);
       }

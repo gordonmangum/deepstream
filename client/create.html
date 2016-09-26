@@ -208,9 +208,9 @@
               <div class="top">
                 {{#if thumbnailUrl}}
                   {{#if imageOnLeft}}
-                    <img class="thumbnail left" src="{{thumbnailUrl}}" />
+                    <img class="thumbnail-link-section left" src="{{thumbnailUrl}}" />
                   {{else}}
-                    <div class="thumbnail top" style='background-image: url("{{thumbnailUrl}}")'></div>
+                    <div class="thumbnail-link-section top" style='background-image: url("{{thumbnailUrl}}")'></div>
                   {{/if}}
                   <div class="link-title {{#if imageOnLeft}}image-on-left{{else}}image-on-top{{/if}}">{{title}}</div>
                 {{/if}}
@@ -424,7 +424,7 @@
           {{#each results}}
             <li class="{{#if isFocused}}focused{{/if}}">
               <div class="search-result {{#if imgUrl}}image{{/if}}">
-                <div class="thumbnail">
+                <div class="thumbnail-link-section">
                   <a href="//twitter.com/{{screenname}}" target="_blank">
                     <img class="small" src="{{userpic}}">
                   </a>
@@ -585,7 +585,7 @@
         {{#each results}}
           <li>
             <div class="{{#if isFocused}}focused-{{/if}}search-result">
-              <div class="{{#if isFocused}}focused-{{/if}}thumbnail">
+              <div class="{{#if isFocused}}focused-{{/if}}thumbnail-link-section">
               <img src="{{thumbnailUrl}}">
               </div>
               <div class="info {{#if isFocused}}focused{{/if}}">
@@ -662,7 +662,7 @@
         {{#each results}}
           <li>
             <div class="{{#if isFocused}}focused-{{/if}}search-result">
-              <div class="{{#if isFocused}}focused-{{/if}}thumbnail">
+              <div class="{{#if isFocused}}focused-{{/if}}thumbnail-link-section">
                 <img src="{{thumbnailUrl}}">
               </div>
               <div class="info {{#if isFocused}}focused{{/if}}">
@@ -721,11 +721,11 @@
         {{#each results}}
           <li>
             <div class="{{#if isFocused}}focused-{{/if}}search-result">
-              <div class="{{#if isFocused}}focused-{{/if}}thumbnail">
+              <div class="{{#if isFocused}}focused-{{/if}}thumbnail-link-section">
                 {{#if isFocused}}
                   <iframe class="audio" width="100%" src="{{url}}"></iframe>
                 {{else}}
-                  <div class="thumbnail">
+                  <div class="thumbnail-link-section">
                     {{#if artworkUrl}}
                       <img class="square" src="{{artworkUrl}}" />
                     {{else}}
