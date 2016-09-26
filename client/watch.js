@@ -313,7 +313,7 @@ Template.watch_page.onCreated(function () {
           var deepstream = Deepstreams.findOne({shortId: that.data.shortId()}, {reactive: false});
           if(_.contains(deepstream.curatorIds, user._id)){ // if this user is already a curator
             delete that.data.curatorSignupCode;
-            return
+            return;
           }
           Meteor.call('becomeCurator', that.data.shortId(), inviteCode, function(err, success){
             if(err){
@@ -329,11 +329,11 @@ Template.watch_page.onCreated(function () {
             }
           });
         } else {
-          Session.set('signingIn', true);
+          $('#login-modal').modal('show');
+          // Session.set('signingIn', true); now defunct
         }
       }
     }
-
   });
 
   this.activeStream = new ReactiveVar();
