@@ -1195,6 +1195,13 @@
   }
 }
 
+.list-item-context-section.suggest-content-card {
+  padding: 20px 0;
+  background-color: #ac00d8;
+  color: #ffffff;
+  text-align: center;
+}
+
 .list-item-context-section.curator-card{
   margin-top: 15px;
   .user-pic {
