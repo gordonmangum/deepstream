@@ -1353,7 +1353,8 @@
   .padding-sides(55px);
 
   button{
-    .transparency-fade(background-color, @context-background-color);
+    background-color: rgba(244, 244, 244, 0.8);
+    border-radius: 0 0 5px 5px;
     text-transform: uppercase;
   }
   svg{

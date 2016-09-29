@@ -112,6 +112,7 @@ window.addStream = function(stream, template) {
 window.addContext = function(contextBlock) { // add or suggest
   var user;
 
+  /* require login
   if (user = Meteor.user()) {
     contextBlock.authorId = user._id;
     contextBlock.rank = 0; // places above existing ranked context
@@ -127,6 +128,25 @@ window.addContext = function(contextBlock) { // add or suggest
     $('#login-modal').modal('show');
     return;
   }
+  */
+  
+  //do not req login
+  
+  if(user = Meteor.user()){
+    contextBlock.authorId = user._id;
+  } else {
+    contextBlock.authorId = 1;
+  }
+  contextBlock.rank = 0; // places above existing ranked context
+  if(mainPlayer.getElapsedTime()){
+    if(Session.get('videoMarkerTouched')){
+      var videoMarkerArray = Session.get('userVideoMarker').split(':').reverse();
+      contextBlock.videoMarker = moment.duration({hours: videoMarkerArray[2], minutes: videoMarkerArray[1], seconds: videoMarkerArray[0]}).asSeconds();
+    } else {
+      contextBlock.videoMarker = mainPlayer.getElapsedTime();
+    }
+  }
+  
 
   if (Session.get('curateMode')) {
     Session.set('saveState', 'saving');
