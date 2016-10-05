@@ -812,6 +812,7 @@ Template.watch_page.events({
     }else{
       Session.set('contextMode', 'timeline');
     }
+    analytics.track('Click portrait mode switch', trackingInfoFromPage());
   },
   'click #videoOverlay' (e,t){
     // now not in use

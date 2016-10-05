@@ -725,8 +725,13 @@ Template.context_browser_portrait.events({
     } else {
       $('.embed-responsive-16by9.main-stream-mobile').removeClass('expanded').addClass('not-expanded').animate({'padding-bottom': '56.25%' }, 400, 'swing', function(){Session.set('expandedPortraitCards', false);});
     }
+  },
+  "click .carousel-control.left" (){
+    analytics.track('Clicked portrait carousel control left', trackingInfoFromPage());
+  },
+  "click .carousel-control.right" (){
+    analytics.track('Clicked portrait carousel control right', trackingInfoFromPage());
   }
-  
 });
 
 

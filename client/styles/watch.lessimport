@@ -930,7 +930,10 @@
       }
       .news-date{
         text-align: left;
-        margin-top: 20px;
+        margin-top: 30px;
+        p {
+          line-height: 1.7;
+        }
       }
       .news-author{
         text-align: left;
@@ -1314,7 +1317,7 @@
     line-height: @lineHeight;
     min-height: @lineHeight * 1 + @padding*2;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 8;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2059,7 +2062,7 @@ a.svg:after {
 }
 
 label.vote-option {
-  padding-left: 10px;
+  margin-left: 60px;
 }
 
 p.vote-description{
