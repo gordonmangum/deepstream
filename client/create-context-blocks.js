@@ -524,7 +524,7 @@ var dataSourcesByType = {
   'audio': [{source: 'soundcloud', display: 'SoundCloud'}],
   'twitter': [{source: 'twitter', display: 'Twitter'}],
   'map': [{source: 'google_maps', display: 'Google Maps'}],
-  'text': [{source: 'free_text', display: 'Free Text'}],
+  'text': [{source: 'free_text', display: 'Comment'}],
   'poll': [{source: 'pie_poll', display: 'Polling'}],
   'link': [{source: 'link', display: 'Link'}]
 };

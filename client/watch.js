@@ -274,7 +274,7 @@ Template.watch_page.onCreated(function () {
           Session.set("mediaDataType", 'stream');
           return
         } else if (reactiveDeepstream.creationStep === 'add_cards') {
-          Session.set("mediaDataType", 'image');
+          Session.set("mediaDataType", 'text');
           return
         }
       }
@@ -867,7 +867,7 @@ Template.watch_page.events({
   },
   'click .suggest-content' (){
     analytics.track('Clicked suggest context button', trackingInfoFromPage());
-    Session.set('mediaDataType', Session.get('previousMediaDataType') || 'image');
+    Session.set('mediaDataType', Session.get('previousMediaDataType') || 'text');
   },
   'click .got-it-context' (){
     Session.set('shownHighlightContext', true); 
@@ -1354,7 +1354,7 @@ Template.context_browser.helpers({
 
 Template.context_browser.events({
   'click .add-new-context-row' (){
-    Session.set('mediaDataType', Session.get('previousMediaDataType') || 'image');
+    Session.set('mediaDataType', Session.get('previousMediaDataType') || 'text');
   },
   'click .delete-context' (e, t){
     if(confirm('Are you sure you want to delete this ' + singularizeMediaType(this.type) + '? This cannot be undone.')){

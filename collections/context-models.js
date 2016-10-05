@@ -1223,7 +1223,7 @@ TextBlock = (function (_super) {
   };
 
   TextBlock.prototype.providerName = function() {
-    return 'Curator Text'
+    return 'Comment'
   };
 
   TextBlock.prototype.providerIconUrl = function() {
