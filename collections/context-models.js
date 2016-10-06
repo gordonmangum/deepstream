@@ -1103,7 +1103,7 @@ ImageBlock = (function (_super) {
   ImageBlock.prototype.providerName = function() {
     switch (this.source) {
       case 'cloudinary':
-        return 'Curator Upload';
+        return 'Image Upload';
       default:
         return _super.prototype.providerName.call(this);
     }
