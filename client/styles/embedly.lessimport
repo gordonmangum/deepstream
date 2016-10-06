@@ -511,7 +511,7 @@ body#cards {
     color: #ccc
 }
 .card .provider .author {
-    line-height: 16px;
+    line-height: 18px;
     letter-spacing: .2px;
     display: inline-block;
     vertical-align: middle;
