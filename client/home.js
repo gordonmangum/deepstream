@@ -526,11 +526,10 @@ Template.my_streams.helpers({
   streams (published) {
     if (FlowRouter.subsReady()) {
       if(published) {
-        var deepstreams = Deepstreams.find({curatorIds: Meteor.user()._id, onAir: true}).fetch();
+        var deepstreams = Deepstreams.find({curatorIds: Meteor.user()._id, onAir: true},{sort: { createdAt: -1 }}).fetch();
       } else {
-        var deepstreams = Deepstreams.find({curatorIds: Meteor.user()._id, onAir: false}).fetch();
+        var deepstreams = Deepstreams.find({curatorIds: Meteor.user()._id, onAir: false},{sort: { createdAt: -1 }}).fetch();
       }
-      
       deepstreams.forEach(function(val, index, arr){ arr[index] = _.extend(arr[index], {showDeleteButton: true})});
       return deepstreams;
     }
