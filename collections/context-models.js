@@ -806,7 +806,7 @@ AudioBlock = (function (_super) {
 
   AudioBlock.prototype.soloModeLocation = 'sidebar';
   AudioBlock.prototype.soloModeTemplate = 'display_audio_section';
-  AudioBlock.prototype.listModeItemTemplate = 'display_audio_section';
+  AudioBlock.prototype.listModeItemTemplate = 'preview_audio_section';
   AudioBlock.prototype.portraitListModeItemTemplate = 'portrait_display_audio_section';
   AudioBlock.prototype.annotationAllowed = true;
   AudioBlock.prototype.countListModeViewAsRead = true;
@@ -939,7 +939,7 @@ TwitterBlock = (function (_super) {
 
   TwitterBlock.prototype.soloModeLocation = 'sidebar';
   TwitterBlock.prototype.soloModeTemplate = 'display_twitter_section';
-  TwitterBlock.prototype.listModeItemTemplate = 'display_twitter_section';
+  TwitterBlock.prototype.listModeItemTemplate = 'preview_twitter_section';
   TwitterBlock.prototype.portraitListModeItemTemplate = 'portrait_display_twitter_section';
   TwitterBlock.prototype.annotationAllowed = true;
   TwitterBlock.prototype.countListModeViewAsRead = true;
