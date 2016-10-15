@@ -875,7 +875,7 @@ Template.watch_page.events({
   },
   'click .suggest-content' (){
     analytics.track('Clicked suggest context button', trackingInfoFromPage());
-    Session.set('mediaDataType', Session.get('previousMediaDataType') || 'text');
+    Session.set('mediaDataType', Session.get('previousMediaDataType') || 'selectCard');
   },
   'click .got-it-context' (){
     Session.set('shownHighlightContext', true); 
