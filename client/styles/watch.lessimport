@@ -96,6 +96,13 @@
   max-width: 16px;
 }
 
+.main-card-section {
+  border-bottom: 1px solid #d5d5d5;
+  padding: 7px 3px;
+}
+
+
+
 
   
   
@@ -1201,25 +1208,6 @@
   .transparency-fade-strong(background-color, @light-background-color);
   .transparency-rounded;
 }
-
-.moderation-buttons{
-  flex-direction: row;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  .padding-sides(55px);
-
-  button{
-    background-color: rgba(244, 244, 244, 0.8);
-    border-radius: 0 0 5px 5px;
-    text-transform: uppercase;
-  }
-  svg{
-    margin-bottom: -2px;
-    margin-right: 3px;
-  }
-}
-
 
 .link-section{
   line-height: 18px;

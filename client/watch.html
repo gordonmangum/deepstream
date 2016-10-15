@@ -71,7 +71,7 @@
             -->
           {{/if}}
           <div class="row">
-            <div class="col-xs-8">
+            <div class="col-xs-7">
             {{#if showTutorial}}
             {{> creation_tutorial}}
             {{/if}}
@@ -183,7 +183,7 @@
           </div>
             {{/if}}
         </div>
-        <div class="col-xs-4" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
+        <div class="col-xs-5" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
         <!-- Begin Card List Area -->
         {{#if showOpenSidebarIcon}}
         <!-- hide show/hide button for now
@@ -1076,65 +1076,86 @@
 <template name="list_item_context_section">
   {{#if showContext}}
   <div class="row thumbnail context-section {{#if type}}{{type}}-card{{/if}} {{#if hasSoloMode}}isClickable{{/if}}" data-context-id="{{_id}}">
-    <div class="col-xs-12 clickable">
-      <div class="row">
-        <div class="col-xs-10">
-        {{#if suggestedByUsername}}
-        <div class="row">
-          <div class="col-xs-12">
-            <p>@{{suggestedByUsername}} suggested this card</p>
-          </div>
-        </div>
-        {{/if}}
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="provider">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}" height="32"/>{{/if}}{{providerName}}</div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            {{> Template.dynamic template=listModeItemTemplate}}
-            <!--
-            {{#unless curateMode}}
-              {{#if hoverIconTemplate}}<button class="hover-icon">{{> Template.dynamic template=hoverIconTemplate}}</button>{{/if}}
-            {{/unless}}
+    <div class="col-xs-12">
+      <div class="row main-card-section">
+        <div class="col-xs-12 clickable">
+          <div class="row">
+            <div class="col-xs-11">
+            {{#if suggestedByUsername}}
+            <div class="row">
+              <div class="col-xs-12">
+                <p>@{{suggestedByUsername}} suggested this card</p>
+              </div>
+            </div>
+            {{/if}}
+            <!-- no provider icon in viv mockup
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="provider">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}" height="32"/>{{/if}}{{providerName}}</div>
+              </div>
+            </div>
             -->
+            <div class="row">
+              <div class="col-xs-12">
+                {{> Template.dynamic template=listModeItemTemplate}}
+                <!--
+                {{#unless curateMode}}
+                  {{#if hoverIconTemplate}}<button class="hover-icon">{{> Template.dynamic template=hoverIconTemplate}}</button>{{/if}}
+                {{/unless}}
+                -->
+              </div>
+            </div>
+            </div>
+            <div class="col-xs-1"><h1 style="margin-top:75px; margin-left:-15px;">&gt;</h1></div>
           </div>
         </div>
-        </div>
-        <div class="col-xs-2"><h1>&gt;</h1></div>
       </div>
+       {{#if showAnnotationSection}}
+      <div class="row">
+        <div class="col-xs-12">
+          {{> annotation_section}}
+        </div>
+      </div>
+      {{/if}}
+      {{#if replayEnabled}}
+      {{#if showVideoMarkerSection}}
+      <div class="row">
+        <div class="col-xs-12">
+          {{> video_marker_section}}
+        </div>
+      </div>
+      {{/if}}
+      {{/if}}
+      {{#if browseSuggestionsMode}}
+      <div class="row">
+        <div class="col-xs-6">
+          <button class="approve-suggestion"><i class="fa fa-check"></i> Approve</button>
+        </div>
+        <div class="col-xs-6">
+          <button class="reject-suggestion"><i class="fa fa-close"></i> Reject</button>
+        </div>
+      </div>
+      {{/if}}
     </div>
+    
+    <!-- to do  add a delete card button-->
       {{#if curateMode}}
         {{#unless browseSuggestionsMode}}
           <button title="delete" class="delete-context">{{> close_circle}}</button>
         {{/unless}}
       {{/if}}
-    {{#if showAnnotationSection}}
-      {{> annotation_section}}
-    {{/if}}
-    {{#if replayEnabled}}
-      {{#if showVideoMarkerSection}}
-        {{> video_marker_section}}
-      {{/if}}
-    {{/if}}
-    
-    {{#if browseSuggestionsMode}}
-      <div class="moderation-buttons">
-        <button class="approve-suggestion">{{> approve_icon}}Approve</button>
-        <button class="reject-suggestion">{{> reject_icon}}Reject</button>
-      </div>
-    {{/if}}
   </div>
   {{/if}}
 </template>
 
 <template name="annotation_section">
-  <div class="annotation-section">
-    <div class="user-pic">
-      {{> default_user_pic }}
+  <div class="row">
+    <div class="col-xs-1">
+      <i class="fa fa-user" style="margin-top: 10px; margin-left: 10px;"></i>
     </div>
-    {{{annotation}}}
+    <div class="col-xs-11">
+       {{{annotation}}}
+    </div>
   </div>
 </template>
 

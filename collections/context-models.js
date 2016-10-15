@@ -746,7 +746,7 @@ VideoBlock = (function (_super) {
   };
 
 
-  VideoBlock.prototype.soloModeLocation = 'overlay';
+  VideoBlock.prototype.soloModeLocation = 'sidebar';
   VideoBlock.prototype.soloModeTemplate = 'display_video_section';
   VideoBlock.prototype.listModeItemTemplate = 'preview_video_section';
   VideoBlock.prototype.portraitListModeItemTemplate = 'portrait_preview_video_section';
@@ -804,7 +804,7 @@ AudioBlock = (function (_super) {
 
 
 
-  AudioBlock.prototype.soloModeLocation = null;
+  AudioBlock.prototype.soloModeLocation = 'sidebar';
   AudioBlock.prototype.soloModeTemplate = 'display_audio_section';
   AudioBlock.prototype.listModeItemTemplate = 'display_audio_section';
   AudioBlock.prototype.portraitListModeItemTemplate = 'portrait_display_audio_section';
@@ -937,8 +937,8 @@ TwitterBlock = (function (_super) {
 
 
 
-  TwitterBlock.prototype.soloModeLocation = null;
-  TwitterBlock.prototype.soloModeTemplate = null;
+  TwitterBlock.prototype.soloModeLocation = 'sidebar';
+  TwitterBlock.prototype.soloModeTemplate = 'display_twitter_section';
   TwitterBlock.prototype.listModeItemTemplate = 'display_twitter_section';
   TwitterBlock.prototype.portraitListModeItemTemplate = 'portrait_display_twitter_section';
   TwitterBlock.prototype.annotationAllowed = true;
@@ -1122,7 +1122,7 @@ ImageBlock = (function (_super) {
 
   //
 
-  ImageBlock.prototype.soloModeLocation = 'overlay';
+  ImageBlock.prototype.soloModeLocation = 'sidebar';
   ImageBlock.prototype.soloModeTemplate = 'display_image_section';
   ImageBlock.prototype.listModeItemTemplate = 'preview_image_section';
   ImageBlock.prototype.portraitListModeItemTemplate = 'portrait_preview_image_section';
@@ -1181,7 +1181,7 @@ MapBlock = (function (_super) {
   };
 
 
-  MapBlock.prototype.soloModeLocation = 'overlay';
+  MapBlock.prototype.soloModeLocation = 'sidebar';
   MapBlock.prototype.soloModeTemplate = 'display_map_section';
   MapBlock.prototype.listModeItemTemplate = 'preview_map_section';
   MapBlock.prototype.portraitListModeItemTemplate = 'portrait_preview_map_section';
@@ -1281,7 +1281,7 @@ PollBlock = (function (_super) {
   };
 
 
-  PollBlock.prototype.soloModeLocation = null; //'sidebar';
+  PollBlock.prototype.soloModeLocation = 'sidebar'; //'sidebar';
   PollBlock.prototype.soloModeTemplate = 'display_poll_section';
   PollBlock.prototype.listModeItemTemplate = 'preview_poll_section';
   PollBlock.prototype.portraitListModeItemTemplate = 'portrait_preview_poll_section';
