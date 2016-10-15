@@ -79,7 +79,7 @@ var goBack = function(e, t) {
     return t.focusResult.set(null);
   } else {
     Session.set('previousMediaDataType', Session.get('mediaDataType'));
-    return Session.set('mediaDataType', null);
+    return Session.set('mediaDataType', 'selectCard');
   }
 };
 

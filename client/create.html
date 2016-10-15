@@ -633,7 +633,8 @@
 
 <template name="create_stream_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} Streams</div>
-  {{#if showBackButton}}<button class="go-back-button {{#unless showSingleResult}}hide{{/unless}}">{{> back_arrow_icon}}</button>{{/if}}
+  <!-- {{#if showBackButton}}{{/if}} -->
+  <button class="go-back-button ">{{> back_arrow_icon}}</button> <!-- removed from go back button class field {{#unless showSingleResult}}hide{{/unless}} -->
   {{#if replayAvailable}}
     {{#if replayEnabled}}
       {{#if showStreamReplayWarning}}

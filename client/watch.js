@@ -271,10 +271,10 @@ Template.watch_page.onCreated(function () {
       var reactiveDeepstream = Deepstreams.findOne({shortId: that.data.shortId()}, {fields: {creationStep: 1}});
       if(that.data.onCuratePage()){
         if (_.contains(['find_stream'], reactiveDeepstream.creationStep)){
-          Session.set("mediaDataType", 'stream');
+          Session.set("mediaDataType", 'selectCard'); //'stream'
           return
         } else if (reactiveDeepstream.creationStep === 'add_cards') {
-          Session.set("mediaDataType", 'text');
+          Session.set("mediaDataType", 'selectCard'); //'text'
           return
         }
       }
@@ -732,6 +732,9 @@ Template.watch_page.helpers({
   },
   showContextSearch (){
     return Session.get('mediaDataType') && Session.get('mediaDataType') !=='webcam';
+  },
+  showSelectCardType () {
+    return Session.get('mediaDataType') == "selectCard";
   },
   showPreviewEditButton (){
     return !this.creationStep || this.creationStep === 'go_on_air';

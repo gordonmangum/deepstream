@@ -183,7 +183,7 @@
           </div>
             {{/if}}
         </div>
-        <div class="col-xs-5" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
+        <div class="col-xs-5" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch; z-index: 10;">
         <!-- Begin Card List Area -->
         {{#if showOpenSidebarIcon}}
         <!-- hide show/hide button for now
@@ -200,8 +200,7 @@
         {{/if}}
 
          {{#with deepstreamForContext}}
-
-          {{#if showContextSearch}}
+          {{#if showSelectCardType}}
             <div class="row card-list-nav-row">
               <div class="col-xs-3">
                 <button class="card-list-nav-button back-button">&lt; Back</button>
@@ -213,6 +212,8 @@
             <!-- start select context type -->
             {{> content_icons}}
             <!-- end select context type -->
+          {{/if}}
+          {{#if showContextSearch}}
             <!-- start add context field -->
             {{> add_context}}
             <!-- end add context field --> 
