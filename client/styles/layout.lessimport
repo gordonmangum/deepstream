@@ -828,29 +828,6 @@ div.horizontal-context {
   }
 }
 
-.context-section{
-  div.preview {
-    display: none; // TODO fix this and display
-
-
-    position: absolute;
-    top: 0;
-    z-index: 10;
-    overflow: hidden;
-    .size-to-fit;
-    img{
-      width: 100%;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      margin: auto;
-    }
-  }
-  div.active-display {
-    z-index: 20;
-  }
-}
-
 div.text-content {
   @font-size: 14px;
   font-size: @font-size;

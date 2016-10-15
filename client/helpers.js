@@ -141,7 +141,7 @@ Template.registerHelper("newContextAvailable", function() {
 });
 
 getMainStreamHeight = function(offset){
-  return Session.get("windowHeight") - 60 - 65 - 130 - 20 + (offset || 0);
+  return Session.get("windowHeight") - 51 + (offset || 0);
 };
 
 getLeftSectionWidth = function(offset){

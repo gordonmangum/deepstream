@@ -806,6 +806,10 @@ var saveStreamTitle = function(template){
 };
 
 Template.watch_page.events({
+  'click .card-list-nav-button.back-button': function(){
+    Session.set('previousMediaDataType', Session.get('mediaDataType'));
+    return Session.set('mediaDataType', null);
+  },
   'click .portrait-mode-switch' (e,t){
     if(Session.equals('contextMode', 'timeline')){
       Session.set('contextMode', 'context');
@@ -1354,7 +1358,7 @@ Template.context_browser.helpers({
 });
 
 Template.context_browser.events({
-  'click .add-new-context-row' (){
+  'click .add-new-card-row' (){
     Session.set('mediaDataType', Session.get('previousMediaDataType') || 'text');
   },
   'click .delete-context' (e, t){
@@ -1389,11 +1393,9 @@ Template.context_browser.events({
     });
   },
   'click .context-section .clickable' (e, t){
-
     if ($(e.target).is('textarea')) { // don't go to big browser when its time to edit context
       return
     }
-
     if(this.hasSoloMode()){
       setCurrentContext(this);
     }
