@@ -1064,6 +1064,7 @@
   background-color: #ac00d8;
   color: #ffffff;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .list-item-context-section.curator-card{
