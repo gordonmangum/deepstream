@@ -185,8 +185,6 @@ Template.watch_page.onCreated(function () {
 
   var that = this;
 
-  this.settingsMenuOpen = new ReactiveVar();
-
   window.onYouTubeIframeAPIReady = function() {
     ytApiReady.set(true);
   };
@@ -568,6 +566,27 @@ Template.watch_page.onRendered(function(){
     }
   },1300);
   
+  
+  // load settings toggles
+  $("#settings-modal").on('show.bs.modal', function () {
+      var deepstreamForSettings = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {onAir: 1, replayEnabled:1, directorMode:1}});
+      if(deepstreamForSettings.onAir === true){
+        $('#publish-toggle').bootstrapToggle('on');
+      } else {
+        $('#publish-toggle').bootstrapToggle('off');
+      }
+      if(deepstreamForSettings.directorMode === true){
+        $('#director-mode-toggle').bootstrapToggle('on');
+      } else {
+        $('#director-mode-toggle').bootstrapToggle('off');
+      }
+      if(deepstreamForSettings.replayEnabled === true){
+        $('#replay-toggle').bootstrapToggle('on');
+      } else {
+        $('#replay-toggle').bootstrapToggle('off');
+      }
+  });
+  
 });
 
 Template.watch_page.onDestroyed(function () {
@@ -761,10 +780,6 @@ Template.watch_page.helpers({
   showStreamSwitcher (){
     return Session.get('curateMode') || this.userStreamSwitchAllowed();
   },
-
-  settingsMenuOpen (){
-    return Template.instance().settingsMenuOpen.get();
-  },
   livestreams (){
     return _.where(this.streams, { live: true });
   },
@@ -800,12 +815,81 @@ var basicErrorHandler = function(err){
 };
 
 var saveStreamTitle = function(template){
-  streamTitle = $.trim(template.$('div.stream-title').text());
+  streamTitle = $.trim(template.$('#set-stream-title').val());
   Session.set('saveState', 'saving');
   return Meteor.call('updateStreamTitle', template.data.shortId(), streamTitle, basicErrorHandler);
 };
 
 Template.watch_page.events({
+  'change #publish-toggle': function(e, t){
+    if($('#publish-toggle').prop('checked')){
+      Meteor.call('publishStream', t.data.shortId(), function (err) {
+        if (err) {
+          $('#publish-toggle').prop('checked', false).change();
+          basicErrorHandler(err);
+        } else {
+          analytics.track('Curator published deepstream!', trackingInfoFromPage());
+          notifySuccess("Your Deep Stream is currently on air!");
+        }
+      });
+    } else {
+      Meteor.call('unpublishStream', t.data.shortId(), function (err) {
+        if (err) {
+          $('#publish-toggle').prop('checked', true).change();
+          basicErrorHandler(err);
+        } else {
+          analytics.track('Curator unpublished deepstream!', trackingInfoFromPage());
+        }
+      });
+    }
+  },
+  'change #replay-toggle': function(e, t){
+    if($('#replay-toggle').prop('checked')){
+      notifyInfo('Replay Context is on. Your cards will appear at the time shown on each card.');
+      analytics.track('Curator turned replay context on', trackingInfoFromPage());
+      Meteor.call('replayEnabledOn', t.data.shortId(), basicErrorHandler);
+    } else {
+      notifyInfo('Replay Context is off. Your cards will all be visible and in the order you have arranged them.');
+      analytics.track('Curator turned replay context off', trackingInfoFromPage());
+      Meteor.call('replayEnabledOff', t.data.shortId(), basicErrorHandler);
+    }
+  },
+  'change #director-mode-toggle': function(e,t){
+    if($('#director-mode-toggle').prop('checked')){
+      notifyInfo('Director mode is on. Which ever stream you are watching will be displayed to viewers.');
+      analytics.track('Curator turned director mode on', trackingInfoFromPage());
+      return Meteor.call('directorModeOn', t.data.shortId(), basicErrorHandler);
+    } else {
+      notifyInfo('Director mode is off. Viewers are free to choose between streams as they please.');
+      analytics.track('Curator turned director mode off', trackingInfoFromPage());
+      return Meteor.call('directorModeOff', t.data.shortId(), basicErrorHandler);
+    }
+  },
+  
+  'click .director-mode-off' (e, t){
+    analytics.track('Curator turned director mode off', trackingInfoFromPage());
+    return Meteor.call('directorModeOff', t.data.shortId(), basicErrorHandler)
+  },
+  'click .director-mode-on' (e, t){
+    analytics.track('Curator turned director mode on', trackingInfoFromPage());
+    return Meteor.call('directorModeOn', t.data.shortId(), basicErrorHandler)
+  },
+  'click .replay-context-mode-off' (e, t){
+    notifyInfo('Replay Context is now off. Your cards will all be visible and in the order you have arranged them.');
+    analytics.track('Curator turned replay context off', trackingInfoFromPage());
+    Meteor.call('replayEnabledOff', t.data.shortId(), basicErrorHandler)
+  },
+  'click .replay-context-mode-on' (e, t){
+    notifyInfo('Replay Context is now on. Your cards will appear at the time shown on each card.');
+    analytics.track('Curator turned replay context on', trackingInfoFromPage());
+    Meteor.call('replayEnabledOn', t.data.shortId(), basicErrorHandler)
+  },
+  'click .replay-context-mode-disabled' (e, t){
+    analytics.track('Curator clicked disabled Replay Context', trackingInfoFromPage());
+    notifyError('Unfortunately Replay Context is not available for Deepstreams with a livestream or more than one stream');
+  },
+  
+  
   'click .card-list-nav-button.back-button': function(){
     Session.set('previousMediaDataType', Session.get('mediaDataType'));
     return Session.set('mediaDataType', null);
@@ -912,22 +996,30 @@ Template.watch_page.events({
       Session.set('mediaDataType', 'stream');
     }
   },
-  'blur .stream-title[contenteditable]' (e, template) {
+  'blur .set-title' (e, template) {
     saveStreamTitle(template);
   },
-  'keypress .stream-title[contenteditable]' (e, template) {
+  'keypress .set-title' (e, template) {
+    saveStreamTitle(template);
+    /*
     if (e.keyCode === 13) { // return
       e.preventDefault();
       saveStreamTitle(template);
     }
+    */
   },
   'paste [contenteditable]': window.plainTextPaste,
   'drop [contenteditable]' (e){
     e.preventDefault();
     return false;
   },
-  'blur .stream-description[contenteditable]' (e, template) {
-    streamDescription = $.trim(template.$('div.stream-description').text());
+  'blur .set-description' (e, template) {
+    streamDescription = $.trim(template.$('#set-stream-description').val());
+    Session.set('saveState', 'saving');
+    return Meteor.call('updateStreamDescription', template.data.shortId(), streamDescription, basicErrorHandler);
+  },
+  'keypress .set-description' (e, template) {
+    streamDescription = $.trim(template.$('#set-stream-description').val());
     Session.set('saveState', 'saving');
     return Meteor.call('updateStreamDescription', template.data.shortId(), streamDescription, basicErrorHandler);
   },
@@ -958,18 +1050,6 @@ Template.watch_page.events({
     Session.set('mediaDataType', null);
     analytics.track('Curator viewed manage curators menu', trackingInfoFromPage());
     return Session.set("showManageCuratorsMenu", true);
-  },
-  'mouseenter .settings-menu-button' (e, template){
-    template.settingsMenuOpen.set(true);
-  },
-  'mouseleave .settings-menu-button' (e, template){
-    template.settingsMenuOpen.set(false);
-  },
-  'mouseenter .settings-menu' (e, template){
-    template.settingsMenuOpen.set(true);
-  },
-  'mouseleave .settings-menu' (e, template){
-    template.settingsMenuOpen.set(false);
   },
   'click .microphone' (e, t){
     notifyFeature('Live audio broadcast: coming soon!');
@@ -1472,12 +1552,12 @@ Template.list_item_context_section.helpers({
   },
 });
 
-Template.title_description_overlay.onCreated(function(){
+Template.title_description_inlay.onCreated(function(){
   this.titleLength = new ReactiveVar(this.title ? this.title.length : 0);
   this.descriptionLength = new ReactiveVar(this.description ? this.description.length : 0);
 });
 
-Template.title_description_overlay.helpers({
+Template.title_description_inlay.helpers({
   titleLength (){
     return  Template.instance().titleLength.get();
   },
@@ -1492,7 +1572,7 @@ Template.title_description_overlay.helpers({
   }
 });
 
-Template.title_description_overlay.events({
+Template.title_description_inlay.events({
   'keypress .set-title' (e, t){
     if (e.keyCode === 13){
       e.preventDefault();
@@ -1511,6 +1591,8 @@ Template.title_description_overlay.events({
   'keyup .set-description' (e, t){
     t.descriptionLength.set($(e.currentTarget).val().length);
   },
+  // TO DO set title and description on key up.
+  // TO DO set publish to be on the 
   'submit #publish-with-title-description' (e, t){
     e.preventDefault();
     var title = t.$('.set-title').val();

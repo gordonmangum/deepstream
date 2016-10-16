@@ -25,15 +25,68 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-md-6">
-              <p>Title field</p>
-              <p>Description field</p>
+              <div class="row">
+                <div class="col-xs-12">
+                  {{> title_description_inlay}}
+                </div>
+              </div>
               <p>Curators</p>
+                {{#if isMainCurator}}
+                  <li>
+                    <button class="show-manage-curators-menu">Add/Remove Curators</button>
+                  </li>
+                {{/if}}
             </div>
             <div class="col-md-6">
-              <p>Replay Context</p>
-              <p>Director Mode</p>
-              <p>Right Sidebar expanded on load</p>
-              <p>Publish</p>
+             <!-- <ul>
+      <li>
+    {{#if replayAvailable}}
+          {{#if replayEnabled}}
+            <button class="replay-context-mode-off">Turn Replay Context Off</button>
+          {{else}}
+            <button class="replay-context-mode-on">Turn Replay Context On</button>
+          {{/if}}
+        {{else}}
+          <button class="replay-context-mode-disabled">Turn Replay Context On</button>
+        {{/if}}
+      </li>
+      <li>
+        {{#if directorMode}}
+          <button class="director-mode-off">Turn Director Mode Off</button>
+        {{else}}
+          <button class="director-mode-on">Turn Director Mode On</button>
+        {{/if}}
+      </li>
+    
+      <li>
+        {{#if onAir}}
+          <button class="unpublish">Unpublish</button>
+        {{else}}
+          <button class="publish">Publish</button>
+        {{/if}}
+      </li>
+    </ul>
+              -->
+              
+               <div class="checkbox">
+                <label>
+                  <input id="publish-toggle" type="checkbox" data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+                  Published
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input id="replay-toggle" type="checkbox" data-toggle="toggle" data-onstyle="success" disabled="{{#unless replayAvailable}}disabled{{/unless}}">
+                  Replay Context
+                </label>
+              </div>
+              
+              <div class="checkbox">
+                <label>
+                  <input id="director-mode-toggle" type="checkbox" data-toggle="toggle" data-onstyle="success">
+                  Director Mode
+                </label>
+              </div>
             </div>
           </div>
         </div>
@@ -344,18 +397,7 @@
                     </div>
                   {{/if}}
                 {{/if}}
-
-
-                {{#if curateMode}}
-                <div class="button-container icon-button">
-                    <button class="settings-menu-button {{#if settingsMenuOpen}}active{{/if}}">{{> setting_icon}}</button>
-                    {{#if settingsMenuOpen}}
-                      {{> settings_menu}}
-                    {{/if}}
-                </div>
-                {{/if}}
-
-              </div>-->
+            </div>-->
               {{/if}}
 
               {{#unless isCurator}}
@@ -511,9 +553,11 @@
     </div>
             {{#with thisDeepstream}}
               <!--Fixed sections-->
+              <!--
               {{#if showTitleDescriptionEditOverlay}}
                 {{> title_description_overlay}}
               {{/if}}
+              -->
               {{#if soloOverlayContextMode}}
                 {{> overlay_context_browser}}
               {{/if}}
@@ -978,22 +1022,22 @@
  -->
 </template>
 
-<template name="title_description_overlay">
-  <div class="title-description-overlay" style="width: {{windowWidth}}px; height: {{windowHeight}}px;">
-    <button class="close">✕</button>
-    <div class="title-description-inputs">
+<template name="title_description_inlay">
+  <div class="row">
+    <div class="col-xs-12">
       <form id="publish-with-title-description" action="action" autocomplete="off">
-        <label for="title">Enter a title for your Deep Stream:</label>
-        <input type="text" name="title" value="{{title}}" class="set-title" autofocus="autofocus">
-
-        <div class="character-count">{{titleLength}} / {{titleMax}}</div>
-        <label for="description">Enter a description:</label>
-        <textarea name="description" value="{{description}}" class="set-description" rows="3"></textarea>
-
-        <div class="character-count">{{descriptionLength}} / {{descriptionMax}}</div>
-        <div class="button-area">
-          <button type="submit">Publish!</button>
+       <div class="form-group">
+          <label for="title">Enter a title for your Deep Stream:</label>
+          <input type="text" id="set-stream-title" name="title" value="{{title}}" class="form-control set-title" placeholder="Put your title here." autofocus="autofocus">
+          <div class="character-count"><p class="text-muted">{{titleLength}} / {{titleMax}}</p></div>
         </div>
+        
+        <div class="form-group">
+          <label for="description">Enter a description:</label>
+          <textarea id="set-stream-description" name="description" value="{{description}}" class="form-control set-description" placeholder="Put your description here." autofocus="autofocus" rows="3"></textarea>
+          <div class="character-count"><p class="text-muted">{{descriptionLength}} / {{descriptionMax}}</p></div>
+        </div>
+        <!-- <button type="submit" class="btn btn-outline-success">publish</button>-->
       </form>
     </div>
   </div>
@@ -1256,43 +1300,6 @@
 <template name="video_marker_section">
   <div class="video-marker-section">
     {{> clock_icon}}<span>Card appears at: <input name="videoMarker" class="text-content editable video-marker" rows="1" value="{{formatDuration videoMarker}}" dir="auto" /></span>
-  </div>
-</template>
-
-<template name="settings_menu">
-  <div class="settings-menu">
-    <ul>
-      <li>
-        {{#if replayAvailable}}
-          {{#if replayEnabled}}
-            <button class="replay-context-mode-off">Turn Replay Context Off</button>
-          {{else}}
-            <button class="replay-context-mode-on">Turn Replay Context On</button>
-          {{/if}}
-        {{else}}
-          <button class="replay-context-mode-disabled">Turn Replay Context On</button>
-        {{/if}}
-      </li>
-      <li>
-        {{#if directorMode}}
-          <button class="director-mode-off">Turn Director Mode Off</button>
-        {{else}}
-          <button class="director-mode-on">Turn Director Mode On</button>
-        {{/if}}
-      </li>
-      {{#if isMainCurator}}
-        <li>
-          <button class="show-manage-curators-menu">Add/Remove Curators</button>
-        </li>
-      {{/if}}
-      <li>
-        {{#if onAir}}
-          <button class="unpublish">Unpublish</button>
-        {{else}}
-          <button class="publish">Publish</button>
-        {{/if}}
-      </li>
-    </ul>
   </div>
 </template>
 
