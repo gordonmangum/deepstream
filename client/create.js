@@ -236,7 +236,3 @@ Template.videoMarkerInput.events({
     template.$('#video-marker-input').val(videoMarker);
   }
 });
-
-Template.unimplemented_chat_section.onCreated(function(){
-  notifyFeature('Chat: coming soon!');
-});

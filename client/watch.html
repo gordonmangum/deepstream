@@ -1,47 +1,63 @@
 <template name="context_browser_area">
-  
+  <div class="row">
   {{#if curateMode}}
-    {{> context_card_column}}
-  {{/if}}
-  <!--
-  <div class="context-timeline-switcher {{#unless curateMode}}wide-menu{{/unless}}">
-    
-      <div class="button-container close-bar-button">
-        <button title="Close context bar" class="close-sidebar">
-          {{> close_right_icon}}
-        </button>
-      </div>
-  
-    <div class="button-container {{#if showContextBrowser}}active{{/if}}">
-      <button title="Context" class="show-context-browser {{#if showContextBrowser}}active{{/if}}">
-        Context
-      </button>
+    {{#if showContextBrowser}}
+    <div class="col-xs-2">
+      {{> context_card_column}}
     </div>
-
-    {{#if curateMode}}
-      <div class="button-container {{#if showSuggestions}}active{{/if}}">
-        <button title="User suggestions" class="show-suggestions {{#if showSuggestions}}active{{/if}}" disabled='{{#unless showShowSuggestionsButton}}disabled{{/unless}}'>
-          Suggested
-        </button>
-      </div>
     {{/if}}
-    <div class="button-container {{#if showTimeline}}active{{/if}}">
-      <button title="Twitter timeline" class="show-timeline {{#if showTimeline}}active{{/if}}" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>
-        {{> twitter_icon}}
-      </button>
-    </div>
-
-  </div>
-  -->
-  {{#if showChat}}
-    {{> unimplemented_chat_section}}
-  {{else}}
-    {{> context_browser show=showSuggestions suggestions=true contextBlocks=pendingSuggestions deepstream=deepstreamForContext}}
-    {{> timeline_section show=showTimeline}}
-    {{> context_browser show=showContextBrowser contextBlocks=orderedContext curatorName=curatorName}}
   {{/if}}
+    <div class="col-xs-{{#if showContextBrowser}}10{{else}}12{{/if}}">
+      {{> context_browser show=showSuggestions suggestions=true contextBlocks=pendingSuggestions deepstream=deepstreamForContext}}
+      {{> timeline_section show=showTimeline}}
+      {{> context_browser show=showContextBrowser contextBlocks=orderedContext curatorName=curatorName}}
+    </div>
+  </div>
 </template>
 
+<template name="settings_modal">
+  <div class="modal fade" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="padding:0; border-bottom: none">
+          <a href="http://deepstream.tv" target="_blank">
+          <img src="http://res.cloudinary.com/deepstream/image/upload/v1474311683/embed-about-logo_zlsfxr.png" style="border-radius: 4px 4px 0 0; width: 100%">
+          </a>
+        </div>
+        <div class="modal-body">
+          <h4>Settings</h4> 
+          <p><em>New Dimensions in Video Engagement</em></p>
+          <p><b><a href="http://deepstream.tv" target="_blank">DeepStream</a></b> (<a href="http://deepstream.tv" target="_blank">http://deepstream.tv</a>) is a web platform for enhancing your video, whether it is livestream or on-demand. You can quickly and easily add related content to your videos to tell richer stories that connect with your viewers.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="more_info_modal">
+  <div class="modal fade" id="more-info-modal" tabindex="-1" role="dialog" aria-labelledby="moreInfoModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="padding:0; border-bottom: none">
+          <a href="http://deepstream.tv" target="_blank">
+          <img src="http://res.cloudinary.com/deepstream/image/upload/v1474311683/embed-about-logo_zlsfxr.png" style="border-radius: 4px 4px 0 0; width: 100%">
+          </a>
+        </div>
+        <div class="modal-body">
+          <h4>More info</h4> 
+          <p><em>New Dimensions in Video Engagement</em></p>
+          <p><b><a href="http://deepstream.tv" target="_blank">DeepStream</a></b> (<a href="http://deepstream.tv" target="_blank">http://deepstream.tv</a>) is a web platform for enhancing your video, whether it is livestream or on-demand. You can quickly and easily add related content to your videos to tell richer stories that connect with your viewers.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 <template name="watch_page">
   {{> modals}}
@@ -183,116 +199,182 @@
           </div>
             {{/if}}
         </div>
-        <div class="col-xs-4" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch; z-index: 10;">
-        <!-- Begin Card List Area -->
-        {{#if showOpenSidebarIcon}}
-        <!-- hide show/hide button for now
-        <div class="bar-open-close fadeIn fadeOut animated-fast">
-          <button class="open-sidebar">
-            {{> close_left_icon}}
-          </button>
-        </div>
-        -->
-        {{else}}
-          {{#if showCloseSidebarIcon}}
-          <!-- close button on menu bar -->
-          {{/if}}
-        {{/if}}
+        <div class="col-xs-4" style="z-index: 10;">
+          <!-- begin top navigation -->
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="row card-list-nav-row">
+                <div class="col-xs-12">
+                  <div class="row">
+                    <div class="col-xs-2">
+                      <button class="card-list-nav-button back-button">&lt; Back</button>
+                    </div>
+                    <!-- old top navigation buttons
+  <div class="context-timeline-switcher {{#unless curateMode}}wide-menu{{/unless}}">
+      <div class="button-container close-bar-button">
+        <button title="Close context bar" class="close-sidebar">
+          {{> close_right_icon}}
+        </button>
+      </div>
+  
+    <div class="button-container {{#if showContextBrowser}}active{{/if}}">
+      <button title="Context" class="show-context-browser {{#if showContextBrowser}}active{{/if}}">
+        Context
+      </button>
+    </div>
 
-         {{#with deepstreamForContext}}
-          {{#if showSelectCardType}}
-            <div class="row card-list-nav-row">
-              <div class="col-xs-3">
-                <button class="card-list-nav-button back-button">&lt; Back</button>
-              </div>
-              <div class="col-xs-8 col-xs-offset-1">
-                <button class="card-list-nav-button pull-right">&gt; See Suggested Cards</button>
+    {{#if curateMode}}
+      <div class="button-container {{#if showSuggestions}}active{{/if}}">
+        <button class="show-suggestions {{#if showSuggestions}}active{{/if}}" disabled='{{#unless showShowSuggestionsButton}}disabled{{/unless}}'>
+          Suggested
+        </button>
+      </div>
+    {{/if}}
+    
+    <div class="button-container {{#if showTimeline}}active{{/if}}">
+      <button title="Twitter timeline" class="show-timeline {{#if showTimeline}}active{{/if}}" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>
+        {{> twitter_icon}}
+      </button>
+    </div>
+
+  </div>      -->      
+                    {{#if curateMode}}
+                      {{#if showSuggestions}}
+                    <div class="col-xs-2">
+                      <button class="card-list-nav-button pull-right hot-notification show-suggestions"  title="User suggestions">Suggested</button>
+                    </div>
+                      {{/if}}
+                    {{/if}}
+                    {{#if curateMode}}
+                    <div class="col-xs-2">
+                      <button class="card-list-nav-button pull-right show-timeline"  title="Twitter timeline"><i class="fa fa-twitter"></i></button>
+                    </div>
+                    <div class="col-xs-2">
+                      <button class="card-list-nav-button pull-right show-context-browser"  title="Twitter timeline">Cards</button>
+                    </div>
+                    {{/if}}
+                    <div class="col-xs-2">
+                       <button class="card-list-nav-button pull-right"  data-toggle="modal" data-target="#settings-modal"><i class="fa fa-cog"></i></button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                     
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <!-- start select context type -->
-            {{> content_icons}}
-            <!-- end select context type -->
-          {{/if}}
-          {{#if showContextSearch}}
-            <!-- start add context field -->
-            {{> add_context}}
-            <!-- end add context field --> 
-          {{else}}
-            <div class="row">
-              <div class="col-xs-12">
-              {{#if showWebcamSetup}}
-                {{> webcam_setup}}
+          </div>
+          <!-- end top navigation -->
+          <!-- begin Card List Area -->
+          <div class="row" style="height: {{mainStreamHeight -55}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
+            <div class="col-xs-12">
+              {{#if showOpenSidebarIcon}}
+              <!-- hide show/hide button for now
+              <div class="bar-open-close fadeIn fadeOut animated-fast">
+                <button class="open-sidebar">
+                  {{> close_left_icon}}
+                </button>
+              </div>
+              -->
               {{else}}
-                {{#if showManageCuratorsMenu}}
-                  {{> manage_curators_menu}}
+                {{#if showCloseSidebarIcon}}
+                <!-- close button on menu bar -->
+                {{/if}}
+              {{/if}}
+
+               {{#with deepstreamForContext}}
+                {{#if showSelectCardType}}
+                  <!-- start select context type -->
+                  {{> content_icons}}
+                  <!-- end select context type -->
+                {{/if}}
+                {{#if showContextSearch}}
+                  <!-- start add context field -->
+                  {{> add_context}}
+                  <!-- end add context field --> 
                 {{else}}
-                  {{> context_browser_area deepstreamForContext}}
+                  <div class="row">
+                    <div class="col-xs-12">
+                    {{#if showWebcamSetup}}
+                      {{> webcam_setup}}
+                    {{else}}
+                      {{#if showManageCuratorsMenu}}
+                        {{> manage_curators_menu}}
+                      {{else}}
+                        {{> context_browser_area deepstreamForContext}}
+                      {{/if}}
+                    {{/if}}
+                  </div>
+                </div>
                 {{/if}}
-              {{/if}}
-            </div>
-          </div>
-          {{/if}}
-        {{/with}}
-        {{#with thisDeepstream}}
-         {{#if isCurator}}
-          <!--
-         <div class="settings-bar {{#unless curateMode}}wide-menu short-margin-top{{/unless}}  {{#if showContextBrowser}}short-margin-top{{/if}}">
-            
-           {{#if curateMode}}
-            <div class="button-container icon-button">
-              <button title="Set up webcam narration" class="webcam">{{> webcam_icon}}</button>
-            </div>
-          {{/if}}
+              {{/with}}
+              {{#with thisDeepstream}}
+               {{#if isCurator}}
+                <!--
+               <div class="settings-bar {{#unless curateMode}}wide-menu short-margin-top{{/unless}}  {{#if showContextBrowser}}short-margin-top{{/if}}">
 
-          {{#if isCurator}}
-            {{#if onCuratePage}}
-              <div class="button-container">
-              {{#if curateMode}}
-                {{#if showPreviewEditButton}}
-                  <button class="preview">Preview</button>
+                 {{#if curateMode}}
+                  <div class="button-container icon-button">
+                    <button title="Set up webcam narration" class="webcam">{{> webcam_icon}}</button>
+                  </div>
                 {{/if}}
-              {{else}}
-                {{#if showPreviewEditButton}}
-                  <button class="return-to-curate">Edit</button>
-                {{/if}}
-              {{/if}}
-              </div>
-            {{/if}}
-          {{/if}}
-           
-           
-          {{#if curateMode}}
-          <div class="button-container icon-button">
-              <button class="settings-menu-button {{#if settingsMenuOpen}}active{{/if}}">{{> setting_icon}}</button>
-              {{#if settingsMenuOpen}}
-                {{> settings_menu}}
-              {{/if}}
-          </div>
-          {{/if}}
 
-        </div>-->
-        {{/if}}
-      
-        {{#unless isCurator}}
-          {{#if showHighlightContext}}
-           <!--
-            <div class="highlight-context-container fadeIn fadeOut">
-              <div class="highlight-context-content">
-                <p>Click context cards to expand them.</p>
-                <p>You can learn more about the topic while watching the video!</p>
-                <center>
-                  <button class="got-it-context">Got it!</button>
-                </center>
-              </div>
-            </div>
-           -->
-          {{/if}}
-        {{/unless}}
-      {{/with}}
-            <!-- End Card List Area -->
+                {{#if isCurator}}
+                  {{#if onCuratePage}}
+                    <div class="button-container">
+                    {{#if curateMode}}
+                      {{#if showPreviewEditButton}}
+                        <button class="preview">Preview</button>
+                      {{/if}}
+                    {{else}}
+                      {{#if showPreviewEditButton}}
+                        <button class="return-to-curate">Edit</button>
+                      {{/if}}
+                    {{/if}}
+                    </div>
+                  {{/if}}
+                {{/if}}
+
+
+                {{#if curateMode}}
+                <div class="button-container icon-button">
+                    <button class="settings-menu-button {{#if settingsMenuOpen}}active{{/if}}">{{> setting_icon}}</button>
+                    {{#if settingsMenuOpen}}
+                      {{> settings_menu}}
+                    {{/if}}
+                </div>
+                {{/if}}
+
+              </div>-->
+              {{/if}}
+
+              {{#unless isCurator}}
+                {{#if showHighlightContext}}
+                 <!--
+                  <div class="highlight-context-container fadeIn fadeOut">
+                    <div class="highlight-context-content">
+                      <p>Click context cards to expand them.</p>
+                      <p>You can learn more about the topic while watching the video!</p>
+                      <center>
+                        <button class="got-it-context">Got it!</button>
+                      </center>
+                    </div>
+                  </div>
+                 -->
+                {{/if}}
+              {{/unless}}
+            {{/with}}
+
             </div>
           </div>
-          <div class="left-section">
+          <!-- End Card List Area -->
+       
+        
+        </div>
+      </div>
+      <div class="left-section">
             <div class="header-section">
               <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
                 <div class="icon trigger-title"  style="{{#if curateMode}}display:none{{/if}}"><i class="fa fa-info-circle"></i></div>
@@ -418,7 +500,6 @@
             </div>
             -->
       </div>
-    
     </div>
             {{#with thisDeepstream}}
               <!--Fixed sections-->
@@ -1208,18 +1289,30 @@
 </template>
 
 <template name="timeline_section">
-    <div class="timeline-section {{#unless show}}hide{{/unless}}" style="height:{{#if curateMode}}{{mainStreamHeight}}{{else}} {{mainStreamHeight 35}}{{/if}}px; {{#if portrait}}margin: 0px; padding-top: 0px; background-color: #000;{{/if}}">
+  <div class="row thumbnail timeline-section {{#unless show}}hide{{/unless}}" style="height:{{mainStreamHeight -55}}px; {{#if portrait}}margin: 0px; padding-top: 0px; background-color: #000;{{/if}}">
+    <div class="col-xs-12">
       {{#unless portrait}}
       {{#if curateMode}}
-        <form id="timeline-embed" action="" autocomplete="off">
-          <label for="timeline-embed-code-input"><a href="https://twitter.com/settings/widgets/new/search" target="_blank">Create a new Timeline widget</a> and enter the generated embed code or url here</label>
-          <input id="timeline-embed-code-input" name="timeline-embed-code" type="text"/>
-          <div class="button-container"><button type="submit" class="submit-timeline-embed-code">Update Timeline</button></div>
-        </form>
+      <div class="row">
+        <div class="col-xs-12">
+          <form id="timeline-embed" action="" autocomplete="off">
+            <div class="form-group">
+              <label for="timeline-embed-code-input"><a href="https://twitter.com/settings/widgets/new/search" target="_blank">Create a new Timeline widget</a> and enter the generated embed code or url here</label>
+              <input type="text" class="form-control" id="timeline-embed-code-input" name="timeline-embed-code" placeholder="Paste your embed code or url here.">
+            </div>
+            <button type="submit" class="btn btn-outline-success submit-timeline-embed-code">Update Timeline</button>
+          </form>
+        </div>
+      </div>
       {{/if}}
       {{/unless}}
-      <div id='twitter-timeline' class="timeline-container" style="max-width:100%;"></div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div id='twitter-timeline' class="timeline-container" style="max-width:100%;"></div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <template name="portrait_timeline_section">

@@ -727,9 +727,6 @@ Template.watch_page.helpers({
   showManageCuratorsMenu (){
     return Session.get("curateMode") && Session.get("showManageCuratorsMenu");
   },
-  showChat (){
-    return Session.get('showChat', true); // TODO this is probably not what we want
-  },
   showContextSearch (){
     return Session.get('mediaDataType') && Session.get('mediaDataType') !=='webcam';
   },
@@ -1086,6 +1083,23 @@ Template.watch_page.events({
   'click .open-bottombar' (){
     return Session.set('reducedBottomView', false);
   },
+  'click .show-suggestions'(){
+    analytics.track('Click show suggestions browser', trackingInfoFromPage());
+    Session.set('contextMode', 'suggestions');
+    Session.set('activeContextId', null);
+  },
+  'click .show-timeline'(){
+    analytics.track('Click show Twitter timeline', trackingInfoFromPage());
+    Session.set('contextMode', 'timeline');
+    Session.set('activeContextId', null);
+  },
+  'click .show-context-browser'(){
+    analytics.track('Click show context browser', trackingInfoFromPage());
+    Session.set('contextMode', 'context');
+    setTimeout(() => { // need to wait till display has switched back to context
+      updateActiveContext();
+    })
+  }
 });
 
 Template.stream_li.onCreated(function(){
@@ -1256,23 +1270,6 @@ Template.context_browser_area.helpers({
 });
 
 Template.context_browser_area.events({
-  'click .show-timeline'(){
-    analytics.track('Click show Twitter timeline', trackingInfoFromPage());
-    Session.set('contextMode', 'timeline');
-    Session.set('activeContextId', null);
-  },
-  'click .show-context-browser'(){
-    analytics.track('Click show context browser', trackingInfoFromPage());
-    Session.set('contextMode', 'context');
-    setTimeout(() => { // need to wait till display has switched back to context
-      updateActiveContext();
-    })
-  },
-  'click .show-suggestions'(){
-    analytics.track('Click show suggestions browser', trackingInfoFromPage());
-    Session.set('contextMode', 'suggestions');
-    Session.set('activeContextId', null);
-  }
 });
 
 Template.context_card_column.helpers({
@@ -1627,7 +1624,7 @@ Template.timeline_section.onRendered(function(){
             timelineId,
             this.$('#twitter-timeline')[0],
             {
-              theme: 'dark',
+              theme: 'light',
               height: 'auto',
               width: 'auto'
             })

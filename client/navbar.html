@@ -1,6 +1,8 @@
 <template name="modals">
   <!-- Modals -->
   {{> login_modal}}
+  {{> settings_modal}}
+  {{> more_info_modal}}
   {{> signup_modal}}
   {{> embed_about_modal}}
 </template>
@@ -21,6 +23,7 @@
             {{#if embedMode}}
             <li><a class="js-link" data-toggle="modal" data-target="#embed-about-modal"><i class="fa fa-info-circle" style="margin-right: 25px;"></i> Learn about Deepstream</a></li>
             {{else}}
+              <li><a class="js-link" data-toggle="modal" data-target="#more-info-modal"><i class="fa fa-info-circle" style="margin-right: 25px;"></i> More Info</a></li>
               <li><a href="/"><i class="fa fa-home" style="margin-right: 25px;"></i> Home</a></li>
             {{/if}}
             {{#if loggedIn}}

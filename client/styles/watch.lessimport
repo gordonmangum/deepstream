@@ -33,6 +33,8 @@
   background-color: @watch-background-color;
   
   .card-list-nav-row {
+    height:55px;
+    overflow-y: hidden;
     padding: 5px 0;
   }
   .card-list-nav-button {
@@ -1633,32 +1635,6 @@ a.svg:after {
   }
   overflow-y:scroll; -webkit-overflow-scrolling: touch;
   display: flex;
-  flex-flow: column;
-  margin-left: 10px;
-  margin-right: 10px;
-  form{
-    margin-bottom: 15px;
-    input{
-      margin-bottom: 10px;
-    }
-  }
-  label{
-    a {
-      color:  @dark-text-color; //@action-color;
-      text-decoration: underline!important;
-      &:hover {
-        color: @hover-action-color;
-        text-decoration: underline!important;
-      }
-    }
-  }
-  .button-container{
-    text-align: right;
-
-    button{
-      .action-button;
-    }
-  }
 }
 .timeline-container{
   flex: auto;
