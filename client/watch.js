@@ -1365,7 +1365,7 @@ Template.context_browser.events({
     Session.set('mediaDataType', Session.get('previousMediaDataType') || 'text');
   },
   'click .delete-context' (e, t){
-    if(confirm('Are you sure you want to delete this ' + singularizeMediaType(this.type) + '? This cannot be undone.')){
+    if(confirm('Are you sure you want to delete this ' + singularizeMediaType(this.type) + ' card? This cannot be undone.')){
       analytics.track('Delete ' + singularizeMediaType(this.type) + ' context from deepstream', trackingInfoFromPage());
       t.$('.list-item-context-plus-annotation[data-context-id=' + this._id + ']').fadeOut(500, () => {
           Meteor.call('removeContextFromStream', Session.get("streamShortId"), this._id, basicErrorHandler);

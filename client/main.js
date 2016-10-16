@@ -272,7 +272,7 @@ Template.homepage_preview_poll_section.helpers(horizontalBlockHelpers);
 Template.display_poll_section.events(editableTextEventsBoilerplate('editPollSection'));
 
 // Start PieChart code 
-Template.pieChart.helpers({
+var pieHelpers = {
   options: function(){
     return this.data;
   },
@@ -309,9 +309,9 @@ Template.pieChart.helpers({
       return document.cookie.match('voted'+contextId+'=');
     }
   }
-});
-Template.pieChart.events({
-  'click .add-button': function(){
+};
+var pieEvents = {
+  'click .cast-vote-button': function(){
     var votedId = this._id;
     // set session for update now, and cookie for persistance
     document.cookie = "voted"+ this._id +"=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
@@ -319,8 +319,17 @@ Template.pieChart.events({
         analytics.track('Viewer voted in poll', trackingInfoFromPage());
     });
   }
-});
-Template.chart_container.rendered = function(){
+};
+
+Template.pieChart.helpers(pieHelpers);
+Template.pieChart.events(pieEvents);
+Template.pieChart_preview.helpers(pieHelpers);
+Template.pieChart_preview.events(pieEvents);
+Template.pieChart_display.helpers(pieHelpers);
+Template.pieChart_display.events(pieEvents);
+
+
+var chartContainerRendered = function(){
   //Width and height
   var w = 200;
   var h = 200;
@@ -436,7 +445,7 @@ Template.chart_container.rendered = function(){
     }
   });
 };
-Template.chart_container.helpers({
+var chartContainerHelpers = {
   options: function(){
     return this.data;
   },
@@ -474,7 +483,15 @@ Template.chart_container.helpers({
     }
     return color(i);
   }
-});
+}; 
+    
+
+Template.chart_container_display.rendered = chartContainerRendered;
+Template.chart_container_display.helpers(chartContainerHelpers);
+Template.chart_container_preview.rendered = chartContainerRendered;
+Template.chart_container_preview.helpers(chartContainerHelpers);
+Template.chart_container.rendered = chartContainerRendered;
+Template.chart_container.helpers(chartContainerHelpers);
 
 Template.favorite_button.helpers({
   userFavorited () {

@@ -418,6 +418,7 @@
             </div>
             -->
       </div>
+    
     </div>
             {{#with thisDeepstream}}
               <!--Fixed sections-->
@@ -1078,9 +1079,9 @@
 
 <template name="list_item_context_section">
   {{#if showContext}}
-  <div class="row thumbnail context-section {{#if type}}{{type}}-card{{/if}} {{#if hasSoloMode}}isClickable{{/if}}" data-context-id="{{_id}}">
+  <div class="row thumbnail list-item-context-plus-annotation context-section {{#if type}}{{type}}-card{{/if}} {{#if hasSoloMode}}isClickable{{/if}}" data-context-id="{{_id}}">
     <div class="col-xs-12">
-      <div class="row main-card-section">
+      <div class="row main-card-section" style="{{#if showAnnotationSection}}border-bottom: 1px solid #d5d5d5;{{/if}} padding: 7px 3px;">
         <div class="col-xs-12 clickable">
           <div class="row">
             <div class="col-xs-11">
@@ -1129,6 +1130,14 @@
       </div>
       {{/if}}
       {{/if}}
+      <!-- to do  add a delete card button-->
+      {{#if curateMode}}
+        {{#unless browseSuggestionsMode}}
+      <div class="row">
+        <button title="Remove card" class="col-xs-12 btn btn-outline-danger delete-context"><i class="fa fa-close"></i> Remove Card</button>
+      </div>
+        {{/unless}}
+      {{/if}}
       {{#if browseSuggestionsMode}}
       <div class="row">
         <div class="col-xs-6">
@@ -1140,13 +1149,6 @@
       </div>
       {{/if}}
     </div>
-    
-    <!-- to do  add a delete card button-->
-      {{#if curateMode}}
-        {{#unless browseSuggestionsMode}}
-          <button title="delete" class="delete-context">{{> close_circle}}</button>
-        {{/unless}}
-      {{/if}}
   </div>
   {{/if}}
 </template>
