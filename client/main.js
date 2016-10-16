@@ -278,16 +278,20 @@ Template.pieChart.helpers({
   },
   totalVotes: function(){
     var totalVotes = 0;
-    this.data.forEach(function(value, index, array){
-      totalVotes += value.value;
-    });
+    if(this.data){
+      this.data.forEach(function(value, index, array){
+        totalVotes += value.value;
+      });
+    }
     return totalVotes;
   },
   percentageVote: function(votes){
     var totalVotes = 0;
-    this.data.forEach(function(value, index, array){
-      totalVotes += value.value;
-    });
+    if(this.data){
+      this.data.forEach(function(value, index, array){
+        totalVotes += value.value;
+      });
+    }
     if(totalVotes < 1){
       return '0';
     }
@@ -438,16 +442,20 @@ Template.chart_container.helpers({
   },
   totalVotes: function(){
     var totalVotes = 0;
-    this.data.forEach(function(value, index, array){
-      totalVotes += value.value;
-    });
+    if(this.data){
+      this.data.forEach(function(value, index, array){
+        totalVotes += value.value;
+      });
+    }
     return totalVotes;
   },
   percentageVote: function(votes){
     var totalVotes = 0;
-    this.data.forEach(function(value, index, array){
-      totalVotes += value.value;
-    });
+    if(this.data){
+      this.data.forEach(function(value, index, array){
+        totalVotes += value.value;
+      });
+    }
     if(totalVotes < 1){
       return '0';
     }

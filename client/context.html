@@ -196,8 +196,8 @@
     <div class="col-xs-12">
       <div class="row">
         <div class="col-xs-12">
-          <!-- 16:9 aspect ratio -->
-          <div class="embed-responsive embed-responsive-16by9">
+          <!-- 33:7 aspect ratio -->
+          <div class="embed-responsive embed-responsive-33by7">
             <iframe class="embed-responsive-item" src="{{url}}"></iframe>
           </div>
         </div>
@@ -426,11 +426,13 @@
                 </div>
               </div>
             </div>
+            <!--
             {{#if imgUrl}}
               <div class='image-section'>
                 <img src='{{imgUrl}}'>
               </div>
             {{/if}}
+            -->
           </div>
         </div>
       </div>
@@ -578,8 +580,10 @@
           {{#if showVideo}}
             {{> looping_video}}
           {{else}}
-            <img src="{{url}}" />
-            {{#if isGiphy}}<img class="giphy-logo" src="{{c.url 'static/giphy_logo.png'}}" />{{/if}}
+          <!-- 33:7 aspect ratio -->
+          <div class="embed-responsive embed-responsive-33by7" style="overflow-y:hidden;">
+            <img src="{{url}}"/>
+          </div>
           {{/if}}
         </div>
       </div>
@@ -616,18 +620,17 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-4">
           <!-- 16:9 aspect ratio -->
           <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="{{url}}"></iframe>
+             <img class="embed-responsive-item" src="{{previewUrl}}"/>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <p class="text-muted">{{title}}</p>
-          <!-- <p>{{caption}}</p>-->
-        </div>  
+        <div class="col-xs-8">
+          <div class="{{#if headerImageUrl}}col-xs-8{{else}}col-xs-12{{/if}}">
+            <p class="text-muted">{{title}}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -661,8 +664,8 @@
       <div class="row">
         <div class="col-xs-12">
           <!-- 4:3 aspect ratio -->
-          <div class="embed-responsive embed-responsive-4by3">
-            <iframe class="embed-responsive-item" src="{{url}}"></iframe>
+          <div class="embed-responsive embed-responsive-33by7" style="overflow-y:hidden;">
+            <img src="{{previewUrl}}" />
           </div>
         </div>
       </div>
