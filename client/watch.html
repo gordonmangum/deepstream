@@ -98,19 +98,58 @@
   </div>
 </template>
 
-<template name="more_info_modal">
+<template name="more_info_modal"> 
+  {{#with thisDeepstream}}
   <div class="modal fade" id="more-info-modal" tabindex="-1" role="dialog" aria-labelledby="moreInfoModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header" style="padding:0; border-bottom: none">
-          <a href="http://deepstream.tv" target="_blank">
-          <img src="http://res.cloudinary.com/deepstream/image/upload/v1474311683/embed-about-logo_zlsfxr.png" style="border-radius: 4px 4px 0 0; width: 100%">
-          </a>
+        <div class="modal-header">
+          <div class="row">
+            <div class="col-xs-6">
+              <p class="lead">More Info</p>
+            </div>
+            <div class="col-xs-6">
+               <div class="stream-stats-and-share pull-right">
+                  <div class="share-and-favorite">
+                    {{> favorite_button}}
+                    <button class="twitter-share-button">{{> twitter_share_icon}}</button>
+                    <button class="facebook-share-button">{{> facebook_share_icon}}</button>
+                    <button class="email-share-button">{{> email_share_icon}}</button>
+                    <button class="embed-code-button" data-clipboard-text='true'>{{> embed_code_icon}}</button>
+                  </div>
+                </div>
+            </div>
+          </div>
         </div>
         <div class="modal-body">
-          <h4>More info</h4> 
-          <p><em>New Dimensions in Video Engagement</em></p>
-          <p><b><a href="http://deepstream.tv" target="_blank">DeepStream</a></b> (<a href="http://deepstream.tv" target="_blank">http://deepstream.tv</a>) is a web platform for enhancing your video, whether it is livestream or on-demand. You can quickly and easily add related content to your videos to tell richer stories that connect with your viewers.</p>
+          <div class="row">
+            <div class="col-xs-12">
+              <p><strong>Title</strong></p>
+              <p>{{title}}</p>
+              <p><strong>Description</strong></p>
+              <p>{{description}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-xs-12">
+                  <p><strong>Stats</strong></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-4 text-center">
+                  <p><i class="fa fa-eye fa-2x"></i></p>
+                  <p>{{formatNumber viewCount}} views</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Creator</strong></p>
+              <p>{{curatorNames}}</p>
+              <p>Published at {{publicationDate}}</p>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -118,6 +157,7 @@
       </div>
     </div>
   </div>
+  {{/with}}
 </template>
 
 <template name="watch_page">
@@ -314,10 +354,13 @@
                       <button class="card-list-nav-button pull-right show-context-browser"  title="Twitter timeline">Cards</button>
                     </div>
                     {{/if}}
+                    {{#if curateMode}}
                     <div class="col-xs-2">
                        <button class="card-list-nav-button pull-right"  data-toggle="modal" data-target="#settings-modal"><i class="fa fa-cog"></i></button>
                     </div>
+                    {{/if}}
                   </div>
+                  
                   <div class="row">
                     <div class="col-xs-12">
                      
@@ -428,62 +471,13 @@
             <div class="header-section">
               <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
                 <div class="icon trigger-title"  style="{{#if curateMode}}display:none{{/if}}"><i class="fa fa-info-circle"></i></div>
-                <div class="title-section {{#unless showBottomSection}}collapsed{{/unless}}" style="width: {{titleSectionWidth}}px;{{#if curateMode}}opacity:1;{{else}} opacity:0;{{/if}}{{#unless isCurator}}opacity:0;{{/unless}}">
-                    {{{streamTitleElement}}}
-                  <div class="about-stream">
-                    {{{streamDescriptionElement}}}
-                    <div class="stream-views">
-                      <div class="views">
-                        {{#if activeStream.live}}
-                          <div class="live-indicator">
-                            LIVE
-                          </div>
-                        {{/if}}
-                          <div class="view-counter">
-                            Views: {{formatNumber viewCount}}
-                          </div>
-                        {{#unless isCurator}}
-                        <!--
-                          <a title="Report inappropriate content" class="report-inappropriate-content" href="mailto:deepstream@media.mit.edu?subject=Inappropriate Content in DeepStream '{{title}}' - {{shortId}}
-                        &body=(Please let us know which content on this page is inappropriate and we'll get right on it!)" target="_blank">{{> inappropriate_content_icon}}</a> -->
-                       {{/unless}}
-                      </div>
-                      <div class="stream-stats-and-share">
-                        <div class="share-and-favorite">
-                          {{> favorite_button}}
-                          <button class="twitter-share-button">{{> twitter_share_icon}}</button>
-                          <button class="facebook-share-button">{{> facebook_share_icon}}</button>
-                          <button class="email-share-button">{{> email_share_icon}}</button>
-                          <button class="embed-code-button" data-clipboard-text='true'>{{> embed_code_icon}}</button>
-                        </div>
-                      </div> 
-                    </div>
-                  </div>
-                </div>
                 {{#if curateMode}}
                   <div class="streams-list" style="max-height:{{mainStreamHeight 0}}px">
                     <div class="streams-list-container">
                     {{#each livestreams}}
                       {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}       
                       <br/>
-                    {{else}}
-                      {{#unless curateMode}}
-                      <!--
-                        <li class="placeholder">
-                          <button>
-                            There are no live streams right now
-                          </button>
-                        </li>
-                        <br/>
-                      -->
-                      {{/unless}}
                     {{/each}}
-                    {{#if deadstreams.length}}
-                    <!--
-                      <li class="live-dead-divider"></li>
-                      <br/>
-                    -->
-                    {{/if}}
                     {{#each deadstreams}}
                       {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}
                       <br/>
@@ -542,13 +536,6 @@
                 {{/if}}
               </div>
             </div>
-            <!-- to delete
-            <div class="main-section {{#if expandMainSection}}expanded{{/if}}">
-              <div class="main-stream {{#if expandMainSection}}expanded{{/if}}" style="height: {{mainStreamHeight}}px">
-                
-              </div>
-            </div>
-            -->
       </div>
     </div>
             {{#with thisDeepstream}}
@@ -1025,6 +1012,7 @@
 <template name="title_description_inlay">
   <div class="row">
     <div class="col-xs-12">
+      {{#with thisDeepstream}}
       <form id="publish-with-title-description" action="action" autocomplete="off">
        <div class="form-group">
           <label for="title">Enter a title for your Deep Stream:</label>
@@ -1039,6 +1027,7 @@
         </div>
         <!-- <button type="submit" class="btn btn-outline-success">publish</button>-->
       </form>
+      {{/with}}
     </div>
   </div>
 </template>

@@ -761,22 +761,6 @@ Template.watch_page.helpers({
   PiP (){
     return soloOverlayContextModeActive();
   },
-  streamTitleElement (){
-    if (Session.get('curateMode')) {
-      // this is contenteditable in curate mode
-      return '<div class="stream-title notranslate" placeholder="Title" contenteditable="true" dir="auto">' + _.escape(this.title) + '</div>';
-    } else {
-      return '<div class="stream-title">' + _.escape(this.title) + '</div>';
-    }
-  },
-  streamDescriptionElement (){
-    if (Session.get('curateMode')) {
-      // this is contenteditable in curate mode
-      return '<div class="stream-description notranslate" placeholder="Enter a description" contenteditable="true" dir="auto">' + _.escape(this.description) + '</div>';
-    } else {
-      return '<div class="stream-description">' + _.escape(this.description) + '</div>';
-    }
-  },
   showStreamSwitcher (){
     return Session.get('curateMode') || this.userStreamSwitchAllowed();
   },
@@ -1000,13 +984,10 @@ Template.watch_page.events({
     saveStreamTitle(template);
   },
   'keypress .set-title' (e, template) {
-    saveStreamTitle(template);
-    /*
     if (e.keyCode === 13) { // return
       e.preventDefault();
       saveStreamTitle(template);
     }
-    */
   },
   'paste [contenteditable]': window.plainTextPaste,
   'drop [contenteditable]' (e){
@@ -1019,9 +1000,12 @@ Template.watch_page.events({
     return Meteor.call('updateStreamDescription', template.data.shortId(), streamDescription, basicErrorHandler);
   },
   'keypress .set-description' (e, template) {
-    streamDescription = $.trim(template.$('#set-stream-description').val());
-    Session.set('saveState', 'saving');
-    return Meteor.call('updateStreamDescription', template.data.shortId(), streamDescription, basicErrorHandler);
+    if (e.keyCode === 13) { // return
+      e.preventDefault();
+      streamDescription = $.trim(template.$('#set-stream-description').val());
+      Session.set('saveState', 'saving');
+      return Meteor.call('updateStreamDescription', template.data.shortId(), streamDescription, basicErrorHandler);
+    }
   },
   'click .director-mode-off' (e, t){
     analytics.track('Curator turned director mode off', trackingInfoFromPage());
@@ -1236,29 +1220,6 @@ Template.context_browser_portrait.helpers({
     } else {
       return Session.get('windowHeightForCarousel') - 51 - videoSpace;
     }
-  },
-  curatorNames () {
-    var curatorIds = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {curatorIds: 1}}).curatorIds;
-    if(curatorIds.length < 2){
-      return this.deepstream.curatorName;
-    }
-    Meteor.call('returnCuratorNames', curatorIds, function(error, results){
-      var nameList = results;
-      var curatorNames = '';
-      nameList.forEach(function(value, index, array){
-        if(value !== undefined){
-          if(index === (array.length-2)){
-            curatorNames += value + ' and '
-          } else if(index === (array.length-1)){
-            curatorNames += value + '.'
-          } else {
-            curatorNames += value + ', '
-          }
-        }
-      });
-      Session.set('curatorNames', curatorNames);
-    });
-    return Session.get('curatorNames');
   }
 });
 
@@ -1552,12 +1513,45 @@ Template.list_item_context_section.helpers({
   },
 });
 
+Template.more_info_modal.helpers({
+  thisDeepstream () {
+    if (FlowRouter.subsReady()) {
+      return Deepstreams.findOne({shortId: Template.instance().data.shortId()});
+    }
+  },
+  curatorNames () {
+    var curatorIds = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {curatorIds: 1}}).curatorIds;
+    Meteor.call('returnCuratorNames', curatorIds, function(error, results){
+      var nameList = results;
+      var curatorNames = '';
+      nameList.forEach(function(value, index, array){
+        if(value !== undefined){
+          if(index === (array.length-2)){
+            curatorNames += value + ' and '
+          } else if(index === (array.length-1)){
+            curatorNames += value + '.'
+          } else {
+            curatorNames += value + ', '
+          }
+        }
+      });
+      Session.set('curatorNames', curatorNames);
+    });
+    return Session.get('curatorNames');
+  }
+});
+
 Template.title_description_inlay.onCreated(function(){
   this.titleLength = new ReactiveVar(this.title ? this.title.length : 0);
   this.descriptionLength = new ReactiveVar(this.description ? this.description.length : 0);
 });
 
 Template.title_description_inlay.helpers({
+  thisDeepstream () {
+    if (FlowRouter.subsReady()) {
+      return Deepstreams.findOne({shortId: Template.instance().data.shortId()});
+    }
+  },
   titleLength (){
     return  Template.instance().titleLength.get();
   },
@@ -1573,6 +1567,7 @@ Template.title_description_inlay.helpers({
 });
 
 Template.title_description_inlay.events({
+  /*
   'keypress .set-title' (e, t){
     if (e.keyCode === 13){
       e.preventDefault();
@@ -1585,14 +1580,14 @@ Template.title_description_inlay.events({
       $('#publish-with-title-description').submit();
     }
   },
+  */
   'keyup .set-title' (e, t){
     t.titleLength.set($(e.currentTarget).val().length);
   },
   'keyup .set-description' (e, t){
     t.descriptionLength.set($(e.currentTarget).val().length);
   },
-  // TO DO set title and description on key up.
-  // TO DO set publish to be on the 
+  // TO DO set title and description on key up
   'submit #publish-with-title-description' (e, t){
     e.preventDefault();
     var title = t.$('.set-title').val();

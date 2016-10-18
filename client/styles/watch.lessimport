@@ -305,6 +305,46 @@
   }
 }
 
+.stream-stats-and-share{
+  .stream-stats{
+    margin-top: 20px;
+  }
+  .share-and-favorite{
+    padding-top: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .fg {
+    fill: @dark-icon-color;
+  }
+  button{
+    text-align: center;
+    .size(20px);
+    padding: 3px;
+    margin: 5px 20px 5px 0px;
+    color: @light-icon-color;
+    &:hover {
+      .fg {
+        fill: @light-icon-color;
+      }
+      .twitter-share-icon{
+        .fg {
+          fill: #4099ff;
+        }
+      }
+      .facebook-share-icon{
+        .fg {
+          fill: #3b5998;
+        }
+      }
+      color: @white-icon-color;
+    }
+    &.embed-code-button{
+      width: 30px;
+    }
+  }
+}
+
 .title-section{
     padding-top: 15px;
     padding-bottom: 15px;
@@ -361,35 +401,6 @@
 
     .streams-list{
       flex: 1;
-    }
-
-    .stream-stats-and-share{
-      display:inline-block;
-      background-color: #000;
-      .stream-stats{
-        margin-top: 20px;
-      }
-      .share-and-favorite{
-        padding-top: 3px;
-        padding-left: 5px;
-        padding-right: 5px;
-      }
-      .fg {
-        fill: @light-icon-color;
-      }
-      button{
-        text-align: center;
-        .size(20px);
-        padding: 3px;
-        margin: 5px 20px 5px 0px;
-        color: @light-icon-color;
-        &:hover {
-          color: @white-icon-color;
-        }
-        &.embed-code-button{
-          width: 30px;
-        }
-      }
     }
   }
 
