@@ -1513,6 +1513,65 @@ Template.list_item_context_section.helpers({
   },
 });
 
+Template.settings_modal.onCreated(function() {
+  this.subscribe('minimalUsersPub', this.data.curatorIds);
+  var disableInviteForm = false;
+});
+
+Template.settings_modal.helpers({
+  thisDeepstream () {
+    if (FlowRouter.subsReady()) {
+      return Deepstreams.findOne({shortId: Template.instance().data.shortId()});
+    }
+  },
+  'additionalCurators' (){
+    return Meteor.users.find({_id: {$in: _.without(this.curatorIds, this.mainCuratorId)}});
+  },
+  'disableInviteForm' (){
+    return disableInviteForm;
+  }
+});
+
+Template.settings_modal.events({
+  'click .go-back-button': function(){
+    return Session.set('showManageCuratorsMenu', false);
+  },
+  'submit #invite-curator' (e, t){
+    e.preventDefault();
+    if(disableInviteForm){
+      return
+    }
+    disableInviteForm = true;
+
+    var newCuratorEmail = t.$('input[name=new-curator-email]').val();
+    if(!newCuratorEmail){
+      disableInviteForm = false;
+      return notifyError('Please enter the email address of the person you would like to invite');
+    }
+    analytics.track('Curator invited a new curator', trackingInfoFromPage());
+    Meteor.call('inviteCurator', Session.get("streamShortId"), newCuratorEmail, function(err, result){
+      t.$('input[name=new-curator-email]').val('');
+      disableInviteForm = false;
+      if(err){
+        return basicErrorHandler(err);
+      }
+      if(result){
+        notifySuccess('You have successfully invited ' + newCuratorEmail + ' to help curate this DeepStream!');
+        Session.set('showManageCuratorsMenu', false);
+      }
+    });
+  },
+  'click .remove-curator' (e, t){
+    analytics.track('Curator removed a curator', trackingInfoFromPage());
+    Meteor.call('removeCurator', Session.get("streamShortId"), this._id, function(err, result){
+
+      if(err){
+        return basicErrorHandler(err);
+      }
+    });
+  }
+});
+
 Template.more_info_modal.helpers({
   thisDeepstream () {
     if (FlowRouter.subsReady()) {
@@ -1786,58 +1845,6 @@ Template.portrait_timeline_section.helpers({
     } else {
       return Session.get('windowHeightForCarousel') - 51 - videoSpace;
     }
-  }
-});
-
-Template.manage_curators_menu.onCreated(function() {
-  this.subscribe('minimalUsersPub', this.data.curatorIds);
-});
-
-Template.manage_curators_menu.helpers({
-  'additionalCurators' (){
-    return Meteor.users.find({_id: {$in: _.without(this.curatorIds, this.mainCuratorId)}});
-  }
-});
-
-var disableInviteForm;
-
-Template.manage_curators_menu.events({
-  'click .go-back-button': function(){
-    return Session.set('showManageCuratorsMenu', false);
-  },
-  'submit #invite-curator' (e, t){
-    e.preventDefault();
-    if(disableInviteForm){
-      return
-    }
-    disableInviteForm = true;
-
-    var newCuratorEmail = t.$('input[name=new-curator-email]').val();
-    if(!newCuratorEmail){
-      disableInviteForm = false;
-      return notifyError('Please enter the email of the person you\'d like to invite');
-    }
-    analytics.track('Curator invited a new curator', trackingInfoFromPage());
-    Meteor.call('inviteCurator', Session.get("streamShortId"), newCuratorEmail, function(err, result){
-      t.$('input[name=new-curator-email]').val('');
-      disableInviteForm = false;
-      if(err){
-        return basicErrorHandler(err);
-      }
-      if(result){
-        notifySuccess('You have successfully invited ' + newCuratorEmail + ' to help curate this DeepStream!');
-        Session.set('showManageCuratorsMenu', false);
-      }
-    });
-  },
-  'click .remove-curator' (e, t){
-    analytics.track('Curator removed a curator', trackingInfoFromPage());
-    Meteor.call('removeCurator', Session.get("streamShortId"), this._id, function(err, result){
-
-      if(err){
-        return basicErrorHandler(err);
-      }
-    });
   }
 });
 

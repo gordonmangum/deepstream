@@ -16,6 +16,7 @@
 </template>
 
 <template name="settings_modal">
+  {{#with thisDeepstream}}
   <div class="modal fade" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -30,44 +31,8 @@
                   {{> title_description_inlay}}
                 </div>
               </div>
-              <p>Curators</p>
-                {{#if isMainCurator}}
-                  <li>
-                    <button class="show-manage-curators-menu">Add/Remove Curators</button>
-                  </li>
-                {{/if}}
             </div>
             <div class="col-md-6">
-             <!-- <ul>
-      <li>
-    {{#if replayAvailable}}
-          {{#if replayEnabled}}
-            <button class="replay-context-mode-off">Turn Replay Context Off</button>
-          {{else}}
-            <button class="replay-context-mode-on">Turn Replay Context On</button>
-          {{/if}}
-        {{else}}
-          <button class="replay-context-mode-disabled">Turn Replay Context On</button>
-        {{/if}}
-      </li>
-      <li>
-        {{#if directorMode}}
-          <button class="director-mode-off">Turn Director Mode Off</button>
-        {{else}}
-          <button class="director-mode-on">Turn Director Mode On</button>
-        {{/if}}
-      </li>
-    
-      <li>
-        {{#if onAir}}
-          <button class="unpublish">Unpublish</button>
-        {{else}}
-          <button class="publish">Publish</button>
-        {{/if}}
-      </li>
-    </ul>
-              -->
-              
                <div class="checkbox">
                 <label>
                   <input id="publish-toggle" type="checkbox" data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
@@ -89,6 +54,66 @@
               </div>
             </div>
           </div>
+          {{#if isMainCurator}}
+          <div class="row">
+            <div class="col-xs-12">
+              <p><strong>Curator options:</strong></p>
+               <form id="invite-curator" action="">
+                 <label for="invite-curator-input">Invite a new curator by email</label>
+                 <div class="input-group">
+                    <input id="invite-curator-input" type="email" class="form-control" placeholder="Email address" name="new-curator-email" disabled="{{disableInviteForm}}">
+                    <span class="input-group-btn">
+                      <button class="btn btn-outline-success invite-curator" type="submit" disabled="{{disableInviteForm}}"><i class="fa fa-plus"></i></button>
+                    </span>
+                  </div>
+                </form>
+              <table class="table table-hover"> 
+                <thead> 
+                  <tr> 
+                    <th>Profile Name</th>
+                    <th>Remove</th>
+                  </tr> 
+                </thead> 
+                <tbody> 
+                  <tr> 
+                    <td>{{currentUser.profile.name}}</td>
+                    <td>This is you!</td> 
+                  </tr> 
+                  {{#each additionalCurators}}
+                  <tr> 
+                    <td>{{profile.name}}</td>
+                    <td class="text-danger remove-curator"><i class="fa fa-close"></i></td> 
+                  </tr> 
+                  {{/each}}
+                </tbody> 
+              </table>
+            </div>
+          </div>
+          <!--
+  <div class="add-context manage-curators-menu narrative-section selected editing" style="height: {{mainStreamHeight 100}}px">
+    <div class="search-section-title">Add/Remove Curators</div>
+    <button class="go-back-button">{{> back_arrow_icon}}</button>
+    <div class="create-section manage-curators-section">
+      <form id="invite-curator" action="">
+        <label for="invite-curator-input">Invite a new curator by email</label>
+        <input id="invite-curator-input" name="new-curator-email" placeholder="Email" type="email"/>
+        <div class="button-container"><button type="submit" class="invite-curator">INVITE</button></div>
+      </form>
+      <h4 class="">Current Curators</h4>
+      <ol class="current-curators-list">
+        <li class="main-curator">
+          <span class="name">{{currentUser.profile.name}}</span><span class="this-is-you">This is you</span>
+        </li>
+        {{#each additionalCurators}}
+          <li class="additional-curator">
+            <span class="name">{{profile.name}}</span><button class="remove-curator">REMOVE</button>
+          </li>
+        {{/each}}
+      </ol>
+    </div>
+  </div>
+          -->
+          {{/if}}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -96,6 +121,7 @@
       </div>
     </div>
   </div>
+  {{/with}}
 </template>
 
 <template name="more_info_modal"> 
@@ -404,11 +430,7 @@
                     {{#if showWebcamSetup}}
                       {{> webcam_setup}}
                     {{else}}
-                      {{#if showManageCuratorsMenu}}
-                        {{> manage_curators_menu}}
-                      {{else}}
-                        {{> context_browser_area deepstreamForContext}}
-                      {{/if}}
+                      {{> context_browser_area deepstreamForContext}}
                     {{/if}}
                   </div>
                 </div>
@@ -1012,7 +1034,6 @@
 <template name="title_description_inlay">
   <div class="row">
     <div class="col-xs-12">
-      {{#with thisDeepstream}}
       <form id="publish-with-title-description" action="action" autocomplete="off">
        <div class="form-group">
           <label for="title">Enter a title for your Deep Stream:</label>
@@ -1027,7 +1048,6 @@
         </div>
         <!-- <button type="submit" class="btn btn-outline-success">publish</button>-->
       </form>
-      {{/with}}
     </div>
   </div>
 </template>
