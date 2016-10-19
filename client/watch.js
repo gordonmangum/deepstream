@@ -1513,17 +1513,21 @@ Template.list_item_context_section.helpers({
   },
 });
 
-Template.settings_modal.onCreated(function() {
-  this.subscribe('minimalUsersPub', this.data.curatorIds);
-  var disableInviteForm = false;
-});
-
-Template.settings_modal.helpers({
+Template.modals.helpers({
   thisDeepstream () {
     if (FlowRouter.subsReady()) {
       return Deepstreams.findOne({shortId: Template.instance().data.shortId()});
     }
-  },
+  }
+})
+
+var disableInviteForm = false;
+
+Template.settings_modal.onCreated(function() {
+  this.subscribe('minimalUsersPub', this.data.curatorIds);
+});
+
+Template.settings_modal.helpers({
   'additionalCurators' (){
     return Meteor.users.find({_id: {$in: _.without(this.curatorIds, this.mainCuratorId)}});
   },
@@ -1565,8 +1569,10 @@ Template.settings_modal.events({
     analytics.track('Curator removed a curator', trackingInfoFromPage());
     Meteor.call('removeCurator', Session.get("streamShortId"), this._id, function(err, result){
 
-      if(err){
+      if(err){ 
         return basicErrorHandler(err);
+      } else {
+        notifyInfo('You have successfully removed the curator.');
       }
     });
   }

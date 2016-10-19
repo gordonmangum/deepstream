@@ -1,7 +1,9 @@
 <template name="modals">
   <!-- Modals -->
   {{> login_modal}}
-  {{> settings_modal}}
+  {{#with thisDeepstream}}
+    {{> settings_modal}}
+  {{/with}}
   {{> more_info_modal}}
   {{> signup_modal}}
   {{> embed_about_modal}}

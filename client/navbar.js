@@ -4,7 +4,6 @@ Template.minimal_navbar.helpers({
 
 Template.minimal_navbar.events({
   "click .logout" (e, t) {
-    console.log('clicked logout!')
     e.preventDefault();
     Meteor.logout(() => {
       if(window.mainPlayer){

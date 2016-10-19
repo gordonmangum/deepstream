@@ -16,7 +16,6 @@
 </template>
 
 <template name="settings_modal">
-  {{#with thisDeepstream}}
   <div class="modal fade" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -82,37 +81,13 @@
                   {{#each additionalCurators}}
                   <tr> 
                     <td>{{profile.name}}</td>
-                    <td class="text-danger remove-curator"><i class="fa fa-close"></i></td> 
+                    <td class="text-danger remove-curator"><i class="fa fa-close js-link"></i></td> 
                   </tr> 
                   {{/each}}
                 </tbody> 
               </table>
             </div>
           </div>
-          <!--
-  <div class="add-context manage-curators-menu narrative-section selected editing" style="height: {{mainStreamHeight 100}}px">
-    <div class="search-section-title">Add/Remove Curators</div>
-    <button class="go-back-button">{{> back_arrow_icon}}</button>
-    <div class="create-section manage-curators-section">
-      <form id="invite-curator" action="">
-        <label for="invite-curator-input">Invite a new curator by email</label>
-        <input id="invite-curator-input" name="new-curator-email" placeholder="Email" type="email"/>
-        <div class="button-container"><button type="submit" class="invite-curator">INVITE</button></div>
-      </form>
-      <h4 class="">Current Curators</h4>
-      <ol class="current-curators-list">
-        <li class="main-curator">
-          <span class="name">{{currentUser.profile.name}}</span><span class="this-is-you">This is you</span>
-        </li>
-        {{#each additionalCurators}}
-          <li class="additional-curator">
-            <span class="name">{{profile.name}}</span><button class="remove-curator">REMOVE</button>
-          </li>
-        {{/each}}
-      </ol>
-    </div>
-  </div>
-          -->
           {{/if}}
         </div>
         <div class="modal-footer">
@@ -121,7 +96,6 @@
       </div>
     </div>
   </div>
-  {{/with}}
 </template>
 
 <template name="more_info_modal"> 
