@@ -495,7 +495,7 @@ Template.watch_page.onRendered(function(){
 
         // create embed-code
         var deepstreamEmbedUrl = decodeURIComponent(encodeURIComponent(location.href).replace(/%2Fcurate%2F/, "%2Fembed%2F").replace(/%2Fwatch%2F/, "%2Fembed%2F"));
-        $(".embed-code-button").attr("data-clipboard-text", '<div style="position: relative; padding-bottom: 56.25%; padding-top: 25px; height: 0;"> <iframe src="' + deepstreamEmbedUrl + '" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;min-height: 500px;"></iframe></div>');
+        $(".embed-code-button").attr("data-clipboard-text", '<style>@media (max-width: 480px) { #deepstream-embed-container-div{ padding-bottom: 110%!important; } }</style><div id="deepstream-embed-container-div" style="position: relative; padding-bottom: 56.25%; padding-top: 25px; height: 0;z-index:99999;"> <iframe src="' + deepstreamEmbedUrl + '" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>');
 
         // set up embed-code-button in footer
         embedClipboard = new Clipboard('.embed-code-button');
