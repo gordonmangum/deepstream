@@ -1367,6 +1367,7 @@ Template.context_browser.helpers({
   },
   soloSidebarContextMode (){
     var currentContext = getCurrentContext();
+    $('#card-list-area').scrollTop(0);
     return currentContext && currentContext.soloModeLocation === 'sidebar';
   },
   userFavorited () {
