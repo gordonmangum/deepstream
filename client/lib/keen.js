@@ -4783,7 +4783,7 @@ module.exports = function(){
       borderRadius    : "4px",
       color           : "#ccc",
       display         : "block",
-      fontFamily      : "Helvetica Neue, Helvetica, Arial, sans-serif",
+      fontFamily      : "Muli, sans-serif",
       fontSize        : "21px",
       fontWeight      : "light",
       textAlign       : "center"
@@ -4818,7 +4818,7 @@ module.exports = function(){
       css.id = "keen-widgets";
       css.type = "text/css";
       css.innerHTML = "\
-  .keen-metric { \n  background: " + bgDefault + "; \n  border-radius: 4px; \n  color: #fff; \n  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; \n  padding: 10px 0; \n  text-align: center; \n} \
+  .keen-metric { \n  background: " + bgDefault + "; \n  border-radius: 4px; \n  color: #fff; \n  font-family: 'Muli', Helvetica, Arial, sans-serif; \n  padding: 10px 0; \n  text-align: center; \n} \
   .keen-metric-value { \n  display: block; \n  font-size: 84px; \n  font-weight: 700; \n  line-height: 84px; \n} \
   .keen-metric-title { \n  display: block; \n  font-size: 24px; \n  font-weight: 200; \n}";
       if (!document.getElementById(css.id)) {

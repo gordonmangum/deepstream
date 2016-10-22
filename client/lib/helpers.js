@@ -124,7 +124,7 @@ window.textContentHelper = function() {
 
   if (!Session.get('curateMode')) {
     if (textContent.length){
-      return '<div class="text-content annotation-section" dir="auto">' + _.escape(textContent).replace(/\n/g, "<br>") + '</div>';
+      return '<div class="text-content annotation-section" dir="auto"><em>' + _.escape(textContent).replace(/\n/g, "<br>") + '</em></div>';
     } else {
       return '';
     }

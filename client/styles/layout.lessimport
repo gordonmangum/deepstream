@@ -277,7 +277,10 @@ button:focus{
   src: local('Muli'), url(//fonts.gstatic.com/s/muli/v7/FrmKYbbiMrxVeJO6lA8KEvesZW2xOQ-xsNqO47m55DA.ttf) format('truetype');
 }
 
-@import url(//fonts.googleapis.com/css?family=Roboto:500,400italic,700italic,700,500italic,400);
+/**
+* Muli is the font for the site
+**/
+@import url('https://fonts.googleapis.com/css?family=Muli:300i,400,400i');
 
 @highdensity: ~"only screen and (-webkit-min-device-pixel-ratio: 1.5)",
 ~"only screen and (min--moz-device-pixel-ratio: 1.5)",
@@ -477,7 +480,7 @@ input {
 
 input[type="text"], input[type="password"], input[type="email"] {
   width: 100%;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Muli', sans-serif;
   margin-top: 5px;
   margin-bottom: 15px;
   height: 45px;
@@ -530,7 +533,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 textarea {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Muli', sans-serif;
   border: none;
   overflow: auto;
   outline: none;
@@ -550,7 +553,7 @@ textarea {
 body {
   //still like san-serif for headlines and bylines
   //font-family: 'Alright Sans', 'Lucida Grande', 'Avenir Next', sans-serif;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Muli', sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
