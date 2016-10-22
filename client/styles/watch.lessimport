@@ -35,9 +35,14 @@
     border: 1px solid #d5d5d5;
     margin-top: 14px;
     font-weight: 300;
+    font-size: 12px;
+    line-height: normal;
     color: #969696;
   }
   
+  .isClickable {
+    cursor: pointer;
+  }
   
   .card-list-nav-row {
     height:55px;
@@ -101,8 +106,8 @@
 }
 
 .provider-image {
-  max-height: 16px;
-  max-width: 16px;
+  max-height: 25px;
+  max-width: 25px;
 }
 
 

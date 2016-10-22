@@ -440,16 +440,39 @@
       -->
       <div class="row">
         <div class="col-xs-12">
-          <div class="news-section">
-            <div class="news-source">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}{{providerName}}</div>
-            {{#if headerImageUrl}}
-              <img class="news-header-image" src="{{headerImageUrl}}"/>
+          <div class="row">
+            {{#if providerIconUrl}}
+            <div class="col-xs-1">
+             <img class="provider-image" src="{{providerIconUrl}}"/>
+            </div>
             {{/if}}
-            <h4 class="news-title">{{title}}</h4>
-            <div class="news-date">{{formatDate publicationDate}}</div>
-            <div class="news-author">{{primaryAuthor}}</div>
-            <div class="news-html">{{{html}}}</div>
-            <div class="news-link"><a class="read-more" href="{{url}}" target="_blank">Read more on {{providerTruncatedUrl}} ></a></div>
+            <div class="col-xs-{{#if providerIconUrl}}10{{else}}12{{/if}}">
+              {{title}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <br/>
+              <p style="margin:0;">{{primaryAuthor}}</p>
+              <p>{{formatDateNice publicationDate}}</p>
+            </div>
+          </div>
+          {{#if headerImageUrl}}
+          <div class="row">
+            <div class="col-xs-12">
+              <img class="news-header-image" src="{{headerImageUrl}}" style="margin: 0 0 10px 0;"/>
+            </div>
+          </div>
+          {{/if}}
+          <div class="row">
+            <div class="col-xs-12">
+              {{{html}}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <a class="read-more" href="{{url}}" target="_blank">Read more on {{providerTruncatedUrl}} ></a>
+            </div>
           </div>
         </div>
       </div>
