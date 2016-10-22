@@ -31,6 +31,11 @@
 
 .watch{
   background-color: @watch-background-color;
+  .annotation-section{
+    border: 1px solid #d5d5d5;
+    margin-top: 14px;
+  }
+  
   
   .card-list-nav-row {
     height:55px;
@@ -57,7 +62,7 @@
       }
     }
   
-}
+  }
 
 .hot-notification {
   color: #fff;
@@ -972,11 +977,6 @@
 .overlay-context-browser{
   .full-overlay;
   background-color: @dark-transparent-color;
-  
-  .annotation-section{
-    border-radius: 0;
-    background-color: @context-background-color;
-  }
 
   @topPaddingHeight: 36px;
 
@@ -1537,26 +1537,6 @@ a.svg:after {
   text-align: center;
   padding-top: 40px;
 }
-
-.annotation-section{
-  .transparency-fade-strong(background-color, @light-background-color);
-  border-radius: 5px;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  flex-flow: row;
-  .user-pic {
-    padding-left: 2px;
-    padding-top: 7px;
-  }
-  svg{
-    .size(20px);
-  }
-  .text-content{
-    flex: auto;
-  }
-}
-
 
 .curator-webcam-stream-container{
   .opacity-transition;

@@ -124,7 +124,7 @@ window.textContentHelper = function() {
 
   if (!Session.get('curateMode')) {
     if (textContent.length){
-      return '<div class="text-content" dir="auto">' + _.escape(textContent).replace(/\n/g, "<br>") + '</div>';
+      return '<div class="text-content annotation-section" dir="auto">' + _.escape(textContent).replace(/\n/g, "<br>") + '</div>';
     } else {
       return '';
     }
@@ -202,7 +202,7 @@ window.horizontalBlockHelpers = _.extend({}, {
     return this.annotationAllowed && (Session.get('curateMode') || this.annotation) && !window.browseSuggestionsMode();
   },
   showVideoMarkerSection () {
-    return Session.get('curateMode') && (mainPlayer.activeStream.get().source === "youtube" && !mainPlayer.activeStream.get().live)
+    return Session.get('curateMode') && mainPlayer.activeStream.get() && (mainPlayer.activeStream.get().source === "youtube" && !mainPlayer.activeStream.get().live)
   }
 });
 

@@ -1,6 +1,7 @@
 <template name="display_text_section">
   <div class="row">
     <div class="col-xs-12">
+      <!--
       {{#if suggestedByUsername}}
       <div class="row">
         <div class="col-xs-12">
@@ -8,6 +9,7 @@
         </div>
       </div>
       {{/if}}
+      -->
       <div class="row">
        <div class="col-xs-12">
           <div class="text-section" dir="auto">
@@ -228,6 +230,7 @@
 <template name="display_image_section">
   <div class="row">
     <div class="col-xs-12">
+      <!--
       {{#if suggestedByUsername}}
       <div class="row">
         <div class="col-xs-12">
@@ -235,6 +238,7 @@
         </div>
       </div>
       {{/if}}
+      -->
       <div class="row">
         <div class="col-xs-12">
           {{#if showVideo}}
@@ -282,6 +286,7 @@
 <template name="display_map_section">
   <div class="row">
     <div class="col-xs-12">
+      <!--
       {{#if suggestedByUsername}}
       <div class="row">
         <div class="col-xs-12">
@@ -289,6 +294,7 @@
         </div>
       </div>
       {{/if}}
+      -->
       <div class="row">
         <div class="col-xs-12">
           <!-- 4:3 aspect ratio -->
@@ -314,11 +320,18 @@
       <div class="row">
         <div class="col-xs-12">
           <!-- 33:7 aspect ratio -->
-          <div class="embed-responsive embed-responsive-33by7">
+          <div class="embed-responsive embed-responsive-25by12">
             <iframe class="embed-responsive-item" src="{{url}}"></iframe>
           </div>
         </div>
       </div>
+      {{#if showAnnotationSection}}
+      <div class="row">
+        <div class="col-xs-12">
+          {{> annotation_section}}
+        </div>
+      </div>
+      {{/if}}
       <!--
       <div class="row">
         <div class="col-xs-12">
@@ -331,8 +344,9 @@
 </template>
 
 <template name="display_audio_section">
-  <div class="row">
+   <div class="row">
     <div class="col-xs-12">
+      <!--
       {{#if suggestedByUsername}}
       <div class="row">
         <div class="col-xs-12">
@@ -340,21 +354,23 @@
         </div>
       </div>
       {{/if}}
+      -->
       <div class="row">
         <div class="col-xs-12">
-          <!-- 16:9 aspect ratio -->
-          <div class="embed-responsive embed-responsive-16by9">
+          <!-- 33:7 aspect ratio -->
+          <div class="embed-responsive embed-responsive-square">
             <iframe class="embed-responsive-item" src="{{url}}"></iframe>
           </div>
         </div>
-        {{#if showAnnotationSection}}
-        <div class="row">
-          <div class="col-xs-12">
-            {{> annotation_section}}
-          </div>
-        </div>
-        {{/if}}
+        
       </div>
+      {{#if showAnnotationSection}}
+      <div class="row">
+        <div class="col-xs-12">
+          {{> annotation_section}}
+        </div>
+      </div>
+      {{/if}}
       <!--
       <div class="row">
         <div class="col-xs-12">
@@ -375,6 +391,7 @@
 <template name="display_video_section">
   <div class="row">
     <div class="col-xs-12">
+      <!--
       {{#if suggestedByUsername}}
       <div class="row">
         <div class="col-xs-12">
@@ -382,6 +399,7 @@
         </div>
       </div>
       {{/if}}
+      -->
       <div class="row">
         <div class="col-xs-12">
           <!-- 16:9 aspect ratio -->
@@ -411,6 +429,7 @@
 <template name="display_news_section">
   <div class="row">
     <div class="col-xs-12">
+      <!--
       {{#if suggestedByUsername}}
       <div class="row">
         <div class="col-xs-12">
@@ -418,6 +437,7 @@
         </div>
       </div>
       {{/if}}
+      -->
       <div class="row">
         <div class="col-xs-12">
           <div class="news-section">
@@ -560,6 +580,7 @@
 <template name="display_twitter_section">
   <div class="row">
     <div class="col-xs-12">
+      <!--
       {{#if suggestedByUsername}}
       <div class="row">
         <div class="col-xs-12">
@@ -567,6 +588,7 @@
         </div>
       </div>
       {{/if}}
+      -->
       <div class="row">
         <div class="col-xs-12">
           <div class="twitter-section">
