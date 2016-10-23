@@ -1367,7 +1367,10 @@ Template.context_browser.helpers({
   },
   soloSidebarContextMode (){
     var currentContext = getCurrentContext();
-    $('#card-list-area').scrollTop(0);
+    console.log(currentContext);
+    if(currentContext){
+      $('#card-list-area').scrollTop(0);
+    }
     return currentContext && currentContext.soloModeLocation === 'sidebar';
   },
   userFavorited () {
@@ -1435,11 +1438,14 @@ Template.context_browser.events({
     });
   },
   'click .context-section .clickable' (e, t){
-    if ($(e.target).is('textarea')) { // don't go to big browser when its time to edit context
-      return
-    }
-    if(this.hasSoloMode()){
-      setCurrentContext(this);
+    if(Session.get('curateMode')){
+      if ($(e.target).is('textarea')) { // don't go to big browser when its time to edit context
+        return
+      }
+    } else {
+      if(this.hasSoloMode()){
+        setCurrentContext(this);
+      }
     }
   },
   'click .switch-to-list-mode' (){
