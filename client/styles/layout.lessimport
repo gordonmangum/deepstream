@@ -991,6 +991,10 @@ div.collapse {
   display: none !important;
 }
 
+span.fa-stack.fa-custom-sm {
+  font-size: 0.7em;
+}
+
 div.loading-container {
   margin-top: 100px;
   display: flex;

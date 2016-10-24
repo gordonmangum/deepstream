@@ -1367,7 +1367,6 @@ Template.context_browser.helpers({
   },
   soloSidebarContextMode (){
     var currentContext = getCurrentContext();
-    console.log(currentContext);
     if(currentContext){
       $('#card-list-area').scrollTop(0);
     }

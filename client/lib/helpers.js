@@ -129,7 +129,7 @@ window.textContentHelper = function() {
       return '';
     }
   } else {
-    return '<textarea name="content" class="text-content editable ' + additionalClasses + '" rows="' + rows + '" placeholder="' + placeholder +  '" dir="auto">' + _.escape(textContent) + '</textarea>';
+    return '<textarea name="content" class="text-content annotation-section editable ' + additionalClasses + '" rows="' + rows + '" placeholder="' + placeholder +  '" dir="auto" style="margin-bottom:10px;font-style: italic;">' + _.escape(textContent) + '</textarea>';
   }
 };
 

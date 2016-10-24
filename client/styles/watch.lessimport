@@ -32,12 +32,12 @@
 .watch{
   background-color: @watch-background-color;
   .annotation-section{
-    border: 1px solid #d5d5d5;
+    border: 1px solid #b3b3b3;
     margin-top: 14px;
     font-weight: 300;
     font-size: 12px;
     line-height: normal;
-    color: #969696;
+    color: #666666;
   }
   
   .isClickable {

@@ -11,16 +11,15 @@
 
 <template name="minimal_navbar">
   <nav class="navbar navbar-inverse navbar-{{#if fixed}}fixed{{else}}static{{/if}}-top">
-      <div class="container">
+      <div class="container" style="width:100%;">
         <div class="navbar-header">
-          <button class="navbar-brand collapsed pull-left" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <img alt="Logo" src="/images/logo.svg" class="inverse-brand img-circle">
-            <i class="fa fa-caret-down"></i>
-          </button>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            {{#if embedMode}}
+          <li class="dropdown">
+            <a class="navbar-brand pull-left dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <img alt="Logo" src="/images/logo.svg" class="inverse-brand img-circle">
+              <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu" style="margin-top:50px;">
+              {{#if embedMode}}
             <li><a class="js-link" data-toggle="modal" data-target="#embed-about-modal"><i class="fa fa-info-circle" style="margin-right: 25px;"></i> Learn about Deepstream</a></li>
             {{else}}
               <li><a class="js-link" data-toggle="modal" data-target="#more-info-modal"><i class="fa fa-info-circle" style="margin-right: 25px;"></i> More Info</a></li>
@@ -32,7 +31,20 @@
             {{else}}
               <li><a class="js-link" data-toggle="modal" data-target="#login-modal"><i class="fa fa-user" style="  margin-right: 25px;"></i> Login / Create Account</a></li>
             {{/if}}
-          </ul>
+            </ul>
+          </li>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><i class="fa fa-angle-left"></i> Back</a></li>
+          <li><a href="#">
+            <span class="fa-stack fa-custom-sm">
+              <i class="fa fa-square-o fa-stack-2x"></i>
+              <i class="fa fa-align-center fa-stack-1x"></i>
+            </span> See Suggested Cards</a></li>
+          <li><a href="#"><i class="fa fa-clone"></i> Show Cards</a></li>
+        </ul>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         
         </div><!-- /.navbar-collapse -->
       </div>
     </nav> 

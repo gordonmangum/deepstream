@@ -463,7 +463,6 @@
       <div class="left-section">
             <div class="header-section">
               <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
-                <div class="icon trigger-title"  style="{{#if curateMode}}display:none{{/if}}"><i class="fa fa-info-circle"></i></div>
                 {{#if curateMode}}
                   <div class="streams-list" style="max-height:{{mainStreamHeight 0}}px">
                     <div class="streams-list-container">
@@ -492,24 +491,7 @@
                       {{#each livestreams}}
                         {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}       
                         <br/>
-                      {{else}}
-                        {{#unless curateMode}}
-                        <!--
-                          <li class="placeholder">
-                            <button>
-                              There are no live streams right now
-                            </button>
-                          </li>
-                          <br/>
-                        -->
-                        {{/unless}}
                       {{/each}}
-                      {{#if deadstreams.length}}
-                      <!--
-                        <li class="live-dead-divider"></li>
-                        <br/>
-                      -->
-                      {{/if}}
                       {{#each deadstreams}}
                         {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}
                         <br/>
