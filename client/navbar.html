@@ -35,14 +35,26 @@
           </li>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><i class="fa fa-angle-left"></i> Back</a></li>
-          <li><a href="#">
-            <span class="fa-stack fa-custom-sm">
-              <i class="fa fa-square-o fa-stack-2x"></i>
-              <i class="fa fa-align-center fa-stack-1x"></i>
-            </span> See Suggested Cards</a></li>
-          <li><a href="#"><i class="fa fa-clone"></i> Show Cards</a></li>
+          <li><a class="js-link back-button"><i class="fa fa-angle-left"></i> Back</a></li>
+          {{#if curateMode}}
+            {{#if showSuggestionsButton}}
+          <li>
+            <a class="js-link show-suggestions">
+              <span class="fa-stack fa-custom-sm">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-align-center fa-stack-1x"></i>
+              </span> 
+              See Suggested Cards
+            </a>
+          </li>
+            {{/if}}
+          {{/if}}
+          <li><a class="js-link"><i class="fa fa-clone"></i> Show Cards</a></li>
+          {{#if curateMode}}
+          <li><a class="js-link" data-toggle="modal" data-target="#settings-modal"><i class="fa fa-cog"></i></a></li>
+          {{/if}}
         </ul>
+        <!-- <button class="card-list-nav-button pull-right show-timeline"  title="Twitter timeline"><i class="fa fa-twitter"></i></button> -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
          
         </div><!-- /.navbar-collapse -->

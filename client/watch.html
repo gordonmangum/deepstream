@@ -190,7 +190,7 @@
             {{> creation_tutorial}}
             {{/if}}
             {{#if streamUrl}}
-            <div class="main-stream-container">
+            <div class="main-stream-container"  style="height: {{mainStreamHeight}}px;">
             <iframe id="{{mainStreamIFrameId}}"
                     class="embed-responsive-item {{#unless mainStreamInIFrame}}hide{{/unless}} {{#if facebookIframe}}facebook{{/if}}"
                     src="{{#if mainStreamInIFrame}}{{streamUrl}}{{/if}}" frameborder="0"
@@ -298,78 +298,8 @@
             {{/if}}
         </div>
         <div class="col-xs-4" style="z-index: 10;">
-          <!-- begin top navigation -->
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="row card-list-nav-row">
-                <div class="col-xs-12">
-                  <div class="row">
-                    <div class="col-xs-2">
-                      <button class="card-list-nav-button back-button">&lt; Back</button>
-                    </div>
-                    <!-- old top navigation buttons
-  <div class="context-timeline-switcher {{#unless curateMode}}wide-menu{{/unless}}">
-      <div class="button-container close-bar-button">
-        <button title="Close context bar" class="close-sidebar">
-          {{> close_right_icon}}
-        </button>
-      </div>
-  
-    <div class="button-container {{#if showContextBrowser}}active{{/if}}">
-      <button title="Context" class="show-context-browser {{#if showContextBrowser}}active{{/if}}">
-        Context
-      </button>
-    </div>
-
-    {{#if curateMode}}
-      <div class="button-container {{#if showSuggestions}}active{{/if}}">
-        <button class="show-suggestions {{#if showSuggestions}}active{{/if}}" disabled='{{#unless showShowSuggestionsButton}}disabled{{/unless}}'>
-          Suggested
-        </button>
-      </div>
-    {{/if}}
-    
-    <div class="button-container {{#if showTimeline}}active{{/if}}">
-      <button title="Twitter timeline" class="show-timeline {{#if showTimeline}}active{{/if}}" disabled='{{#unless showShowTimelineButton}}disabled{{/unless}}'>
-        {{> twitter_icon}}
-      </button>
-    </div>
-
-  </div>      -->      
-                    {{#if curateMode}}
-                      {{#if showSuggestions}}
-                    <div class="col-xs-2">
-                      <button class="card-list-nav-button pull-right hot-notification show-suggestions"  title="User suggestions">Suggested</button>
-                    </div>
-                      {{/if}}
-                    {{/if}}
-                    {{#if curateMode}}
-                    <div class="col-xs-2">
-                      <button class="card-list-nav-button pull-right show-timeline"  title="Twitter timeline"><i class="fa fa-twitter"></i></button>
-                    </div>
-                    <div class="col-xs-2">
-                      <button class="card-list-nav-button pull-right show-context-browser"  title="Twitter timeline">Cards</button>
-                    </div>
-                    {{/if}}
-                    {{#if curateMode}}
-                    <div class="col-xs-2">
-                       <button class="card-list-nav-button pull-right"  data-toggle="modal" data-target="#settings-modal"><i class="fa fa-cog"></i></button>
-                    </div>
-                    {{/if}}
-                  </div>
-                  
-                  <div class="row">
-                    <div class="col-xs-12">
-                     
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- end top navigation -->
           <!-- begin Card List Area -->
-          <div class="row" id="card-list-area" style="height: {{mainStreamHeight -55}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
+          <div class="row" id="card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
             <div class="col-xs-12">
               {{#if showOpenSidebarIcon}}
               <!-- hide show/hide button for now
@@ -1056,7 +986,7 @@
       <div class="context-area list-mode {{#if soloSidebarContextMode}}hide{{/if}}">
         {{#unless curateMode}}
         <div class="row">
-          <div class="col-xs-12 suggest-content js-link suggest-content-card narrative-section context-section list-item-context-section news-card curator-card">
+          <div class="col-xs-12 text-center suggest-content js-link suggest-content-card narrative-section context-section list-item-context-section news-card curator-card" style="margin-bottom:20px;">
             <b>Suggest a Card</b>
           </div>
         </div>

@@ -82,7 +82,7 @@
 
 <template name="create_text_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} Text</div>
-  <button class="go-back-button">{{> back_arrow_icon}}</button>
+  
   <div class="create-section">
     <div class="tabs">
       <ul>
@@ -107,7 +107,7 @@
 
 <template name="create_poll_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} Poll</div>
-  <button class="go-back-button">{{> back_arrow_icon}}</button>
+  
   <div class="create-section">
     <div class="tabs">
       <ul>
@@ -147,7 +147,7 @@
 
 <template name="create_link_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Link</div>
-  <button class="go-back-button">{{> back_arrow_icon}}</button>
+  
   <div class="create-section create-link-section">
     <div class="tabs">
       <ul>
@@ -219,7 +219,7 @@
 
 <template name="create_news_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest News{{else}}Add a News Story{{/unless}}</div>
-  <button class="go-back-button">{{> back_arrow_icon}}</button>
+  
   <div class="create-section create-news-section">
     <div class="tabs">
       <ul>
@@ -268,7 +268,7 @@
 
 <template name="create_image_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} an Image</div>
-  <button class="go-back-button">{{> back_arrow_icon}}</button>
+  
   <div class="create-section create-image-section">
     <div class="search-section {{#unless uploadMode}}{{#if showSingleResult}}hide{{/if}}{{/unless}}">
       <div class="tabs">
@@ -340,7 +340,7 @@
 
 <template name="create_map_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Map</div>
-  <button class="go-back-button">{{> back_arrow_icon}}</button>
+  
   <div class="create-section create-map-section">
     <div class="tabs">
       <ul>
@@ -374,7 +374,7 @@
 
 <template name="create_twitter_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Tweet</div>
-  <button class="go-back-button">{{> back_arrow_icon}}</button>
+  
   {{#if twitterUser}}
     <div class="create-section twitter">
       <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
@@ -537,7 +537,7 @@
 
 <template name="create_video_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Video</div>
-  <button class="go-back-button">{{> back_arrow_icon}}</button>
+  
   <div class="create-section">
     <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
       <div class="tabs">
@@ -674,7 +674,7 @@
 
 <template name="create_audio_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} Audio</div>
-  <button class="go-back-button">{{> back_arrow_icon}}</button>
+  
     <div class="create-section audio">
       <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
       <div class="tabs">
@@ -744,10 +744,4 @@
       {{/if}}
     </div>
   </div>
-</template>
-
-<template name="back_to_results_button">
-  {{#if showBackToResultsButton}}
-    <button class="go-back-button">{{> back_arrow_icon}}</button>
-  {{/if}}
 </template>

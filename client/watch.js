@@ -872,12 +872,6 @@ Template.watch_page.events({
     analytics.track('Curator clicked disabled Replay Context', trackingInfoFromPage());
     notifyError('Unfortunately Replay Context is not available for Deepstreams with a livestream or more than one stream');
   },
-  
-  
-  'click .card-list-nav-button.back-button': function(){
-    Session.set('previousMediaDataType', Session.get('mediaDataType'));
-    return Session.set('mediaDataType', null);
-  },
   'click .portrait-mode-switch' (e,t){
     if(Session.equals('contextMode', 'timeline')){
       Session.set('contextMode', 'context');
@@ -940,7 +934,7 @@ Template.watch_page.events({
   },
   'click .suggest-content' (){
     analytics.track('Clicked suggest context button', trackingInfoFromPage());
-    Session.set('mediaDataType', Session.get('previousMediaDataType') || 'selectCard');
+    Session.set('mediaDataType', 'selectCard');
   },
   'click .got-it-context' (){
     Session.set('shownHighlightContext', true); 
@@ -1146,11 +1140,6 @@ Template.watch_page.events({
   },
   'click .open-bottombar' (){
     return Session.set('reducedBottomView', false);
-  },
-  'click .show-suggestions'(){
-    analytics.track('Click show suggestions browser', trackingInfoFromPage());
-    Session.set('contextMode', 'suggestions');
-    Session.set('activeContextId', null);
   },
   'click .show-timeline'(){
     analytics.track('Click show Twitter timeline', trackingInfoFromPage());
@@ -1403,7 +1392,7 @@ Template.context_browser.helpers({
 
 Template.context_browser.events({
   'click .add-new-card-row' (){
-    Session.set('mediaDataType', Session.get('previousMediaDataType') || 'text');
+    Session.set('mediaDataType', 'selectCard');
   },
   'click .delete-context' (e, t){
     if(confirm('Are you sure you want to delete this ' + singularizeMediaType(this.type) + ' card? This cannot be undone.')){
