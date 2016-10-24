@@ -47,9 +47,13 @@
       <div class="search-outside-input-container">
         <div class="search-trigger">{{#if searchInputLabel}}{{searchInputLabel}}{{else}}{{#if customSearchLabel}}{{customSearchLabel}}{{else}}Search{{/if}}{{/if}}</div>
         <div class="search-input-container">
-          <input type="search" placeholder={{placeholder}} autofocus="autofocus" dir="auto">
+           <div class="input-group">
+              <input type="search" class="form-control" placeholder="{{placeholder}}" autofocus="autofocus" dir="auto">
+              <span class="input-group-btn">
+                <button class="btn btn-outline-success search-button" type="submit"><i class="fa fa-search"></i></button>
+              </span>
+            </div>
         </div>
-        <button type="submit" class="search-button">{{> search_icon }}</button>
       </div>
       {{#if option1}}
         <div class="search-radios">
