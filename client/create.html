@@ -1,12 +1,10 @@
 <!--DEEPSTREAM-->
 <template name="add_context">
-  <div class="add-context narrative-section selected editing">
-    {{#if listMode}}
-      {{> Template.dynamic template=searchListTemplate}}
-    {{else}}
-      {{> Template.dynamic template=searchSoloTemplate}}
-    {{/if}}
-  </div>
+  {{#if listMode}}
+    {{> Template.dynamic template=searchListTemplate}}
+  {{else}}
+    {{> Template.dynamic template=searchSoloTemplate}}
+  {{/if}}
 </template>
 
 <template name="stream_search">

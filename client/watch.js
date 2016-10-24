@@ -169,8 +169,25 @@ window.resetMainPlayer = function(){
   };
   windowResetMainplayerDependency.changed();
 };
-
 window.resetMainPlayer();
+window.showDesktopMode = function (){
+  var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
+  var cardSpaceAvailable = Session.get('windowHeightForCarousel') - 51 - videoSpace;
+  if(cardSpaceAvailable > 120 && Session.get('windowWidthForCarousel') < 890){
+    if(Session.get('showDesktopMode')){
+      Session.set('showDesktopMode', false);
+      window.resetMainPlayer();
+    }
+    return false;
+  } else {
+    if(!Session.get('showDesktopMode')){
+      Session.set('showDesktopMode', true);
+      window.resetMainPlayer();
+    }
+    return true;
+  }
+};
+  
 
 Template.watch_page.onCreated(function () {
   Session.set('replayEnabled', true);
@@ -698,6 +715,7 @@ Template.watch_page.helpers({
   twitcastPlayer (){
     return Template.instance().activeStream.get().source === 'twitcast'
   },
+  showDesktopMode: window.showDesktopMode,
   removeMainStream (){
     return Session.get('removeMainStream');
   },
@@ -713,23 +731,6 @@ Template.watch_page.helpers({
     if(isNaN(videoSpace) || isNaN(cardSpaceAvailable))
       return true;
     return false;
-  },
-  showDesktopMode(){
-    var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
-    var cardSpaceAvailable = Session.get('windowHeightForCarousel') - 51 - videoSpace;
-    if(cardSpaceAvailable > 120 && Session.get('windowWidthForCarousel') < 890){
-      if(Session.get('showDesktopMode')){
-        Session.set('showDesktopMode', false);
-        window.resetMainPlayer();
-      }
-      return false;
-    } else {
-      if(!Session.get('showDesktopMode')){
-        Session.set('showDesktopMode', true);
-        window.resetMainPlayer();
-      }
-      return true;
-    }
   },
   showRightSection (){
     return !soloOverlayContextModeActive() && !Session.get('reducedRightView');
@@ -747,7 +748,7 @@ Template.watch_page.helpers({
     return Session.get("curateMode") && Session.get("showManageCuratorsMenu");
   },
   showContextSearch (){
-    return Session.get('mediaDataType') && Session.get('mediaDataType') !=='webcam';
+    return Session.get('mediaDataType') &&  Session.get('mediaDataType') !== "selectCard" && Session.get('mediaDataType') !=='webcam';
   },
   showSelectCardType () {
     return Session.get('mediaDataType') == "selectCard";

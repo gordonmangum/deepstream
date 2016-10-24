@@ -299,99 +299,46 @@
         </div>
         <div class="col-xs-4" style="z-index: 10;">
           <!-- begin Card List Area -->
-          <div class="row" id="card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
-            <div class="col-xs-12">
-              {{#if showOpenSidebarIcon}}
-              <!-- hide show/hide button for now
-              <div class="bar-open-close fadeIn fadeOut animated-fast">
-                <button class="open-sidebar">
-                  {{> close_left_icon}}
-                </button>
+          {{#with deepstreamForContext}}
+            {{#if showSelectCardType}}
+              <!-- start select context type -->
+              <div class="row thumbnail" id="card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
+                <div class="col-xs-12">
+                {{> content_icons}}
+                </div>
               </div>
-              -->
+              <!-- end select context type -->
               {{else}}
-                {{#if showCloseSidebarIcon}}
-                <!-- close button on menu bar -->
-                {{/if}}
-              {{/if}}
-
-               {{#with deepstreamForContext}}
-                {{#if showSelectCardType}}
-                  <!-- start select context type -->
-                  {{> content_icons}}
-                  <!-- end select context type -->
-                {{/if}}
-                {{#if showContextSearch}}
-                  <!-- start add context field -->
-                  {{> add_context}}
-                  <!-- end add context field --> 
+              {{#if showContextSearch}}
+              <!-- start add context field -->
+              <div class="row thumbnail" id="card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
+                <div class="col-xs-12">
+                {{> add_context}}
+                </div>
+              </div>
+              <!-- end add context field --> 
+              {{else}}
+                {{#if showWebcamSetup}}
+                <div class="row thumbnail" id="card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
+                  <div class="col-xs-12">
+                  {{> webcam_setup}}
+                  </div>
+                </div>
                 {{else}}
-                  <div class="row">
-                    <div class="col-xs-12">
-                    {{#if showWebcamSetup}}
-                      {{> webcam_setup}}
-                    {{else}}
-                      {{> context_browser_area deepstreamForContext}}
-                    {{/if}}
+                <div class="row" id="card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
+                  <div class="col-xs-12">
+                  {{> context_browser_area deepstreamForContext}}
                   </div>
                 </div>
                 {{/if}}
-              {{/with}}
-              {{#with thisDeepstream}}
-               {{#if isCurator}}
-                <!--
-               <div class="settings-bar {{#unless curateMode}}wide-menu short-margin-top{{/unless}}  {{#if showContextBrowser}}short-margin-top{{/if}}">
-
-                 {{#if curateMode}}
-                  <div class="button-container icon-button">
-                    <button title="Set up webcam narration" class="webcam">{{> webcam_icon}}</button>
-                  </div>
-                {{/if}}
-
-                {{#if isCurator}}
-                  {{#if onCuratePage}}
-                    <div class="button-container">
-                    {{#if curateMode}}
-                      {{#if showPreviewEditButton}}
-                        <button class="preview">Preview</button>
-                      {{/if}}
-                    {{else}}
-                      {{#if showPreviewEditButton}}
-                        <button class="return-to-curate">Edit</button>
-                      {{/if}}
-                    {{/if}}
-                    </div>
-                  {{/if}}
-                {{/if}}
-            </div>-->
               {{/if}}
-
-              {{#unless isCurator}}
-                {{#if showHighlightContext}}
-                 <!--
-                  <div class="highlight-context-container fadeIn fadeOut">
-                    <div class="highlight-context-content">
-                      <p>Click context cards to expand them.</p>
-                      <p>You can learn more about the topic while watching the video!</p>
-                      <center>
-                        <button class="got-it-context">Got it!</button>
-                      </center>
-                    </div>
-                  </div>
-                 -->
-                {{/if}}
-              {{/unless}}
-            {{/with}}
-
-            </div>
-          </div>
+            {{/if}}
+          {{/with}}
           <!-- End Card List Area -->
-       
-        
         </div>
       </div>
       <div class="left-section">
-            <div class="header-section">
+        <div class="header-section">
               <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
                 {{#if curateMode}}
                   <div class="streams-list" style="max-height:{{mainStreamHeight 0}}px">
@@ -440,7 +387,7 @@
 
                 {{/if}}
               </div>
-            </div>
+</div>
       </div>
     </div>
             {{#with thisDeepstream}}
@@ -764,54 +711,59 @@
 
 <template name="content_icons">
   <div class="row">
+    <div class="col-xs-12">
+      <div class="search-section-title">Select Card Type</div>
+    </div>
+  </div>
+  <div class="row">
     {{#if isCurator}}
-    <div class="col-xs-4">
+    <div class="col-xs-6 col-sm-4 col-md-3">
       <a class="js-link thumbnail tile-selector stream-button"  title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} livestreams">
         {{> stream_icon }}
       </a>
     </div>
     {{/if}}
-    <div class="col-xs-4">
+    <div class="col-xs-6 col-sm-4 col-md-3">
       <a class="js-link thumbnail tile-selector news-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} news stories" disabled='{{disableAllButStream}}'>
         {{> news_icon }}
       </a>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-6 col-sm-4 col-md-3">
       <a class="js-link thumbnail tile-selector text-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} text" disabled='{{disableAllButStream}}'>
         {{> text_icon }}
       </a>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-6 col-sm-4 col-md-3">
       <a class="js-link thumbnail tile-selector poll-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} poll" disabled='{{disableAllButStream}}'>
         {{> poll_icon }}
       </a>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-6 col-sm-4 col-md-3">
       <a class="js-link thumbnail tile-selector map-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} maps" disabled='{{disableAllButStream}}'>
         {{> map_icon }}
       </a>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-6 col-sm-4 col-md-3">
       <a class="js-link thumbnail tile-selector image-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} images" disabled='{{disableAllButStream}}'>
         {{> image_icon }}
       </a>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-6 col-sm-4 col-md-3">
       <a class="js-link thumbnail tile-selector video-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} videos" disabled='{{disableAllButStream}}'>
         {{> video_icon }}
       </a>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-6 col-sm-4 col-md-3">
       <a class="js-link thumbnail tile-selector twitter-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} tweets" disabled='{{disableAllButStream}}'>
         {{> twitter_icon }}
       </a>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-6 col-sm-4 col-md-3">
       <a class="js-link thumbnail tile-selector audio-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} audio" disabled='{{disableAllButStream}}'>
         {{> audio_icon }}
       </a>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-6 col-sm-4 col-md-3">
       <a class="js-link thumbnail tile-selector link-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} links" disabled='{{disableAllButStream}}'>
         {{> link_icon }}
       </a>

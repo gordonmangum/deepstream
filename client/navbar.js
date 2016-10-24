@@ -1,5 +1,6 @@
 Template.minimal_navbar.helpers({
-  loggedIn() { return Meteor.user() }
+  loggedIn() { return Meteor.user() },
+  showDesktopMode: window.showDesktopMode,
 });
 
 Template.minimal_navbar.events({
