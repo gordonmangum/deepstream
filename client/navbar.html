@@ -38,7 +38,8 @@
         <ul class="nav navbar-nav navbar-right">
           <li><a class="js-link back-button"><i class="fa fa-angle-left"></i> Back</a></li>
           {{#if curateMode}}
-            {{#if showSuggestionsButton}}
+            {{#with thisDeepstream}}
+              {{#if showSuggestionsButton}}
           <li>
             <a class="js-link show-suggestions">
               <span class="fa-stack fa-custom-sm">
@@ -48,7 +49,8 @@
               See Suggested Cards
             </a>
           </li>
-            {{/if}}
+              {{/if}}
+            {{/with}}
           {{/if}}
           <li><a class="js-link"><i class="fa fa-clone"></i> Show Cards</a></li>
           {{#if curateMode}}
