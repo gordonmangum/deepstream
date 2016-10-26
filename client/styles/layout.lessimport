@@ -40,7 +40,7 @@
 @homepage-shade-5: #525252;
 
 @live-color: #C90923;
-@action-color: #F6C406;
+@action-color: #a60520;
 @dark-action-color: @context-background-color;
 @hover-action-color: #dea406;
 @placeholder-color: #acacac;
@@ -766,8 +766,9 @@ div.twitter-section{
   }
   div.twitter-text-section {
     a {
+    color: #4099ff;
       &:hover {
-        color: @action-color;
+        color: #2c6bb2;
       }
     }
     padding: 20px 10px 12px 18px;
