@@ -39,6 +39,16 @@
     line-height: normal;
     color: #666666;
   }
+  .comment-section{
+    &.complete{
+      border-top:  1px solid @brand-primary;
+      border-bottom:  1px solid @brand-primary;
+    }
+    &.shorten {
+      border-left:  1px solid @brand-primary;
+    }
+    line-height: normal;
+  }
   
   .isClickable {
     cursor: pointer;

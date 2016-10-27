@@ -1,24 +1,27 @@
 <template name="display_text_section">
   <div class="row">
     <div class="col-xs-12">
-      <!--
       {{#if suggestedByUsername}}
       <div class="row">
-        <div class="col-xs-12">
-          <p>@{{suggestedByUsername}} suggested this card</p>
+        <div class="col-xs-11 col-xs-offset-1">
+          <p class="text-muted"><small><em>Submitted by {{suggestedByUsername}}</em></small></p>
         </div>
       </div>
       {{/if}}
-      -->
       <div class="row">
-       <div class="col-xs-12">
-          <div class="text-section" dir="auto">
-            {{{annotation}}}
-          </div>
+        <div class="col-xs-10 col-xs-offset-1 comment-section complete">
+          <p style="padding:5px"><em>{{content}}</em></p>
         </div>
       </div>
     </div>
   </div>
+  {{#if showAnnotationSection}}
+  <div class="row">
+    <div class="col-xs-12">
+      {{> annotation_section}}
+    </div>
+  </div>
+  {{/if}}
 </template>
 
 <template name="homepage_preview_text_section">
@@ -893,9 +896,23 @@
 </template>
 
 <template name="preview_text_section">
-  <div class="show-full">
-    <div class="text-preview" dir="auto">
-      {{content}}
+  <div class="row">
+    <div class="col-xs-12">
+      {{#if suggestedByUsername}}
+      <div class="row">
+        <div class="col-xs-11 col-xs-offset-1">
+          <p class="text-muted"><small><em>Submitted by {{suggestedByUsername}}</em></small></p>
+        </div>
+      </div>
+      {{/if}}
+      <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 comment-section {{#if shotenedComment}}shorten{{else}}complete{{/if}}">
+          <p style="padding:5px"><em>{{previewComment}}{{#if shotenedComment}}...{{/if}}</em></p>
+          {{#if shotenedComment}}
+          <a class="jsLink">read more</a>
+          {{/if}}
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -919,13 +936,6 @@
           {{> pieChart_preview}}
         </div>
       </div>
-      {{#if showAnnotationSection}}
-      <div class="row">
-        <div class="col-xs-12">
-          {{> annotation_section}}
-        </div>
-      </div>
-      {{/if}}
     </div>
   </div>
 </template>

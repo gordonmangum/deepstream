@@ -261,6 +261,14 @@ Template.display_text_section.onCreated(editableTextCreatedBoilerplate);
 //Template.display_text_section.onDestroyed(editableTextDestroyedBoilerplate('editTextSection'));
 Template.display_text_section.helpers(horizontalBlockHelpers);
 Template.preview_text_section.helpers(horizontalBlockHelpers);
+Template.preview_text_section.helpers({
+  previewComment() {
+    return this.content.substring(0,225);
+  },
+  shotenedComment() {
+    return this.content.length > 225;
+  }
+});
 Template.homepage_preview_text_section.helpers(horizontalBlockHelpers);
 Template.display_text_section.events(editableTextEventsBoilerplate('editTextSection'));
 
