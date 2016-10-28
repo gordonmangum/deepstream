@@ -336,8 +336,8 @@ Template.pieChart_preview.events(pieEvents);
 Template.pieChart_display.helpers(pieHelpers);
 Template.pieChart_display.events(pieEvents);
 
-
 var chartContainerRendered = function(){
+  console.info('chart container display rendered');
   //Width and height
   var w = 200;
   var h = 200;
@@ -368,6 +368,7 @@ var chartContainerRendered = function(){
   };
   Tracker.autorun(function(){
     if(contextId){
+      console.info(contextId);
       var modifier = {
         fields:
         {
@@ -378,6 +379,8 @@ var chartContainerRendered = function(){
       query._id = contextId;
       var dataset = ContextBlocks.find(query, {data: 1}).fetch()[0];
       if(dataset){
+        console.info('we got da data');
+        console.info(dataset);
         dataset = dataset.data; 
         var totalVotes = 0;
         dataset.forEach(function(value, index, array){
@@ -453,6 +456,91 @@ var chartContainerRendered = function(){
     }
   });
 };
+var chartPreviewContainerRendered = function(){
+  console.info('chart container preview rendered');
+  //Width and height
+  var w = 100;
+  var h = 100;
+  var outerRadius = w / 2;
+  var innerRadius = 0;
+  var arc = d3.svg.arc()
+    .innerRadius(innerRadius)
+    .outerRadius(outerRadius);
+  var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d)
+    {
+      return d.value;
+    });
+  //Easy colors accessible via a 10-step ordinal scale
+  var color = d3.scale.category10();
+  
+  //access to contextId
+  var contextId = this.data._id;
+  
+  //Create SVG element add the context block id to it -----------------------------------------
+  var svg = d3.select("#pieChart-preview-" + this.data._id)
+    .attr("width", w)
+    .attr("height", h);
+  var key = function(d)
+  {
+    return d.data.name; //._id;
+  };
+  Tracker.autorun(function(){
+    if(contextId){
+      var modifier = {
+        fields:
+        {
+          value: 1
+        }
+      };
+      var query = {};
+      query._id = contextId;
+      var dataset = ContextBlocks.find(query, {data: 1}).fetch()[0];
+      if(dataset){
+        dataset = dataset.data; 
+        var totalVotes = 0;
+        dataset.forEach(function(value, index, array){
+          totalVotes += value.value; 
+        });
+        var arcs = svg.selectAll("g.arc")
+          .data(pie(dataset), key);
+        var newGroups = arcs.enter()
+          .append("g")
+          .attr("class", "arc")
+          .attr("transform", "translate(" + outerRadius + "," + outerRadius +
+            ")");
+        //Draw arc paths
+        newGroups.append("path")
+          .attr("fill", function(d, i)
+          {
+            return color(i);
+          })
+          .attr("d", arc);
+        arcs.transition()
+          .select('path')
+          .attrTween("d", function(d)
+          {
+            this._current = this._current || d;
+            var interpolate = d3.interpolate(this._current, d);
+            this._current = interpolate(0);
+            return function(t)
+            {
+              return arc(interpolate(t));
+            };
+          });
+        arcs.transition()
+          .select('text')
+          .attr("transform", function(d)
+          {
+            return "translate(" + arc.centroid(d) + ")";
+          });
+        arcs.exit()
+          .remove();
+      }
+    }
+  });
+};
 var chartContainerHelpers = {
   options: function(){
     return this.data;
@@ -496,7 +584,7 @@ var chartContainerHelpers = {
 
 Template.chart_container_display.rendered = chartContainerRendered;
 Template.chart_container_display.helpers(chartContainerHelpers);
-Template.chart_container_preview.rendered = chartContainerRendered;
+Template.chart_container_preview.rendered = chartPreviewContainerRendered;
 Template.chart_container_preview.helpers(chartContainerHelpers);
 Template.chart_container.rendered = chartContainerRendered;
 Template.chart_container.helpers(chartContainerHelpers);

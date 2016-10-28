@@ -66,19 +66,21 @@
     <div class="col-xs-12">
       <div class="row">
         <div class="col-xs-12">
-          {{#each option in options}}
-          <div class="radio">
-            <label>
+          <div class="poll-vote-radios">
+            {{#each option in options}}
+            <div class="radio">
               <input type="radio" name="vote-{{_id}}" id="radio-{{_id}}-option-{{@index}}" value="{{@index}}" >
-              {{option.name}}
-            </label>
+              <label for="radio-{{_id}}-option-{{@index}}"><span></span>
+                {{option.name}}
+              </label>
+            </div>
+            {{/each}}
           </div>
-          {{/each}}
         </div>
       </div>
       <div class="row">
-        <button class="btn btn-outline-success col-xs-12 cast-vote-button">
-          Cast Your Vote!
+        <button class="btn btn-outline-success col-xs-4 col-xs-offset-4 cast-vote-button">
+          Vote!
         </button>
       </div>
     </div>
@@ -106,19 +108,21 @@
     <div class="col-xs-12">
       <div class="row">
         <div class="col-xs-12">
-          {{#each option in options}}
-          <div class="radio">
-            <label>
+          <div class="poll-vote-radios">
+            {{#each option in options}}
+            <div class="radio">
               <input type="radio" name="vote-{{_id}}" id="radio-{{_id}}-option-{{@index}}" value="{{@index}}" >
-              {{option.name}}
-            </label>
+              <label for="radio-{{_id}}-option-{{@index}}"><span></span>
+                {{option.name}}
+              </label>
+            </div>
+            {{/each}}
           </div>
-          {{/each}}
         </div>
       </div>
       <div class="row">
-        <button class="btn btn-outline-success col-xs-12 cast-vote-button">
-          Cast Your Vote!
+        <button class="btn btn-outline-success col-xs-4 col-xs-offset-4 cast-vote-button">
+           Vote!
         </button>
       </div>
     </div>
@@ -195,7 +199,7 @@
   <div class="row">
     <div class="col-xs-12">
     {{#each option in options}}
-      <p><span style="color: {{colorFromIndex @index}};"><strong>{{{percentageVote option.value}}}</strong></span>&nbsp;<span class="text-muted">{{option.name}}</span></p>
+      <p style="color: {{colorFromIndex @index}};">{{option.name}} - {{{percentageVote option.value}}}</p>
     {{/each}}
     </div>
   </div>
@@ -207,7 +211,7 @@
     <div class="col-xs-4">
       <div class="row">
         <div class="col-xs-12 text-center">
-          <svg id="pieChart-{{_id}}" data-contextid="{{_id}}"></svg>
+          <svg id="pieChart-preview-{{_id}}" data-contextid="{{_id}}"></svg>
         </div>
       </div>
       <div class="row">
@@ -218,7 +222,7 @@
     </div>
     <div class="col-xs-6">
       {{#each option in options}}
-        <p><span style="color: {{colorFromIndex @index}};"><strong>{{{percentageVote option.value}}}</strong></span>&nbsp;<span class="text-muted">{{option.name}}</span></p>
+        <p style="color: {{colorFromIndex @index}};">{{option.name}} - {{{percentageVote option.value}}}</p>
       {{/each}}
     </div>
   </div>
@@ -510,7 +514,7 @@
     <div class="col-xs-12">
       <div class="row">
         <div class="col-xs-1">
-          <a class="btn btn-primary" href="{{url}}" target="_blank" style="height: 160px;padding:6px; border-radius:0; width: 45px;">
+          <a class="btn btn-primary" href="{{url}}" target="_blank" style="height: 160px;padding:6px; border-radius:0; width: 33px; margin-left: 8px;">
             <i class="fa fa-share-square-o" style="padding-top: 65px;"></i>
           </a>
         </div>
@@ -771,7 +775,7 @@
           {{#if showVideo}}
             {{> looping_video}}
           {{else}}
-          <div class="embed-responsive embed-responsive-16by9" style="overflow-y:hidden;cursor: -webkit-zoom-in; cursor: -moz-zoom-in;">
+          <div class="embed-responsive embed-responsive-16by9 embed-responsive-preview" >
             <img src="{{previewUrl}}" style="width: 100%;"/>
           </div>
           {{/if}}
@@ -814,7 +818,7 @@
     <div class="col-xs-12">
       <div class="row">
         <div class="col-xs-12">
-          <div class="embed-responsive embed-responsive-16by9" style="overflow-y:hidden;cursor: -webkit-zoom-in; cursor: -moz-zoom-in;">
+          <div class="embed-responsive embed-responsive-16by9 embed-responsive-preview">
             <iframe class="embed-responsive-item" src="{{url}}"></iframe>
           </div>
         </div>
@@ -857,8 +861,8 @@
     <div class="col-xs-12">
       <div class="row">
         <div class="col-xs-12">
-          <!-- 4:3 aspect ratio -->
-          <div class="embed-responsive embed-responsive-16by9" style="overflow-y:hidden;">
+          <!-- 4:3 aspect ratio hellooo-->
+          <div class="embed-responsive embed-responsive-16by9 embed-responsive-preview" >
             <!--<iframe class="embed-responsive-item" src="{{url}}"></iframe>-->
             <img class="embed-responsive-item" src="{{previewUrl 250 445}}" />
           </div>
@@ -906,7 +910,7 @@
       </div>
       {{/if}}
       <div class="row">
-        <div class="col-xs-10 col-xs-offset-1 comment-section {{#if shotenedComment}}shorten{{else}}complete{{/if}}">
+        <div class="col-xs-10 col-xs-offset-1 comment-section shorten">
           <p style="padding:5px"><em>{{previewComment}}{{#if shotenedComment}}...{{/if}}</em></p>
           {{#if shotenedComment}}
           <a class="jsLink">read more</a>
@@ -928,7 +932,7 @@
     <div class="col-xs-12">
       <div class="row">
         <div class="col-xs-12">
-            <p class="lead">{{content}}</p>
+            <p><b>{{content}}</b></p>
         </div>
       </div>
       <div class="row">

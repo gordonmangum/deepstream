@@ -1433,7 +1433,12 @@ Template.context_browser.events({
       }
     } else {
       if(this.hasSoloMode()){
-        setCurrentContext(this);
+        if(this.type == 'poll'){
+          console.info('card details');
+          console.info(this);
+        } else {
+          setCurrentContext(this);
+        }
       }
     }
   },
