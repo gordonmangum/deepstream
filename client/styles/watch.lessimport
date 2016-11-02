@@ -716,15 +716,15 @@
     margin-top: 5px;
     margin-bottom: 5px;
     line-height: 0;
-    .transparency-fade-strong(background-color, @light-background-color);
+    background-color: #fff;
     .fg {
       fill: @dark-text-color;
     }
     &:hover{
-      background-color: @hover-action-color;
+      background-color: lighten(@brand-primary, 15%);
     }
     &.active{
-      background-color: @action-color;
+      background-color: @brand-primary;
     }
 
     position: relative;
