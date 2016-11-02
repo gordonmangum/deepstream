@@ -36,7 +36,11 @@
         </div>
         {{#if showDesktopMode}}
         <ul class="nav navbar-nav navbar-right">
+          {{#if cardListContainerHidden}}
+          <li><a class="js-link show-cards"><i class="fa fa-clone"></i> Show Cards</a></li>
+          {{else}}
           <li><a class="js-link back-button"><i class="fa fa-angle-left"></i> Back</a></li>
+          {{/if}}
           {{#if curateMode}}
             {{#with thisDeepstream}}
               {{#if showSuggestionsButton}}
@@ -52,7 +56,6 @@
               {{/if}}
             {{/with}}
           {{/if}}
-          <li><a class="js-link"><i class="fa fa-clone"></i> Show Cards</a></li>
           {{#if curateMode}}
           <li><a class="js-link" data-toggle="modal" data-target="#settings-modal"><i class="fa fa-cog"></i></a></li>
           {{/if}}

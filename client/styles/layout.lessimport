@@ -56,6 +56,32 @@ html {
   -ms-text-size-adjust: 100%;
 }
 
+/**
+*  Animation Styles
+**/
+
+.row div {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.col-xs-0, .col-sm-0, .col-md-0, .col-lg-0, .col-xl-0  {
+ &.right{
+   float:right;
+ }
+ &.left{
+   float:left;
+ }
+ width: 0;
+ padding:0;
+}
+
+/**
+*  Other Styles
+**/
+
 .js-link {
   cursor: pointer;
 }

@@ -185,7 +185,7 @@
       -->
     {{/if}}
     <div class="row" style="margin-right: 0px;">
-      <div class="col-xs-8">
+      <div class="{{#if cardListContainerHidden}}col-xs-12{{else}}col-xs-8{{/if}}" id="watch-video-container">
             {{#if showTutorial}}
             {{> creation_tutorial}}
             {{/if}}
@@ -297,7 +297,7 @@
           </div>
             {{/if}}
         </div>
-        <div class="col-xs-4" style="z-index: 10;">
+      <div class="{{#if cardListContainerHidden}}col-xs-0{{else}}col-xs-4{{/if}} right" style="z-index: 10;" id="card-list-container">
           <!-- begin Card List Area -->
           {{#with deepstreamForContext}}
             {{#if showSelectCardType}}

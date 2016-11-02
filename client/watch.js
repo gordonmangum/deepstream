@@ -634,6 +634,12 @@ Template.watch_page.helpers({
     return true;
     //return Session.get('curateMode') && Deepstreams.findOne({shortId: Template.instance().data.shortId()}, {fields: {'directorMode': 1}}).directorMode
   },
+  cardListContainerHidden () {
+    if(Session.get('cardListContainerHidden')){
+      return true;
+    }
+    return false;
+  },
   facebookIframe (){
     var activeStream = Template.instance().activeStream.get();
     if(activeStream){
@@ -1434,8 +1440,9 @@ Template.context_browser.events({
     } else {
       if(this.hasSoloMode()){
         if(this.type == 'poll'){
-          console.info('card details');
-          console.info(this);
+          if(Session.get('voted' + this._id) || document.cookie.match('voted'+this._id+'=')){
+            setCurrentContext(this);
+          }
         } else {
           setCurrentContext(this);
         }
