@@ -887,6 +887,14 @@ Template.watch_page.events({
     }
     analytics.track('Click portrait mode switch', trackingInfoFromPage());
   },
+  'click .context-mode-switch' (e,t){
+    if(Session.equals('contextMode', 'timeline')){
+      Session.set('contextMode', 'context');
+    }else{
+      Session.set('contextMode', 'timeline');
+    }
+    analytics.track('Click context mode switch', trackingInfoFromPage());
+  },
   'click #videoOverlay' (e,t){
     // now not in use
     $('.right-section.featured-context-container').fadeOut(1000, function(){
