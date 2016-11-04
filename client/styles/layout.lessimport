@@ -1014,9 +1014,11 @@ div.hide {
   visibility: hidden !important; // could also use left: -9999px. better than display:none because it still has a non-zero size
 }
 
+/* clashes with bootstrap
 div.collapse {
   display: none !important;
 }
+*/
 
 span.fa-stack.fa-custom-sm {
   font-size: 0.7em;

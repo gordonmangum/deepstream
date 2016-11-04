@@ -56,16 +56,28 @@
         </div>
       </div>
       {{#if option1}}
-        <div class="search-radios">
-          <input type="radio" name="option" value="{{option1}}" id="{{randomIdPrefix}}{{option1}}"  checked />
-          <label for="{{randomIdPrefix}}{{option1}}">{{label1}}</label>
-          {{#if option2}}
-            <input type="radio" name="option" value="{{option2}}" id="{{randomIdPrefix}}{{option2}}"  />
-            <label for="{{randomIdPrefix}}{{option2}}">{{label2}}</label>
-            {{#if option3}}
-              <input type="radio" name="option" value="{{option3}}" id="{{randomIdPrefix}}{{option3}}"  />
-              <label for="{{randomIdPrefix}}{{option3}}">{{label3}}</label>
-            {{/if}}
+        <div class="poll-vote-radios">
+        <div class="radio-inline data-source" style="margin-right:5px; margin-top:10px; margin-left:0; padding-left:0;">
+          <input type="radio" name="option" id="{{randomIdPrefix}}{{option1}}" value="{{option1}}" checked>
+          <label for="{{randomIdPrefix}}{{option1}}"><span></span>
+            {{label1}}
+          </label>
+        </div>
+        {{#if option2}}
+          <div class="radio-inline data-source" style="margin-right:5px; margin-top:10px; margin-left:0; padding-left:0;">
+            <input type="radio" name="option" id="{{randomIdPrefix}}{{option2}}" value="{{option2}}">
+            <label for="{{randomIdPrefix}}{{option2}}"><span></span>
+              {{label2}}
+            </label>
+          </div>
+          {{#if option3}}
+            <div class="radio-inline data-source" style="margin-right:5px; margin-top:10px; margin-left:0; padding-left:0;">
+              <input type="radio" name="option" id="{{randomIdPrefix}}{{option3}}" value="{{option3}}">
+              <label for="{{randomIdPrefix}}{{option3}}"><span></span>
+                {{label3}}
+              </label>
+            </div>
+          {{/if}}
           {{/if}}
         </div>
       {{/if}}
@@ -84,7 +96,7 @@
 
 <template name="create_text_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} Text</div>
-  
+  <button class="go-back-button ">{{> back_arrow_icon}}</button>
   <div class="create-section">
     <div class="tabs">
       <ul>
@@ -109,7 +121,7 @@
 
 <template name="create_poll_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} Poll</div>
-  
+  <button class="go-back-button ">{{> back_arrow_icon}}</button>
   <div class="create-section">
     <div class="tabs">
       <ul>
@@ -149,18 +161,9 @@
 
 <template name="create_link_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Link</div>
-  
+  <button class="go-back-button ">{{> back_arrow_icon}}</button>
   <div class="create-section create-link-section">
-    <div class="tabs">
-      <ul>
-        {{#each dataSources}}
-          <li class="data-source {{#if selected}}selected{{/if}}">{{display}}</li>
-        {{/each}}
-      </ul>
-    </div>
-
-    {{> search_form searchInputLabel='URL' placeholderType='links'}}
-
+    {{> search_form searchInputLabel='Enter a URL' placeholderType='links'}}
     {{#if loading}}
       <div class="preview-section placeholder">
         {{> loading_icon}}
@@ -221,7 +224,7 @@
 
 <template name="create_news_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest News{{else}}Add a News Story{{/unless}}</div>
-  
+  <button class="go-back-button ">{{> back_arrow_icon}}</button>
   <div class="create-section create-news-section">
     <div class="tabs">
       <ul>
@@ -270,16 +273,10 @@
 
 <template name="create_image_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} an Image</div>
-  
+  <button class="go-back-button ">{{> back_arrow_icon}}</button>
   <div class="create-section create-image-section">
     <div class="search-section {{#unless uploadMode}}{{#if showSingleResult}}hide{{/if}}{{/unless}}">
-      <div class="tabs">
-        <ul>
-          {{#each dataSources}}
-            <li class="data-source {{#if selected}}selected{{/if}}">{{display}}</li>
-          {{/each}}
-        </ul>
-      </div>
+
       {{#if uploadMode}}
         <div class="image-upload">
           {{#c_upload}}
@@ -306,6 +303,18 @@
         {{/if}}
       {{else}}
         {{> search_form}}
+      {{/if}}
+        <div class="poll-vote-radios">
+          {{#each dataSources}}
+          <div class="radio-inline data-source" style="margin-right:5px; margin-top:10px; margin-left:0; padding-left:0;">
+            <input type="radio" name="vote-{{_id}}" id="radio-{{_id}}-option-{{@index}}" value="{{@index}}" checked="{{#if selected}}checked{{/if}}">
+            <label for="radio-{{_id}}-option-{{@index}}"><span></span>
+              {{display}}
+            </label>
+          </div>
+          {{/each}}
+        </div>
+      {{#unless uploadMode}}
         <ol class="search-results-container">
           {{#each results}}
             <li class="tile {{#if isFocused}}focused{{/if}}">
@@ -319,7 +328,7 @@
             {{noMoreResults}}
           {{/if}}
         </ol>
-      {{/if}}
+      {{/unless}}
 
     </div>
     {{#unless uploadMode}}
@@ -342,15 +351,16 @@
 
 <template name="create_map_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Map</div>
-  
+  <button class="go-back-button ">{{> back_arrow_icon}}</button>
   <div class="create-section create-map-section">
-    <div class="tabs">
+    <!--div class="tabs">
       <ul>
         {{#each dataSources}}
           <li class="data-source {{#if selected}}selected{{/if}}">{{display}}</li>
         {{/each}}
       </ul>
     </div>
+    -->
     {{> search_form option1='satellite' label1='Satellite' option2='roadmap' label2='Roadmap' placeholderType='locations'}}
     <div class="map-result-container">
       <img src="{{previewUrl 200 CONTEXT_WIDTH}}"/>
@@ -376,18 +386,10 @@
 
 <template name="create_twitter_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Tweet</div>
-  
+  <button class="go-back-button ">{{> back_arrow_icon}}</button>
   {{#if twitterUser}}
     <div class="create-section twitter">
       <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
-
-        <div class="tabs">
-          <ul>
-            {{#each dataSources}}
-              <li class="data-source {{#if selected}}selected{{/if}}">{{display}}</li>
-            {{/each}}
-          </ul>
-        </div>
         {{> search_form option1='all' label1='All tweets' option2='user' label2='User' option3= 'favorites' label3='Favorites'}}
         <ol class="search-results-container">
           {{#each results}}
@@ -541,17 +543,20 @@
 
 <template name="create_video_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Video</div>
-  
+  <button class="go-back-button ">{{> back_arrow_icon}}</button>
   <div class="create-section">
     <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
-      <div class="tabs">
-        <ul>
-          {{#each dataSources}}
-            <li class="data-source {{#if selected}}selected{{/if}}">{{display}}</li>
-          {{/each}}
-        </ul>
-      </div>
       {{> search_form}}
+      <div class="poll-vote-radios">
+        {{#each dataSources}}
+        <div class="radio-inline data-source" style="margin-right:5px; margin-top:10px; margin-left:0; padding-left:0;">
+          <input type="radio" name="vote-{{_id}}" id="radio-{{_id}}-option-{{@index}}" value="{{@index}}" checked="{{#if selected}}checked{{/if}}">
+          <label for="radio-{{_id}}-option-{{@index}}"><span></span>
+            {{display}}
+          </label>
+        </div>
+        {{/each}}
+      </div>
       <ol class="search-results-container">
         {{#each results}}
           <li>
@@ -622,14 +627,17 @@
   {{/if}} 
   <div class="create-section add-stream-section">
     <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
-      <div class="tabs">
-        <ul>
-          {{#each dataSources}}
-            <li class="data-source {{#if selected}}selected{{/if}}">{{display}}</li>
-          {{/each}}
-        </ul>
-      </div>
       {{> search_form}}
+      <div class="poll-vote-radios">
+        {{#each dataSources}}
+        <div class="radio-inline data-source" style="margin-right:5px; margin-top:10px; margin-left:0; padding-left:0;">
+          <input type="radio" name="vote-{{_id}}" id="radio-{{_id}}-option-{{@index}}" value="{{@index}}" checked="{{#if selected}}checked{{/if}}">
+          <label for="radio-{{_id}}-option-{{@index}}"><span></span>
+            {{display}}
+          </label>
+        </div>
+        {{/each}}
+      </div>
       <ol class="search-results-container">
         {{#each results}}
           <li>
@@ -678,17 +686,20 @@
 
 <template name="create_audio_section">
   <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} Audio</div>
-  
+  <button class="go-back-button ">{{> back_arrow_icon}}</button>
     <div class="create-section audio">
       <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
-      <div class="tabs">
-        <ul>
-          {{#each dataSources}}
-            <li class="data-source {{#if selected}}selected{{/if}}">{{display}}</li>
-          {{/each}}
-        </ul>
-      </div>
       {{> search_form}}
+      <div class="poll-vote-radios">
+        {{#each dataSources}}
+        <div class="radio-inline data-source" style="margin-right:5px; margin-top:10px; margin-left:0; padding-left:0;">
+          <input type="radio" name="vote-{{_id}}" id="radio-{{_id}}-option-{{@index}}" value="{{@index}}" checked="{{#if selected}}checked{{/if}}">
+          <label for="radio-{{_id}}-option-{{@index}}"><span></span>
+            {{display}}
+          </label>
+        </div>
+        {{/each}}
+      </div>
       <ol class="search-results-container">
         {{#each results}}
           <li>

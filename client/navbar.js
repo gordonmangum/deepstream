@@ -19,13 +19,17 @@ Template.minimal_navbar.events({
     });
   },
   'click .back-button': function(){
-    if(Session.get('contextMode') != 'context'){
+    if(Session.get('contextMode') == 'curate' ){
+      return Session.set('contextMode', 'context')
+    }
+    if(Session.get('contextMode') != 'context' ){
       return Session.set('contextMode', 'context');
     }
     if(getCurrentContext()){
       return clearCurrentContext();
     } else if(Session.get('mediaDataType')){
       if(Session.get('mediaDataType') == 'selectCard'){
+        Session.set('contextMode', 'curate');
         return Session.set('mediaDataType', null);
       } else {
         return Session.set('mediaDataType', 'selectCard');

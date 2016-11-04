@@ -1089,7 +1089,7 @@
   }
   &:hover{
     .fg{
-      fill: @hover-action-color;
+      fill: @brand-primary;
     }
   }
 }

@@ -517,7 +517,7 @@ Template.create_audio_section.onCreated(searchTemplateCreatedBoilerplate('audio'
 Template.create_audio_section.onRendered(searchTemplateRenderedBoilerplate());
 
 var dataSourcesByType = {
-  'stream': [{source: 'all_streaming_services', 'display': 'Livestreams'}, {source: 'youtube', display: 'Videos'}, {source: 'embed', display: 'Embed Code'}, {source: 'meerkat', display: 'Meerkat'}, {source: 'twitcast', display: 'Twitcast'}],
+  'stream': [{source: 'all_streaming_services', 'display': 'Livestreams'}, {source: 'youtube', display: 'Videos'}, {source: 'embed', display: 'Embed Code'}, /*{source: 'meerkat', display: 'Meerkat'},*/ {source: 'twitcast', display: 'Twitcast'}],
   'image': [{source: 'flickr', 'display': 'Flickr'}, {source: 'imgur', display: 'Imgur'}, {source: 'cloudinary', display: 'Upload Your Own'}],
   //'gif': [{source: 'giphy', display: 'Giphy'}],
   'video': [{source: 'youtube', display: 'Youtube'}, {source: 'vimeo', display: 'Vimeo'}],

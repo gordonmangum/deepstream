@@ -675,7 +675,10 @@ Template.watch_page.helpers({
       return Deepstreams.findOne({shortId: Template.instance().data.shortId()}, {reactive: Template.instance().data.onCuratePage()});
     }
   },
-  showContextBrowser (){
+  showCurateTools (){
+    return Session.equals('contextMode', 'curate');
+  },
+  showDeck (){
     return Session.equals('contextMode', 'context');
   },
   showTimeline (){
@@ -1309,9 +1312,12 @@ Template.context_browser_area.helpers({
   showTimeline (){
     return Session.equals('contextMode', 'timeline');
   },
-  showContextBrowser (){
+  showDeck (){
     return Session.equals('contextMode', 'context');
-  }
+  },
+  showCurateTools (){
+    return Session.equals('contextMode', 'curate');
+  },
 });
 
 Template.context_browser_area.events({
@@ -1408,6 +1414,7 @@ Template.context_browser.helpers({
 Template.context_browser.events({
   'click .add-new-card-row' (){
     Session.set('mediaDataType', 'selectCard');
+    Session.set('contextMode', 'curate');
   },
   'click .delete-context' (e, t){
     if(confirm('Are you sure you want to delete this ' + singularizeMediaType(this.type) + ' card? This cannot be undone.')){
