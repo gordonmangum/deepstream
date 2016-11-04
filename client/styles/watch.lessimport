@@ -832,7 +832,7 @@
     position: relative;
     .transparency-rounded-left;
     &:hover{
-      background-color: @hover-action-color;
+      background-color: @hover-brand-primary;
     }
     svg{
       .fg{
@@ -1254,7 +1254,7 @@
     }
     &:hover{
       .fg{
-        fill: @hover-action-color;
+        fill: @hover-brand-primary;
       }
     }
     position: absolute;
@@ -1372,7 +1372,7 @@
     }
 
     50% {
-      background-color: @hover-action-color;
+      background-color: @hover-brand-primary;
     }
 
     100% {
@@ -1385,7 +1385,7 @@
     }
 
     50% {
-      background-color: @hover-action-color;
+      background-color: @hover-brand-primary;
     }
 
     100% {

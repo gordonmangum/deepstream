@@ -42,7 +42,6 @@
 @live-color: #C90923;
 @action-color: #a60520;
 @dark-action-color: @context-background-color;
-@hover-action-color: #dea406;
 @placeholder-color: #acacac;
 @favorite-color: #C90523;
 @hover-favorite-color: #F70127;
@@ -223,10 +222,10 @@ button:focus{
 }
 
 .action-button{
-  color: @dark-text-color;
-  background-color: @action-color;
+  color: #fff;
+  background-color: @brand-primary;
   &:hover {
-    background-color: @hover-action-color;
+    background-color: @hover-brand-primary;
   }
 }
 
@@ -271,17 +270,16 @@ button:focus{
 
 .light-action-button{
   .transparency-rounded;
-  color: @dark-text-color;
+  color: #fff;
   .fg{
     fill: @dark-icon-color;
   }
   background-color: @transparent-color;
   &:hover {
-    background-color: @hover-action-color;
-    color: @dark-text-color;
+    background-color: @hover-brand-primary;
   }
   &.active {
-    background-color: @action-color;
+    background-color: @brand-primary;
   }
 }
 
@@ -526,23 +524,6 @@ input.poll-option{
 textarea.poll-content{
   padding: 2px;
 }
-
-input[type="search"] {
-  -webkit-appearance: none;
-  -webkit-border-radius: 0px;
-  border: none;
-  padding-left: 6px;
-  padding-right: 6px;
-  color: @light-text-color;
-}
-
-input[type="search"]::-webkit-search-decoration,
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-results-button,
-input[type="search"]::-webkit-search-results-decoration {
-  display: none;
-}
-
 
 *, *:before, *:after {
   -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;

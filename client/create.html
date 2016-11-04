@@ -223,6 +223,7 @@
 </template>
 
 <template name="create_news_section">
+  <div class="row">
   <div class="search-section-title">{{#unless isCurator}}Suggest News{{else}}Add a News Story{{/unless}}</div>
   <button class="go-back-button ">{{> back_arrow_icon}}</button>
   <div class="create-section create-news-section">
@@ -245,16 +246,42 @@
         {{noMoreResults}}
       {{else}}
         {{#with focusResult}}
-          <div class="news-preview search-results-container">
-            <div class="news-section">
-              {{#if headerImageUrl}}
-                <img class="news-header-image" src="{{headerImageUrl}}"/>
-              {{/if}}
-              <h4 class="news-title">{{title}}</h4>
-              <div class="news-date">{{publicationDate}}</div>
-              <div class="news-html">{{{html}}}</div>
+        <div class="col-xs-10 col-xs-offset-1" style="margin-top: 10px; margin-bottom:10px;">
+          <div class="row thumbnail list-item-context-plus-annotation context-section news-card">
+            <div class="col-xs-12">
+              <div class="row main-card-section" style="padding: 7px 3px;">
+                <div class="col-xs-12 clickable">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <div class="row">
+                                {{#if headerImageUrl}}
+                                <div class="col-xs-4">
+                                  <!-- 16:9 aspect ratio -->
+                                  <div class="embed-responsive embed-responsive-16by9">
+                                    <img class="embed-responsive-item" src="{{headerImageUrl}}"/>
+                                  </div>
+                                </div>
+                                {{/if}}
+                                <div class="{{#if headerImageUrl}}col-xs-8{{else}}col-xs-12{{/if}}">
+                                  <p>{{title}}</p>
+                                  <p class="text-muted">{{formatDateNice publicationDate}}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
         {{/with}}
       {{/if}}
     {{/if}}
@@ -268,6 +295,7 @@
         {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
       </button>
     {{/if}}
+  </div>
   </div>
 </template>
 

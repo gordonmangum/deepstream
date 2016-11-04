@@ -544,14 +544,6 @@ div.video-marker {
 }
 
 button.add-button {
-  position: absolute;
-  right: 30px;
-  bottom: 15px;
-  &.relative-button{
-    position: relative;
-    right: initial;
-    bottom: initial;
-  }
   text-transform: uppercase;
   .action-button;
   height: @newCardBottomButtonHeight;

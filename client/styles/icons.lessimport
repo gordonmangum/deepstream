@@ -48,7 +48,7 @@ svg.search-icon {
 }
 
 i.loading-icon{
-  color: @action-color;
+  color: @brand-primary;
 }
 
 .favorite, .unfavorite {
