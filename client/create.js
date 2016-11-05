@@ -157,11 +157,17 @@ window.addContext = function(contextBlock) { // add or suggest
     });
 
     Meteor.call('addContextToStream', Session.get("streamShortId"), contextBlock, function (err, contextId) {
-      saveCallback(err, contextId);
+      saveCallback(err, contextId, function(){
+        console.log('context added');
+        Session.set('contextMode', 'curate');
+      });
     });
   } else { // suggest content
     Meteor.call('suggestContext', Session.get("streamShortId"), contextBlock, function (err, contextId) {
-      saveCallback(err, contextId);
+      saveCallback(err, contextId, function(){
+        console.log('context suggested');
+        Session.set('contextMode', 'context');
+      });
     });
   }
 };

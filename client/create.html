@@ -106,7 +106,7 @@
       </ul>
     </div>
     <div class="text-result-container">
-      <textarea name="content" value={{content}} class="text-content editable" rows="40" dir="auto"></textarea>
+      <textarea name="content" value={{content}} class="text-content editable" rows="15" dir="auto"></textarea>
     </div>
     {{#if replayAvailable}}
     <div class="video-marker">
@@ -224,51 +224,55 @@
 
 <template name="create_news_section">
   <div class="row">
-  <div class="search-section-title">{{#unless isCurator}}Suggest News{{else}}Add a News Story{{/unless}}</div>
-  <button class="go-back-button ">{{> back_arrow_icon}}</button>
-  <div class="create-section create-news-section">
-    <div class="tabs">
-      <ul>
-        {{#each dataSources}}
-          <li class="data-source {{#if selected}}selected{{/if}}">{{display}}</li>
-        {{/each}}
-      </ul>
-    </div>
+    <div class="col-xs-12">
+      <div class="search-section-title">{{#unless isCurator}}Suggest News{{else}}Add a News Story{{/unless}}</div>
+      <button class="go-back-button ">{{> back_arrow_icon}}</button>
+      <div class="create-section create-news-section">
+        <div class="tabs">
+          <ul>
+            {{#each dataSources}}
+              <li class="data-source {{#if selected}}selected{{/if}}">{{display}}</li>
+            {{/each}}
+          </ul>
+        </div>
 
-    {{> search_form searchInputLabel='URL' placeholderType='news'}}
+        {{> search_form searchInputLabel='URL' placeholderType='news'}}
 
-    {{#if loading}}
-      <div class="preview-section placeholder">
-        {{> loading_icon}}
-      </div>
-    {{else}}
-      {{#if noMoreResults}}
-        {{noMoreResults}}
-      {{else}}
-        {{#with focusResult}}
-        <div class="col-xs-10 col-xs-offset-1" style="margin-top: 10px; margin-bottom:10px;">
-          <div class="row thumbnail list-item-context-plus-annotation context-section news-card">
-            <div class="col-xs-12">
-              <div class="row main-card-section" style="padding: 7px 3px;">
-                <div class="col-xs-12 clickable">
-                  <div class="row">
-                    <div class="col-xs-12">
+        {{#if loading}}
+          <div class="preview-section placeholder">
+            {{> loading_icon}}
+          </div>
+        {{else}}
+          {{#if noMoreResults}}
+            {{noMoreResults}}
+          {{else}}
+            {{#with focusResult}}
+            <div class="row">
+              <div class="col-xs-10 col-xs-offset-1">
+              <div class="row thumbnail list-item-context-plus-annotation context-section news-card" style="margin-top: 10px; margin-bottom:10px;">
+                <div class="col-xs-12">
+                  <div class="row main-card-section" style="padding: 7px 3px;">
+                    <div class="col-xs-12 clickable">
                       <div class="row">
                         <div class="col-xs-12">
                           <div class="row">
                             <div class="col-xs-12">
                               <div class="row">
-                                {{#if headerImageUrl}}
-                                <div class="col-xs-4">
-                                  <!-- 16:9 aspect ratio -->
-                                  <div class="embed-responsive embed-responsive-16by9">
-                                    <img class="embed-responsive-item" src="{{headerImageUrl}}"/>
+                                <div class="col-xs-12">
+                                  <div class="row">
+                                    {{#if headerImageUrl}}
+                                    <div class="col-xs-4">
+                                      <!-- 16:9 aspect ratio -->
+                                      <div class="embed-responsive embed-responsive-16by9">
+                                        <img class="embed-responsive-item" src="{{headerImageUrl}}"/>
+                                      </div>
+                                    </div>
+                                    {{/if}}
+                                    <div class="{{#if headerImageUrl}}col-xs-8{{else}}col-xs-12{{/if}}">
+                                      <p>{{title}}</p>
+                                      <p class="text-muted">{{formatDateNice publicationDate}}</p>
+                                    </div>
                                   </div>
-                                </div>
-                                {{/if}}
-                                <div class="{{#if headerImageUrl}}col-xs-8{{else}}col-xs-12{{/if}}">
-                                  <p>{{title}}</p>
-                                  <p class="text-muted">{{formatDateNice publicationDate}}</p>
                                 </div>
                               </div>
                             </div>
@@ -279,30 +283,33 @@
                   </div>
                 </div>
               </div>
+                
+              </div>
             </div>
+            {{/with}}
+          {{/if}}
+        {{/if}}
+        {{#if showAddButton}}
+          {{#if replayAvailable}}
+          <div class="video-marker">
+            {{> videoMarkerInput}}
           </div>
-        </div>
-        {{/with}}
-      {{/if}}
-    {{/if}}
-    {{#if showAddButton}}
-      {{#if replayAvailable}}
-      <div class="video-marker">
-        {{> videoMarkerInput}}
+          {{/if}}
+          <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
+            {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
+          </button>
+        {{/if}}
       </div>
-      {{/if}}
-      <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
-        {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
-      </button>
-    {{/if}}
-  </div>
+    </div>
   </div>
 </template>
 
 <template name="create_image_section">
-  <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} an Image</div>
-  <button class="go-back-button ">{{> back_arrow_icon}}</button>
-  <div class="create-section create-image-section">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} an Image</div>
+      <button class="go-back-button ">{{> back_arrow_icon}}</button>
+      <div class="create-section create-image-section">
     <div class="search-section {{#unless uploadMode}}{{#if showSingleResult}}hide{{/if}}{{/unless}}">
 
       {{#if uploadMode}}
@@ -317,7 +324,32 @@
           {{#if uploadStatus}}
             <p>{{uploadStatus}}</p>
           {{/if}}
-          <img width="250" src="{{uploadPreview}}">
+          {{#if uploadPreview}}
+          <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+              <div class="row thumbnail list-item-context-plus-annotation context-section image-card" style="margin-top: 10px; margin-bottom:10px;">
+                <div class="col-xs-12">
+                  <div class="row main-card-section" style="padding: 7px 3px;">
+                    <div class="col-xs-12 clickable">
+
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <div class="embed-responsive embed-responsive-16by9 embed-responsive-preview" >
+                                <img src="{{uploadPreview}}" style="width: 100%;"/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{/if}}
         </div>
         {{#if showAddButton}}
           {{#if replayAvailable}}
@@ -345,9 +377,46 @@
       {{#unless uploadMode}}
         <ol class="search-results-container">
           {{#each results}}
-            <li class="tile {{#if isFocused}}focused{{/if}}">
-              <img src="{{thumbnailUrl}}">
-            </li>
+          <li>
+            <div class="row">
+              <div class="col-xs-10 col-xs-offset-1">
+                <div class="row thumbnail list-item-context-plus-annotation context-section image-card" style="margin-top: 10px; margin-bottom:10px;">
+                  <div class="col-xs-12">
+                    <div class="row main-card-section" style="padding: 7px 3px;">
+                      <div class="col-xs-12 clickable">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div class="row">
+                              <div class="col-xs-12">
+                                {{#if showVideo}}
+                                  {{> looping_video}}
+                                {{else}}
+                                <div class="embed-responsive embed-responsive-16by9 embed-responsive-preview" >
+                                  <img src="{{url}}" style="width: 100%;"/>
+                                </div>
+                                {{/if}}
+                              </div>
+                            </div>
+                            {{#if isFlickr}}
+                            {{#if ownerName}}
+                            <div class="row" style="margin-top:10px;">
+                              <div class="col-xs-12">          
+                                  <p class="text-muted text-center">
+                                    <i class="fa fa-flickr"></i> {{ownerName}} {{#if uploadDate}} posted on {{uploadDate}}.{{/if}}
+                                  </p>
+                              </div>
+                            </div>
+                            {{/if}}
+                            {{/if}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+          </li>
           {{/each}}
           {{#if loading}}
             {{> loading_icon}}
@@ -355,14 +424,53 @@
           {{#if noMoreResults}}
             {{noMoreResults}}
           {{/if}}
-        </ol>
+          </ol>
       {{/unless}}
 
     </div>
     {{#unless uploadMode}}
       {{#if focusResult}}
         <div class="single-result">
-          <img src="{{focusResult.url}}">
+          <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+              <div class="row thumbnail list-item-context-plus-annotation context-section image-card" style="margin-top: 10px; margin-bottom:10px;">
+                <div class="col-xs-12">
+                  <div class="row main-card-section" style="padding: 7px 3px;">
+                    <div class="col-xs-12 clickable">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <div class="row">
+                            <div class="col-xs-12">
+                              {{#if focusResult.showVideo}}
+                                {{> looping_video}}
+                              {{else}}
+                              {{#if focusResult.url}}
+                              <div class="embed-responsive embed-responsive-16by9 embed-responsive-preview" >
+                                <img src="{{focusResult.url}}" style="width: 100%;"/>
+                              </div>
+                              {{/if}}
+                              {{/if}}
+                            </div>
+                          </div>
+                          {{#if focusResult.isFlickr}}
+                          {{#if focusResult.ownerName}}
+                          <div class="row" style="margin-top:10px;">
+                            <div class="col-xs-12">          
+                                <p class="text-muted text-center">
+                                  <i class="fa fa-flickr"></i> {{focusResult.ownerName}}
+                                </p>
+                            </div>
+                          </div>
+                          {{/if}}
+                          {{/if}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           {{#if replayAvailable}}
           <div class="video-marker">
             {{> videoMarkerInput}}
@@ -375,34 +483,64 @@
       {{/if}}
     {{/unless}}
   </div>
+    </div>
+  </div>
 </template>
 
 <template name="create_map_section">
-  <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Map</div>
-  <button class="go-back-button ">{{> back_arrow_icon}}</button>
-  <div class="create-section create-map-section">
-    <!--div class="tabs">
-      <ul>
-        {{#each dataSources}}
-          <li class="data-source {{#if selected}}selected{{/if}}">{{display}}</li>
-        {{/each}}
-      </ul>
-    </div>
-    -->
-    {{> search_form option1='satellite' label1='Satellite' option2='roadmap' label2='Roadmap' placeholderType='locations'}}
-    <div class="map-result-container">
-      <img src="{{previewUrl 200 CONTEXT_WIDTH}}"/>
-    </div>
-    {{#if showAddButton}}
-      {{#if replayAvailable}}
-      <div class="video-marker">
-        {{> videoMarkerInput}}
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Map</div>
+      <button class="go-back-button ">{{> back_arrow_icon}}</button>
+      <div class="create-section create-map-section">
+        <!--div class="tabs">
+          <ul>
+            {{#each dataSources}}
+              <li class="data-source {{#if selected}}selected{{/if}}">{{display}}</li>
+            {{/each}}
+          </ul>
+        </div>
+        -->
+        {{> search_form option1='satellite' label1='Satellite' option2='roadmap' label2='Roadmap' placeholderType='locations'}}
+        {{#if previewUrl}}
+        <div class="row">
+          <div class="col-xs-10 col-xs-offset-1">
+            <div class="row thumbnail list-item-context-plus-annotation context-section news-card" style="margin-top: 10px; margin-bottom:10px;">
+              <div class="col-xs-12">
+                <div class="row main-card-section" style="padding: 7px 3px;">
+                  <div class="col-xs-12 clickable">
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <!-- 4:3 aspect ratio hellooo-->
+                            <div class="embed-responsive embed-responsive-16by9 embed-responsive-preview" >
+                              <!--<iframe class="embed-responsive-item" src="{{url}}"></iframe>-->
+                              <img class="embed-responsive-item" src="{{previewUrl 250 445}}" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/if}}
+        {{#if showAddButton}}
+          {{#if replayAvailable}}
+          <div class="video-marker">
+            {{> videoMarkerInput}}
+          </div>
+          {{/if}}
+          <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
+            {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
+          </button>
+        {{/if}}
       </div>
-      {{/if}}
-      <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
-        {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
-      </button>
-    {{/if}}
+    </div>
   </div>
 </template>
 

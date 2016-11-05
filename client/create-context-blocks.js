@@ -40,7 +40,9 @@ var createBlockHelpers = {
   },
   focusResult() {
     var focusResult = Template.instance().focusResult.get();
-    if (focusResult) { return focusResult; }
+    if (focusResult) { 
+      return focusResult; 
+    }
   },
   textContent: textContentHelper
 };
