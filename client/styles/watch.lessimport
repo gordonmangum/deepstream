@@ -34,7 +34,7 @@
   .annotation-section{
     border: 1px solid #b3b3b3;
     margin-top: 14px;
-    font-weight: 300;
+    font-weight: 500;
     font-size: 12px;
     line-height: normal;
     color: #666666;
