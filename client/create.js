@@ -160,6 +160,7 @@ window.addContext = function(contextBlock) { // add or suggest
       saveCallback(err, contextId, function(){
         console.log('context added');
         Session.set('contextMode', 'curate');
+        Session.set('mediaDataType', 'selectCard');
       });
     });
   } else { // suggest content
@@ -167,6 +168,7 @@ window.addContext = function(contextBlock) { // add or suggest
       saveCallback(err, contextId, function(){
         console.log('context suggested');
         Session.set('contextMode', 'context');
+        Session.set('mediaDataType', 'selectCard');
       });
     });
   }

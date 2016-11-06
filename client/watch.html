@@ -34,19 +34,19 @@
             <div class="col-md-6">
                <div class="checkbox">
                 <label>
-                  <input id="publish-toggle" type="checkbox" data-on="Public" data-off="Private" data-toggle="toggle" data-onstyle="success" data-offstyle="primary" data-width="100">
+                  <input class="publish-toggle" type="checkbox" data-on="Public" data-off="Private" data-toggle="toggle" data-onstyle="success" data-offstyle="primary" data-width="100">
                 </label>
               </div>
               <div class="checkbox">
                 <label>
-                  <input id="replay-toggle" type="checkbox" data-toggle="toggle" data-onstyle="success" disabled="{{#unless replayAvailable}}disabled{{/unless}}">
+                  <input class="replay-toggle" type="checkbox" data-toggle="toggle" data-onstyle="success" disabled="{{#unless replayAvailable}}disabled{{/unless}}">
                   Replay Context
                 </label>
               </div>
               
               <div class="checkbox">
                 <label>
-                  <input id="director-mode-toggle" type="checkbox" data-toggle="toggle" data-onstyle="success">
+                  <input class="director-mode-toggle" type="checkbox" data-toggle="toggle" data-onstyle="success">
                   Director Mode
                 </label>
               </div>
@@ -348,7 +348,7 @@
                         <div class="col-xs-12">
                            <div class="checkbox">
                             <label>
-                              <input id="publish-toggle" type="checkbox" data-on="Public" data-off="Private" data-toggle="toggle" data-onstyle="success" data-offstyle="primary" data-width="100">
+                              <input class="publish-toggle" type="checkbox" data-on="Public" data-off="Private" data-toggle="toggle" data-onstyle="success" data-offstyle="primary" data-width="100">
                             </label>
                         </div>
                       </div>
@@ -940,7 +940,7 @@
 <template name="title_description_inlay">
   <div class="row">
     <div class="col-xs-12">
-      <form id="publish-with-title-description" action="action" autocomplete="off">
+      <form class="publish-with-title-description" action="action" autocomplete="off">
        <div class="form-group">
           <label for="title">Enter a title for your Deep Stream:</label>
           <input type="text" id="set-stream-title" name="title" value="{{title}}" class="form-control set-title" placeholder="Put your title here." autofocus="autofocus">

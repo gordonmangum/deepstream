@@ -588,19 +588,19 @@ Template.watch_page.onRendered(function(){
   $("#settings-modal").on('show.bs.modal', function () {
       var deepstreamForSettings = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {onAir: 1, replayEnabled:1, directorMode:1}});
       if(deepstreamForSettings.onAir === true){
-        $('#publish-toggle').bootstrapToggle('on');
+        $('.publish-toggle').bootstrapToggle('on');
       } else {
-        $('#publish-toggle').bootstrapToggle('off');
+        $('.publish-toggle').bootstrapToggle('off');
       }
       if(deepstreamForSettings.directorMode === true){
-        $('#director-mode-toggle').bootstrapToggle('on');
+        $('.director-mode-toggle').bootstrapToggle('on');
       } else {
-        $('#director-mode-toggle').bootstrapToggle('off');
+        $('.director-mode-toggle').bootstrapToggle('off');
       }
       if(deepstreamForSettings.replayEnabled === true){
-        $('#replay-toggle').bootstrapToggle('on');
+        $('.replay-toggle').bootstrapToggle('on');
       } else {
-        $('#replay-toggle').bootstrapToggle('off');
+        $('.replay-toggle').bootstrapToggle('off');
       }
   });
   
@@ -1191,7 +1191,6 @@ Template.stream_li.helpers({
     return this.source === 'twitch' || this.source === 'ml30';
   }
 });
-
 Template.stream_li.events({
   'click .preview-stream' (e, t){
     analytics.track('Click preview mini-stream', trackingInfoFromPage());
@@ -1218,7 +1217,6 @@ Template.context_browser_portrait.onRendered(function(){
   });
   
 });
-
 Template.context_browser_portrait.helpers({
   carouselHeight(){
     var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
@@ -1630,6 +1628,7 @@ Template.more_info_modal.helpers({
 Template.title_description_inlay.onCreated(function(){
     this.titleLength = new ReactiveVar(this.title ? this.title.length : 0);
     this.descriptionLength = new ReactiveVar(this.description ? this.description.length : 0);
+    $('input[type=checkbox][data-toggle^=toggle]').bootstrapToggle();
 });
 
 Template.title_description_inlay.helpers({
@@ -1678,6 +1677,7 @@ Template.title_description_inlay.events({
     e.preventDefault();
     var title = t.$('.set-title').val();
     var description = t.$('.set-description').val();
+    
     Meteor.call('publishStream', this.shortId, title, description, function(err){
       if(err){
         basicErrorHandler(err);
