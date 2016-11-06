@@ -502,8 +502,8 @@ img.profile-picture {
 }
 
 div.video-marker {
-  position: absolute;
-  bottom: 0;
+  margin-top:5px;
+  margin-bottom:5px;
   input {
     text-align: center;
     width: 105px;
