@@ -1317,7 +1317,6 @@ Template.context_browser_area.helpers({
     return Session.equals('contextMode', 'curate');
   },
 });
-
 Template.context_browser_area.events({
 });
 
@@ -1326,7 +1325,6 @@ Template.context_card_column.helpers({
     return Session.equals('activeContextId', this._id);
   }
 });
-
 Template.context_card_column.onRendered(function(){
   // make context sortable
   var sortableSets = [
@@ -1368,7 +1366,6 @@ Template.context_browser.onRendered(function() {
     updateActiveContext();
   });
 });
-
 Template.context_browser.helpers({
   mediaTypeForDisplay (){
     return pluralizeMediaType(Session.get('mediaDataType') || Session.get('previousMediaDataType')).toUpperCase();
@@ -1408,7 +1405,6 @@ Template.context_browser.helpers({
     return Session.get('curatorNames');
   }
 });
-
 Template.context_browser.events({
   'click .add-new-card-row' (){
     Session.set('mediaDataType', 'selectCard');

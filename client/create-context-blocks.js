@@ -491,9 +491,6 @@ Template.create_image_section.helpers({
   },
   uploadPreview (){
     return Template.instance().uploadPreview.get();
-  },
-  previewUrl (){
-
   }
 });
 
