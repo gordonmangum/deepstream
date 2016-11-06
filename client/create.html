@@ -160,51 +160,125 @@
 </template>
 
 <template name="create_link_section">
-  <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Link</div>
-  <button class="go-back-button ">{{> back_arrow_icon}}</button>
-  <div class="create-section create-link-section">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Link</div>
+      <button class="go-back-button ">{{> back_arrow_icon}}</button>
+      <div class="create-section create-link-section">
     {{> search_form searchInputLabel='Enter a URL' placeholderType='links'}}
     {{#if loading}}
-      <div class="preview-section placeholder">
-        {{> loading_icon}}
-      </div>
+      {{> loading_icon}}
     {{else}}
       {{#if noMoreResults}}
         {{noMoreResults}}
       {{/if}}
       {{#if link}}
         {{#with preview}}
-          <div class="link-section preview-section">
-            <div class="transparent-cover"></div>
-            <a href="{{url}}" target="_blank">
-              <div class="top">
-                {{#if thumbnailUrl}}
-                  {{#if imageOnLeft}}
-                    <img class="thumbnail-link-section left" src="{{thumbnailUrl}}" />
-                  {{else}}
-                    <div class="thumbnail-link-section top" style='background-image: url("{{thumbnailUrl}}")'></div>
-                  {{/if}}
-                  <div class="link-title {{#if imageOnLeft}}image-on-left{{else}}image-on-top{{/if}}">{{title}}</div>
-                {{/if}}
+          <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+              <div class="row thumbnail list-item-context-plus-annotation context-section link-card" style="margin-top: 10px; margin-bottom:10px;">
+                <div class="col-xs-12">
+                  <div class="row main-card-section" style="padding: 7px 3px;">
+                    <div class="col-xs-12 clickable">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <div class="row">
+                            <div class="col-xs-1">
+                              <a class="btn btn-primary" href="{{url}}" target="_blank" style="height: 160px;padding:6px; border-radius:0; width: 33px; margin-left: 8px;">
+                                <i class="fa fa-share-square-o" style="padding-top: 65px;"></i>
+                              </a>
+                            </div>
+                            <div class="col-xs-9 col-xs-offset-1">
+                              <div class="row" style="margin-bottom: 10px;">
+                                {{#if thumbnailUrl}}
+                                <div class="col-xs-4">
+                                  <img class="thumbnail-link-section" src="{{thumbnailUrl}}" />
+                                </div>
+                                {{/if}}
+                                <div class="col-xs-{{#if thumbnailUrl}}8{{else}}12{{/if}}" style="padding:0; max-height: 40px; overflow-y: hidden;">
+                                  <p><b>{{title}}</b></p>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-xs-12" style="max-height: 115px; overflow-y: hidden;">
+                                  <p><em>{{linkDescription}}</em></p>
+                                </div>
+                              </div>
+                                <!--
+                                <div class="bottom">
+                                  <a class="read-more" href="{{url}}" target="_blank">Read more on {{providerTruncatedUrl}} ></a>
+                                </div>
+                                -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </a>
-            <div class="link-description {{#if imageOnLeft}}image-on-left{{else}}image-on-top{{/if}}">{{linkDescription}}</div>
-            <div class="bottom">
-              <a class="read-more" href="{{url}}" target="_blank">Read more on {{providerTruncatedUrl}}</a>
             </div>
           </div>
         {{/with}}
       {{else}}
         {{#if image}}
-          <div class="preview-section image-section">
-            <img class="image" src="{{preview.url}}" />
+          <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+              <div class="row thumbnail list-item-context-plus-annotation context-section image-card" style="margin-top: 10px; margin-bottom:10px;">
+                <div class="col-xs-12">
+                  <div class="row main-card-section" style="padding: 7px 3px;">
+                    <div class="col-xs-12 clickable">
+
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <div class="embed-responsive embed-responsive-16by9 embed-responsive-preview" >
+                                <img src="{{preview.url}}" style="width: 100%;"/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         {{else}}
 
           {{#if video}}
-            <div class="preview-section video-section">
-              <iframe width="100%" height="300" frameborder="0" style="border:0" src="{{preview.url}}" allowfullscreen></iframe>
-            </div>
+            <div class="row">
+                  <div class="col-xs-10 col-xs-offset-1">
+                    <div class="row thumbnail list-item-context-plus-annotation context-section video-card" style="margin-top: 10px; margin-bottom:10px;">
+                      <div class="col-xs-12">
+                        <div class="row main-card-section" style="padding: 7px 3px;">
+                          <div class="col-xs-12 clickable">
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <div class="row">
+                                  <div class="col-xs-12">
+                                    <div class="embed-responsive embed-responsive-16by9 embed-responsive-preview">
+                                      <iframe class="embed-responsive-item" src="{{preview.url}}"></iframe>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row" style="margin-top:10px;">
+                                  <div class="col-xs-12">          
+                                      <p class="text-muted text-center">
+                                        {{preview.title}}
+                                      </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
           {{/if}}
         {{/if}}
       {{/if}}
@@ -219,6 +293,8 @@
         {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
       </button>
     {{/if}}
+  </div>
+    </div>
   </div>
 </template>
 
@@ -392,7 +468,7 @@
                                   {{> looping_video}}
                                 {{else}}
                                 <div class="embed-responsive embed-responsive-16by9 embed-responsive-preview" >
-                                  <img src="{{url}}" style="width: 100%;"/>
+                                  <img src="{{previewUrl}}" style="width: 100%;"/>
                                 </div>
                                 {{/if}}
                               </div>
@@ -446,7 +522,7 @@
                               {{else}}
                               {{#if focusResult.url}}
                               <div class="embed-responsive embed-responsive-16by9 embed-responsive-preview" >
-                                <img src="{{focusResult.url}}" style="width: 100%;"/>
+                                <img src="{{focusResult.previewUrl}}" style="width: 100%;"/>
                               </div>
                               {{/if}}
                               {{/if}}
@@ -551,156 +627,239 @@
 
 
 <template name="create_twitter_section">
-  <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Tweet</div>
-  <button class="go-back-button ">{{> back_arrow_icon}}</button>
-  {{#if twitterUser}}
-    <div class="create-section twitter">
-      <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
-        {{> search_form option1='all' label1='All tweets' option2='user' label2='User' option3= 'favorites' label3='Favorites'}}
-        <ol class="search-results-container">
-          {{#each results}}
-            <li class="{{#if isFocused}}focused{{/if}}">
-              <div class="search-result {{#if imgUrl}}image{{/if}}">
-                <div class="thumbnail-link-section">
-                  <a href="//twitter.com/{{screenname}}" target="_blank">
-                    <img class="small" src="{{userpic}}">
-                  </a>
-                </div>
-                <div class="info twitter">
-                  <div class="content-title">{{username}}
-                    <span>
-                      <a href="//twitter.com/{{screenname}}" target="_blank">@{{screenname}}</a>
-                      </span>
-                  </div>
-                  <div class="tweet" dir="auto">
-                    <em>{{{formattedTweet}}}</em>
-                  </div>
-                  {{#if imgUrl}}
-                    <div>
-                      <img src="{{imgUrl}}" class="tweet-image">
+ <div class="row">
+  <div class="col-xs-12">
+    <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Tweet</div>
+    <button class="go-back-button ">{{> back_arrow_icon}}</button>
+    {{#if twitterUser}}
+      <div class="create-section twitter">
+        <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
+          {{> search_form option1='all' label1='All tweets' option2='user' label2='User' option3= 'favorites' label3='Favorites'}}
+          <ol class="search-results-container">
+            {{#each results}}
+              <li>
+                <div class="row">
+                  <div class="col-xs-10 col-xs-offset-1">
+                    <div class="row thumbnail list-item-context-plus-annotation context-section image-card" style="margin-top: 10px; margin-bottom:10px;">
+                      <div class="col-xs-12">
+                        <div class="row main-card-section" style="padding: 7px 3px;">
+                          <div class="col-xs-12 clickable">
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <div class="row">
+                                  <div class="col-xs-12">
+                                    <div class="twitter-section">
+                                      <div class="active-display">
+                                        <div class="twitter-text-section {{#if selected}} selected {{/if}} {{#if imgUrl}}image{{/if}} ">
+                                          <div class='tweet-card'>
+                                            <div class='title'>
+                                              <div class='prof_pic'>
+                                                <a href="{{user_url}}" target="_blank">
+                                                  <img src="{{userpic}}">
+                                                </a>
+                                              </div>
+                                              <div class='username'>
+                                                <div>{{username}}
+                                                </div>
+                                                <div class="screenname"><a href="{{user_url}}" target="_blank">@{{screenname}}</a>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="tweet" dir="auto">
+                                              <em>{{{formattedTweet}}}</em>
+                                            </div>
+                                            <div class="info">
+                                              <span>
+                                                <a href="{{twitter_url}}" target="_blank"><i class="fa fa-twitter"></i>
+                                                </a>
+                                                {{#if retweetUser}}
+                                                  <a href="{{retweet_url}}" target="_blank">
+                                                    <i class="fa fa-retweet"></i>@{{retweetUser}}</a>
+                                                {{/if}}
+                                                <a href="{{tweet_url}}" target="_blank">{{creationDateString}}</a>
+                                              </span>
+                                            </div>
+                                            <div class="actions">
+                                              <span>
+                                                <a href="{{reply_action}}" target="_blank">
+                                                  <i class="fa fa-reply"></i>
+                                                </a>
+                                                <a href="{{retweet_action}}" target="_blank">
+                                                  <i class="fa fa-retweet"></i>
+                                                </a>
+                                                <a href="{{favorite_action}}" target="_blank">
+                                                  <i class="fa fa-star"></i>
+                                                </a>
+                                              </span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <!--
+                                      {{#if imgUrl}}
+                                        <div class='image-section'>
+                                          <img src='{{imgUrl}}'>
+                                        </div>
+                                      {{/if}}
+                                      -->
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  {{/if}}
-                  <div class="descr">
-                      <span>
-                        <a href={{twitter_url}} target="_blank"><i class="fa fa-twitter"></i></a>
-                        {{#if retweetUser}}
-                          <a href={{retweet_url}} target="_blank">
-                            <i class="fa fa-retweet"></i> @{{retweetUser}}</a>
-                        {{/if}}
-                        <a href={{tweet_url}} target="_blank">{{creationDateCompactString}}</a>
-                      </span>
                   </div>
                 </div>
-              </div>
+              </li>
+            {{/each}}
+            <li class="loading-icon">
+              {{#if loading}}
+                {{> loading_icon}}
+              {{/if}}
+              {{#if noMoreResults}}
+                {{noMoreResults}}
+              {{/if}}
             </li>
-          {{/each}}
-          <li class="loading-icon">
-            {{#if loading}}
-              {{> loading_icon}}
-            {{/if}}
-            {{#if noMoreResults}}
-              {{noMoreResults}}
-            {{/if}}
-          </li>
-        </ol>
-      </div>
-      {{#if stepZero}}
-      {{#with focusResult}}
-        <div class="single-result">
-          <div class="twitter-section">
-          <div class="twitter-text-section {{#if imgUrl}}image{{/if}} ">
-            <div class='tweet-card'>
-              <div class='title'>
-                <div class='prof_pic'>
-                  <a href="{{user_url}}" target="_blank">
-                    <img src="{{userpic}}">
-                  </a>
-                </div>
-                <div class='username'>
-                  <div>{{username}}
-                  </div>
-                  <div class="screenname"><a href="{{user_url}}" target="_blank">@{{screenname}}</a>
-                  </div>
-                </div>
-              </div>
-              <div class="tweet" dir="auto">
-                <em>{{{formattedTweet}}}</em>
-              </div>
-              <div class="info">
-                <span>
-                  <a href="{{twitter_url}}" target="_blank"><i class="fa fa-twitter"></i>
-                  </a>
-                  {{#if retweetUser}}
-                    <a href="{{retweet_url}}" target="_blank">
-                      <i class="fa fa-retweet"></i>@{{retweetUser}}</a>
-                  {{/if}}
-                  <a href="{{tweet_url}}" target="_blank">{{creationDateString}}</a>
-                </span>
-              </div>
-            </div>
-          </div>
-          {{#if imgUrl}}
-            <div class='image-section'>
-              <img src='{{imgUrl}}'>
-            </div>
-          {{/if}}
-          </div>
+          </ol>
         </div>
-        {{/with}}
-        {{/if}}
-        {{#if showAddButton}}
         {{#if stepZero}}
-        <div class="centered-div">
-          {{#if replayAvailable}}
-          <div class="video-marker">
-            {{> videoMarkerInput}}
+        {{#with focusResult}}
+        <div class="row">
+          <div class="col-xs-10 col-xs-offset-1">
+            <div class="row thumbnail list-item-context-plus-annotation context-section image-card" style="margin-top: 10px; margin-bottom:10px;">
+              <div class="col-xs-12">
+                <div class="row main-card-section" style="padding: 7px 3px;">
+                  <div class="col-xs-12 clickable">
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div class="twitter-section">
+                              <div class="active-display">
+                                <div class="twitter-text-section {{#if selected}} selected {{/if}} {{#if imgUrl}}image{{/if}} ">
+                                  <div class='tweet-card'>
+                                    <div class='title'>
+                                      <div class='prof_pic'>
+                                        <a href="{{user_url}}" target="_blank">
+                                          <img src="{{userpic}}">
+                                        </a>
+                                      </div>
+                                      <div class='username'>
+                                        <div>{{username}}
+                                        </div>
+                                        <div class="screenname"><a href="{{user_url}}" target="_blank">@{{screenname}}</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="tweet" dir="auto">
+                                      <em>{{{formattedTweet}}}</em>
+                                    </div>
+                                    <div class="info">
+                                      <span>
+                                        <a href="{{twitter_url}}" target="_blank"><i class="fa fa-twitter"></i>
+                                        </a>
+                                        {{#if retweetUser}}
+                                          <a href="{{retweet_url}}" target="_blank">
+                                            <i class="fa fa-retweet"></i>@{{retweetUser}}</a>
+                                        {{/if}}
+                                        <a href="{{tweet_url}}" target="_blank">{{creationDateString}}</a>
+                                      </span>
+                                    </div>
+                                    <div class="actions">
+                                      <span>
+                                        <a href="{{reply_action}}" target="_blank">
+                                          <i class="fa fa-reply"></i>
+                                        </a>
+                                        <a href="{{retweet_action}}" target="_blank">
+                                          <i class="fa fa-retweet"></i>
+                                        </a>
+                                        <a href="{{favorite_action}}" target="_blank">
+                                          <i class="fa fa-star"></i>
+                                        </a>
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!--
+                              {{#if imgUrl}}
+                                <div class='image-section'>
+                                  <img src='{{imgUrl}}'>
+                                </div>
+                              {{/if}}
+                              -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+              
+          {{/with}}
+          {{/if}}
+          {{#if showAddButton}}
+          {{#if stepZero}}
+          <div class="centered-div">
+            {{#if replayAvailable}}
+            <div class="video-marker">
+              {{> videoMarkerInput}}
+            </div>
+            {{/if}}
+            <button type="button" class="add-button relative-button {{#if isActive}}enabled{{/if}}">
+              {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
+            </button>
           </div>
           {{/if}}
-          <button type="button" class="add-button relative-button {{#if isActive}}enabled{{/if}}">
-            {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
-          </button>
-        </div>
-        {{/if}}
-        <div class="reply-to-tweeter">
-          {{#with focusResult}}
-          {{#if stepOne}}
-          <span id="step-1-tweet">
-            <div class="centered-div">
-             
-              <p>Would you like to reply to this tweet with a 'thank you' to @{{screenname}}</p>
-              <button type="button" class="add-button tweet-to-tweet-author relative-button">
-                Yes
-              </button>
-              <button type="button" class="add-button negative-button relative-button">
-                No
-              </button>
-            </div>
-          </span>
-          {{/if}}
-          {{#if stepTwo}}
-          <span id="step-2-tweet">
-            <img class="profile-picture" src="{{profileImage currentUser}}"/>
-            <!--unless is curator doesnt work here in with statement -->
-            <textarea id="tweetarea" class="tweet-area" rows="6">{{tweetText}}</textarea>
-            <div class="centered-div">
-              <a id="tweetToTweeterLink" href="{{tweetToTweeterUrl}}" target="_blank">
-                <button type="button" class="add-button tweet-button relative-button">
-                  Tweet
+          <div class="reply-to-tweeter">
+            {{#with focusResult}}
+            {{#if stepOne}}
+            <span id="step-1-tweet">
+              <div class="centered-div">
+
+                <p>Would you like to reply to this tweet with a 'thank you' to @{{screenname}}</p>
+                <button type="button" class="add-button tweet-to-tweet-author relative-button">
+                  Yes
                 </button>
-              </a>
-            </div>
-          </span>
+                <button type="button" class="add-button negative-button relative-button">
+                  No
+                </button>
+              </div>
+            </span>
+            {{/if}}
+            {{#if stepTwo}}
+            <span id="step-2-tweet">
+              <img class="profile-picture" src="{{profileImage currentUser}}"/>
+              <!--unless is curator doesnt work here in with statement -->
+              <textarea id="tweetarea" class="tweet-area" rows="6">{{tweetText}}</textarea>
+              <div class="centered-div">
+                <a id="tweetToTweeterLink" href="{{tweetToTweeterUrl}}" target="_blank">
+                  <button type="button" class="add-button tweet-button relative-button">
+                    Tweet
+                  </button>
+                </a>
+              </div>
+            </span>
+            {{/if}}
+            {{/with}}
+          </div>
           {{/if}}
-          {{/with}}
-        </div>
-        {{/if}}
-      
-    </div>
-  {{else}}
-    <div class="create-section link-twitter">
-      {{> link_twitter}}
-    </div>
-  {{/if}}
+
+      </div>
+    {{else}}
+      <div class="create-section link-twitter">
+        {{> link_twitter}}
+      </div>
+    {{/if}}
+  </div>
+  </div>
 </template>
 
 <template name="link_twitter">
@@ -708,67 +867,113 @@
 </template>
 
 <template name="create_video_section">
-  <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Video</div>
-  <button class="go-back-button ">{{> back_arrow_icon}}</button>
-  <div class="create-section">
-    <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
-      {{> search_form}}
-      <div class="poll-vote-radios">
-        {{#each dataSources}}
-        <div class="radio-inline data-source" style="margin-right:5px; margin-top:10px; margin-left:0; padding-left:0;">
-          <input type="radio" name="vote-{{_id}}" id="radio-{{_id}}-option-{{@index}}" value="{{@index}}" checked="{{#if selected}}checked{{/if}}">
-          <label for="radio-{{_id}}-option-{{@index}}"><span></span>
-            {{display}}
-          </label>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="search-section-title">{{#unless isCurator}}Suggest{{else}}Add{{/unless}} a Video</div>
+      <button class="go-back-button ">{{> back_arrow_icon}}</button>
+      <div class="create-section">
+        <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
+          {{> search_form}}
+          <div class="poll-vote-radios">
+            {{#each dataSources}}
+            <div class="radio-inline data-source" style="margin-right:5px; margin-top:10px; margin-left:0; padding-left:0;">
+              <input type="radio" name="vote-{{_id}}" id="radio-{{_id}}-option-{{@index}}" value="{{@index}}" checked="{{#if selected}}checked{{/if}}">
+              <label for="radio-{{_id}}-option-{{@index}}"><span></span>
+                {{display}}
+              </label>
+            </div>
+            {{/each}}
+          </div>
+          <ol class="search-results-container">
+            {{#each results}}
+              <li>
+                <div class="row">
+                  <div class="col-xs-10 col-xs-offset-1">
+                    <div class="row thumbnail list-item-context-plus-annotation context-section video-card" style="margin-top: 10px; margin-bottom:10px;">
+                      <div class="col-xs-12">
+                        <div class="row main-card-section" style="padding: 7px 3px;">
+                          <div class="col-xs-12 clickable">
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <div class="row">
+                                  <div class="col-xs-12">
+                                    <div class="embed-responsive embed-responsive-16by9 embed-responsive-preview">
+                                      <iframe class="embed-responsive-item" src="{{url}}"></iframe>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row" style="margin-top:10px;">
+                                  <div class="col-xs-12">          
+                                      <p class="text-muted text-center">
+                                        {{title}}
+                                      </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            {{/each}}
+            <li class="loading-icon">
+              {{#if loading}}
+                {{> loading_icon}}
+              {{/if}}
+              {{#if noMoreResults}}
+                {{noMoreResults}}
+              {{/if}}
+            </li>
+          </ol>
         </div>
-        {{/each}}
-      </div>
-      <ol class="search-results-container">
-        {{#each results}}
-          <li>
-            <div class="{{#if isFocused}}focused-{{/if}}search-result">
-              <div class="{{#if isFocused}}focused-{{/if}}thumbnail-link-section">
-              <img src="{{thumbnailUrl}}">
-              </div>
-              <div class="info {{#if isFocused}}focused{{/if}}">
-                <div class="content-title">{{title}}</div>
-                <div class="descr">{{caption}}</div>
-                <div class="user">{{username}}</div>
-                <div class="date">{{creationDateCompactString}}</div>
+        <div class="single-result">
+          {{#with focusResult}}
+            <div class="row">
+              <div class="col-xs-10 col-xs-offset-1">
+                <div class="row thumbnail list-item-context-plus-annotation context-section image-card" style="margin-top: 10px; margin-bottom:10px;">
+                  <div class="col-xs-12">
+                    <div class="row main-card-section" style="padding: 7px 3px;">
+                      <div class="col-xs-12 clickable">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <div class="embed-responsive embed-responsive-16by9 embed-responsive-preview">
+                                  <iframe class="embed-responsive-item" src="{{url}}"></iframe>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row" style="margin-top:10px;">
+                              <div class="col-xs-12">          
+                                  <p class="text-muted text-center">
+                                    {{title}}
+                                  </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </li>
-        {{/each}}
-        <li class="loading-icon">
-          {{#if loading}}
-            {{> loading_icon}}
+          {{/with}}
+          {{#if showAddButton}}
+            {{#if replayAvailable}}
+            <div class="video-marker">
+              {{> videoMarkerInput}}
+            </div>
+            {{/if}}
+            <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
+              {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
+            </button>
           {{/if}}
-          {{#if noMoreResults}}
-            {{noMoreResults}}
-          {{/if}}
-        </li>
-      </ol>
-    </div>
-    <div class="single-result">
-      {{#with focusResult}}
-        <iframe class="video" width="100%" height="200" src="{{url}}"></iframe>
-        <div class="info">
-          <div class="content-title">{{title}}</div>
-          <div class="descr">{{caption}}</div>
-          <div class="user">{{username}}</div>
-          <div class="date">{{creationDateCompactString}}</div>
         </div>
-      {{/with}}
-      {{#if showAddButton}}
-        {{#if replayAvailable}}
-        <div class="video-marker">
-          {{> videoMarkerInput}}
-        </div>
-        {{/if}}
-        <button type="button" class="add-button {{#if isActive}}enabled{{/if}}">
-          {{#unless isCurator}}Suggest{{else}}Add{{/unless}}
-        </button>
-      {{/if}}
+      </div>
     </div>
   </div>
 </template>
@@ -869,25 +1074,46 @@
       <ol class="search-results-container">
         {{#each results}}
           <li>
-            <div class="{{#if isFocused}}focused-{{/if}}search-result">
-              <div class="{{#if isFocused}}focused-{{/if}}thumbnail-link-section">
-                {{#if isFocused}}
-                  <iframe class="audio" width="100%" src="{{url}}"></iframe>
-                {{else}}
-                  <div class="thumbnail-link-section">
-                    {{#if artworkUrl}}
-                      <img class="square" src="{{artworkUrl}}" />
-                    {{else}}
-                      <img class="square" src="https://addons.opera.com/media/extensions/45/11645/0.5-rev2/icons/icon_64x64.png" />
-                    {{/if}}
+            <div class="row">
+              <div class="col-xs-10 col-xs-offset-1">
+                <div class="row thumbnail list-item-context-plus-annotation context-section audio-card" style="margin-top: 10px; margin-bottom:10px;">
+                  <div class="col-xs-12">
+                    <div class="row main-card-section" style="padding: 7px 3px;">
+                      <div class="col-xs-12 clickable">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div class="row">
+                              <div class="col-xs-4">
+                                {{#if artworkUrl}}
+                                  <img class="square" src="{{artworkUrl}}" />
+                                {{else}}
+                                  <img class="square" src="https://addons.opera.com/media/extensions/45/11645/0.5-rev2/icons/icon_64x64.png" />
+                                {{/if}}
+                              </div>
+                              <div class="col-xs-8">
+                                <p><b>{{reference.title}}</b></p>
+                              </div>
+                            </div>
+                            {{#if showAnnotationSection}}
+                            <div class="row">
+                              <div class="col-xs-12">
+                                {{> annotation_section}}
+                              </div>
+                            </div>
+                            {{/if}}
+                            <!--
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <img src="{{previewUrl}}"/>
+                              </div>  
+                            </div>
+                             -->
+                          </div>
+                        </div>  
+                      </div>
+                    </div>
                   </div>
-                  <div class="info">
-                    <div class="content-title">{{reference.title}}</div>
-                    <div class="descr">{{reference.description}}</div>
-                    <div class="user">{{reference.username}}</div>
-                    <div class="date">{{creationDateCompactString}}</div>
-                  </div>
-                {{/if}}
+                </div>
               </div>
             </div>
           </li>
@@ -904,14 +1130,44 @@
     </div>
     <div class="single-result">
       {{#with focusResult}}
-
-        <iframe class="audio" width="100%" src="{{url}}"></iframe>
-        <div class="info">
-          <div class="content-title">{{reference.title}}</div>
-          <div class="descr">{{reference.description}}</div>
-          <div class="user">{{reference.username}}</div>
-          <div class="date">{{creationDateCompactString}}</div>
+      <div class="row">
+        <div class="col-xs-10 col-xs-offset-1">
+          <div class="row thumbnail list-item-context-plus-annotation context-section audio-card" style="margin-top: 10px; margin-bottom:10px;">
+            <div class="col-xs-12">
+              <div class="row main-card-section" style="padding: 7px 3px;">
+                <div class="col-xs-12 clickable">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <!-- 33:7 aspect ratio -->
+                          <div class="embed-responsive embed-responsive-25by12">
+                            <iframe class="embed-responsive-item" src="{{url}}"></iframe>
+                          </div>
+                        </div>
+                      </div>
+                      {{#if showAnnotationSection}}
+                      <div class="row">
+                        <div class="col-xs-12">
+                          {{> annotation_section}}
+                        </div>
+                      </div>
+                      {{/if}}
+                      <!--
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <img src="{{previewUrl}}"/>
+                        </div>  
+                      </div>
+                       -->
+                    </div>
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
       {{/with}}
       {{#if showAddButton}}
         {{#if replayAvailable}}

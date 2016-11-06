@@ -93,15 +93,6 @@ div.create-section.link-twitter{
   padding: 1px; // so textarea outline can be seen
 }
 
-.create-image-section{
-  .single-result{
-    img{
-      max-width: 100%;
-      max-height: 70%;
-    }
-  }
-}
-
 @newCardBottomButtonHeight: 35px;
 
 div.add-context {
