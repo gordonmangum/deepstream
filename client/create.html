@@ -1037,15 +1037,34 @@
       <ol class="search-results-container">
         {{#each results}}
           <li>
-            <div class="{{#if isFocused}}focused-{{/if}}search-result">
-              <div class="{{#if isFocused}}focused-{{/if}}thumbnail-link-section">
-                <img src="{{thumbnailUrl}}">
-              </div>
-              <div class="info {{#if isFocused}}focused{{/if}}">
-                <div class="content-title">{{#if providerIconUrl}}<img class="provider-image stream-provider-image" src="{{providerIconUrl}}"/>{{/if}}{{title}}</div>
-                <div class="descr">{{caption}}</div>
-                <div class="user">{{username}}</div>
-                <div class="date">{{streamDate creationDateCompactString live}}</div>
+            <div class="row">
+              <div class="col-xs-10 col-xs-offset-1">
+                <div class="row thumbnail list-item-context-plus-annotation context-section video-card" style="margin-top: 10px; margin-bottom:10px;">
+                  <div class="col-xs-12">
+                    <div class="row main-card-section" style="padding: 7px 3px;">
+                      <div class="col-xs-12 clickable">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <div class="embed-responsive embed-responsive-16by9 embed-responsive-preview">
+                                  <img class="embed-responsive-item"  src="{{thumbnailUrl}}">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row" style="margin-top:10px;">
+                              <div class="col-xs-12">          
+                                  <p class="text-muted text-center">
+                                    {{title}}
+                                  </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </li>
@@ -1062,13 +1081,35 @@
     </div>
     <div class="single-result">
       {{#with focusResult}}
-
-        <iframe class="video" width="100%" height="200" src="{{url}}"></iframe>
-        <div class="info">
-          <div class="content-title">{{title}}</div>
-          <div class="descr">{{caption}}</div>
-          <div class="user">{{username}}</div>
-          <div class="date">{{streamDate creationDateCompactString live}}</div>
+        <div class="row">
+          <div class="col-xs-10 col-xs-offset-1">
+            <div class="row thumbnail list-item-context-plus-annotation context-section video-card" style="margin-top: 10px; margin-bottom:10px;">
+              <div class="col-xs-12">
+                <div class="row main-card-section" style="padding: 7px 3px;">
+                  <div class="col-xs-12 clickable">
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div class="embed-responsive embed-responsive-16by9 embed-responsive-preview">
+                              <img class="embed-responsive-item"  src="{{thumbnailUrl}}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row" style="margin-top:10px;">
+                          <div class="col-xs-12">          
+                              <p class="text-muted text-center">
+                                {{title}}
+                              </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       {{/with}}
       {{#if showAddButton}}

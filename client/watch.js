@@ -1549,7 +1549,6 @@ var disableInviteForm = false;
 Template.settings_modal.onCreated(function() {
   this.subscribe('minimalUsersPub', this.data.curatorIds);
 });
-
 Template.settings_modal.helpers({
   'additionalCurators' (){
     return Meteor.users.find({_id: {$in: _.without(this.curatorIds, this.mainCuratorId)}});
@@ -1558,7 +1557,6 @@ Template.settings_modal.helpers({
     return disableInviteForm;
   }
 });
-
 Template.settings_modal.events({
   'click .go-back-button': function(){
     return Session.set('showManageCuratorsMenu', false);
@@ -1630,8 +1628,8 @@ Template.more_info_modal.helpers({
 });
 
 Template.title_description_inlay.onCreated(function(){
-  this.titleLength = new ReactiveVar(this.title ? this.title.length : 0);
-  this.descriptionLength = new ReactiveVar(this.description ? this.description.length : 0);
+    this.titleLength = new ReactiveVar(this.title ? this.title.length : 0);
+    this.descriptionLength = new ReactiveVar(this.description ? this.description.length : 0);
 });
 
 Template.title_description_inlay.helpers({
@@ -1665,7 +1663,7 @@ Template.title_description_inlay.events({
   'keypress .set-description' (e, t){
     if (e.keyCode === 13){
       e.preventDefault();
-      $('#publish-with-title-description').submit();
+      $('.publish-with-title-description').submit();
     }
   },
   */
@@ -1676,7 +1674,7 @@ Template.title_description_inlay.events({
     t.descriptionLength.set($(e.currentTarget).val().length);
   },
   // TO DO set title and description on key up
-  'submit #publish-with-title-description' (e, t){
+  'submit .publish-with-title-description' (e, t){
     e.preventDefault();
     var title = t.$('.set-title').val();
     var description = t.$('.set-description').val();
