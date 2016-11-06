@@ -501,26 +501,6 @@ input {
   color: @dark-text-color;
 }
 
-
-input[type="text"], input[type="password"], input[type="email"] {
-  width: 100%;
-  font-family: 'Muli', sans-serif;
-  margin-top: 5px;
-  margin-bottom: 15px;
-  height: 45px;
-  border: none;
-  border-bottom: 5px solid transparent;
-  padding-left: 15px;
-  font-size: 16px;
-}
-
-input.poll-option{
-  width: 90%;
-  margin-left: 10px;
-  margin-bottom: 0;
-  height: inherit;
-  padding: 2px 2px 2px 15px;
-}
 textarea.poll-content{
   padding: 2px;
 }

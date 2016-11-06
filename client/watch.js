@@ -823,7 +823,7 @@ Template.watch_page.events({
           basicErrorHandler(err);
         } else {
           analytics.track('Curator published deepstream!', trackingInfoFromPage());
-          notifySuccess("Your Deep Stream is currently on air!");
+          notifySuccess("Your DeepStream is currently public!");
         }
       });
     } else {
@@ -963,8 +963,8 @@ Template.watch_page.events({
   'click .publish' (e, t){
     if (this.creationStep === 'go_on_air') {
       if (!this.streams.length) {
-        analytics.track('Curator attempt to publish deepstream with no streams', trackingInfoFromPage());
-        notifyError('Please add a stream before you publish your deepstream');
+        analytics.track('Curator attempt to make deepstream public with no streams', trackingInfoFromPage());
+        notifyError('Please add a stream before you make your DeepStream public');
         Meteor.call('goToFindStreamStep', t.data.shortId(), basicErrorHandler);
       } else {
         Meteor.call('proceedFromGoOnAirStep', t.data.shortId(), basicErrorHandler);
@@ -975,7 +975,7 @@ Template.watch_page.events({
           basicErrorHandler(err);
         } else {
           analytics.track('Curator published deepstream!', trackingInfoFromPage());
-          notifySuccess("Congratulations! Your Deep Stream is now on air!");
+          notifySuccess("Congratulations! Your DeepStream is now public!");
         }
       });
     }
@@ -1685,7 +1685,7 @@ Template.title_description_inlay.events({
         basicErrorHandler(err);
       } else {
         analytics.track('Curator published deepstream!', trackingInfoFromPage());
-        notifySuccess("Congratulations! Your Deep Stream is now on air!");
+        notifySuccess("Congratulations! Your DeepStream is now public!");
       }
     });
   },
