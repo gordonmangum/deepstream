@@ -788,56 +788,66 @@
   </div>
   <div class="row">
     {{#if isCurator}}
-    <div class="col-xs-6 col-sm-4 col-md-3">
+    <div class="col-xs-6 col-sm-4 col-md-3 text-center tile-container">
       <a class="js-link thumbnail tile-selector stream-button"  title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} livestreams">
         {{> stream_icon }}
       </a>
+      <small>Stream</small>
     </div>
     {{/if}}
-    <div class="col-xs-6 col-sm-4 col-md-3">
+    <div class="col-xs-6 col-sm-4 col-md-3 text-center tile-container">
       <a class="js-link thumbnail tile-selector news-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} news stories" disabled='{{disableAllButStream}}'>
         {{> news_icon }}
       </a>
+      <small>News</small>
     </div>
-    <div class="col-xs-6 col-sm-4 col-md-3">
+    <div class="col-xs-6 col-sm-4 col-md-3 text-center tile-container">
       <a class="js-link thumbnail tile-selector text-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} text" disabled='{{disableAllButStream}}'>
         {{> text_icon }}
       </a>
+      <small>Comment</small>
     </div>
-    <div class="col-xs-6 col-sm-4 col-md-3">
+    <div class="col-xs-6 col-sm-4 col-md-3 text-center tile-container">
       <a class="js-link thumbnail tile-selector poll-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} poll" disabled='{{disableAllButStream}}'>
         {{> poll_icon }}
       </a>
+      <small>Poll</small>
     </div>
-    <div class="col-xs-6 col-sm-4 col-md-3">
+    <div class="col-xs-6 col-sm-4 col-md-3 text-center tile-container">
       <a class="js-link thumbnail tile-selector map-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} maps" disabled='{{disableAllButStream}}'>
         {{> map_icon }}
       </a>
+      <small>Map</small>
     </div>
-    <div class="col-xs-6 col-sm-4 col-md-3">
+    <div class="col-xs-6 col-sm-4 col-md-3 text-center tile-container">
       <a class="js-link thumbnail tile-selector image-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} images" disabled='{{disableAllButStream}}'>
         {{> image_icon }}
       </a>
+      <small>Image</small>
     </div>
-    <div class="col-xs-6 col-sm-4 col-md-3">
+    <div class="col-xs-6 col-sm-4 col-md-3 text-center tile-container">
       <a class="js-link thumbnail tile-selector video-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} videos" disabled='{{disableAllButStream}}'>
         {{> video_icon }}
       </a>
+      <small>Video</small>
     </div>
-    <div class="col-xs-6 col-sm-4 col-md-3">
+    <div class="col-xs-6 col-sm-4 col-md-3 text-center tile-container">
       <a class="js-link thumbnail tile-selector twitter-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} tweets" disabled='{{disableAllButStream}}'>
         {{> twitter_icon }}
       </a>
+      <small>Tweet</small>
     </div>
-    <div class="col-xs-6 col-sm-4 col-md-3">
+    <div class="col-xs-6 col-sm-4 col-md-3 text-center tile-container">
       <a class="js-link thumbnail tile-selector audio-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} audio" disabled='{{disableAllButStream}}'>
         {{> audio_icon }}
       </a>
+      <small>Sound</small>
     </div>
-    <div class="col-xs-6 col-sm-4 col-md-3">
+    <div class="col-xs-6 col-sm-4 col-md-3 text-center tile-container">
       <a class="js-link thumbnail tile-selector link-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} links" disabled='{{disableAllButStream}}'>
         {{> link_icon }}
       </a>
+      <small>Link</small>
     </div>
     <!--
     <ol>

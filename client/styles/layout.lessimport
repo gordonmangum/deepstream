@@ -453,9 +453,6 @@ a {
   &:hover {
     color: inherit;
   }
-  &:visited {
-    color: inherit;
-  }
 }
 
 img {

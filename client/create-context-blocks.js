@@ -152,7 +152,6 @@ var existingSearchResults = function(options){
   }
 
   var newContextDataSource = Session.get('newContextDataSource');
-
   if (newContextDataSource.indexOf('all_') !== 0){ // naming convention...
     _.extend(selector, {
       source: Session.get('newContextDataSource')
@@ -957,7 +956,9 @@ Template.search_form.events({
     searchDep.changed();
   },
   'change input[type="radio"]' (e,t){
-    t.$('form').submit();
+    Meteor.setTimeout(function(){
+      t.$('form').submit();
+    },0);
   }
 });
 
