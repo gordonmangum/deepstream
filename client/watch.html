@@ -311,21 +311,21 @@
           <!-- begin Card List Area -->
           {{#with deepstreamForContext}}
             {{#if showDeck}}
-            <div class="row" id="card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
+            <div class="row card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
               <div class="col-xs-12">
               {{> context_browser_area deepstreamForContext}}
               </div>
             </div>
             {{/if}}
             {{#if showTimeline}}
-            <div class="row" id="card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
+            <div class="row card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch; margin-bottom:0px;">
               <div class="col-xs-12">
               {{> context_browser_area deepstreamForContext}}
               </div>
             </div>
             {{/if}}
             {{#if showCurateTools}}
-              <div class="row thumbnail" id="card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch; margin-bottom:0px;">
+              <div class="row thumbnail card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch; margin-bottom:0px;">
               <!-- add collapse here -->
               
               <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -390,7 +390,7 @@
                       <!-- end select context type -->
                       {{#if showContextSearch}}
                       <!-- start add context field -->
-                      <div class="row" id="card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
+                      <div class="row card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch;">
                         <div class="col-xs-12">
                         {{> add_context}}
                         </div>
@@ -1018,41 +1018,6 @@
         {{#each contextBlocks}}
           {{> list_item_context_section}}
         {{/each}}
-        
-        {{#unless curateMode}}
-         
-        <!--
-          <div class="narrative-section context-section list-item-context-section news-card curator-card">
-            <div class="news-preview-top">
-            <div class="news-author"><small>Curated By</small></div>
-            <div class="news-date">
-              <p>{{curatorNames}}</p>
-            </div>
-            <div class="user-pic">
-              {{> default_user_pic }}
-            </div>
-           </div>
-           
-            <div class="show-full">
-              <center>
-                <button class="curator-card-like favorite-button {{#if userFavorited}}unfavorite{{else}}favorite{{/if}}">{{> favorite_icon}} Show some love</button>
-              </center>
-              {{#if replayEnabled}}
-                {{#if replayAvailable}}
-                <center>
-                  <button class="curator-card-replay {{#if replayContextOn}}replay{{/if}}">{{> replay_icon}} Replay Context</button>
-                </center>
-                {{/if}}
-              {{/if}}
-              <center>
-                <button class="curator-card-create create">{{> create_icon}} Make your own</button>
-              </center>
-            </div>
-          
-          </div>
-          -->
-       {{/unless}}
-        <!--<div class="bottom-bar"></div>-->
       </div>
   </div>
 </template>
@@ -1213,7 +1178,7 @@
 </template>
 
 <template name="timeline_section">
-  <div class="row thumbnail timeline-section {{#unless show}}hide{{/unless}}" style="height:{{mainStreamHeight -55}}px; {{#if portrait}}margin: 0px; padding-top: 0px; background-color: #000;{{/if}}">
+  <div class="row thumbnail timeline-section {{#unless show}}hide{{/unless}}" style="height:{{mainStreamHeight}}px;{{#if portrait}}margin: 0px; padding-top: 0px; background-color: #000;{{else}}margin-bottom: 0px;{{/if}}">
     <div class="col-xs-12">
       {{#unless portrait}}
       {{#if curateMode}}
@@ -1221,7 +1186,9 @@
         <div class="col-xs-12">
           <form id="timeline-embed" action="" autocomplete="off">
             <div class="form-group">
-              <label for="timeline-embed-code-input"><a href="https://twitter.com/settings/widgets/new/search" target="_blank">Create a new Timeline widget</a> and enter the generated embed code or url here</label>
+              <label for="timeline-embed-code-input">
+                <a href="https://twitter.com/settings/widgets/new/search" target="_blank">Create a new Timeline widget</a> and enter the generated embed code or url here
+              </label>
               <input type="text" class="form-control" id="timeline-embed-code-input" name="timeline-embed-code" placeholder="Paste your embed code or url here.">
             </div>
             <button type="submit" class="btn btn-outline-success submit-timeline-embed-code">Update Timeline</button>
@@ -1232,7 +1199,7 @@
       {{/unless}}
       <div class="row">
         <div class="col-xs-12">
-          <div id='twitter-timeline' class="timeline-container" style="max-width:100%;"></div>
+          <div id='twitter-timeline' class="timeline-container" style="max-width:100%; height:{{#if curateMode}}{{mainStreamHeight -132}}{{else}}{{mainStreamHeight -26}}{{/if}}px;"></div>
         </div>
       </div>
     </div>

@@ -1373,7 +1373,7 @@ Template.context_browser.helpers({
   soloSidebarContextMode (){
     var currentContext = getCurrentContext();
     if(currentContext){
-      $('#card-list-area').scrollTop(0);
+      $('.card-list-area').scrollTop(0);
     }
     return currentContext && currentContext.soloModeLocation === 'sidebar';
   },
