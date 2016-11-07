@@ -416,10 +416,19 @@ Stream = (function (_super) {
   };
 
   Stream.prototype.autoplayUrl = function(){
+    var url = this.url();
     if (this.source === 'bambuser') {
-      return this.url() + "&autoplay=1";
+      if(url.includes('?')){
+        return url + "&autoplay=1";
+      } else {
+        return url + "?autoplay=1";
+      }
     } else {
-      return this.url() + "&autoplay=true&auto_play=true&loop=1";
+      if(url.includes('?')){
+        return url + "&autoplay=true&auto_play=true&loop=1";
+      } else {
+        return url + "?autoplay=true&auto_play=true&loop=1";
+      }
     }
   };
 
