@@ -300,10 +300,12 @@
           {{#unless showCurateTools}}
           <!-- begin Context switcher -->
           <span class="context-mode-switch js-link" style="position:absolute; bottom:25px; right: 40px;z-index:1;border: 1px solid; border-radius: 30px;background-color: rgba(255,255,255,0.9);">
-            {{#if showTimeline}}
-            <i class="fa fa-bars" style="padding:12px;"></i>
-            {{else}}
-            <i class="fa fa-twitter fa-2x" style="padding:5px;"></i>
+            {{#if showShowTimelineButton}}
+              {{#if showTimeline}}
+              <i class="fa fa-bars" style="padding:12px;"></i>
+              {{else}}
+              <i class="fa fa-twitter fa-2x" style="padding:5px;"></i>
+              {{/if}}
             {{/if}}
           </span>
           <!-- end Context switcher -->
