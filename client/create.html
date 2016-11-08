@@ -673,7 +673,7 @@
     {{#if twitterUser}}
       <div class="create-section twitter">
         <div class="hiding-div {{#if showSingleResult}}hide{{/if}}">
-          {{> search_form option1='all' label1='All tweets' option2='user' label2='User' option3= 'favorites' label3='Favorites'}}
+          {{> search_form option1='all' label1='All tweets' option2='user' label2='User' option3= 'favorites' label3='Favorites' source='twitter'}}
           <ol class="search-results-container">
             {{#each results}}
               <li>

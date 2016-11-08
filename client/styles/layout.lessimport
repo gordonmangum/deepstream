@@ -244,8 +244,8 @@ button:focus{
   }
   background-color: @dark-action-color;
   &:hover, &.active {
-    background-color: @action-color;
-    color: @dark-text-color;
+    background-color: @brand-primary;
+    color: #fff;
     .fg{
       fill: @light-icon-color;
     }

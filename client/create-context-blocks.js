@@ -89,6 +89,9 @@ var createBlockEvents = {
   "click .data-source" (d, template) {
     template.focusResult.set(null);
     SearchResults.remove({type: 'stream'}); // TO-DO, fixes stream results for videos 
+    console.log('whats our source?');
+    console.log(this);
+    console.log(this.source);
     Session.set('newContextDataSource', this.source);
   },
 
@@ -144,19 +147,25 @@ var setSearchInput = function(query){
 };
 
 var existingSearchResults = function(options){
+  console.log(111);
   inputs = getSearchInput.call(this);
   var selector = {
     searchQuery: inputs.query,
     searchOption: inputs.option,
     type: this.type
   }
-
+   console.log(222);
+   console.log(inputs);
+   console.log(selector);
   var newContextDataSource = Session.get('newContextDataSource');
+  console.log(newContextDataSource);
   if (newContextDataSource.indexOf('all_') !== 0){ // naming convention...
+     console.log(333);
     _.extend(selector, {
       source: Session.get('newContextDataSource')
     });
   }
+   console.log(444);
   return SearchResults.find(selector, _.extend({}, options, {sort: {ordinalId: 1} }));
 };
 
