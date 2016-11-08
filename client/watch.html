@@ -1064,40 +1064,9 @@
   </div>
 </template>
 
-<template name="list_item_context_section_featured">
-  <div class="list-item-context-plus-annotation " data-context-id="{{_id}}">
-    <div class="narrative-section context-section list-item-context-section {{#if type}}{{type}}-card{{/if}} {{#if hasSoloMode}}isClickable{{/if}}" data-context-id="{{_id}}">
-      <div class="clickable">
-        <div class="provider">{{#if providerIconUrl}}<img class="provider-image" src="{{providerIconUrl}}"/>{{/if}}{{providerName}}</div>
-        {{> Template.dynamic template=listModeItemTemplate}}
-        {{#unless curateMode}}
-          {{#if hoverIconTemplate}}<button class="hover-icon">{{> Template.dynamic template=hoverIconTemplate}}</button>{{/if}}
-        {{/unless}}
-      </div>
-      {{#if curateMode}}
-        {{#unless browseSuggestionsMode}}
-          <button title="delete" class="delete-context">{{> close_circle}}</button>
-        {{/unless}}
-      {{/if}}
-    </div>
-    {{#if showAnnotationSection}}
-      {{> annotation_section}}
-    {{/if}}
-    {{#if suggestedByUsername}}
-      <div class="suggested-by">Suggested by {{suggestedByUsername}}</div>
-    {{/if}}
-    {{#if browseSuggestionsMode}}
-      <div class="moderation-buttons">
-        <button class="approve-suggestion">{{> approve_icon}}Approve</button>
-        <button class="reject-suggestion">{{> reject_icon}}Reject</button>
-      </div>
-    {{/if}}
-  </div>
-</template>
-
 <template name="list_item_context_section">
   {{#if showContext}}
-  <div class="row thumbnail list-item-context-plus-annotation context-section {{#if type}}{{type}}-card{{/if}} {{#if hasSoloMode}}isClickable{{/if}}" data-context-id="{{_id}}">
+  <div class="row thumbnail list-item-context-plus-annotation context-section {{#if type}}{{type}}-card{{/if}} {{#if hasSoloMode}}{{#unless curateMode}}isClickable{{/unless}}{{/if}}" data-context-id="{{_id}}">
     <div class="col-xs-12">
       <div class="row main-card-section" style="padding: 7px 3px;">
         <div class="col-xs-12 clickable">
