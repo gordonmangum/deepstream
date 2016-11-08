@@ -21,8 +21,8 @@ input[type=file] {
 
   }
   &:hover::before {
-    background-color: @action-color;
-    color: @dark-color;
+    background-color: @brand-primary;
+    color: #fff;
   }
 
   &.change-header-upload{
