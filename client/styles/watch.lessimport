@@ -30,6 +30,8 @@
 
 
 .watch{
+  @media (min-width: 900px) { margin-top: 51px; }
+  
   background-color: @watch-background-color;
   .annotation-section{
     border: 1px solid #b3b3b3;

@@ -177,7 +177,7 @@
       {{#if loadingScreen}} {{else}}
       
   {{#if showDesktopMode}}
-    <div class="watch {{#if thisDeepstream.onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}}" style="width: {{windowWidth}}px; height: {{mainStreamHeight}}px; margin-top: 51px;">
+    <div class="watch {{#if thisDeepstream.onAir}}on-air{{else}}off-air{{/if}} {{#if curateMode}}curate-mode{{/if}}" style="width: {{windowWidth}}px; height: {{mainStreamHeight}}px;">
     {{#if showTutorial}}
       <!-- development mode remove steps
        <div class="create-overlay" style="height: {{windowHeight -80}}px;"></div>
@@ -369,7 +369,7 @@
                     </a>
                   <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                     <div class="panel-body">
-                      <div class="streams-list" style="max-height:{{mainStreamHeight 0}}px">
+                      <div class="streams-list" style="max-height:{{mainStreamHeight 0}}px; padding-top: 15px; margin-top: -30px;">
                         <div class="streams-list-container">
                         {{#each livestreams}}
                           {{> stream_li stream=this active=active allowPreview=false}}       
