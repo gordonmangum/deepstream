@@ -97,6 +97,9 @@ Template.registerHelper("isCuratorInTemplate", function(){
       Session.set('curatorIds', this.curatorIds);
     }
   }
+  console.info(Meteor.userId());
+  console.info(Session.get('curatorIds'));
+  console.info( Meteor.userId() && _.contains(Session.get('curatorIds'), Meteor.userId()));
   return Meteor.userId() && _.contains(Session.get('curatorIds'), Meteor.userId());
 });
 
