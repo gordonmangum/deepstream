@@ -801,7 +801,7 @@ Meteor.methods({
     var nextPageToken = 'end';
     var items = [];
     var notice = null;
-    var whitelist = ["ustream.tv", "www.ustream.tv", "periscope.tv", "www.periscope.tv", "w.soundcloud.com","www.soundcloud.com", "soundcloud.com", "player.vimeo.com", "vimeo.com", "www.vimeo.com", "www.facebook.com", "facebook.com", "tunein.com", "www.tunein.com", "livestream.com", "vine.co", "www.vine.co", "www.livestream.com", "www.wral.com", "wral.com", "wralsportsfan.com","www.wralsportsfan.com", "youtube.com", "www.youtube.com"];
+    var whitelist = ["ustream.tv", "www.ustream.tv", "periscope.tv", "www.periscope.tv", "w.soundcloud.com","www.soundcloud.com", "soundcloud.com", "player.vimeo.com", "vimeo.com", "www.vimeo.com", "www.facebook.com", "facebook.com", "tunein.com", "www.tunein.com", "livestream.com", "vine.co", "www.vine.co", "www.livestream.com", "www.wral.com", "wral.com", "wralsportsfan.com","www.wralsportsfan.com", "youtube.com", "www.youtube.com", "player.waywire.com", "www.player.waywire.com", "www.waywire.com", "waywire.com"];
     var urlOnlyList = ["periscope.tv", "www.periscope.tv"];
     var embedOnlyList =  _.reject(whitelist, function(url){ return _.contains(urlOnlyList, url); });
     

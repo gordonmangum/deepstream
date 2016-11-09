@@ -36,3 +36,4 @@ Supported providers currently:
 - Twitcast (username)
 - Vine (embed code)
 - wral.com & wralsportsfan.com (videoJs in iFrame)
+- player.waywire.com (Currently Branded as 'the Root')

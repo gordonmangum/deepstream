@@ -569,6 +569,14 @@ Stream = (function (_super) {
               return cloudinaryLink + 'v1472593841/placeholder_wralmovie_akkodp.png';
             case 'wralsportsfan.com':
               return cloudinaryLink + 'v1472593841/placeholder_wralmovie_akkodp.png';
+            case 'player.waywire.com':
+              return cloudinaryLink + 'v1478701934/placeholder_rootmovie_w3tk8l.png';
+            case 'www.player.waywire.com':
+              return cloudinaryLink + 'v1478701934/placeholder_rootmovie_w3tk8l.png';
+            case 'www.waywire.com':
+              return cloudinaryLink + 'v1478701934/placeholder_rootmovie_w3tk8l.png';
+            case 'waywire.com':
+              return cloudinaryLink + 'v1478701934/placeholder_rootmovie_w3tk8l.png';
             default:
               return cloudinaryLink + 'v1466257562/placeholder_movie_rad2ai.png';
           }
@@ -638,6 +646,14 @@ Stream = (function (_super) {
               return cloudinaryLink + 'v1472593841/placeholder_wralmovie_akkodp.png';
             case 'wralsportsfan.com':
               return cloudinaryLink + 'v1472593841/placeholder_wralmovie_akkodp.png';
+            case 'player.waywire.com':
+              return cloudinaryLink + 'v1478701934/placeholder_rootmovie_w3tk8l.png';
+            case 'www.player.waywire.com':
+              return cloudinaryLink + 'v1478701934/placeholder_rootmovie_w3tk8l.png';
+            case 'www.waywire.com':
+              return cloudinaryLink + 'v1478701934/placeholder_rootmovie_w3tk8l.png';
+            case 'waywire.com':
+              return cloudinaryLink + 'v1478701934/placeholder_rootmovie_w3tk8l.png';
             default:
               return cloudinaryLink + 'v1466257562/placeholder_movie_rad2ai.png';
           }
