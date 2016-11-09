@@ -990,6 +990,8 @@ Template.watch_page.events({
     if (this.creationStep && this.creationStep !== 'go_on_air') {
       Meteor.call('goToFindStreamStep', t.data.shortId(), basicErrorHandler);
     } else {
+      Session.set('contextMode', 'curate');
+      Session.set('mediaDataType', 'selectCard');
       Session.set('mediaDataType', 'stream');
     }
   },
