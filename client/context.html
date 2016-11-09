@@ -187,7 +187,7 @@
 <template name="chart_container_display">
   <div class="row">
     <div class="col-xs-12 text-center">
-      <svg id="pieChart-{{_id}}" data-contextid="{{_id}}"></svg>
+      <svg class="pieChart-display-{{_id}}" data-contextid="{{_id}}"></svg>
     </div>
   </div>
   <div class="row">
@@ -220,7 +220,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-xs-6" style="margin-left: 20px;">
       {{#each option in options}}
         <p style="color: {{colorFromIndex @index}};">{{option.name}} - {{{percentageVote option.value}}}</p>
       {{/each}}

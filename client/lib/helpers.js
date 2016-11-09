@@ -333,10 +333,9 @@ window.scrollToContext = function(id){
   Session.set('mediaDataType', null);
   Session.set('contextMode', 'context');
   Meteor.setTimeout(() => {
-    var offset = 130;
     var contextToScrollTo = $('.context-section[data-context-id=' + id + ']');
-    var container = $('.context-browser>.context-area');
-    container.animate({scrollTop: (contextToScrollTo.offset().top - container.offset().top + container.scrollTop() - offset)});
+    var container = $('.card-list-area');
+    container.animate({scrollTop: (contextToScrollTo.offset().top - container.offset().top + container.scrollTop())});
   })
 }
 
