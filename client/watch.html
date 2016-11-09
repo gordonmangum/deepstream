@@ -381,7 +381,7 @@
                         {{/each}}
                         </div>
                       </div>
-                      <div class=" stream-search narrative-section selected editing" style="height: {{mainStreamHeight 65}}px">
+                      <div class=" stream-search narrative-section selected editing" style="position:relative;">
                         {{> create_stream_section}}
                       </div>
                     </div>
@@ -443,14 +443,6 @@
                       {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}
                       <br/>
                     {{/each}}
-                    {{#if curateMode}}
-                      <li class="add-stream">
-                        <button class="show-stream-search">
-                          {{> add_stream_text}}
-                        </button>
-                      </li>
-                      <br/>
-                    {{/if}}
                     </div>
                   </div>
                 {{else}}
@@ -465,14 +457,7 @@
                         {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}
                         <br/>
                       {{/each}}
-                      {{#if curateMode}}
-                        <li class="add-stream">
-                          <button class="show-stream-search">
-                            {{> add_stream_text}}
-                          </button>
-                        </li>
-                        <br/>
-                      {{/if}}
+                     
                     </div>
                    </div>
                   {{/unless}}
@@ -808,6 +793,7 @@
     </div>
   </div>
   <div class="row">
+    <!--
     {{#if isCurator}}
     <div class="col-xs-6 col-sm-4 col-md-3 text-center tile-container">
       <a class="js-link thumbnail tile-selector stream-button"  title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} livestreams">
@@ -816,6 +802,7 @@
       <small>Stream</small>
     </div>
     {{/if}}
+    -->
     <div class="col-xs-6 col-sm-4 col-md-3 text-center tile-container">
       <a class="js-link thumbnail tile-selector news-button" title="{{#unless isCurator}}Suggest{{else}}Add{{/unless}} news stories" disabled='{{disableAllButStream}}'>
         {{> news_icon }}
