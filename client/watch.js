@@ -685,7 +685,7 @@ Template.watch_page.helpers({
     return Session.equals('contextMode', 'timeline');
   },
   showShowTimelineButton (){
-    return Session.get('curateMode') || Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
+    return Session.get('curateMode') && !Session.equals('showSuggestionBrowser', 'suggestions') && !Session.get('cardListContainerHidden') || Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
   },
   showPortraitShowTimelineButton (){
     return Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
@@ -1269,14 +1269,6 @@ Template.portrait_item_context_section.helpers({
 
 Template.context_browser_area.helpers({
   orderedContext (){
-    /*
-    if(Session.get('replayContext')){
-      return true;
-    } else {
-      return false;
-    }
-    */
-    
     var rplyAvail = false;
     if(mainPlayer && mainPlayer.activeStream && mainPlayer.activeStream.get() && mainPlayer.activeStream.get().source === "youtube" && !mainPlayer.activeStream.get().live){
     //check number of streams
@@ -1301,20 +1293,20 @@ Template.context_browser_area.helpers({
       return this.orderedContext(replayEnabled && Session.get('replayContext'))
     }
   },
-  showShowSuggestionsButton (){
-    return Session.get('curateMode') && this.hasPendingSuggestions();
-  },
   showShowTimelineButton (){
-    return Session.get('curateMode') || Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
+    return Session.get('curateMode') && !Session.equals('showSuggestionBrowser', 'suggestions') && !Session.get('cardListContainerHidden') || Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
   },
   showSuggestions (){
-    return Session.equals('contextMode', 'suggestions');
+    return Session.equals('showSuggestionBrowser', 'suggestions');
   },
   showTimeline (){
     return Session.equals('contextMode', 'timeline');
   },
   showDeck (){
     return Session.equals('contextMode', 'context');
+  },
+  showContextDeck (){
+    return Session.equals('contextMode', 'context') && !Session.equals('showSuggestionBrowser', 'suggestions');
   },
   showCurateTools (){
     return Session.equals('contextMode', 'curate');
@@ -1429,6 +1421,8 @@ Template.context_browser.events({
     Meteor.call('approveContext', this._id, function(err, success){
       if(t.data.contextBlocks.count() === 0){ // if this was the last suggestion
         Session.set('contextMode', 'context');
+        Session.set('showSuggestionBrowser', null);
+        Session.set('cardListContainerHidden', false);
       }
       return basicErrorHandler(err, success)
     });

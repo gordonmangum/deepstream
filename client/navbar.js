@@ -6,6 +6,14 @@ Template.minimal_navbar.helpers({
       return true;
     }
     return false;
+  },
+  showShowSuggestionsButton (){
+    return Session.get('curateMode') && this.hasPendingSuggestions();
+  },
+  thisDeepstream () {
+    if (FlowRouter.subsReady()) {
+      return Deepstreams.findOne({shortId: Session.get('streamShortId')});
+    }
   }
 });
 
@@ -19,6 +27,9 @@ Template.minimal_navbar.events({
     });
   },
   'click .back-button': function(){
+    if(Session.equals('showSuggestionBrowser', 'suggestions')){
+      return Session.set('showSuggestionBrowser', null);
+    }
     if(Session.get('contextMode') == 'curate' ){
       return Session.set('contextMode', 'context')
     }
@@ -48,8 +59,11 @@ Template.minimal_navbar.events({
     return Session.set('cardListContainerHidden', null)
   },
   'click .show-suggestions'(){
+    console.log('show suggestions plz');
     analytics.track('Click show suggestions browser', trackingInfoFromPage());
-    Session.set('contextMode', 'suggestions');
+    Session.set('contextMode', 'context');
+    Session.set('showSuggestionBrowser', 'suggestions');
+    //Session.set('contextMode', 'suggestions');
     Session.set('mediaDataType', null);
     Session.set('activeContextId', null);
   },

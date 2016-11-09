@@ -157,6 +157,7 @@ Deepstream = (function() {
   };
 
   Deepstream.prototype.pendingSuggestions = function(){
+    console.info(SuggestedContextBlocks.find({streamShortId: this.shortId, suggestionStatus: 'pending'}).fetch());
     return SuggestedContextBlocks.find({streamShortId: this.shortId, suggestionStatus: 'pending'});
   };
 

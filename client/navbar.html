@@ -41,9 +41,8 @@
           {{else}}
           <li><a class="js-link back-button"><i class="fa fa-angle-left"></i> Back</a></li>
           {{/if}}
-          {{#if curateMode}}
-            {{#with thisDeepstream}}
-              {{#if showSuggestionsButton}}
+          {{#with thisDeepstream}}
+          {{#if showShowSuggestionsButton}}
           <li>
             <a class="js-link show-suggestions">
               <span class="fa-stack fa-custom-sm">
@@ -53,9 +52,8 @@
               See Suggested Cards
             </a>
           </li>
-              {{/if}}
-            {{/with}}
           {{/if}}
+          {{/with}}
           {{#if curateMode}}
           <li><a class="js-link" data-toggle="modal" data-target="#settings-modal"><i class="fa fa-cog"></i></a></li>
           {{/if}}

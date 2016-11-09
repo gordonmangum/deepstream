@@ -340,7 +340,8 @@ window.scrollToContext = function(id){
 }
 
 window.browseSuggestionsMode = function(){
-  return Session.equals('contextMode', 'suggestions')
+  return Session.equals('showSuggestionBrowser', 'suggestions');
+  //return Session.equals('contextMode', 'suggestions')
 };
 
 window.embedMode = function(){
