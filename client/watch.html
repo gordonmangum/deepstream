@@ -331,6 +331,7 @@
               <!-- add collapse here -->
               
               <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                {{#if isCurator}}
                 <div class="panel panel-default">
                   <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                     <div class="panel-heading" role="tab" id="headingOne">
@@ -372,12 +373,16 @@
                     </div>
                   </div>
                 </div>
+                {{/if}}
                 <div class="panel panel-default">
                   <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                   <div class="panel-heading" role="tab" id="headingThree">
-                    <p>
-                        <b>Add Cards:</b> Create cards to be used in your DeepStream experience.
-                      
+                    <p> 
+                    {{#if isCurator}}
+                      <b>Add Cards:</b> Create cards to be used in your DeepStream experience.
+                    {{else}}
+                      <b>Suggest Cards:</b> Suggest cards to be used in the broadcaster's DeepStream experience.
+                    {{/if}}
                     </p>
                   </div>
                   </a>

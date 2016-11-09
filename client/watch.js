@@ -952,6 +952,7 @@ Template.watch_page.events({
   },
   'click .suggest-content' (){
     analytics.track('Clicked suggest context button', trackingInfoFromPage());
+    Session.set('contextMode', 'curate');
     Session.set('mediaDataType', 'selectCard');
   },
   'click .got-it-context' (){
