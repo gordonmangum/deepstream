@@ -1317,6 +1317,7 @@ Template.portrait_item_context_section.helpers({
         
         notifyCard(notifyObject);
         return true;
+      }
       return true;
     }
   },
