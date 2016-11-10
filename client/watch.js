@@ -1262,7 +1262,61 @@ Template.portrait_item_context_section.helpers({
       if(parseFloat(Session.get("currentTimeElapsed")) < this.videoMarker){
         return false;
       }
-      notifySuccess('hello new card now visible on portrait');
+      if(!this.shownNotification){
+        console.info('show notif');
+        this.shownNotification = true;
+        var notifyObject = {
+          cardId: this._id,
+          type: this.type,
+          size: 'desktop',
+        }
+        switch (this.type) {
+          case 'news':
+            notifyObject.message = this.reference.title;
+            notifyObject.image = this.reference.topImage.url || this.reference.providerIconUrl;
+            break;
+          case 'image':
+            if(this.source == 'cloudinary'){
+              notifyObject.message = 'Uploaded Image';
+            } else {
+              notifyObject.message = this.reference.title;
+            }
+            notifyObject.image = this.previewUrl();
+            break;
+          case 'text':
+            notifyObject.message = this.content;
+            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/text_b7uaky.png';
+            break;
+          case 'link':
+            notifyObject.message = this.reference.title;
+            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/link_kdb1bb.png';
+            break;
+          case 'twitter':
+            notifyObject.message = this.reference.text;
+            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
+            break;
+          case 'map':
+            notifyObject.message = this.reference.mapQuery;
+            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
+            break;
+          case 'poll':
+            notifyObject.message = "Poll: " + this.content;
+            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/poll_jnvpnp.png';
+            break;
+          case 'audio':;
+            notifyObject.message = this.reference.title;
+            notifyObject.image = this.reference.artworkUrl;
+            break;
+          case 'video':;
+            notifyObject.message = this.reference.title;
+            notifyObject.image = this.thumbnailUrl();
+            break;
+          default:
+            notifyObject.message = 'A new ' + this.type + ' card is avaialble';
+        }
+        
+        notifyCard(notifyObject);
+        return true;
       return true;
     }
   },
