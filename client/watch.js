@@ -1531,7 +1531,6 @@ Template.list_item_context_section.helpers({
           type: this.type,
           size: 'desktop',
         }
-        
         switch (this.type) {
           case 'news':
             notifyObject.message = this.reference.title;
@@ -1547,27 +1546,31 @@ Template.list_item_context_section.helpers({
             break;
           case 'text':
             notifyObject.message = this.content;
-            notifyObject.image = 'http://placekitten.com/g/210/210';
+            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/text_b7uaky.png';
             break;
           case 'link':
             notifyObject.message = this.reference.title;
-            notifyObject.image = 'http://placekitten.com/g/210/210';
+            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/link_kdb1bb.png';
             break;
           case 'twitter':
             notifyObject.message = this.reference.text;
-            notifyObject.image = 'http://placekitten.com/g/211/210';
+            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
             break;
           case 'map':
             notifyObject.message = this.reference.mapQuery;
-            notifyObject.image = 'http://placekitten.com/g/200/200';
+            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
             break;
           case 'poll':
             notifyObject.message = "Poll: " + this.content;
-            notifyObject.image = 'http://placekitten.com/g/201/200';
+            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/poll_jnvpnp.png';
             break;
           case 'audio':;
             notifyObject.message = this.reference.title;
             notifyObject.image = this.reference.artworkUrl;
+            break;
+          case 'video':;
+            notifyObject.message = this.reference.title;
+            notifyObject.image = this.thumbnailUrl();
             break;
           default:
             notifyObject.message = 'A new ' + this.type + ' card is avaialble';
