@@ -1114,20 +1114,6 @@
   background-color: #F40030;
   position: absolute;
   z-index: 110;
-  &:before{
-    right: 100%;
-    top: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-color: rgba(244, 0, 48, 0);
-    border-right-color: #F40030;
-    border-width: 30px;
-    margin-top: -97px;
-  }
   .stream-replay-warning-content {
     padding: 10px 30px;
   }

@@ -7,7 +7,7 @@ window.notifyFeature = function(message){
       },
       'position' :'top right',
       theme:'colorful',
-      delay: 8000
+      delay: 5000
     }
   );
 };
@@ -21,7 +21,21 @@ window.notifySuccess = function(message){
       },
       'position' :'top right',
       theme:'colorful',
-      delay: 8000
+      delay: 5000
+    }
+  );
+};
+
+window.notifyCard = function(cardDataObject){
+  $.amaran({
+      content: {
+        message: cardDataObject.message,
+        color: 'white',
+        bgcolor: '#4D4D4D' // action-color
+      },
+      'position' :'top right',
+      theme:'colorful',
+      delay: 5000
     }
   );
 };
@@ -42,7 +56,7 @@ window.notifyError = function(message){
       },
       'position' :'top right',
       theme:'colorful',
-      delay: 8000
+      delay: 5000
     }
   );
 };
@@ -56,7 +70,7 @@ window.notifyInfo = function(message){
       },
       'position' :'top right',
       theme:'colorful',
-      delay: 8000
+      delay: 5000
     }
   );
 };

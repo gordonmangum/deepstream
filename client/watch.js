@@ -815,11 +815,11 @@ var saveStreamTitle = function(template){
 };
 
 Template.watch_page.events({
-  'change #publish-toggle': function(e, t){
-    if($('#publish-toggle').prop('checked')){
+  'change .publish-toggle': function(e, t){
+    if($('.publish-toggle').prop('checked')){
       Meteor.call('publishStream', t.data.shortId(), function (err) {
         if (err) {
-          $('#publish-toggle').prop('checked', false).change();
+          $('.publish-toggle').prop('checked', false).change();
           basicErrorHandler(err);
         } else {
           analytics.track('Curator published deepstream!', trackingInfoFromPage());
@@ -829,7 +829,7 @@ Template.watch_page.events({
     } else {
       Meteor.call('unpublishStream', t.data.shortId(), function (err) {
         if (err) {
-          $('#publish-toggle').prop('checked', true).change();
+          $('.publish-toggle').prop('checked', true).change();
           basicErrorHandler(err);
         } else {
           analytics.track('Curator unpublished deepstream!', trackingInfoFromPage());
@@ -837,8 +837,8 @@ Template.watch_page.events({
       });
     }
   },
-  'change #replay-toggle': function(e, t){
-    if($('#replay-toggle').prop('checked')){
+  'change .replay-toggle': function(e, t){
+    if($('.replay-toggle').prop('checked')){
       notifyInfo('Replay Context is on. Your cards will appear at the time shown on each card.');
       analytics.track('Curator turned replay context on', trackingInfoFromPage());
       Meteor.call('replayEnabledOn', t.data.shortId(), basicErrorHandler);
@@ -848,8 +848,8 @@ Template.watch_page.events({
       Meteor.call('replayEnabledOff', t.data.shortId(), basicErrorHandler);
     }
   },
-  'change #director-mode-toggle': function(e,t){
-    if($('#director-mode-toggle').prop('checked')){
+  'change .director-mode-toggle': function(e,t){
+    if($('.director-mode-toggle').prop('checked')){
       notifyInfo('Director mode is on. Which ever stream you are watching will be displayed to viewers.');
       analytics.track('Curator turned director mode on', trackingInfoFromPage());
       return Meteor.call('directorModeOn', t.data.shortId(), basicErrorHandler);
@@ -1262,6 +1262,7 @@ Template.portrait_item_context_section.helpers({
       if(parseFloat(Session.get("currentTimeElapsed")) < this.videoMarker){
         return false;
       }
+      notifySuccess('hello new card now visible on portrait');
       return true;
     }
   },
@@ -1522,6 +1523,61 @@ Template.list_item_context_section.helpers({
       if(parseFloat(Session.get("currentTimeElapsed")) < this.videoMarker){
         return false;
       }
+      console.info(this);
+      if(!this.shownNotification){
+        console.info('show notif');
+        this.shownNotification = true;
+        var notifyObject = {
+          cardId: this._id,
+          type: this.type,
+          size: 'desktop',
+        }
+        
+        switch (this.type) {
+          case 'news':
+            notifyObject.message = this.reference.title;
+            notifyObject.image = this.reference.topImage.url || this.reference.providerIconUrl;
+            break;
+          case 'image':
+            if(this.source == 'cloudinary'){
+              notifyObject.message = 'Uploaded Image';
+            } else {
+              notifyObject.message = this.reference.title;
+            }
+            notifyObject.image = this.url;
+            break;
+          case 'text':
+            notifyObject.message = this.content;
+            notifyObject.image = 'http://placekitten.com/g/210/210';
+            break;
+          case 'link':
+            notifyObject.message = this.reference.title;
+            notifyObject.image = this.reference.thumbnailUrl || 'http://placekitten.com/g/210/210';
+            break;
+          case 'twitter':
+            notifyObject.message = this.reference.text;
+            notifyObject.image = 'http://placekitten.com/g/211/210';
+            break;
+          case 'map':
+            notifyObject.message = this.reference.mapQuery;
+            notifyObject.image = 'http://placekitten.com/g/200/200';
+            break;
+          case 'poll':
+            notifyObject.message = "Poll: " + this.content;
+            notifyObject.image = 'http://placekitten.com/g/201/200';
+            break;
+          case 'audio':;
+            notifyObject.message = this.reference.title;
+            notifyObject.image = this.reference.artworkUrl;
+            break;
+          default:
+            notifyObject.message = 'A new ' + this.type + ' card is avaialble';
+        }
+        
+        notifyCard(notifyObject);
+        return true;
+      }
+      console.log('dont show notif');
       return true;
     }
   },
