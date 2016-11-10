@@ -8,3 +8,16 @@
 .amaran{
   cursor: pointer !important;
 }
+
+.amaran.cardNotificationTheme{
+  max-width: 550px;
+  background-color: #313131;
+  width: inherit;
+  font-size:16px;
+  img {
+    padding: 10%;
+  }
+  p {
+    padding: 5% 0;
+  }
+}

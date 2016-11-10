@@ -1523,7 +1523,6 @@ Template.list_item_context_section.helpers({
       if(parseFloat(Session.get("currentTimeElapsed")) < this.videoMarker){
         return false;
       }
-      console.info(this);
       if(!this.shownNotification){
         console.info('show notif');
         this.shownNotification = true;
@@ -1544,7 +1543,7 @@ Template.list_item_context_section.helpers({
             } else {
               notifyObject.message = this.reference.title;
             }
-            notifyObject.image = this.url;
+            notifyObject.image = this.previewUrl();
             break;
           case 'text':
             notifyObject.message = this.content;
@@ -1552,7 +1551,7 @@ Template.list_item_context_section.helpers({
             break;
           case 'link':
             notifyObject.message = this.reference.title;
-            notifyObject.image = this.reference.thumbnailUrl || 'http://placekitten.com/g/210/210';
+            notifyObject.image = 'http://placekitten.com/g/210/210';
             break;
           case 'twitter':
             notifyObject.message = this.reference.text;

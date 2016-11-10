@@ -27,15 +27,21 @@ window.notifySuccess = function(message){
 };
 
 window.notifyCard = function(cardDataObject){
+  console.log(cardDataObject);
   $.amaran({
       content: {
-        message: cardDataObject.message,
+        themeName: 'cardNotificationTheme',
+        CDO: cardDataObject,
         color: 'white',
         bgcolor: '#4D4D4D' // action-color
       },
       'position' :'top right',
-      theme:'colorful',
-      delay: 5000
+      delay: 5000,
+      themeTemplate:function(data){
+      return '<div class="card-notification-container"> <div class="row"> <div class="col-xs-3"><img src="' + data.CDO.image+'"/></div> <div class="col-xs-9" style="padding-left: 0;"><p>' + data.CDO.message + '</p></div> </div> </div>';
+      },
+      //sticky: true,
+      //clearAll: true
     }
   );
 };
