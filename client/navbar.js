@@ -39,6 +39,10 @@ Template.minimal_navbar.events({
     if(getCurrentContext()){
       return clearCurrentContext();
     } else if(Session.get('mediaDataType')){
+      if(Session.get('contextMode') == 'context' ){
+        Session.set('mediaDataType', null);
+        return Session.set('cardListContainerHidden', true);
+      }
       if(Session.get('mediaDataType') == 'selectCard'){
         Session.set('contextMode', 'curate');
         return Session.set('mediaDataType', null);
@@ -59,7 +63,6 @@ Template.minimal_navbar.events({
     return Session.set('cardListContainerHidden', null)
   },
   'click .show-suggestions'(){
-    console.log('show suggestions plz');
     analytics.track('Click show suggestions browser', trackingInfoFromPage());
     Session.set('contextMode', 'context');
     Session.set('showSuggestionBrowser', 'suggestions');
