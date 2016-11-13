@@ -812,11 +812,11 @@ var saveStreamTitle = function(template){
 };
 
 Template.watch_page.events({
-  'change #publish-toggle': function(e, t){
-    if($('#publish-toggle').prop('checked')){
+  'change .publish-toggle': function(e, t){
+    if($('.publish-toggle').prop('checked')){
       Meteor.call('publishStream', t.data.shortId(), function (err) {
         if (err) {
-          $('#publish-toggle').prop('checked', false).change();
+          $('.publish-toggle').prop('checked', false).change();
           basicErrorHandler(err);
         } else {
           analytics.track('Curator published deepstream!', trackingInfoFromPage());
@@ -826,7 +826,7 @@ Template.watch_page.events({
     } else {
       Meteor.call('unpublishStream', t.data.shortId(), function (err) {
         if (err) {
-          $('#publish-toggle').prop('checked', true).change();
+          $('.publish-toggle').prop('checked', true).change();
           basicErrorHandler(err);
         } else {
           analytics.track('Curator unpublished deepstream!', trackingInfoFromPage());
@@ -834,8 +834,8 @@ Template.watch_page.events({
       });
     }
   },
-  'change #replay-toggle': function(e, t){
-    if($('#replay-toggle').prop('checked')){
+  'change .replay-toggle': function(e, t){
+    if($('.replay-toggle').prop('checked')){
       notifyInfo('Replay Context is on. Your cards will appear at the time shown on each card.');
       analytics.track('Curator turned replay context on', trackingInfoFromPage());
       Meteor.call('replayEnabledOn', t.data.shortId(), basicErrorHandler);
@@ -845,8 +845,8 @@ Template.watch_page.events({
       Meteor.call('replayEnabledOff', t.data.shortId(), basicErrorHandler);
     }
   },
-  'change #director-mode-toggle': function(e,t){
-    if($('#director-mode-toggle').prop('checked')){
+  'change .director-mode-toggle': function(e,t){
+    if($('.director-mode-toggle').prop('checked')){
       notifyInfo('Director mode is on. Which ever stream you are watching will be displayed to viewers.');
       analytics.track('Curator turned director mode on', trackingInfoFromPage());
       return Meteor.call('directorModeOn', t.data.shortId(), basicErrorHandler);
