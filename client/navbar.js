@@ -14,7 +14,10 @@ Template.minimal_navbar.helpers({
     if (FlowRouter.subsReady()) {
       return Deepstreams.findOne({shortId: Session.get('streamShortId')});
     }
-  }
+  },
+  showPreviewEditButton (){
+    return !this.creationStep || this.creationStep === 'go_on_air';
+  },
 });
 
 Template.minimal_navbar.events({

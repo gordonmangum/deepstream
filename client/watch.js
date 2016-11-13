@@ -762,9 +762,6 @@ Template.watch_page.helpers({
   showSelectCardType () {
     return Session.get('mediaDataType') == "selectCard";
   },
-  showPreviewEditButton (){
-    return !this.creationStep || this.creationStep === 'go_on_air';
-  },
   soloOverlayContextMode (){
     return soloOverlayContextModeActive();
   },
