@@ -374,11 +374,13 @@
                       <div class="streams-list" style="max-height:{{mainStreamHeight 0}}px; padding-top: 15px; margin-top: -30px;">
                         <div class="streams-list-container">
                         {{#each livestreams}}
-                          {{> stream_li stream=this active=active allowPreview=false}}       
+                          {{> stream_li stream=this active=active allowPreview=false}}
+                          {{this.title}}
                           <br/>
                         {{/each}}
                         {{#each deadstreams}}
                           {{> stream_li stream=this active=active allowPreview=false}}
+                          {{this.title}}
                           <br/>
                         {{/each}}
                         </div>
@@ -431,43 +433,6 @@
           <!-- End Card List Area -->
         </div>
       </div>
-    <!--  <div class="left-section">
-        <div class="header-section">
-              <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
-                {{#if curateMode}}
-                  <div class="streams-list" style="max-height:{{mainStreamHeight 0}}px">
-                    <div class="streams-list-container">
-                    {{#each livestreams}}
-                      {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}       
-                      <br/>
-                    {{/each}}
-                    {{#each deadstreams}}
-                      {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}
-                      <br/>
-                    {{/each}}
-                    </div>
-                  </div>
-                {{else}}
-                  {{#unless directorMode}}
-                    <div class="streams-list" style="max-height: {{mainStreamHeight 0}}px">
-                      <div class="streams-list-container">
-                      {{#each livestreams}}
-                        {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}       
-                        <br/>
-                      {{/each}}
-                      {{#each deadstreams}}
-                        {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}
-                        <br/>
-                      {{/each}}
-                     
-                    </div>
-                   </div>
-                  {{/unless}}
-
-                {{/if}}
-              </div>
-</div>
-      </div>-->
     </div>
             {{#with thisDeepstream}}
               <!--Fixed sections-->
@@ -997,8 +962,8 @@
         {{#unless browseSuggestionsMode}}
         <div class="row add-new-card-row">
           <div class="col-xs-12">
-            <a class="js-link thumbnail tile-selector" title="Add a new card">
-              <i class="fa fa-plus-circle"></i> Add Card
+            <a class="js-link thumbnail tile-selector" title="View Content Manager">
+              <i class="fa fa-plus-circle"></i> View Content Manager
             </a>
           </div>
         </div>

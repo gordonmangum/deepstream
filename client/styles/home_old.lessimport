@@ -193,7 +193,7 @@ div.logo-title {
 
 .hover-shadow{
   &:hover{
-    .box-shadow(4px 8px 12px 0px rgba(0,0,0,0.75));
+    .box-shadow(4px 8px 12px 0px rgba(0,0,0,0.25));
   }
 }
 
