@@ -170,12 +170,6 @@
     text-shadow: 2px 2px 2px darken(@light-text-color,60%);
   }
   .streams-list{
-    direction: rtl;
-    .streams-list-container {
-      direction: ltr;
-    }
-    white-space: nowrap;
-    width:250px;
     li.add-stream{
       background-color: rgba(0, 0, 0, 0.7);
     }
