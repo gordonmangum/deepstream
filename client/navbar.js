@@ -77,6 +77,7 @@ Template.minimal_navbar.events({
     t.userControlledActiveStreamId.set(null); // so that stream selection doesn't switch
     // now lets go back to the curate menu
     Session.set('previousMediaDataType', Session.get('mediaDataType'));
+    Session.set('showSuggestionBrowser', null);
     Session.set('mediaDataType', null);
     Session.set('curateMode', false);
     analytics.track('Curator clicked preview deepstream', trackingInfoFromPage());
