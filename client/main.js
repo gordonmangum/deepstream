@@ -463,7 +463,6 @@ var chartContainerRendered = function(){
   });
 };
 var chartDisplayContainerRendered = function(){
-  console.info('chart container display rendered');
   //Width and height
   var w = 200;
   var h = 200;
@@ -495,7 +494,6 @@ var chartDisplayContainerRendered = function(){
   };
   Tracker.autorun(function(){
     if(contextId){
-      console.info(contextId + ' display');
       var modifier = {
         fields:
         {
@@ -506,8 +504,6 @@ var chartDisplayContainerRendered = function(){
       query._id = contextId;
       var dataset = ContextBlocks.find(query, {data: 1}).fetch()[0];
       if(dataset){
-        console.info('we got da data for display');
-        console.info(dataset);
         dataset = dataset.data; 
         var totalVotes = 0;
         dataset.forEach(function(value, index, array){
@@ -585,7 +581,6 @@ var chartDisplayContainerRendered = function(){
   });
 };
 var chartPreviewContainerRendered = function(){
-  console.info('chart container preview rendered');
   //Width and height
   var w = 100;
   var h = 100;

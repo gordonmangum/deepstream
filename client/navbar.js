@@ -78,4 +78,8 @@ Template.minimal_navbar.events({
     Session.set('curateMode', false);
     analytics.track('Curator clicked preview deepstream', trackingInfoFromPage());
   },
+  'click .return-to-curate' (){
+    Session.set('curateMode', true);
+    analytics.track('Curator clicked edit deepstream', trackingInfoFromPage());
+  },
 });

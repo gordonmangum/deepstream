@@ -946,10 +946,6 @@ Template.watch_page.events({
     Session.set('curateMode', false);
     analytics.track('Curator clicked preview deepstream', trackingInfoFromPage());
   },
-  'click .return-to-curate' (){
-    Session.set('curateMode', true);
-    analytics.track('Curator clicked edit deepstream', trackingInfoFromPage());
-  },
   'click .suggest-content' (){
     analytics.track('Clicked suggest context button', trackingInfoFromPage());
     Session.set('contextMode', 'curate');
@@ -1530,7 +1526,11 @@ Template.list_item_context_section.helpers({
 Template.modals.helpers({
   thisDeepstream () {
     if (FlowRouter.subsReady()) {
-      return Deepstreams.findOne({shortId: Template.instance().data.shortId()});
+      if(typeof Template.instance().data.shortId == 'function'){
+        return Deepstreams.findOne({shortId: Template.instance().data.shortId()});
+      } else {
+        return;
+      }
     }
   }
 })
@@ -1593,7 +1593,11 @@ Template.settings_modal.events({
 Template.more_info_modal.helpers({
   thisDeepstream () {
     if (FlowRouter.subsReady()) {
+      if(typeof Template.instance().data.shortId == 'function'){
       return Deepstreams.findOne({shortId: Template.instance().data.shortId()});
+      } else {
+        return false;
+      }
     }
   },
   curatorNames () {
