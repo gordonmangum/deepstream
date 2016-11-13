@@ -563,8 +563,6 @@ Stream = (function (_super) {
               return cloudinaryLink + 'v1472609327/placeholder_wpmovie_cqbfeb.png';
             case 'www.wral.com':
               return cloudinaryLink + 'v1472593841/placeholder_wralmovie_akkodp.png';
-            case 'www.wralsportsfan.com':
-              return cloudinaryLink + 'v1472593841/placeholder_wralmovie_akkodp.png';
             case 'wral.com':
               return cloudinaryLink + 'v1472593841/placeholder_wralmovie_akkodp.png';
             case 'wralsportsfan.com':
@@ -639,8 +637,6 @@ Stream = (function (_super) {
             case 'www.youtube.com':
               return cloudinaryLink + 'v1472609327/placeholder_wpmovie_cqbfeb.png';
             case 'www.wral.com':
-              return cloudinaryLink + 'v1472593841/placeholder_wralmovie_akkodp.png';
-            case 'www.wralsportsfan.com':
               return cloudinaryLink + 'v1472593841/placeholder_wralmovie_akkodp.png';
             case 'wral.com':
               return cloudinaryLink + 'v1472593841/placeholder_wralmovie_akkodp.png';
