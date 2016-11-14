@@ -16,7 +16,10 @@ Template.minimal_navbar.helpers({
     }
   },
   showPreviewEditButton (){
-    return !this.creationStep || this.creationStep === 'go_on_air';
+    if(Meteor.userId() && _.contains(Session.get('curatorIds'), Meteor.userId())){
+      return !this.creationStep || this.creationStep === 'go_on_air';
+    }
+    return false;
   },
 });
 

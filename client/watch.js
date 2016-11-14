@@ -948,7 +948,7 @@ Template.watch_page.events({
   'click .suggest-content' (){
     analytics.track('Clicked suggest context button', trackingInfoFromPage());
     if(Meteor.userId() && _.contains(Session.get('curatorIds'), Meteor.userId())){
-       notifyInfo("Viewers can use this button to comment and suggest content. We will notify you if there is suggested content for you to approve or deny");
+       notifyInfo("Viewers can use this button to comment and suggest content. We will notify you if there is suggested content for you to approve.");
     } else {
       Session.set('contextMode', 'curate');
       Session.set('mediaDataType', 'selectCard');
