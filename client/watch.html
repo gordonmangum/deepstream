@@ -50,7 +50,8 @@
                   Director Mode
                 </label>
               </div>
-              <button class="btn btn-default embed-code-button">Get Embed Code</button>
+              <p><strong>Embed code:</strong></p>
+              <textarea rows="5" onclick="this.focus();this.select()" readonly="readonly">{{embedCode}}</textarea>
             </div>
           </div>
           {{#if isMainCurator}}
@@ -115,7 +116,7 @@
                     <button class="twitter-share-button">{{> twitter_share_icon}}</button>
                     <button class="facebook-share-button">{{> facebook_share_icon}}</button>
                     <button class="email-share-button">{{> email_share_icon}}</button>
-                    <button class="embed-code-button" data-clipboard-text='true'>{{> embed_code_icon}}</button>
+                    <!--<button class="embed-code-button" data-clipboard-text='true'>{{> embed_code_icon}}</button>-->
                   </div>
                 </div>
             </div>
