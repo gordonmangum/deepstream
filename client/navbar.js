@@ -78,6 +78,7 @@ Template.minimal_navbar.events({
     // now lets go back to the curate menu
     Session.set('previousMediaDataType', Session.get('mediaDataType'));
     Session.set('showSuggestionBrowser', null);
+    Session.set('contextMode', 'context');
     Session.set('mediaDataType', null);
     Session.set('curateMode', false);
     analytics.track('Curator clicked preview deepstream', trackingInfoFromPage());
