@@ -941,13 +941,18 @@ Template.watch_page.events({
     Session.set('previousMediaDataType', Session.get('mediaDataType'));
     Session.set('mediaDataType', null);
     Session.set('curateMode', false);
+    Session.set('contextMode', 'context');
     Session.set('showSuggestionBrowser', null);
     analytics.track('Curator clicked preview deepstream', trackingInfoFromPage());
   },
   'click .suggest-content' (){
     analytics.track('Clicked suggest context button', trackingInfoFromPage());
-    Session.set('contextMode', 'curate');
-    Session.set('mediaDataType', 'selectCard');
+    if(Meteor.userId() && _.contains(Session.get('curatorIds'), Meteor.userId())){
+       notifyInfo("Viewers can use this button to comment and suggest content. We will notify you if there is suggested content for you to approve or deny");
+    } else {
+      Session.set('contextMode', 'curate');
+      Session.set('mediaDataType', 'selectCard');
+    }
   },
   'click .got-it-context' (){
     Session.set('shownHighlightContext', true); 
