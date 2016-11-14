@@ -941,6 +941,7 @@ Template.watch_page.events({
     Session.set('previousMediaDataType', Session.get('mediaDataType'));
     Session.set('mediaDataType', null);
     Session.set('curateMode', false);
+    Session.set('showSuggestionBrowser', null);
     analytics.track('Curator clicked preview deepstream', trackingInfoFromPage());
   },
   'click .suggest-content' (){

@@ -73,16 +73,6 @@ Template.minimal_navbar.events({
     Session.set('mediaDataType', null);
     Session.set('activeContextId', null);
   },
-  'click .preview-deepstream' (e, t){
-    t.userControlledActiveStreamId.set(null); // so that stream selection doesn't switch
-    // now lets go back to the curate menu
-    Session.set('previousMediaDataType', Session.get('mediaDataType'));
-    Session.set('showSuggestionBrowser', null);
-    Session.set('contextMode', 'context');
-    Session.set('mediaDataType', null);
-    Session.set('curateMode', false);
-    analytics.track('Curator clicked preview deepstream', trackingInfoFromPage());
-  },
   'click .return-to-curate' (){
     Session.set('curateMode', true);
     analytics.track('Curator clicked edit deepstream', trackingInfoFromPage());
