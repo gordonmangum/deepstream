@@ -575,6 +575,10 @@ Stream = (function (_super) {
               return cloudinaryLink + 'v1478701934/placeholder_rootmovie_w3tk8l.png';
             case 'waywire.com':
               return cloudinaryLink + 'v1478701934/placeholder_rootmovie_w3tk8l.png';
+            case 'player.pbs.org':
+              return cloudinaryLink + 'v1479165797/placeholder_mpbn_tdlgk9.png';
+            case 'www.player.pbs.org':
+              return cloudinaryLink + 'v1479165797/placeholder_mpbn_tdlgk9.png';
             default:
               return cloudinaryLink + 'v1466257562/placeholder_movie_rad2ai.png';
           }
@@ -650,6 +654,10 @@ Stream = (function (_super) {
               return cloudinaryLink + 'v1478701934/placeholder_rootmovie_w3tk8l.png';
             case 'waywire.com':
               return cloudinaryLink + 'v1478701934/placeholder_rootmovie_w3tk8l.png';
+            case 'player.pbs.org':
+              return cloudinaryLink + 'v1479165797/placeholder_mpbn_tdlgk9.png';
+            case 'www.player.pbs.org':
+              return cloudinaryLink + 'v1479165797/placeholder_mpbn_tdlgk9.png';
             default:
               return cloudinaryLink + 'v1466257562/placeholder_movie_rad2ai.png';
           }
