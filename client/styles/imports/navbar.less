@@ -34,9 +34,11 @@
 .navbar-header {
   &:extend(.clearfix all);
 
-  @media (min-width: @grid-float-breakpoint) {
+  // lets float left all the time
+  float:left;
+ /* @media (min-width: @grid-float-breakpoint) {
     float: left;
-  }
+  } */
 }
 
 
@@ -378,6 +380,20 @@
 //
 // Declared after the navbar components to ensure more specificity on the margins.
 
+
+// lets float left and right all the time.
+
+.navbar-left  { .pull-left(); }
+.navbar-right {
+  .pull-right();
+  margin-right: -@navbar-padding-horizontal;
+
+  ~ .navbar-right {
+    margin-right: 0;
+  }
+}
+
+/*
 @media (min-width: @grid-float-breakpoint) {
   .navbar-left  { .pull-left(); }
   .navbar-right {
@@ -389,7 +405,7 @@
     }
   }
 }
-
+*/
 
 // Alternate navbars
 // --------------------------------------------------

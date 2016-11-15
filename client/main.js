@@ -793,6 +793,9 @@ Template.create_deepstream2016.events({
             notifyError(err);
             throw(err);
           }
+          Session.set('openCreateAccordion', null);
+          Session.set('mediaDataType', 'selectCard');
+          Session.set('contextMode', 'curate');
           analytics.track('User clicked create and created deepstream');
         });
       } else {

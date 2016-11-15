@@ -765,6 +765,9 @@ Template.watch_page.helpers({
   soloOverlayContextMode (){
     return soloOverlayContextModeActive();
   },
+  openCardAccordion () {
+    return Session.equals('openCreateAccordion', 'cards');
+  },
   PiP (){
     return soloOverlayContextModeActive();
   },
@@ -1402,6 +1405,7 @@ Template.context_browser.helpers({
 Template.context_browser.events({
   'click .add-new-card-row' (){
     Session.set('mediaDataType', 'selectCard');
+    Session.set('openCreateAccordion', 'cards');
     Session.set('contextMode', 'curate');
   },
   'click .delete-context' (e, t){
