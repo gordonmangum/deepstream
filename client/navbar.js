@@ -69,7 +69,11 @@ Template.minimal_navbar.events({
     return Session.set('cardListContainerHidden', null)
   },
   'click .show-suggestions'(){
-    analytics.track('Click show suggestions browser', trackingInfoFromPage());
+    if(Session.get('cardListContainerHidden')){
+      analytics.track('Click show suggestions browser', trackingInfoFromPage());
+      $('#card-list-container').toggleClass('col-xs-4 col-xs-0');
+      $('#watch-video-container').toggleClass('col-xs-8 col-xs-12');
+    }
     Session.set('contextMode', 'context');
     Session.set('showSuggestionBrowser', 'suggestions');
     //Session.set('contextMode', 'suggestions');
