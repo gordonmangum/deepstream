@@ -688,6 +688,14 @@ Template.watch_page.helpers({
   showShowTimelineButton (){
     return Session.get('curateMode') && !Session.equals('showSuggestionBrowser', 'suggestions') && !Session.get('cardListContainerHidden') || Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
   },
+  showCreateStreamSection (){
+    var changed = Session.get('changedCreateSection');
+    if($('#collapseTwo').hasClass('in')){
+      return true;
+    } else {
+      return false;
+    }
+  },
   showPortraitShowTimelineButton (){
     return Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
   },
@@ -816,6 +824,9 @@ var saveStreamTitle = function(template){
 };
 
 Template.watch_page.events({
+  'click .panel-heading': function(e,t){
+    Meteor.setTimeout(function(){Session.set('changedCreateSection', Random.id(5))},400);
+  },
   'change .publish-toggle': function(e, t){
     if($('.publish-toggle').prop('checked')){
       Meteor.call('publishStream', t.data.shortId(), function (err) {

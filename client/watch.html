@@ -334,10 +334,10 @@
               <div class="row thumbnail card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch; margin-bottom:0px;">
               <!-- add collapse here -->
               
-              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel-group" id="create-accordion" role="tablist" aria-multiselectable="true">
                 {{#if isCurator}}
-                <div class="panel panel-default">
-                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+               <!-- <div class="panel panel-default">
+                  <a role="button" data-toggle="collapse" data-parent="#create-accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                     <div class="panel-heading" role="tab" id="headingOne">
                       <p>
                           <b>General:</b> Edit this stream experience's title and description.
@@ -351,22 +351,13 @@
                           {{> title_description_inlay}}
                         </div>
                       </div>
-                      <!--
-                      <div class="row">
-                        <div class="col-xs-12">
-                           <div class="checkbox">
-                            <label>
-                              <input class="publish-toggle" type="checkbox" data-on="Public" data-off="Private" data-toggle="toggle" data-onstyle="success" data-offstyle="primary" data-width="100">
-                            </label>
-                        </div>
-                      </div>
-                    </div>
-                    -->
+                      
                   </div>
                 </div>
                 </div>
+                -->
                 <div class="panel panel-default">
-                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#create-accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                   <div class="panel-heading" role="tab" id="headingTwo">
                     <p>
                       <b>Stream list:</b> Add or remove videos/streams.
@@ -405,14 +396,16 @@
                         </div>
                       </div>
                       <div class=" stream-search narrative-section selected editing" style="position:relative;">
-                        {{> create_stream_section}}
+                        {{#if showCreateStreamSection}}
+                          {{> create_stream_section}}
+                        {{/if}}
                       </div>
                     </div>
                   </div>
                 </div>
                 {{/if}}
                 <div class="panel panel-default">
-                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#create-accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                   <div class="panel-heading" role="tab" id="headingThree">
                     <p> 
                     {{#if isCurator}}

@@ -671,7 +671,6 @@ Meteor.methods({
       throw new Meteor.Error('Context block not found');
     }
     
-    console.log(contextBlock);
     
     var contextBlockAddendum = {
       suggestionStatus: 'approved',
@@ -680,8 +679,6 @@ Meteor.methods({
       moderatedByUsername: user.username
     };
     
-    console.log('new context:');
-    console.log(_.extend({}, contextBlock, contextBlockAddendum));
 
     var contextBlockAddedId = addContextToStream.call(this, contextBlock.streamShortId, _.extend({}, contextBlock, contextBlockAddendum));
 
