@@ -133,6 +133,7 @@ window.addContext = function(contextBlock) { // add or suggest
   //do not req login
   
   if(user = Meteor.user()){
+    console.log('author id: ' + user._id);
     contextBlock.authorId = user._id;
   } else {
     contextBlock.authorId = 1;

@@ -607,12 +607,12 @@ Meteor.methods({
       throw new Meteor.Error('Must be logged in to suggest content');
       */
       //now we dont -- set up an anonymous user
-      user = { username: 'anonymous', placeholder:true, id: '0'}
+      user = { username: 'anonymous', placeholder:true, _id: '0'}
     }
     var now = new Date;
     var contextBlockToInsert = _.extend({}, _.omit(contextBlock, '_id'), {
       streamShortId: streamShortId,
-      authorId: user.id,
+      authorId: user._id,
       addedAt: now,
       savedAt: now,
       suggestedAt: now,
