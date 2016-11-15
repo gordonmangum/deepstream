@@ -17,7 +17,8 @@ Template.minimal_navbar.helpers({
   },
   showPreviewEditButton (){
     if(Meteor.userId() && _.contains(Session.get('curatorIds'), Meteor.userId())){
-      return !this.creationStep || this.creationStep === 'go_on_air';
+       return true; 
+      //return !this.creationStep || this.creationStep === 'go_on_air';
     }
     return false;
   },
@@ -73,6 +74,7 @@ Template.minimal_navbar.events({
       analytics.track('Click show suggestions browser', trackingInfoFromPage());
       $('#card-list-container').toggleClass('col-xs-4 col-xs-0');
       $('#watch-video-container').toggleClass('col-xs-8 col-xs-12');
+      Session.set('cardListContainerHidden', false);
     }
     Session.set('contextMode', 'context');
     Session.set('showSuggestionBrowser', 'suggestions');

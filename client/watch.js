@@ -423,9 +423,10 @@ Template.watch_page.onRendered(function(){
   },800);
   
   this.autorun(function(){
-    var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1}});
+    var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1, curatorIds: 1}});
     if(deepstream) {
       Session.set('replayEnabled', deepstream.replayEnabled);
+      Session.set('curatorIds', deepstream.curatorIds);
     }
   });
  

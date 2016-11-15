@@ -84,7 +84,7 @@
         type="email"
         placeholder="Email"
         dir="auto"
-        class="{{#if emailError}}error{{/if}}"
+        class="form-control {{#if emailError}}error{{/if}}"
         required
       >
 
@@ -97,7 +97,7 @@
         placeholder="Full Name"
         dir="auto"
         value="{{#if currentUser.profile.name}}{{currentUser.profile.name}}{{/if}}"
-        class="{{#if nameError}}error{{/if}}"
+        class="form-control {{#if nameError}}error{{/if}}"
         required
       >
 
