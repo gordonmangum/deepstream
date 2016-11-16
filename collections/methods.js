@@ -616,7 +616,7 @@ Meteor.methods({
       addedAt: now,
       savedAt: now,
       suggestedAt: now,
-      suggestedBy: user.id,
+      suggestedBy: user._id,
       suggestedByUsername: user.username,
       suggestionStatus: 'pending'
     });
@@ -658,15 +658,15 @@ Meteor.methods({
   },
   approveContext (contextBlockId){
     check(contextBlockId, String);
-
+    
     var user = Meteor.user();
-
+    
     if(!user){
       throw new Meteor.Error('Must be logged in to approve content');
     }
-
+ 
     var contextBlock = SuggestedContextBlocks.findOne(contextBlockId, {transform: null});
-
+    
     if(!contextBlock){
       throw new Meteor.Error('Context block not found');
     }
@@ -678,7 +678,6 @@ Meteor.methods({
       moderatedBy: this.userId,
       moderatedByUsername: user.username
     };
-    
 
     var contextBlockAddedId = addContextToStream.call(this, contextBlock.streamShortId, _.extend({}, contextBlock, contextBlockAddendum));
 
@@ -697,7 +696,7 @@ Meteor.methods({
         var suggester;
         if(suggester = Meteor.users.findOne(contextBlock.suggestedBy, {fields:{'emails.address':1, 'unsubscribes': 1}})){
           if(suggester.unsubscribes && _.contains(suggester.unsubscribes, emailType)){
-            return
+            return;
           }
           var email = suggester.emails[0].address;
           if (email){
