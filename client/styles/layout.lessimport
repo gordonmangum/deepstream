@@ -783,7 +783,9 @@ div.twitter-section{
         line-height: 20px;
         padding-bottom: 12px;
         max-width: 480px;
-
+        span.js-display-url {
+          word-break: break-all;
+        }
       }
     }
   }
