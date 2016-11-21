@@ -336,7 +336,7 @@
               
               <div class="panel-group" id="create-accordion" role="tablist" aria-multiselectable="true">
                 {{#if isCurator}}
-               <!-- <div class="panel panel-default">
+               <div class="panel panel-default">
                   <a role="button" data-toggle="collapse" data-parent="#create-accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                     <div class="panel-heading" role="tab" id="headingOne">
                       <p>
@@ -355,7 +355,7 @@
                   </div>
                 </div>
                 </div>
-                -->
+                
                 <div class="panel panel-default">
                   <a class="collapsed" role="button" data-toggle="collapse" data-parent="#create-accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                   <div class="panel-heading" role="tab" id="headingTwo">
@@ -940,13 +940,13 @@
       <form class="publish-with-title-description" action="action" autocomplete="off">
        <div class="form-group">
           <label for="title">Enter a title for your Deep Stream:</label>
-          <input type="text" id="set-stream-title" name="title" value="{{title}}" class="form-control set-title" placeholder="Put your title here." autofocus="autofocus">
+          <input type="text" name="title" value="{{title}}" class="form-control set-title set-stream-title" placeholder="Put your title here." autofocus="autofocus">
           <div class="character-count"><p class="text-muted">{{titleLength}} / {{titleMax}}</p></div>
         </div>
         
         <div class="form-group">
           <label for="description">Enter a description:</label>
-          <textarea id="set-stream-description" name="description" value="{{description}}" class="form-control set-description" placeholder="Put your description here." autofocus="autofocus" rows="3"></textarea>
+          <textarea name="description" value="{{description}}" class="form-control set-description set-stream-description" placeholder="Put your description here." autofocus="autofocus" rows="3"></textarea>
           <div class="character-count"><p class="text-muted">{{descriptionLength}} / {{descriptionMax}}</p></div>
         </div>
         <!-- <button type="submit" class="btn btn-outline-success">publish</button>-->

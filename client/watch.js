@@ -817,8 +817,8 @@ var basicErrorHandler = function(err){
   }
 };
 
-var saveStreamTitle = function(template){
-  streamTitle = $.trim(template.$('#set-stream-title').val());
+var saveStreamTitle = function(e, template){
+  streamTitle = $.trim(template.$(e.target).val());
   Session.set('saveState', 'saving');
   return Meteor.call('updateStreamTitle', template.data.shortId(), streamTitle, basicErrorHandler);
 };
@@ -1011,12 +1011,12 @@ Template.watch_page.events({
     }
   },
   'blur .set-title' (e, template) {
-    saveStreamTitle(template);
+    saveStreamTitle(e, template);
   },
   'keypress .set-title' (e, template) {
     if (e.keyCode === 13) { // return
       e.preventDefault();
-      saveStreamTitle(template);
+      saveStreamTitle(e, template);
     }
   },
   'paste [contenteditable]': window.plainTextPaste,
@@ -1025,14 +1025,14 @@ Template.watch_page.events({
     return false;
   },
   'blur .set-description' (e, template) {
-    streamDescription = $.trim(template.$('#set-stream-description').val());
+    streamDescription = $.trim(template.$(e.target).val());
     Session.set('saveState', 'saving');
     return Meteor.call('updateStreamDescription', template.data.shortId(), streamDescription, basicErrorHandler);
   },
   'keypress .set-description' (e, template) {
     if (e.keyCode === 13) { // return
       e.preventDefault();
-      streamDescription = $.trim(template.$('#set-stream-description').val());
+      streamDescription = $.trim(template.$(e.target).val());
       Session.set('saveState', 'saving');
       return Meteor.call('updateStreamDescription', template.data.shortId(), streamDescription, basicErrorHandler);
     }
