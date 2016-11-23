@@ -496,6 +496,36 @@ Meteor.methods({
     }
     return updated
   },
+  hideStackOff (shortId){
+    check(shortId, String);
+    this.unblock();
+    var updated = updateDeepstream.call(this, {
+      shortId: shortId
+    }, {
+      $set: {
+        hideStackAtStart: false
+      }
+    });
+    if(updated){
+      updateDeepstreamStatuses({selector: {shortId: shortId}});
+    }
+    return updated
+  },
+  hideStackOn (shortId){
+    check(shortId, String);
+    this.unblock();
+    var updated = updateDeepstream.call(this, {
+      shortId: shortId
+    }, {
+      $set: {
+        hideStackAtStart: true
+      }
+    });
+    if(updated){
+      updateDeepstreamStatuses({selector: {shortId: shortId}});
+    }
+    return updated
+  },
   replayEnabledOff (shortId){
     check(shortId, String);
     this.unblock();

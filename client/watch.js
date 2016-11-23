@@ -505,6 +505,7 @@ Template.watch_page.onRendered(function(){
     }
   });
   
+  
   this.autorun(function(){
     if(FlowRouter.subsReady()) {
       Meteor.setTimeout(function() { // TODO this is a hack.
@@ -584,10 +585,16 @@ Template.watch_page.onRendered(function(){
     }
   },1300);
   
+  // hide card stack based on settings
+  if(Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {hideStackAtStart:1}}).hideStackAtStart){
+    $('#card-list-container').toggleClass('col-xs-4 col-xs-0');
+    $('#watch-video-container').toggleClass('col-xs-8 col-xs-12');
+    Session.set('cardListContainerHidden', true);
+  }
   
   // load settings toggles
   $("#settings-modal").on('show.bs.modal', function () {
-      var deepstreamForSettings = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {onAir: 1, replayEnabled:1, directorMode:1}});
+      var deepstreamForSettings = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {onAir: 1, replayEnabled:1, directorMode:1, hideStackAtStart:1}});
       if(deepstreamForSettings.onAir === true){
         $('.publish-toggle').bootstrapToggle('on');
       } else {
@@ -603,6 +610,12 @@ Template.watch_page.onRendered(function(){
       } else {
         $('.replay-toggle').bootstrapToggle('off');
       }
+      if(deepstreamForSettings.hideStackAtStart === true){
+        $('.stack-mode-toggle').bootstrapToggle('on');
+      } else {
+        $('.stack-mode-toggle').bootstrapToggle('off');
+      }
+      
   });
   
 });
@@ -869,6 +882,17 @@ Template.watch_page.events({
       notifyInfo('Director mode is off. Viewers are free to choose between streams as they please.');
       analytics.track('Curator turned director mode off', trackingInfoFromPage());
       return Meteor.call('directorModeOff', t.data.shortId(), basicErrorHandler);
+    }
+  },
+  'change .stack-mode-toggle': function(e,t){
+    if($('.stack-mode-toggle').prop('checked')){
+      notifyInfo('The card stack will be hidden when your deepstream opens.');
+      analytics.track('Curator turned hide card stack on', trackingInfoFromPage());
+      return Meteor.call('hideStackOn', t.data.shortId(), basicErrorHandler);
+    } else {
+      notifyInfo('The card stack will be shown when your deepstream opens');
+      analytics.track('Curator turned hide card stack off', trackingInfoFromPage());
+      return Meteor.call('hideStackOff', t.data.shortId(), basicErrorHandler);
     }
   },
   
