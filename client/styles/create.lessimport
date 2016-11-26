@@ -1,3 +1,9 @@
+.search-results-container{
+  .thumbnail:hover{
+    border: 3px solid @link-color;
+  }
+}
+
 input[type=file] {
   height: 40px;
   width: 165px;
@@ -288,7 +294,6 @@ div.add-context {
           .transparency-fade(background-color, @light-background-color);
         }
       }
-
     }
 
     li.loading-icon{

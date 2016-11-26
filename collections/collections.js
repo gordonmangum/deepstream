@@ -645,6 +645,10 @@ Schema.Deepstreams = new SimpleSchema({
     type: Boolean,
     defaultValue: false
   },
+  hideStackAtStart: {
+    type: Boolean,
+    defaultValue: false
+  },
   createdAt: {
     type: Date,
     autoValue () {

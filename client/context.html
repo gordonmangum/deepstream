@@ -10,7 +10,7 @@
       {{/if}}
       <div class="row">
         <div class="col-xs-10 col-xs-offset-1 comment-section complete">
-          <p style="padding:5px"><em>{{content}}</em></p>
+          <p style="padding:5px"><em>{{{contentWithBreaks}}}</em></p>
         </div>
       </div>
     </div>
@@ -911,7 +911,7 @@
       {{/if}}
       <div class="row">
         <div class="col-xs-10 col-xs-offset-1 comment-section shorten">
-          <p style="padding:5px"><em>{{previewComment}}{{#if shotenedComment}}...{{/if}}</em></p>
+          <p style="padding:5px"><em>{{{previewComment}}}{{#if shotenedComment}}...{{/if}}</em></p>
           {{#if shotenedComment}}
           <a class="jsLink">read more</a>
           {{/if}}
@@ -923,7 +923,7 @@
 
 <template name="portrait_preview_text_section">
   <div class="txt-bd">
-    <p class="description">{{content}}</p>
+    <p class="description">{{{contentWithBreaks}}}</p>
   </div>
 </template>
 

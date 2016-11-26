@@ -89,9 +89,6 @@ var createBlockEvents = {
   "click .data-source" (d, template) {
     template.focusResult.set(null);
     SearchResults.remove({type: 'stream'}); // TO-DO, fixes stream results for videos 
-    console.log('whats our source?');
-    console.log(this);
-    console.log(this.source);
     Session.set('newContextDataSource', this.source);
   },
 

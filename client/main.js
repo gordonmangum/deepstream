@@ -260,13 +260,18 @@ Template.display_link_section.events({
 Template.display_text_section.onCreated(editableTextCreatedBoilerplate);
 //Template.display_text_section.onDestroyed(editableTextDestroyedBoilerplate('editTextSection'));
 Template.display_text_section.helpers(horizontalBlockHelpers);
+Template.display_text_section.helpers({
+  contentWithBreaks() {
+    return this.content.replace(/\n/g, "<br>");
+  }
+});
 Template.preview_text_section.helpers(horizontalBlockHelpers);
 Template.preview_text_section.helpers({
   previewComment() {
-    return this.content.substring(0,225);
+    return this.content.replace(/\n/g, "<br>").substring(0,225);
   },
   shotenedComment() {
-    return this.content.length > 225;
+    return this.content.replace(/\n/g, "<br>").length > 225;
   }
 });
 Template.homepage_preview_text_section.helpers(horizontalBlockHelpers);
@@ -463,7 +468,6 @@ var chartContainerRendered = function(){
   });
 };
 var chartDisplayContainerRendered = function(){
-  console.info('chart container display rendered');
   //Width and height
   var w = 200;
   var h = 200;
@@ -495,7 +499,6 @@ var chartDisplayContainerRendered = function(){
   };
   Tracker.autorun(function(){
     if(contextId){
-      console.info(contextId + ' display');
       var modifier = {
         fields:
         {
@@ -506,8 +509,6 @@ var chartDisplayContainerRendered = function(){
       query._id = contextId;
       var dataset = ContextBlocks.find(query, {data: 1}).fetch()[0];
       if(dataset){
-        console.info('we got da data for display');
-        console.info(dataset);
         dataset = dataset.data; 
         var totalVotes = 0;
         dataset.forEach(function(value, index, array){
@@ -585,7 +586,6 @@ var chartDisplayContainerRendered = function(){
   });
 };
 var chartPreviewContainerRendered = function(){
-  console.info('chart container preview rendered');
   //Width and height
   var w = 100;
   var h = 100;
@@ -798,6 +798,9 @@ Template.create_deepstream2016.events({
             notifyError(err);
             throw(err);
           }
+          Session.set('openCreateAccordion', null);
+          Session.set('mediaDataType', 'selectCard');
+          Session.set('contextMode', 'curate');
           analytics.track('User clicked create and created deepstream');
         });
       } else {

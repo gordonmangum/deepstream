@@ -496,6 +496,36 @@ Meteor.methods({
     }
     return updated
   },
+  hideStackOff (shortId){
+    check(shortId, String);
+    this.unblock();
+    var updated = updateDeepstream.call(this, {
+      shortId: shortId
+    }, {
+      $set: {
+        hideStackAtStart: false
+      }
+    });
+    if(updated){
+      updateDeepstreamStatuses({selector: {shortId: shortId}});
+    }
+    return updated
+  },
+  hideStackOn (shortId){
+    check(shortId, String);
+    this.unblock();
+    var updated = updateDeepstream.call(this, {
+      shortId: shortId
+    }, {
+      $set: {
+        hideStackAtStart: true
+      }
+    });
+    if(updated){
+      updateDeepstreamStatuses({selector: {shortId: shortId}});
+    }
+    return updated
+  },
   replayEnabledOff (shortId){
     check(shortId, String);
     this.unblock();
@@ -607,16 +637,16 @@ Meteor.methods({
       throw new Meteor.Error('Must be logged in to suggest content');
       */
       //now we dont -- set up an anonymous user
-      user = { username: 'anonymous', placeholder:true, id: '0'}
+      user = { username: 'anonymous', placeholder:true, _id: '0'}
     }
     var now = new Date;
     var contextBlockToInsert = _.extend({}, _.omit(contextBlock, '_id'), {
       streamShortId: streamShortId,
-      authorId: user.id,
+      authorId: user._id,
       addedAt: now,
       savedAt: now,
       suggestedAt: now,
-      suggestedBy: user.id,
+      suggestedBy: user._id,
       suggestedByUsername: user.username,
       suggestionStatus: 'pending'
     });
@@ -658,20 +688,19 @@ Meteor.methods({
   },
   approveContext (contextBlockId){
     check(contextBlockId, String);
-
+    
     var user = Meteor.user();
-
+    
     if(!user){
       throw new Meteor.Error('Must be logged in to approve content');
     }
-
+ 
     var contextBlock = SuggestedContextBlocks.findOne(contextBlockId, {transform: null});
-
+    
     if(!contextBlock){
       throw new Meteor.Error('Context block not found');
     }
     
-    console.log(contextBlock);
     
     var contextBlockAddendum = {
       suggestionStatus: 'approved',
@@ -679,9 +708,6 @@ Meteor.methods({
       moderatedBy: this.userId,
       moderatedByUsername: user.username
     };
-    
-    console.log('new context:');
-    console.log(_.extend({}, contextBlock, contextBlockAddendum));
 
     var contextBlockAddedId = addContextToStream.call(this, contextBlock.streamShortId, _.extend({}, contextBlock, contextBlockAddendum));
 
@@ -700,7 +726,7 @@ Meteor.methods({
         var suggester;
         if(suggester = Meteor.users.findOne(contextBlock.suggestedBy, {fields:{'emails.address':1, 'unsubscribes': 1}})){
           if(suggester.unsubscribes && _.contains(suggester.unsubscribes, emailType)){
-            return
+            return;
           }
           var email = suggester.emails[0].address;
           if (email){

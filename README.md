@@ -37,3 +37,4 @@ Supported providers currently:
 - Vine (embed code)
 - wral.com & wralsportsfan.com (videoJs in iFrame)
 - player.waywire.com (Currently Branded as 'the Root')
+- player.pbs.org

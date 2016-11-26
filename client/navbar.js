@@ -14,7 +14,14 @@ Template.minimal_navbar.helpers({
     if (FlowRouter.subsReady()) {
       return Deepstreams.findOne({shortId: Session.get('streamShortId')});
     }
-  }
+  },
+  showPreviewEditButton (){
+    if(Meteor.userId() && _.contains(Session.get('curatorIds'), Meteor.userId())){
+       return true; 
+      //return !this.creationStep || this.creationStep === 'go_on_air';
+    }
+    return false;
+  },
 });
 
 Template.minimal_navbar.events({
@@ -39,6 +46,10 @@ Template.minimal_navbar.events({
     if(getCurrentContext()){
       return clearCurrentContext();
     } else if(Session.get('mediaDataType')){
+      if(Session.get('contextMode') == 'context' ){
+        Session.set('mediaDataType', null);
+        return Session.set('cardListContainerHidden', true);
+      }
       if(Session.get('mediaDataType') == 'selectCard'){
         Session.set('contextMode', 'curate');
         return Session.set('mediaDataType', null);
@@ -59,12 +70,20 @@ Template.minimal_navbar.events({
     return Session.set('cardListContainerHidden', null)
   },
   'click .show-suggestions'(){
-    console.log('show suggestions plz');
-    analytics.track('Click show suggestions browser', trackingInfoFromPage());
+    if(Session.get('cardListContainerHidden')){
+      analytics.track('Click show suggestions browser', trackingInfoFromPage());
+      $('#card-list-container').toggleClass('col-xs-4 col-xs-0');
+      $('#watch-video-container').toggleClass('col-xs-8 col-xs-12');
+      Session.set('cardListContainerHidden', false);
+    }
     Session.set('contextMode', 'context');
     Session.set('showSuggestionBrowser', 'suggestions');
     //Session.set('contextMode', 'suggestions');
     Session.set('mediaDataType', null);
     Session.set('activeContextId', null);
+  },
+  'click .return-to-curate' (){
+    Session.set('curateMode', true);
+    analytics.track('Curator clicked edit deepstream', trackingInfoFromPage());
   },
 });

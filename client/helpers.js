@@ -85,18 +85,10 @@ Template.registerHelper("isContextOfType", function(type) {
 Template.registerHelper("UsersCollection", Meteor.users);
 
 Template.registerHelper("isCurator", function() {
-  if(this.curatorIds){
-    Session.set('curatorIds', this.curatorIds);
-  }
-  return Meteor.userId() && _.contains(this.curatorIds, Meteor.userId());
+  return Meteor.userId() && _.contains(Session.get('curatorIds'), Meteor.userId());
 });
 
 Template.registerHelper("isCuratorInTemplate", function(){
-  if(!Session.get('curatorIds')){
-    if(this.curatorIds){
-      Session.set('curatorIds', this.curatorIds);
-    }
-  }
   return Meteor.userId() && _.contains(Session.get('curatorIds'), Meteor.userId());
 });
 

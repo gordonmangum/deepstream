@@ -423,9 +423,10 @@ Template.watch_page.onRendered(function(){
   },800);
   
   this.autorun(function(){
-    var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1}});
+    var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1, curatorIds: 1}});
     if(deepstream) {
       Session.set('replayEnabled', deepstream.replayEnabled);
+      Session.set('curatorIds', deepstream.curatorIds);
     }
   });
  
@@ -503,6 +504,7 @@ Template.watch_page.onRendered(function(){
       Session.set('activeContextId', context._id);
     }
   });
+  
   
   this.autorun(function(){
     if(FlowRouter.subsReady()) {
@@ -583,10 +585,16 @@ Template.watch_page.onRendered(function(){
     }
   },1300);
   
+  // hide card stack based on settings
+  if(Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {hideStackAtStart:1}}).hideStackAtStart){
+    $('#card-list-container').toggleClass('col-xs-4 col-xs-0');
+    $('#watch-video-container').toggleClass('col-xs-8 col-xs-12');
+    Session.set('cardListContainerHidden', true);
+  }
   
   // load settings toggles
   $("#settings-modal").on('show.bs.modal', function () {
-      var deepstreamForSettings = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {onAir: 1, replayEnabled:1, directorMode:1}});
+      var deepstreamForSettings = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {onAir: 1, replayEnabled:1, directorMode:1, hideStackAtStart:1}});
       if(deepstreamForSettings.onAir === true){
         $('.publish-toggle').bootstrapToggle('on');
       } else {
@@ -602,6 +610,12 @@ Template.watch_page.onRendered(function(){
       } else {
         $('.replay-toggle').bootstrapToggle('off');
       }
+      if(deepstreamForSettings.hideStackAtStart === true){
+        $('.stack-mode-toggle').bootstrapToggle('on');
+      } else {
+        $('.stack-mode-toggle').bootstrapToggle('off');
+      }
+      
   });
   
 });
@@ -687,6 +701,14 @@ Template.watch_page.helpers({
   showShowTimelineButton (){
     return Session.get('curateMode') && !Session.equals('showSuggestionBrowser', 'suggestions') && !Session.get('cardListContainerHidden') || Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
   },
+  showCreateStreamSection (){
+    var changed = Session.get('changedCreateSection');
+    if($('#collapseTwo').hasClass('in')){
+      return true;
+    } else {
+      return false;
+    }
+  },
   showPortraitShowTimelineButton (){
     return Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {twitterTimelineId: 1}}).twitterTimelineId;
   },
@@ -762,11 +784,11 @@ Template.watch_page.helpers({
   showSelectCardType () {
     return Session.get('mediaDataType') == "selectCard";
   },
-  showPreviewEditButton (){
-    return !this.creationStep || this.creationStep === 'go_on_air';
-  },
   soloOverlayContextMode (){
     return soloOverlayContextModeActive();
+  },
+  openCardAccordion () {
+    return Session.equals('openCreateAccordion', 'cards');
   },
   PiP (){
     return soloOverlayContextModeActive();
@@ -808,13 +830,16 @@ var basicErrorHandler = function(err){
   }
 };
 
-var saveStreamTitle = function(template){
-  streamTitle = $.trim(template.$('#set-stream-title').val());
+var saveStreamTitle = function(e, template){
+  streamTitle = $.trim(template.$(e.target).val());
   Session.set('saveState', 'saving');
   return Meteor.call('updateStreamTitle', template.data.shortId(), streamTitle, basicErrorHandler);
 };
 
 Template.watch_page.events({
+  'click .panel-heading': function(e,t){
+    Meteor.setTimeout(function(){Session.set('changedCreateSection', Random.id(5))},400);
+  },
   'change .publish-toggle': function(e, t){
     if($('.publish-toggle').prop('checked')){
       Meteor.call('publishStream', t.data.shortId(), function (err) {
@@ -857,6 +882,17 @@ Template.watch_page.events({
       notifyInfo('Director mode is off. Viewers are free to choose between streams as they please.');
       analytics.track('Curator turned director mode off', trackingInfoFromPage());
       return Meteor.call('directorModeOff', t.data.shortId(), basicErrorHandler);
+    }
+  },
+  'change .stack-mode-toggle': function(e,t){
+    if($('.stack-mode-toggle').prop('checked')){
+      notifyInfo('The card stack will be hidden when your deepstream opens.');
+      analytics.track('Curator turned hide card stack on', trackingInfoFromPage());
+      return Meteor.call('hideStackOn', t.data.shortId(), basicErrorHandler);
+    } else {
+      notifyInfo('The card stack will be shown when your deepstream opens');
+      analytics.track('Curator turned hide card stack off', trackingInfoFromPage());
+      return Meteor.call('hideStackOff', t.data.shortId(), basicErrorHandler);
     }
   },
   
@@ -944,16 +980,19 @@ Template.watch_page.events({
     Session.set('previousMediaDataType', Session.get('mediaDataType'));
     Session.set('mediaDataType', null);
     Session.set('curateMode', false);
+    Session.set('contextMode', 'context');
+    Session.set('showSuggestionBrowser', null);
     analytics.track('Curator clicked preview deepstream', trackingInfoFromPage());
-  },
-  'click .return-to-curate' (){
-    Session.set('curateMode', true);
-    analytics.track('Curator clicked edit deepstream', trackingInfoFromPage());
   },
   'click .suggest-content' (){
     analytics.track('Clicked suggest context button', trackingInfoFromPage());
-    Session.set('contextMode', 'curate');
-    Session.set('mediaDataType', 'selectCard');
+    if(Meteor.userId() && _.contains(Session.get('curatorIds'), Meteor.userId())){
+       notifyInfo("Viewers can use this button to comment and suggest content. We will notify you if there is suggested content for you to approve.");
+    } else {
+      Session.set('openCreateAccordion', 'cards');
+      Session.set('contextMode', 'curate');
+      Session.set('mediaDataType', 'selectCard');
+    }
   },
   'click .got-it-context' (){
     Session.set('shownHighlightContext', true); 
@@ -996,12 +1035,12 @@ Template.watch_page.events({
     }
   },
   'blur .set-title' (e, template) {
-    saveStreamTitle(template);
+    saveStreamTitle(e, template);
   },
   'keypress .set-title' (e, template) {
     if (e.keyCode === 13) { // return
       e.preventDefault();
-      saveStreamTitle(template);
+      saveStreamTitle(e, template);
     }
   },
   'paste [contenteditable]': window.plainTextPaste,
@@ -1010,14 +1049,14 @@ Template.watch_page.events({
     return false;
   },
   'blur .set-description' (e, template) {
-    streamDescription = $.trim(template.$('#set-stream-description').val());
+    streamDescription = $.trim(template.$(e.target).val());
     Session.set('saveState', 'saving');
     return Meteor.call('updateStreamDescription', template.data.shortId(), streamDescription, basicErrorHandler);
   },
   'keypress .set-description' (e, template) {
     if (e.keyCode === 13) { // return
       e.preventDefault();
-      streamDescription = $.trim(template.$('#set-stream-description').val());
+      streamDescription = $.trim(template.$(e.target).val());
       Session.set('saveState', 'saving');
       return Meteor.call('updateStreamDescription', template.data.shortId(), streamDescription, basicErrorHandler);
     }
@@ -1459,6 +1498,7 @@ Template.context_browser.helpers({
 Template.context_browser.events({
   'click .add-new-card-row' (){
     Session.set('mediaDataType', 'selectCard');
+    Session.set('openCreateAccordion', 'cards');
     Session.set('contextMode', 'curate');
   },
   'click .delete-context' (e, t){
@@ -1643,7 +1683,11 @@ Template.list_item_context_section.helpers({
 Template.modals.helpers({
   thisDeepstream () {
     if (FlowRouter.subsReady()) {
-      return Deepstreams.findOne({shortId: Template.instance().data.shortId()});
+      if(typeof Template.instance().data.shortId == 'function'){
+        return Deepstreams.findOne({shortId: Template.instance().data.shortId()});
+      } else {
+        return;
+      }
     }
   }
 })
@@ -1659,6 +1703,10 @@ Template.settings_modal.helpers({
   },
   'disableInviteForm' (){
     return disableInviteForm;
+  },
+  'embedCode' () {
+    var deepstreamEmbedUrl = decodeURIComponent(encodeURIComponent(location.href).replace(/%2Fcurate%2F/, "%2Fembed%2F").replace(/%2Fwatch%2F/, "%2Fembed%2F"));
+    return '<style>@media (max-width: 480px) { #deepstream-embed-container-div{ padding-bottom: 110%!important; } }</style><div id="deepstream-embed-container-div" style="position: relative; padding-bottom: 56.25%; padding-top: 25px; height: 0;z-index:99999;"> <iframe src="' + deepstreamEmbedUrl + '" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>';
   }
 });
 Template.settings_modal.events({
@@ -1706,7 +1754,11 @@ Template.settings_modal.events({
 Template.more_info_modal.helpers({
   thisDeepstream () {
     if (FlowRouter.subsReady()) {
+      if(typeof Template.instance().data.shortId == 'function'){
       return Deepstreams.findOne({shortId: Template.instance().data.shortId()});
+      } else {
+        return false;
+      }
     }
   },
   curatorNames () {

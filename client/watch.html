@@ -39,7 +39,7 @@
               </div>
               <div class="checkbox">
                 <label>
-                  <input class="replay-toggle" type="checkbox" data-toggle="toggle" data-onstyle="success" disabled="{{#unless replayAvailable}}disabled{{/unless}}">
+                  <input class="replay-toggle" type="checkbox" data-toggle="toggle" data-onstyle="success" disabled="{{#unless replayAvailable}}disabled{{/unless}}" style="{{#unless replayAvailable}}cursor: not-allowed{{/unless}}">
                   Replay Context
                 </label>
               </div>
@@ -50,6 +50,15 @@
                   Director Mode
                 </label>
               </div>
+              <div class="checkbox">
+                <label>
+                  <input class="stack-mode-toggle" type="checkbox" data-toggle="toggle" data-onstyle="success">
+                  Pre-hide Card Stack
+                </label>
+              </div>
+              
+              <p><strong>Embed code:</strong></p>
+              <textarea rows="5" onclick="this.focus();this.select()" readonly="readonly">{{embedCode}}</textarea>
             </div>
           </div>
           {{#if isMainCurator}}
@@ -114,7 +123,7 @@
                     <button class="twitter-share-button">{{> twitter_share_icon}}</button>
                     <button class="facebook-share-button">{{> facebook_share_icon}}</button>
                     <button class="email-share-button">{{> email_share_icon}}</button>
-                    <button class="embed-code-button" data-clipboard-text='true'>{{> embed_code_icon}}</button>
+                    <!--<button class="embed-code-button" data-clipboard-text='true'>{{> embed_code_icon}}</button>-->
                   </div>
                 </div>
             </div>
@@ -298,6 +307,7 @@
         </div>
       <div class="{{#if cardListContainerHidden}}col-xs-0{{else}}col-xs-4{{/if}} right animate" style="z-index: 10;" id="card-list-container">
           {{#unless showCurateTools}}
+          {{#unless cardListContainerHidden}}
           <!-- begin Context switcher -->
           <span class="context-mode-switch js-link" style="position:absolute; bottom:25px; right: 40px;z-index:1;border: 1px solid; border-radius: 30px;background-color: rgba(255,255,255,0.9);">
             {{#if showShowTimelineButton}}
@@ -309,6 +319,7 @@
             {{/if}}
           </span>
           <!-- end Context switcher -->
+          {{/unless}}
           {{/unless}}
           <!-- begin Card List Area -->
           {{#with deepstreamForContext}}
@@ -330,13 +341,13 @@
               <div class="row thumbnail card-list-area" style="height: {{mainStreamHeight}}px; overflow-y: scroll;-webkit-overflow-scrolling: touch; margin-bottom:0px;">
               <!-- add collapse here -->
               
-              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel-group" id="create-accordion" role="tablist" aria-multiselectable="true">
                 {{#if isCurator}}
-                <div class="panel panel-default">
-                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+               <div class="panel panel-default">
+                  <a role="button" data-toggle="collapse" data-parent="#create-accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                     <div class="panel-heading" role="tab" id="headingOne">
                       <p>
-                          <b>General:</b> Edit this stream experience's title, description and public/private setting.
+                          <b>General:</b> Edit this stream experience's title and description.
                       </p>
                     </div>
                   </a>
@@ -347,20 +358,13 @@
                           {{> title_description_inlay}}
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-xs-12">
-                           <div class="checkbox">
-                            <label>
-                              <input class="publish-toggle" type="checkbox" data-on="Public" data-off="Private" data-toggle="toggle" data-onstyle="success" data-offstyle="primary" data-width="100">
-                            </label>
-                        </div>
-                      </div>
-                    </div>
+                      
                   </div>
                 </div>
                 </div>
+                
                 <div class="panel panel-default">
-                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#create-accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                   <div class="panel-heading" role="tab" id="headingTwo">
                     <p>
                       <b>Stream list:</b> Add or remove videos/streams.
@@ -370,27 +374,45 @@
                   <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                     <div class="panel-body">
                       <div class="search-section-title" style="margin-top: -15px;margin-bottom:30px;">Current Streams</div>
-                      <div class="streams-list" style="max-height:{{mainStreamHeight 0}}px; padding-top: 15px; margin-top: -30px;">
+                      <div class="streams-list" style="padding-top: 15px; margin-top: -30px;">
                         <div class="streams-list-container">
+                          <div class="row">
+                            <div class="col-xs-12">
                         {{#each livestreams}}
-                          {{> stream_li stream=this active=active allowPreview=false}}       
-                          <br/>
+                              <div class="row">
+                                <div class="col-xs-4">
+                                  {{> stream_li stream=this active=active allowPreview=false}}
+                                </div>
+                                <div class="col-xs-8">
+                                  <p>{{this.title}}</p>
+                                </div>
+                              </div>
                         {{/each}}
                         {{#each deadstreams}}
-                          {{> stream_li stream=this active=active allowPreview=false}}
-                          <br/>
+                              <div class="row">
+                                <div class="col-xs-4">
+                                  {{> stream_li stream=this active=active allowPreview=false}}
+                                </div>
+                                <div class="col-xs-8">
+                                  <p>{{this.title}}</p>
+                                </div>
+                              </div>
                         {{/each}}
+                            </div>
+                          </div>
                         </div>
                       </div>
                       <div class=" stream-search narrative-section selected editing" style="position:relative;">
-                       {{> create_stream_section}}
+                        {{#if showCreateStreamSection}}
+                          {{> create_stream_section}}
+                        {{/if}}
                       </div>
                     </div>
                   </div>
                 </div>
                 {{/if}}
                 <div class="panel panel-default">
-                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#create-accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                   <div class="panel-heading" role="tab" id="headingThree">
                     <p> 
                     {{#if isCurator}}
@@ -401,7 +423,7 @@
                     </p>
                   </div>
                   </a>
-                  <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                  <div id="collapseThree" class="panel-collapse collapse {{#if openCardAccordion}}in{{/if}}" role="tabpanel" aria-labelledby="headingThree">
                     <div class="panel-body">
                      <!-- start select context type -->
                       {{#if showSelectCardType}}
@@ -430,43 +452,6 @@
           <!-- End Card List Area -->
         </div>
       </div>
-    <!--  <div class="left-section">
-        <div class="header-section">
-              <div class="second-row" style="max-width: {{leftSectionWidth}}px;">
-                {{#if curateMode}}
-                  <div class="streams-list" style="max-height:{{mainStreamHeight 0}}px">
-                    <div class="streams-list-container">
-                    {{#each livestreams}}
-                      {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}       
-                      <br/>
-                    {{/each}}
-                    {{#each deadstreams}}
-                      {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}
-                      <br/>
-                    {{/each}}
-                    </div>
-                  </div>
-                {{else}}
-                  {{#unless directorMode}}
-                    <div class="streams-list" style="max-height: {{mainStreamHeight 0}}px">
-                      <div class="streams-list-container">
-                      {{#each livestreams}}
-                        {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}       
-                        <br/>
-                      {{/each}}
-                      {{#each deadstreams}}
-                        {{> stream_li stream=this active=active allowPreview=allowStreamPreview}}
-                        <br/>
-                      {{/each}}
-                     
-                    </div>
-                   </div>
-                  {{/unless}}
-
-                {{/if}}
-              </div>
-</div>
-      </div>-->
     </div>
             {{#with thisDeepstream}}
               <!--Fixed sections-->
@@ -962,13 +947,13 @@
       <form class="publish-with-title-description" action="action" autocomplete="off">
        <div class="form-group">
           <label for="title">Enter a title for your Deep Stream:</label>
-          <input type="text" id="set-stream-title" name="title" value="{{title}}" class="form-control set-title" placeholder="Put your title here." autofocus="autofocus">
+          <input type="text" name="title" value="{{title}}" class="form-control set-title set-stream-title" placeholder="Put your title here." autofocus="autofocus">
           <div class="character-count"><p class="text-muted">{{titleLength}} / {{titleMax}}</p></div>
         </div>
         
         <div class="form-group">
           <label for="description">Enter a description:</label>
-          <textarea id="set-stream-description" name="description" value="{{description}}" class="form-control set-description" placeholder="Put your description here." autofocus="autofocus" rows="3"></textarea>
+          <textarea name="description" value="{{description}}" class="form-control set-description set-stream-description" placeholder="Put your description here." autofocus="autofocus" rows="3"></textarea>
           <div class="character-count"><p class="text-muted">{{descriptionLength}} / {{descriptionMax}}</p></div>
         </div>
         <!-- <button type="submit" class="btn btn-outline-success">publish</button>-->
@@ -996,8 +981,8 @@
         {{#unless browseSuggestionsMode}}
         <div class="row add-new-card-row">
           <div class="col-xs-12">
-            <a class="js-link thumbnail tile-selector" title="Add a new card">
-              <i class="fa fa-plus-circle"></i> Add
+            <a class="js-link thumbnail tile-selector" title="View Content Manager">
+              <i class="fa fa-plus-circle"></i> View Content Manager
             </a>
           </div>
         </div>
