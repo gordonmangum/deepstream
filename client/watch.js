@@ -403,6 +403,7 @@ Template.watch_page.onRendered(function(){
   $(window).resize(throttledResize);
   Tracker.autorun(function(){
     windowSizeDep.depend();
+    Session.set('cardStackWidth', $('#card-list-container').width() + 30);
     Session.set('windowHeightForCarousel', $(window).height());
     Session.set('windowWidthForCarousel', $(window).width());
   });
@@ -653,6 +654,9 @@ Template.watch_page.helpers({
       return true;
     }
     return false;
+  },
+  cardStackWidth (){
+    return Session.get('cardStackWidth');
   },
   facebookIframe (){
     var activeStream = Template.instance().activeStream.get();

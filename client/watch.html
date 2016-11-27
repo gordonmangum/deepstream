@@ -309,8 +309,8 @@
           {{#unless showCurateTools}}
           {{#unless cardListContainerHidden}}
           <style>
-          /* alter notifications when cardlisth shown */
-          .amaran-wrapper.right { right: 450px!important; }
+          /* alter notifications when cardlist is shown */
+            .amaran-wrapper.right { right: {{cardStackWidth}}px!important; }
           </style>
           <!-- begin Context switcher -->
           <span class="context-mode-switch js-link" style="position:absolute; bottom:25px; right: 40px;z-index:1;border: 1px solid; border-radius: 30px;background-color: rgba(255,255,255,0.9);">
@@ -626,13 +626,6 @@
 
 <template name="context_browser_portrait">
   <div id="carousel-portrait-context" class="carousel slide" data-interval="false" data-ride="carousel" data-slide-to="1" style="height:{{carouselHeight}}px">
-  <!-- Indicators 
-  <ol class="carousel-indicators">
-    <li data-target="#carousel-portrait-context" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel-portrait-context" data-slide-to="1"></li>
-    <li data-target="#carousel-portrait-context" data-slide-to="2"></li>
-  </ol>
-  -->
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
@@ -698,7 +691,7 @@
   
 <template name="portrait_item_context_section">
   {{#if showContext}}
-    <div class="item" style="height: {{carouselHeight}}px">
+    <div class="item" style="height: {{carouselHeight}}px" data-context-id="{{_id}}">
     <div class="embedly-card" data-context-id="{{_id}}">
       <div class="embedly-card-hug" style="width: 600px; padding: 0px; position: relative; max-width: 100%; margin: 5px auto;">
         <div class="card article">
