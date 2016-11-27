@@ -308,6 +308,10 @@
       <div class="{{#if cardListContainerHidden}}col-xs-0{{else}}col-xs-4{{/if}} right animate" style="z-index: 10;" id="card-list-container">
           {{#unless showCurateTools}}
           {{#unless cardListContainerHidden}}
+          <style>
+          /* alter notifications when cardlisth shown */
+          .amaran-wrapper.right { right: 450px!important; }
+          </style>
           <!-- begin Context switcher -->
           <span class="context-mode-switch js-link" style="position:absolute; bottom:25px; right: 40px;z-index:1;border: 1px solid; border-radius: 30px;background-color: rgba(255,255,255,0.9);">
             {{#if showShowTimelineButton}}
