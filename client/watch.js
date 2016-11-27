@@ -403,6 +403,7 @@ Template.watch_page.onRendered(function(){
   $(window).resize(throttledResize);
   Tracker.autorun(function(){
     windowSizeDep.depend();
+    var windowSizeDepRand = Session.get('windowSizeDepRand');
     Session.set('cardStackWidth', $('#card-list-container').width() + 30);
     Session.set('windowHeightForCarousel', $(window).height());
     Session.set('windowWidthForCarousel', $(window).width());
@@ -1353,7 +1354,6 @@ Template.portrait_item_context_section.helpers({
           default:
             notifyObject.message = 'A new ' + this.type + ' card is avaialble';
         }
-        
         notifyCard(notifyObject);
         return true;
       }

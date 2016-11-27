@@ -59,6 +59,7 @@ Template.minimal_navbar.events({
     } else {
       $('#card-list-container').toggleClass('col-xs-4 col-xs-0');
       $('#watch-video-container').toggleClass('col-xs-8 col-xs-12');
+      Meteor.setTimeout(function(){Session.set('windowSizeDepRand', Math.random());},350);
       return Session.set('cardListContainerHidden', true);
     }
     //TO DO, when in search result takes you back from 
@@ -67,6 +68,7 @@ Template.minimal_navbar.events({
   'click .show-cards' () {
     $('#card-list-container').toggleClass('col-xs-4 col-xs-0');
     $('#watch-video-container').toggleClass('col-xs-8 col-xs-12');
+    Meteor.setTimeout(function(){Session.set('windowSizeDepRand', Math.random());},350);
     return Session.set('cardListContainerHidden', null)
   },
   'click .show-suggestions'(){
