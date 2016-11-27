@@ -1153,10 +1153,6 @@ Template.watch_page.events({
   'click .PiP-overlay' (e, t){
     clearCurrentContext();
   },
-  'click .context-mini-preview' (e, t){
-    scrollToContext(this._id);
-    analytics.track('Click context mini preview', trackingInfoFromContext(this));
-  },
   'click .curator-card-like' (e, t){
     analytics.track('Click curator card like', trackingInfoFromPage());
   },

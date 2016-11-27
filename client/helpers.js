@@ -1,3 +1,14 @@
+Template.body.events({
+  'click .context-mini-preview' (e, t){
+    var _id = this._id;
+    if(!_id){
+      _id= $(this).data('context-id');
+    }
+    scrollToContext(_id);
+    analytics.track('Click context mini preview', trackingInfoFromContext(this));
+  },
+});
+
 Template.registerHelper("browseSuggestionsMode", function() {
   return browseSuggestionsMode();
 });

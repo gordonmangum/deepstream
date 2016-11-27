@@ -972,7 +972,7 @@
     <div class="previews-container">
       {{#unless replayEnabled}}
         {{#each orderedInternalContext}}
-          <div class="context-mini-preview {{#if isActiveContext}}{{/if}}" data-context-id="{{_id}}">{{> relevant_content_icon}}</div>
+          <div class="context-mini-preview-stack-item context-mini-preview {{#if isActiveContext}}{{/if}}" data-context-id="{{_id}}">{{> relevant_content_icon}}</div>
         {{/each}}
       {{/unless}}
     </div>

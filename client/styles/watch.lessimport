@@ -699,7 +699,7 @@
   .padding-sides(10px);
   .previews-container{
   }
-  .context-mini-preview{
+  .context-mini-preview-stack-item {
 
     height: 20px;
     width: 35px;

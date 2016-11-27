@@ -332,6 +332,12 @@ window.scrollToContext = function(id){
   clearCurrentContext();
   Session.set('mediaDataType', null);
   Session.set('contextMode', 'context');
+  if(!Session.equals('cardListContainerHidden', null)){
+    $('#card-list-container').toggleClass('col-xs-4 col-xs-0');
+    $('#watch-video-container').toggleClass('col-xs-8 col-xs-12');
+    Session.set('cardListContainerHidden', null)  
+  }
+  
   Meteor.setTimeout(() => {
     var contextToScrollTo = $('.context-section[data-context-id=' + id + ']');
     var container = $('.card-list-area');

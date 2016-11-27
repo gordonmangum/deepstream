@@ -38,7 +38,7 @@ window.notifyCard = function(cardDataObject){
       'position' :'top right',
       delay: 5000,
       themeTemplate:function(data){
-      return '<div class="card-notification-container"> <div class="row"> <div class="col-xs-3"><img src="' + data.CDO.image+'"/></div> <div class="col-xs-9" style="padding-left: 0;"><p>' + data.CDO.message + '</p></div> </div> </div>';
+      return '<div class="card-notification-container context-mini-preview" data-context-id="'+ data.CDO.cardId +' " data-target="#carousel-portrait-context" data-slide-to="2"> <div class="row"> <div class="col-xs-3"><img src="' + data.CDO.image+'"/></div> <div class="col-xs-9" style="padding-left: 0;"><p>' + data.CDO.message + '</p></div> </div> </div>';
       },
       //sticky: true,
       //clearAll: true
