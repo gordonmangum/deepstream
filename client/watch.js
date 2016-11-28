@@ -1354,7 +1354,7 @@ Template.portrait_item_context_section.helpers({
           default:
             notifyObject.message = 'A new ' + this.type + ' card is avaialble';
         }
-        notifyCard(notifyObject);
+        notifyCard(notifyObject, this, function(card){ setTimeout(function(){card.shownNotification = false; },100);});
         return true;
       }
       return true;
@@ -1618,8 +1618,8 @@ Template.list_item_context_section.helpers({
       if(parseFloat(Session.get("currentTimeElapsed")) < parseFloat(this.videoMarker)){
         return false;
       }
-      if(!this.shownNotification && parseFloat(Session.get("currentTimeElapsed")) < (parseFloat(this.videoMarker)+2)){
-        // this.shownNotification = true;
+      if(!this.shownNotification && parseFloat(Session.get("currentTimeElapsed")) < (parseFloat(this.videoMarker)+1)){
+        this.shownNotification = true;
         var notifyObject = {
           cardId: this._id,
           type: this.type,
@@ -1670,7 +1670,7 @@ Template.list_item_context_section.helpers({
             notifyObject.message = 'A new ' + this.type + ' card is avaialble';
         }
         
-        notifyCard(notifyObject);
+        notifyCard(notifyObject, this, function(card){ setTimeout(function(){card.shownNotification = false; },100);});
         return true;
       }
       //console.log('dont show notif');
@@ -1678,6 +1678,94 @@ Template.list_item_context_section.helpers({
     }
   },
 });
+Template.list_item_context_section.onRendered(function(){
+  var notifyIntervalId = setInterval(function(){}, 30000);
+  clearInterval(notifyIntervalId);
+  
+  Tracker.autorun(function () {
+    if(!Session.get('replayEnabled')){
+      if(Session.get('cardListContainerHidden')){
+        if(!Session.get('stackClosedNotifyInterval')){
+           var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {}});
+           if(!deepstream){} else {
+             var contextArray = deepstream.orderedContext();
+             
+           }
+           var stackClosedNotifyInterval = setInterval(function(){
+             if(!contextArray.length){
+               contextArray = deepstream.orderedContext();
+             }
+             
+       var card = contextArray.splice(Math.floor(Math.random()*contextArray.length), 1)[0];
+       var notifyObject = {
+          cardId: card._id,
+          type: card.type,
+          size: 'desktop',
+        }
+        switch (card.type) {
+          case 'news':
+            notifyObject.message = card.reference.title;
+            notifyObject.image = card.reference.topImage.url || card.reference.providerIconUrl;
+            break;
+          case 'image':
+            if(card.source == 'cloudinary'){
+              notifyObject.message = 'Uploaded Image';
+            } else {
+              notifyObject.message = card.reference.title;
+            }
+            notifyObject.image = card.previewUrl();
+            break;
+          case 'text':
+            notifyObject.message = card.content;
+            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/text_b7uaky.png';
+            break;
+          case 'link':
+            notifyObject.message = card.reference.title;
+            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/link_kdb1bb.png';
+            break;
+          case 'twitter':
+            notifyObject.message = card.reference.text;
+            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
+            break;
+          case 'map':
+            notifyObject.message = card.reference.mapQuery;
+            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
+            break;
+          case 'poll':
+            notifyObject.message = "Poll: " + card.content;
+            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/poll_jnvpnp.png';
+            break;
+          case 'audio':;
+            notifyObject.message = card.reference.title;
+            notifyObject.image = card.reference.artworkUrl;
+            break;
+          case 'video':;
+            notifyObject.message = card.reference.title;
+            notifyObject.image = card.thumbnailUrl();
+            break;
+          default:
+            notifyObject.message = 'A new ' + card.type + ' card is avaialble';
+        }
+             
+             notifyCard(notifyObject);
+           }, 30000);
+           Session.set('stackClosedNotifyInterval', stackClosedNotifyInterval);      
+        }
+      } else {
+        // if interval clear interval
+        clearInterval(Session.get('stackClosedNotifyInterval'));
+        Session.set('stackClosedNotifyInterval', null);
+      }
+    } else {
+      // if interval clear interval
+      clearInterval(Session.get('stackClosedNotifyInterval'));
+      Session.set('stackClosedNotifyInterval', null);
+    }
+  });
+  
+  
+});
+
 
 Template.modals.helpers({
   thisDeepstream () {

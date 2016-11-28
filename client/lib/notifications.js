@@ -26,7 +26,7 @@ window.notifySuccess = function(message){
   );
 };
 
-window.notifyCard = function(cardDataObject){
+window.notifyCard = function(cardDataObject, card, cb){
   $.amaran({
       content: {
         themeName: 'cardNotificationTheme',
@@ -43,6 +43,9 @@ window.notifyCard = function(cardDataObject){
       //clearAll: true
     }
   );
+  if(cb && card){
+    cb(card);
+  }
 };
 
 window.notifyLogin = function(){
