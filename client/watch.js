@@ -1686,7 +1686,7 @@ Template.list_item_context_section.onRendered(function(){
   *  Show a random card notification every 30 seconds when on portrait or with hidden card stack. Also only when Replay Context is disabled.
   **/
   Tracker.autorun(function () {
-    if(!Session.get('replayEnabled')){
+    if(!Session.get('replayEnabled') && !Session.get('curateMode')){
       if(Session.get('cardListContainerHidden') || !Session.get('showDesktopMode')){
         if(!Session.get('stackClosedNotifyInterval')){
            var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {}});
@@ -1771,7 +1771,7 @@ Template.list_item_context_section.onRendered(function(){
   **/
   
   Tracker.autorun(function(){
-    if(!Session.get('replayEnabled')){
+    if(!Session.get('replayEnabled') && !Session.get('curateMode')){
       if(Session.get('newContextAvailable')){
         var mostRecentContextId = Deepstreams.findOne({shortId: Session.get('streamShortId')}).mostRecentContextId();
         if(mostRecentContextId){
