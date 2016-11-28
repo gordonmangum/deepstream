@@ -335,10 +335,19 @@ window.scrollToContext = function(id){
   if(Session.get('cardListContainerHidden')){
     $('#card-list-container').toggleClass('col-xs-4 col-xs-0');
     $('#watch-video-container').toggleClass('col-xs-8 col-xs-12');
-    Session.set('cardListContainerHidden', null)  
-  }
+    Session.set('cardListContainerHidden', null);
+    Meteor.setTimeout(() => {
+      if(window.showDesktopMode()){
+        var contextToScrollTo = $('.context-section[data-context-id=' + id + ']');
+        var container = $('.card-list-area');
+        container.animate({scrollTop: (contextToScrollTo.offset().top - container.offset().top + container.scrollTop())});
+      } else {
+        $('#carousel-portrait-context').carousel($('#carousel-portrait-context .item[data-context-id="' + id + '"]').index());
+      }
+    }, 500);
   
-  Meteor.setTimeout(() => {
+  } else {
+    Meteor.setTimeout(() => {
     if(window.showDesktopMode()){
       var contextToScrollTo = $('.context-section[data-context-id=' + id + ']');
       var container = $('.card-list-area');
@@ -347,6 +356,7 @@ window.scrollToContext = function(id){
       $('#carousel-portrait-context').carousel($('#carousel-portrait-context .item[data-context-id="' + id + '"]').index());
     }
   })
+  }
 }
 
 window.browseSuggestionsMode = function(){

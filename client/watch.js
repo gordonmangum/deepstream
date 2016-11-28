@@ -1682,9 +1682,12 @@ Template.list_item_context_section.onRendered(function(){
   var notifyIntervalId = setInterval(function(){}, 30000);
   clearInterval(notifyIntervalId);
   
+  /**
+  *  Show a random card notification every 30 seconds when on portrait or with hidden card stack. Also only when Replay Context is disabled.
+  **/
   Tracker.autorun(function () {
     if(!Session.get('replayEnabled')){
-      if(Session.get('cardListContainerHidden')){
+      if(Session.get('cardListContainerHidden') || !Session.get('showDesktopMode')){
         if(!Session.get('stackClosedNotifyInterval')){
            var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {}});
            if(!deepstream){} else {
@@ -1763,7 +1766,75 @@ Template.list_item_context_section.onRendered(function(){
     }
   });
   
+  /**
+  *  Show a card notification when new context added when replay context disabled.
+  **/
   
+  Tracker.autorun(function(){
+    if(!Session.get('replayEnabled')){
+      if(Session.get('newContextAvailable')){
+        var mostRecentContextId = Deepstreams.findOne({shortId: Session.get('streamShortId')}).mostRecentContextId();
+        if(mostRecentContextId){
+          var newContext = ContextBlocks.findOne(mostRecentContextId);
+          if(newContext){
+            var notifyObject = {
+              cardId: newContext._id,
+              type: newContext.type,
+              size: 'desktop',
+            }
+            switch (newContext.type) {
+              case 'news':
+                notifyObject.message = newContext.reference.title;
+                notifyObject.image = newContext.reference.topImage.url || newContext.reference.providerIconUrl;
+                break;
+              case 'image':
+                if(newContext.source == 'cloudinary'){
+                  notifyObject.message = 'Uploaded Image';
+                } else {
+                  notifyObject.message = newContext.reference.title;
+                }
+                notifyObject.image = newContext.previewUrl();
+                break;
+              case 'text':
+                notifyObject.message = newContext.content;
+                notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/text_b7uaky.png';
+                break;
+              case 'link':
+                notifyObject.message = newContext.reference.title;
+                notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/link_kdb1bb.png';
+                break;
+              case 'twitter':
+                notifyObject.message = newContext.reference.text;
+                notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
+                break;
+              case 'map':
+                notifyObject.message = newContext.reference.mapQuery;
+                notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
+                break;
+              case 'poll':
+                notifyObject.message = "Poll: " + newContext.content;
+                notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/poll_jnvpnp.png';
+                break;
+              case 'audio':;
+                notifyObject.message = newContext.reference.title;
+                notifyObject.image = newContext.reference.artworkUrl;
+                break;
+              case 'video':;
+                notifyObject.message = newContext.reference.title;
+                notifyObject.image = newContext.thumbnailUrl();
+                break;
+              default:
+                notifyObject.message = 'A new ' + newContext.type + ' card is avaialble';
+            }
+             
+            notifyCard(notifyObject);
+          }
+        }
+        Session.set('newContextAvailable', false);
+        newContextDep.changed();
+      }
+    }
+  });
 });
 
 
