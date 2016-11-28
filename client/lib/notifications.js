@@ -27,7 +27,6 @@ window.notifySuccess = function(message){
 };
 
 window.notifyCard = function(cardDataObject){
-  console.log(cardDataObject);
   $.amaran({
       content: {
         themeName: 'cardNotificationTheme',

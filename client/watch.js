@@ -1597,7 +1597,7 @@ Template.solo_context_section.helpers({
 Template.list_item_context_section.helpers(horizontalBlockHelpers);
 Template.list_item_context_section.helpers({
   showContext(){
-    if(!this.videoMarker){
+    if(!this.videoMarker || this.videoMarker == 0){
       return true;
     }
     if(Session.get('replayContext') === false){
@@ -1615,12 +1615,11 @@ Template.list_item_context_section.helpers({
       if(!Session.get("currentTimeElapsed") || Session.get("currentTimeElapsed") === 0){
           return false;
       }
-      if(parseFloat(Session.get("currentTimeElapsed")) < this.videoMarker){
+      if(parseFloat(Session.get("currentTimeElapsed")) < parseFloat(this.videoMarker)){
         return false;
       }
-      if(!this.shownNotification){
-        console.info('show notif');
-        this.shownNotification = true;
+      if(!this.shownNotification && parseFloat(Session.get("currentTimeElapsed")) < (parseFloat(this.videoMarker)+2)){
+        // this.shownNotification = true;
         var notifyObject = {
           cardId: this._id,
           type: this.type,
@@ -1674,7 +1673,7 @@ Template.list_item_context_section.helpers({
         notifyCard(notifyObject);
         return true;
       }
-      console.log('dont show notif');
+      //console.log('dont show notif');
       return true;
     }
   },
