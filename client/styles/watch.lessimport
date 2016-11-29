@@ -16,6 +16,15 @@
   display: block!important;
 }
 
+.card-notification-container {
+  &.desktop{
+    width:350px;
+  }
+  &.mobile{
+    width:200px;
+  }
+}
+
 .new-watch{
   .inverse-brand {
     height: 30px;
@@ -31,6 +40,8 @@
 
 .watch{
   @media (min-width: 900px) { margin-top: 51px; }
+  
+  
   
   background-color: @watch-background-color;
   .annotation-section{
