@@ -39,7 +39,7 @@ window.notifyCard = function(cardDataObject, card, cb){
       themeTemplate:function(data){
       return '<div class="card-notification-container context-mini-preview ' + data.CDO.size + '" data-context-id="'+ data.CDO.cardId +'"> <div class="row"> <div class="col-xs-3"><img src="' + data.CDO.image+'"/></div> <div class="col-xs-9" style="padding-left: 0;"><p>' + data.CDO.message + '</p></div> </div> </div>';
       },
-      //sticky: true,
+      sticky: true,
       //clearAll: true
     }
   );

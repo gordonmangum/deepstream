@@ -5,6 +5,14 @@
 <style type="text/css">
 	.st0{fill:none;stroke:#000000;stroke-miterlimit:10;}
 </style>
+  <style>
+    .fg{ 
+      fill:#d8d8d8;
+    }
+    .bg{
+      fill:none;
+    }
+  </style>
 <g>
 	<g>
 		<circle class="st0" cx="22" cy="22" r="22"/>

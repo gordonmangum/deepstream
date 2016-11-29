@@ -1326,23 +1326,23 @@ Template.portrait_item_context_section.helpers({
             break;
           case 'text':
             notifyObject.message = this.content.substring(0,70);
-            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/text_b7uaky.png';
+            notifyObject.image = '/images/text_icon.svg';
             break;
           case 'link':
             notifyObject.message = this.reference.title.substring(0,70);
-            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/link_kdb1bb.png';
+            notifyObject.image = '/images/link_icon.svg';
             break;
           case 'twitter':
             notifyObject.message = this.reference.text.substring(0,70);
-            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
+            notifyObject.image = '/images/twitter_icon.svg';
             break;
           case 'map':
             notifyObject.message = this.reference.mapQuery.substring(0,70);
-            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
+            notifyObject.image = '';
             break;
           case 'poll':
             notifyObject.message = "Poll: " + this.content.substring(0,70);
-            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/poll_jnvpnp.png';
+            notifyObject.image = '/images/poll_icon.svg';
             break;
           case 'audio':;
             notifyObject.message = this.reference.title.substring(0,70);
@@ -1643,23 +1643,23 @@ Template.list_item_context_section.helpers({
             break;
           case 'text':
             notifyObject.message = this.content.substring(0,70);
-            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/text_b7uaky.png';
+            notifyObject.image = '/images/text_icon.svg';
             break;
           case 'link':
             notifyObject.message = this.reference.title.substring(0,70);
-            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/link_kdb1bb.png';
+            notifyObject.image = '/images/link_icon.svg';
             break;
           case 'twitter':
             notifyObject.message = this.reference.text.substring(0,70);
-            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
+            notifyObject.image = '/images/twitter_icon.svg';
             break;
           case 'map':
             notifyObject.message = this.reference.mapQuery.substring(0,70);
-            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
+            notifyObject.image = '/images/map_icon.svg';
             break;
           case 'poll':
             notifyObject.message = "Poll: " + this.content.substring(0,70);
-            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/poll_jnvpnp.png';
+            notifyObject.image = '/images/poll_icon.svg';
             break;
           case 'audio':;
             notifyObject.message = this.reference.title.substring(0,70);
@@ -1724,23 +1724,23 @@ Template.list_item_context_section.onRendered(function(){
                   break;
                 case 'text':
                   notifyObject.message = card.content.substring(0,70);
-                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/text_b7uaky.png';
+                  notifyObject.image = '/images/text_icon.svg';
                   break;
                 case 'link':
                   notifyObject.message = card.reference.title.substring(0,70);
-                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/link_kdb1bb.png';
+                  notifyObject.image = '/images/link_icon.svg';
                   break;
                 case 'twitter':
                   notifyObject.message = card.reference.text.substring(0,70);
-                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
+                  notifyObject.image = '/images/twitter_icon.svg';
                   break;
                 case 'map':
                   notifyObject.message = card.reference.mapQuery;
-                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
+                  notifyObject.image = '/images/map_icon.svg';
                   break;
                 case 'poll':
                   notifyObject.message = "Poll: " + card.content.substring(0,70);
-                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/poll_jnvpnp.png';
+                  notifyObject.image = '/images/poll_icon.svg';
                   break;
                 case 'audio':;
                   notifyObject.message = card.reference.title.substring(0,70);
@@ -1783,23 +1783,23 @@ Template.list_item_context_section.onRendered(function(){
                   break;
                 case 'text':
                   notifyObject.message = card.content.substring(0,70);
-                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/text_b7uaky.png';
+                  notifyObject.image = '/images/text_icon.svg';
                   break;
                 case 'link':
                   notifyObject.message = card.reference.title.substring(0,70);
-                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/link_kdb1bb.png';
+                  notifyObject.image = '/images/link_icon.svg';
                   break;
                 case 'twitter':
                   notifyObject.message = card.reference.text.substring(0,70);
-                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
+                  notifyObject.image = '/images/twitter_icon.svg';
                   break;
                 case 'map':
                   notifyObject.message = card.reference.mapQuery.substring(0,70);
-                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
+                  notifyObject.image = '/images/map_icon.svg';
                   break;
                 case 'poll':
                   notifyObject.message = "Poll: " + card.content.substring(0,70);
-                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/poll_jnvpnp.png';
+                  notifyObject.image = '/images/poll_icon.svg';
                   break;
                 case 'audio':;
                   notifyObject.message = card.reference.title.substring(0,70);
@@ -1860,23 +1860,23 @@ Template.list_item_context_section.onRendered(function(){
                 break;
               case 'text':
                 notifyObject.message = newContext.content.substring(0,70);
-                notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/text_b7uaky.png';
+                notifyObject.image = '/images/text_icon.svg';
                 break;
               case 'link':
                 notifyObject.message = newContext.reference.title.substring(0,70);
-                notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/link_kdb1bb.png';
+                notifyObject.image = '/images/link_icon.svg';
                 break;
               case 'twitter':
                 notifyObject.message = newContext.reference.text.substring(0,70);
-                notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
+                notifyObject.image = '/images/twitter_icon.svg';
                 break;
               case 'map':
                 notifyObject.message = newContext.reference.mapQuery.substring(0,70);
-                notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
+                notifyObject.image = '/images/map_icon.svg';
                 break;
               case 'poll':
                 notifyObject.message = "Poll: " + newContext.content.substring(0,70);
-                notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/poll_jnvpnp.png';
+                notifyObject.image = '/images/poll_icon.svg';
                 break;
               case 'audio':;
                 notifyObject.message = newContext.reference.title.substring(0,70);

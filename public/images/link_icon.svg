@@ -1,20 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 44 44"
-	 style="enable-background:new 0 0 44 44;" xml:space="preserve">
-<title>Free Text Copy 2</title>
-<desc>Created with Sketch.</desc>
-<g id="Page-1" sketch:type="MSPage">
-	<g id="Free-Text-Copy-2" sketch:type="MSArtboardGroup">
-		<g id="Group" transform="translate(1.000000, 1.000000)" sketch:type="MSLayerGroup">
-			<path id="Shape" sketch:type="MSShapeGroup" d="M4.7,20.7l2.5-2.5c-0.4,2.1-0.3,4.4,0.3,6.5c-2.1,2.6-1.9,6.5,0.5,8.9
-				c2.6,2.6,6.9,2.6,9.5,0l8-8c2.6-2.6,2.6-6.9,0-9.5c-1.2-1.2-2.7-1.8-4.3-2l3.9-3.9c1.4,0.6,2.6,1.4,3.7,2.5
-				c4.5,4.5,4.5,11.7,0,16.2l-8,8c-4.5,4.5-11.7,4.5-16.2,0C0.3,32.4,0.3,25.1,4.7,20.7L4.7,20.7z"/>
-			<path id="Shape_1_" sketch:type="MSShapeGroup" d="M34.1,17c2.1-2.6,1.9-6.5-0.5-8.9c-2.6-2.6-6.9-2.6-9.5,0l-8,8
-				c-2.6,2.6-2.6,6.9,0,9.5c1.2,1.2,2.7,1.8,4.3,1.9l-3.9,3.9c-1.4-0.6-2.6-1.4-3.7-2.5c-4.5-4.5-4.5-11.7,0-16.2l8-8
-				c4.5-4.5,11.7-4.5,16.2,0c4.5,4.5,4.5,11.7,0,16.2l-2.5,2.5C34.8,21.3,34.7,19.1,34.1,17L34.1,17z"/>
-		</g>
-	</g>
-</g>
-</svg>
+  <svg class="link-icon icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+     width="43.791px" height="43.791px" viewBox="0 0 43.791 43.791" enable-background="new 0 0 43.791 43.791" xml:space="preserve">
+  <style>
+    .fg{ 
+      fill:#d8d8d8;
+    }
+    .bg{
+      fill:none;
+    }
+  </style>
+    <g>
+      <circle class="bg" cx="21.895" cy="21.895" r="21.895"/>
+      <g>
+        <path class="fg" d="M13.48,21.818l1.313-1.313c-0.217,1.119-0.167,2.28,0.146,3.384c-1.084,1.385-0.99,3.398,0.284,4.674
+          c1.38,1.379,3.622,1.379,5.002,0l4.168-4.168c1.379-1.379,1.379-3.623,0-5c-0.621-0.622-1.418-0.961-2.235-1.023l2.026-2.025
+          c0.711,0.292,1.377,0.725,1.953,1.304c2.342,2.34,2.342,6.149,0,8.489l-4.168,4.17c-2.34,2.342-6.149,2.342-8.49,0
+          C11.14,27.969,11.14,24.161,13.48,21.818z"/>
+        <path class="fg" d="M28.846,19.901c1.086-1.388,0.994-3.399-0.281-4.677c-1.379-1.378-3.623-1.378-5.002,0.002l-4.168,4.169
+          c-1.38,1.377-1.38,3.621,0,5c0.621,0.621,1.419,0.961,2.234,1.02l-2.026,2.029c-0.71-0.295-1.377-0.729-1.953-1.305
+          c-2.341-2.34-2.341-6.149,0-8.489l4.168-4.168c2.341-2.343,6.152-2.343,8.492-0.002c2.342,2.343,2.342,6.15,0,8.492l-1.314,1.314
+          C29.213,22.163,29.163,21.003,28.846,19.901z"/>
+      </g>
+    </g>
+  </svg>
