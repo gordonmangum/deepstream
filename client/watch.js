@@ -424,7 +424,7 @@ Template.watch_page.onRendered(function(){
       }
       Session.set('currentTimeElapsed', elapsedTime);
     }
-  },800);
+  },1000);
   
   this.autorun(function(){
     var deepstream = Deepstreams.findOne({shortId: Session.get('streamShortId')}, {fields: {replayEnabled: 1, curatorIds: 1}});
@@ -1283,7 +1283,7 @@ Template.portrait_item_context_section.helpers({
     }
   },
   showContext(){
-    if(!this.videoMarker){
+    if(!this.videoMarker || this.videoMarker == 0){
       return true;
     }
     if(Session.get('replayContext') === false){
@@ -1301,11 +1301,10 @@ Template.portrait_item_context_section.helpers({
       if(!Session.get("currentTimeElapsed") || Session.get("currentTimeElapsed") === 0){
           return false;
       }
-      if(parseFloat(Session.get("currentTimeElapsed")) < this.videoMarker){
+      if(parseFloat(Session.get("currentTimeElapsed")) < parseFloat(this.videoMarker)){
         return false;
       }
-      if(!this.shownNotification){
-        console.info('show notif');
+      if(!this.shownNotification && parseFloat(Session.get("currentTimeElapsed")) < (parseFloat(this.videoMarker)+1)){
         this.shownNotification = true;
         var notifyObject = {
           cardId: this._id,
@@ -1338,7 +1337,7 @@ Template.portrait_item_context_section.helpers({
             notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
             break;
           case 'map':
-            notifyObject.message = this.reference.mapQuery;
+            notifyObject.message = this.reference.mapQuery.substring(0,70);
             notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
             break;
           case 'poll':
@@ -1356,9 +1355,11 @@ Template.portrait_item_context_section.helpers({
           default:
             notifyObject.message = 'A new ' + this.type + ' card is avaialble';
         }
+        
         notifyCard(notifyObject, this, function(card){ setTimeout(function(){card.shownNotification = false; },100);});
         return true;
       }
+      //console.log('dont show notif');
       return true;
     }
   },
