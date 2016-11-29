@@ -1,0 +1,20 @@
+ 
+  <svg class="text-icon icon" width="44px" height="44px" viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <style>
+    .fg{ 
+      fill:#d8d8d8;
+    }
+    .bg{
+      fill:none;
+    }
+  </style>
+    <g fill-rule="evenodd">
+      <g>
+        <circle class="bg" cx="22" cy="22" r="22"></circle>
+        <g transform="translate(8.000000, 8.000000)">
+          <path class="fg" d="M24.3597839,0.0496533333 L26.6888532,1.00903704 L27.9563581,3.65489185 L8.08091906,23.5792356 L6.95765943,21.0779852 L4.48463448,19.973997 L24.3597839,0.0496533333 Z"></path>
+          <path class="fg" d="M6.94245517,24.5983111 L0,28 L3.3936,21.040403 L5.52951724,22.1504889 L6.94245517,24.5983111 Z"></path>
+        </g>
+      </g>
+    </g>
+  </svg>
