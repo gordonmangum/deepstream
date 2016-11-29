@@ -274,6 +274,11 @@ Template.preview_text_section.helpers({
     return this.content.replace(/\n/g, "<br>").length > 225;
   }
 });
+Template.portrait_preview_text_section.helpers({
+  contentWithBreaks() {
+    return this.content.replace(/\n/g, "<br>");
+  }
+});
 Template.homepage_preview_text_section.helpers(horizontalBlockHelpers);
 Template.display_text_section.events(editableTextEventsBoilerplate('editTextSection'));
 
