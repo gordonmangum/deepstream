@@ -404,9 +404,11 @@ Template.watch_page.onRendered(function(){
   Tracker.autorun(function(){
     windowSizeDep.depend();
     var windowSizeDepRand = Session.get('windowSizeDepRand');
-    Session.set('cardStackWidth', $('#card-list-container').width() + 30);
-    Session.set('windowHeightForCarousel', $(window).height());
-    Session.set('windowWidthForCarousel', $(window).width());
+    Meteor.setTimeout(function(){
+      Session.set('cardStackWidth', $('#card-list-container').width() + 30);
+      Session.set('windowHeightForCarousel', $(window).height());
+      Session.set('windowWidthForCarousel', $(window).width());
+    },300);
   });
   
   this.checkTime = setInterval(()=>{
@@ -1312,27 +1314,27 @@ Template.portrait_item_context_section.helpers({
         }
         switch (this.type) {
           case 'news':
-            notifyObject.message = this.reference.title;
+            notifyObject.message = this.reference.title.substring(0,70);
             notifyObject.image = this.reference.topImage.url || this.reference.providerIconUrl;
             break;
           case 'image':
             if(this.source == 'cloudinary'){
               notifyObject.message = 'Uploaded Image';
             } else {
-              notifyObject.message = this.reference.title;
+              notifyObject.message = this.reference.title.substring(0,70);
             }
             notifyObject.image = this.previewUrl();
             break;
           case 'text':
-            notifyObject.message = this.content;
+            notifyObject.message = this.content.substring(0,70);
             notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/text_b7uaky.png';
             break;
           case 'link':
-            notifyObject.message = this.reference.title;
+            notifyObject.message = this.reference.title.substring(0,70);
             notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/link_kdb1bb.png';
             break;
           case 'twitter':
-            notifyObject.message = this.reference.text;
+            notifyObject.message = this.reference.text.substring(0,70);
             notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
             break;
           case 'map':
@@ -1340,15 +1342,15 @@ Template.portrait_item_context_section.helpers({
             notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
             break;
           case 'poll':
-            notifyObject.message = "Poll: " + this.content;
+            notifyObject.message = "Poll: " + this.content.substring(0,70);
             notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/poll_jnvpnp.png';
             break;
           case 'audio':;
-            notifyObject.message = this.reference.title;
+            notifyObject.message = this.reference.title.substring(0,70);
             notifyObject.image = this.reference.artworkUrl;
             break;
           case 'video':;
-            notifyObject.message = this.reference.title;
+            notifyObject.message = this.reference.title.substring(0,70);
             notifyObject.image = this.thumbnailUrl();
             break;
           default:
@@ -1627,43 +1629,43 @@ Template.list_item_context_section.helpers({
         }
         switch (this.type) {
           case 'news':
-            notifyObject.message = this.reference.title;
+            notifyObject.message = this.reference.title.substring(0,70);
             notifyObject.image = this.reference.topImage.url || this.reference.providerIconUrl;
             break;
           case 'image':
             if(this.source == 'cloudinary'){
               notifyObject.message = 'Uploaded Image';
             } else {
-              notifyObject.message = this.reference.title;
+              notifyObject.message = this.reference.title.substring(0,70);
             }
             notifyObject.image = this.previewUrl();
             break;
           case 'text':
-            notifyObject.message = this.content;
+            notifyObject.message = this.content.substring(0,70);
             notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/text_b7uaky.png';
             break;
           case 'link':
-            notifyObject.message = this.reference.title;
+            notifyObject.message = this.reference.title.substring(0,70);
             notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/link_kdb1bb.png';
             break;
           case 'twitter':
-            notifyObject.message = this.reference.text;
+            notifyObject.message = this.reference.text.substring(0,70);
             notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
             break;
           case 'map':
-            notifyObject.message = this.reference.mapQuery;
+            notifyObject.message = this.reference.mapQuery.substring(0,70);
             notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
             break;
           case 'poll':
-            notifyObject.message = "Poll: " + this.content;
+            notifyObject.message = "Poll: " + this.content.substring(0,70);
             notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/poll_jnvpnp.png';
             break;
           case 'audio':;
-            notifyObject.message = this.reference.title;
+            notifyObject.message = this.reference.title.substring(0,70);
             notifyObject.image = this.reference.artworkUrl;
             break;
           case 'video':;
-            notifyObject.message = this.reference.title;
+            notifyObject.message = this.reference.title.substring(0,70);
             notifyObject.image = this.thumbnailUrl();
             break;
           default:
@@ -1694,64 +1696,124 @@ Template.list_item_context_section.onRendered(function(){
              var contextArray = deepstream.orderedContext();
              
            }
-           var stackClosedNotifyInterval = setInterval(function(){
+           // set up the interval
+           var stackClosedNotifyInterval = Meteor.setInterval(function(){
              if(!contextArray.length){
                contextArray = deepstream.orderedContext();
              }
-             
-       var card = contextArray.splice(Math.floor(Math.random()*contextArray.length), 1)[0];
-       var notifyObject = {
-          cardId: card._id,
-          type: card.type,
-          size: 'desktop',
-        }
-        switch (card.type) {
-          case 'news':
-            notifyObject.message = card.reference.title;
-            notifyObject.image = card.reference.topImage.url || card.reference.providerIconUrl;
-            break;
-          case 'image':
-            if(card.source == 'cloudinary'){
-              notifyObject.message = 'Uploaded Image';
-            } else {
-              notifyObject.message = card.reference.title;
-            }
-            notifyObject.image = card.previewUrl();
-            break;
-          case 'text':
-            notifyObject.message = card.content;
-            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/text_b7uaky.png';
-            break;
-          case 'link':
-            notifyObject.message = card.reference.title;
-            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/link_kdb1bb.png';
-            break;
-          case 'twitter':
-            notifyObject.message = card.reference.text;
-            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
-            break;
-          case 'map':
-            notifyObject.message = card.reference.mapQuery;
-            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
-            break;
-          case 'poll':
-            notifyObject.message = "Poll: " + card.content;
-            notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/poll_jnvpnp.png';
-            break;
-          case 'audio':;
-            notifyObject.message = card.reference.title;
-            notifyObject.image = card.reference.artworkUrl;
-            break;
-          case 'video':;
-            notifyObject.message = card.reference.title;
-            notifyObject.image = card.thumbnailUrl();
-            break;
-          default:
-            notifyObject.message = 'A new ' + card.type + ' card is avaialble';
-        }
+
+             var card = contextArray.splice(Math.floor(Math.random()*contextArray.length), 1)[0];
+             var notifyObject = {
+                cardId: card._id,
+                type: card.type,
+                size: 'desktop',
+              }
+              switch (card.type) {
+                case 'news':
+                  notifyObject.message = card.reference.title.substring(0,70);
+                  notifyObject.image = card.reference.topImage.url || card.reference.providerIconUrl;
+                  break;
+                case 'image':
+                  if(card.source == 'cloudinary'){
+                    notifyObject.message = 'Uploaded Image';
+                  } else {
+                    notifyObject.message = card.reference.title.substring(0,70);
+                  }
+                  notifyObject.image = card.previewUrl();
+                  break;
+                case 'text':
+                  notifyObject.message = card.content.substring(0,70);
+                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/text_b7uaky.png';
+                  break;
+                case 'link':
+                  notifyObject.message = card.reference.title.substring(0,70);
+                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/link_kdb1bb.png';
+                  break;
+                case 'twitter':
+                  notifyObject.message = card.reference.text.substring(0,70);
+                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
+                  break;
+                case 'map':
+                  notifyObject.message = card.reference.mapQuery;
+                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
+                  break;
+                case 'poll':
+                  notifyObject.message = "Poll: " + card.content.substring(0,70);
+                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/poll_jnvpnp.png';
+                  break;
+                case 'audio':;
+                  notifyObject.message = card.reference.title.substring(0,70);
+                  notifyObject.image = card.reference.artworkUrl;
+                  break;
+                case 'video':;
+                  notifyObject.message = card.reference.title.substring(0,70);
+                  notifyObject.image = card.thumbnailUrl();
+                  break;
+                default:
+                  notifyObject.message = 'A new ' + card.type + ' card is avaialble';
+              }
              
              notifyCard(notifyObject);
            }, 30000);
+           // a first card to appear after 5 seconds
+           Meteor.setTimeout(function(){
+             if(!contextArray.length){
+               contextArray = deepstream.orderedContext();
+             }
+
+             var card = contextArray.splice(Math.floor(Math.random()*contextArray.length), 1)[0];
+             var notifyObject = {
+                cardId: card._id,
+                type: card.type,
+                size: 'desktop',
+              }
+              switch (card.type) {
+                case 'news':
+                  notifyObject.message = card.reference.title.substring(0,70);
+                  notifyObject.image = card.reference.topImage.url || card.reference.providerIconUrl;
+                  break;
+                case 'image':
+                  if(card.source == 'cloudinary'){
+                    notifyObject.message = 'Uploaded Image';
+                  } else {
+                    notifyObject.message = card.reference.title.substring(0,70);
+                  }
+                  notifyObject.image = card.previewUrl();
+                  break;
+                case 'text':
+                  notifyObject.message = card.content.substring(0,70);
+                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/text_b7uaky.png';
+                  break;
+                case 'link':
+                  notifyObject.message = card.reference.title.substring(0,70);
+                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/link_kdb1bb.png';
+                  break;
+                case 'twitter':
+                  notifyObject.message = card.reference.text.substring(0,70);
+                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
+                  break;
+                case 'map':
+                  notifyObject.message = card.reference.mapQuery.substring(0,70);
+                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
+                  break;
+                case 'poll':
+                  notifyObject.message = "Poll: " + card.content.substring(0,70);
+                  notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/poll_jnvpnp.png';
+                  break;
+                case 'audio':;
+                  notifyObject.message = card.reference.title.substring(0,70);
+                  notifyObject.image = card.reference.artworkUrl;
+                  break;
+                case 'video':;
+                  notifyObject.message = card.reference.title.substring(0,70);
+                  notifyObject.image = card.thumbnailUrl();
+                  break;
+                default:
+                  notifyObject.message = 'A new ' + card.type + ' card is avaialble';
+              }
+             
+             notifyCard(notifyObject);
+           }, 5000);
            Session.set('stackClosedNotifyInterval', stackClosedNotifyInterval);      
         }
       } else {
@@ -1784,43 +1846,43 @@ Template.list_item_context_section.onRendered(function(){
             }
             switch (newContext.type) {
               case 'news':
-                notifyObject.message = newContext.reference.title;
+                notifyObject.message = newContext.reference.title.substring(0,70);
                 notifyObject.image = newContext.reference.topImage.url || newContext.reference.providerIconUrl;
                 break;
               case 'image':
                 if(newContext.source == 'cloudinary'){
                   notifyObject.message = 'Uploaded Image';
                 } else {
-                  notifyObject.message = newContext.reference.title;
+                  notifyObject.message = newContext.reference.title.substring(0,70);
                 }
                 notifyObject.image = newContext.previewUrl();
                 break;
               case 'text':
-                notifyObject.message = newContext.content;
+                notifyObject.message = newContext.content.substring(0,70);
                 notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/text_b7uaky.png';
                 break;
               case 'link':
-                notifyObject.message = newContext.reference.title;
+                notifyObject.message = newContext.reference.title.substring(0,70);
                 notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/link_kdb1bb.png';
                 break;
               case 'twitter':
-                notifyObject.message = newContext.reference.text;
+                notifyObject.message = newContext.reference.text.substring(0,70);
                 notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/twitter_bjza4d.png';
                 break;
               case 'map':
-                notifyObject.message = newContext.reference.mapQuery;
+                notifyObject.message = newContext.reference.mapQuery.substring(0,70);
                 notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/map_f3uhmt.png';
                 break;
               case 'poll':
-                notifyObject.message = "Poll: " + newContext.content;
+                notifyObject.message = "Poll: " + newContext.content.substring(0,70);
                 notifyObject.image = 'http://res.cloudinary.com/deepstream/image/upload/v1478817642/poll_jnvpnp.png';
                 break;
               case 'audio':;
-                notifyObject.message = newContext.reference.title;
+                notifyObject.message = newContext.reference.title.substring(0,70);
                 notifyObject.image = newContext.reference.artworkUrl;
                 break;
               case 'video':;
-                notifyObject.message = newContext.reference.title;
+                notifyObject.message = newContext.reference.title.substring(0,70);
                 notifyObject.image = newContext.thumbnailUrl();
                 break;
               default:
