@@ -622,6 +622,10 @@ Template.watch_page.onRendered(function(){
       
   });
   
+  // for notification positioning
+  Meteor.setTimeout(function(){
+    windowSizeDep.changed();
+  },250);
 });
 
 Template.watch_page.onDestroyed(function () {
