@@ -435,7 +435,7 @@ Stream = (function (_super) {
   Stream.prototype.iframePreviewUrl = function(){
     switch (this.source){
       case 'youtube':
-        return this.autoplayUrl() + '&fs=0&playsinline=1'; // unfortunately, youtube doesn't have mute or volume parameters
+        return 'http://' + this.autoplayUrl() + '&fs=0&playsinline=1'; // unfortunately, youtube doesn't have mute or volume parameters. Also https causes issue on Mobile Safari autoplay
       case 'ustream':
         return this.autoplayUrl() + '&volume=0';
       case 'bambuser':
