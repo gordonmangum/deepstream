@@ -557,7 +557,7 @@ Template.watch_page.onRendered(function(){
   });
   
   onMainPlayerReady = function(event){
-    //mainPlayer.play(); // if streamUrl uses autoplayUrl, this is effectively a fallback
+    mainPlayer.play(); // autoplays videos on iOS
   };
 
   onMainPlayerStateChange = function(event){
