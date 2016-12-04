@@ -286,7 +286,7 @@
 <template name="looping_video">
   <div class="embed-responsive embed-responsive-16by9 {{#unless curateMode}}embed-responsive-preview{{/unless}}" >
     <video class="embed-responsive-item" autoplay loop muted="muted"
-           poster="{{previewUrl}}">
+           poster="{{previewUrl}}" webkit-playsinline="true" playsinline="true">
 
       <source type="video/mp4"
               src="{{mp4Url}}">
