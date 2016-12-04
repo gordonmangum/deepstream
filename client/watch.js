@@ -12,7 +12,13 @@ window.resetMainPlayer = function(){
     play(){
       switch(this.activeStreamSource){
         case 'youtube':
-          this._youTubePlayer.playVideo();
+          if(this._youTubePlayer){
+            this._youTubePlayer.playVideo();
+          } else {
+            Meteor.setTimeout(function(){
+              mainPlayer.play();
+            },500);
+          }
           break;
         case 'ustream':
           this._ustreamPlayer.callMethod('play');
@@ -405,7 +411,6 @@ Template.watch_page.onRendered(function(){
     windowSizeDep.depend();
     var windowSizeDepRand = Session.get('windowSizeDepRand');
     Meteor.setTimeout(function(){
-      console.info('the card stack width is: ' +$('#card-list-container').width() + 30);
       Session.set('cardStackWidth', $('#card-list-container').width() + 30);
       Session.set('windowHeightForCarousel', $(window).height());
       Session.set('windowWidthForCarousel', $(window).width());
@@ -557,7 +562,7 @@ Template.watch_page.onRendered(function(){
   });
   
   onMainPlayerReady = function(event){
-    Meteor.setTimeout(function(){ mainPlayer.play(); }, 250); // autoplays videos on iOS
+    mainPlayer.play(); // autoplays videos on iOS
   };
 
   onMainPlayerStateChange = function(event){
@@ -1363,7 +1368,9 @@ Template.portrait_item_context_section.helpers({
           default:
             notifyObject.message = 'A new ' + this.type + ' card is avaialble';
         }
-        
+        if(this.reference.title.length > 71){
+          notifyObject.message += '...';
+        }
         notifyCard(notifyObject, this, function(card){ setTimeout(function(){card.shownNotification = false; },100);});
         return true;
       }
@@ -1680,7 +1687,9 @@ Template.list_item_context_section.helpers({
           default:
             notifyObject.message = 'A new ' + this.type + ' card is avaialble';
         }
-        
+        if(this.reference.title.length > 71){
+          notifyObject.message += '...';
+        }
         notifyCard(notifyObject, this, function(card){ setTimeout(function(){card.shownNotification = false; },100);});
         return true;
       }
@@ -1761,7 +1770,9 @@ Template.list_item_context_section.onRendered(function(){
                 default:
                   notifyObject.message = 'A new ' + card.type + ' card is avaialble';
               }
-             
+             if(this.reference.title.length > 71){
+                notifyObject.message += '...';
+              }
              notifyCard(notifyObject);
            }, 30000);
            // a first card to appear after 5 seconds
@@ -1820,7 +1831,9 @@ Template.list_item_context_section.onRendered(function(){
                 default:
                   notifyObject.message = 'A new ' + card.type + ' card is avaialble';
               }
-             
+             if(this.reference.title.length > 71){
+                notifyObject.message += '...';
+              }
              notifyCard(notifyObject);
            }, 5000);
            Session.set('stackClosedNotifyInterval', stackClosedNotifyInterval);      
@@ -1897,7 +1910,9 @@ Template.list_item_context_section.onRendered(function(){
               default:
                 notifyObject.message = 'A new ' + newContext.type + ' card is avaialble';
             }
-             
+            if(this.reference.title.length > 71){
+              notifyObject.message += '...';
+            }
             notifyCard(notifyObject);
           }
         }

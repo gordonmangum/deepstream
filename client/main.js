@@ -351,7 +351,6 @@ Template.pieChart_display.helpers(pieHelpers);
 Template.pieChart_display.events(pieEvents);
 
 var chartContainerRendered = function(){
-  console.info('chart container portrait rendered');
   //Width and height
   var w = 200;
   var h = 200;
@@ -383,7 +382,6 @@ var chartContainerRendered = function(){
   };
   Tracker.autorun(function(){
     if(contextId){
-      console.info(contextId + ' portrait');
       var modifier = {
         fields:
         {
@@ -394,8 +392,6 @@ var chartContainerRendered = function(){
       query._id = contextId;
       var dataset = ContextBlocks.find(query, {data: 1}).fetch()[0];
       if(dataset){
-        console.info('we got da data for portrait');
-        console.info(dataset);
         dataset = dataset.data; 
         var totalVotes = 0;
         dataset.forEach(function(value, index, array){
