@@ -405,6 +405,7 @@ Template.watch_page.onRendered(function(){
     windowSizeDep.depend();
     var windowSizeDepRand = Session.get('windowSizeDepRand');
     Meteor.setTimeout(function(){
+      console.info('the card stack width is: ' +$('#card-list-container').width() + 30);
       Session.set('cardStackWidth', $('#card-list-container').width() + 30);
       Session.set('windowHeightForCarousel', $(window).height());
       Session.set('windowWidthForCarousel', $(window).width());
@@ -625,6 +626,9 @@ Template.watch_page.onRendered(function(){
   // for notification positioning
   Meteor.setTimeout(function(){
     windowSizeDep.changed();
+    Meteor.setTimeout(function(){windowSizeDep.changed();},250);
+    Meteor.setTimeout(function(){windowSizeDep.changed();},500);
+    Meteor.setTimeout(function(){windowSizeDep.changed();},750);
   },250);
 });
 
