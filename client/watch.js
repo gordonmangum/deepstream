@@ -557,7 +557,7 @@ Template.watch_page.onRendered(function(){
   });
   
   onMainPlayerReady = function(event){
-    mainPlayer.play(); // autoplays videos on iOS
+    Meteor.setTimeout(function(){ mainPlayer.play(); }, 250); // autoplays videos on iOS
   };
 
   onMainPlayerStateChange = function(event){
