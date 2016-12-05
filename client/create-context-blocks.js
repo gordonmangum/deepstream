@@ -504,7 +504,7 @@ Template.create_image_section.events({
     } else {
       t.uploadPreview.set(null);
     }
-  }
+  },
 });
 
 Template.create_image_section.onCreated(searchTemplateCreatedBoilerplate('image', 'flickr'));

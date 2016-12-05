@@ -373,8 +373,12 @@ var chartContainerRendered = function(){
   
   //Create SVG element add the context block id to it -----------------------------------------
   var svg = d3.select("#pieChart-" + this.data._id)
-    .attr("width", w)
-    .attr("height", h);
+    .attr("width", '100%')
+    .attr("height", '100%')
+    .attr('viewBox','0 0 '+Math.min(w,h) +' '+Math.min(w,h) )
+    .attr('preserveAspectRatio','xMinYMin')
+    .append("g")
+    //.attr("transform", "translate(" + Math.min(w,h) / 2 + "," + Math.min(w,h) / 2 + ")");
   
   var key = function(d)
   {
@@ -491,8 +495,12 @@ var chartDisplayContainerRendered = function(){
   
   //Create SVG element add the context block id to it -----------------------------------------
   var svg = d3.selectAll(".pieChart-display-" + this.data._id)
-    .attr("width", w)
-    .attr("height", h);
+    .attr("width", '100%')
+    .attr("height", '100%')
+    .attr('viewBox','0 0 '+Math.min(w,h) +' '+Math.min(w,h) )
+    .attr('preserveAspectRatio','xMinYMin')
+    .append("g")
+    //.attr("transform", "translate(" + Math.min(w,h) / 2 + "," + Math.min(w,h) / 2 + ")");
   
   var key = function(d)
   {
@@ -609,8 +617,12 @@ var chartPreviewContainerRendered = function(){
   
   //Create SVG element add the context block id to it -----------------------------------------
   var svg = d3.select("#pieChart-preview-" + this.data._id)
-    .attr("width", w)
-    .attr("height", h);
+    .attr("width", '100%')
+    .attr("height", '100%')
+    .attr('viewBox','0 0 '+Math.min(w,h) +' '+Math.min(w,h) )
+    .attr('preserveAspectRatio','xMinYMin')
+    .append("g")
+    //.attr("transform", "translate(" + Math.min(w,h) / 2 + "," + Math.min(w,h) / 2 + ")");
   var key = function(d)
   {
     return d.data.name; //._id;
@@ -669,6 +681,7 @@ var chartPreviewContainerRendered = function(){
       }
     }
   });
+
 };
 var chartContainerHelpers = {
   options: function(){
@@ -709,8 +722,6 @@ var chartContainerHelpers = {
     return color(i);
   }
 }; 
-    
-
 Template.chart_container_display.rendered = chartDisplayContainerRendered;
 Template.chart_container_display.helpers(chartContainerHelpers);
 Template.chart_container_preview.rendered = chartPreviewContainerRendered;

@@ -431,6 +431,7 @@
             <!--{{#each c.uploading_images}}-->
           <!--<p>Uploading: {{percent_uploaded}}%</p>-->
             <!--{{/each}}-->
+          {{#if showAddButton}}
           {{#if uploadStatus}}
             <p>{{uploadStatus}}</p>
           {{/if}}
@@ -459,6 +460,7 @@
               </div>
             </div>
           </div>
+          {{/if}}
           {{/if}}
         </div>
         {{#if showAddButton}}
