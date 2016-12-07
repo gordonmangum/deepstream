@@ -373,8 +373,8 @@ var chartContainerRendered = function(){
   
   //Create SVG element add the context block id to it -----------------------------------------
   var svg = d3.select("#pieChart-" + this.data._id)
-    .attr("width", '100%')
-    .attr("height", '100%')
+    .attr("width", '80%')
+    .attr("height", '80%')
     .attr('viewBox','0 0 '+Math.min(w,h) +' '+Math.min(w,h) )
     .attr('preserveAspectRatio','xMinYMin')
     .append("g")
@@ -495,8 +495,8 @@ var chartDisplayContainerRendered = function(){
   
   //Create SVG element add the context block id to it -----------------------------------------
   var svg = d3.selectAll(".pieChart-display-" + this.data._id)
-    .attr("width", '100%')
-    .attr("height", '100%')
+    .attr("width", '70%')
+    .attr("height", '70%')
     .attr('viewBox','0 0 '+Math.min(w,h) +' '+Math.min(w,h) )
     .attr('preserveAspectRatio','xMinYMin')
     .append("g")

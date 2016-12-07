@@ -1770,7 +1770,7 @@ Template.list_item_context_section.onRendered(function(){
                 notifyObject.message += '...';
               }
              notifyCard(notifyObject);
-           }, 30000);
+           }, 15000);
            // a first card to appear after 5 seconds
            Meteor.setTimeout(function(){
              if(!contextArray.length){
