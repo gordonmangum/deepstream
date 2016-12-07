@@ -10,15 +10,42 @@
 }
 
 .amaran.cardNotificationTheme{
+  border-radius: 0;
   max-width: 550px;
   min-width: 350px;
+  border-right: 1px solid #CD0021;
   background-color: #313131;
   width: inherit;
   font-size:16px;
   img {
     padding: 10%;
+    max-height:50px;
   }
   p {
     padding: 5% 0;
   }
+}
+
+.amaran.cardNotificationTheme:after, .amaran.cardNotificationTheme:before {
+	left: 90%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.amaran.cardNotificationTheme:after {
+	border-color: rgba(213, 194, 194, 0);
+	border-left-color: #313131;
+	border-width: 20px;
+	margin-top: -20px;
+}
+.amaran.cardNotificationTheme:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-left-color: #CD0021;
+	border-width: 21px;
+	margin-top: -21px;
 }

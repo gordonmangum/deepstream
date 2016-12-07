@@ -1361,8 +1361,8 @@ Template.portrait_item_context_section.helpers({
             notifyObject.message = 'A new ' + this.type + ' card is avaialble';
         }
         
-        if(notifyObject.message.length > 71){
-          notifyObject.message = notifyObject.message.substring(0,70);
+        if(notifyObject.message.length > 27){
+          notifyObject.message = notifyObject.message.substring(0,26);
           notifyObject.message += '...';
         }
         notifyCard(notifyObject, this, function(card){ setTimeout(function(){card.shownNotification = false; },100);});
@@ -1681,8 +1681,8 @@ Template.list_item_context_section.helpers({
           default:
             notifyObject.message = 'A new ' + this.type + ' card is avaialble';
         }
-        if(notifyObject.message.length > 71){
-          notifyObject.message = notifyObject.message.substring(0,70);
+        if(notifyObject.message.length > 27){
+          notifyObject.message = notifyObject.message.substring(0,26);
           notifyObject.message += '...';
         }
         notifyCard(notifyObject, this, function(card){ setTimeout(function(){card.shownNotification = false; },100);});
@@ -1765,12 +1765,12 @@ Template.list_item_context_section.onRendered(function(){
                 default:
                   notifyObject.message = 'A new ' + card.type + ' card is avaialble';
               }
-             if(notifyObject.message.length > 71){
-                notifyObject.message = notifyObject.message.substring(0,70);
+             if(notifyObject.message.length > 27){
+                notifyObject.message = notifyObject.message.substring(0,26);
                 notifyObject.message += '...';
               }
              notifyCard(notifyObject);
-           }, 15000);
+           }, 30000);
            // a first card to appear after 5 seconds
            Meteor.setTimeout(function(){
              if(!contextArray.length){
@@ -1827,8 +1827,8 @@ Template.list_item_context_section.onRendered(function(){
                 default:
                   notifyObject.message = 'A new ' + card.type + ' card is avaialble';
               }
-             if(notifyObject.message.length > 71){
-                notifyObject.message = notifyObject.message.substring(0,70);
+             if(notifyObject.message.length > 27){
+                notifyObject.message = notifyObject.message.substring(0,26);
                 notifyObject.message += '...';
               }
              notifyCard(notifyObject);
@@ -1907,8 +1907,8 @@ Template.list_item_context_section.onRendered(function(){
               default:
                 notifyObject.message = 'A new ' + newContext.type + ' card is avaialble';
             }
-            if(notifyObject.message.length > 71){
-              notifyObject.message = notifyObject.message.substring(0,70);
+            if(notifyObject.message.length > 27){
+              notifyObject.message = notifyObject.message.substring(0,26);
               notifyObject.message += '...';
             }
             notifyCard(notifyObject);
