@@ -1,5 +1,6 @@
 Template.body.events({
   'click .context-mini-preview' (e, t){
+    Meteor.setTimeout(function(){Session.set('windowSizeDepRand', Math.random());},350);
     var _id = this._id;
     if(!_id){
       _id= $(this).data('context-id');
