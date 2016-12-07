@@ -1311,6 +1311,10 @@ Template.portrait_item_context_section.helpers({
       }
       if(!this.shownNotification && parseFloat(Session.get("currentTimeElapsed")) < (parseFloat(this.videoMarker)+1)){
         this.shownNotification = true;
+        if(this.suggestionStatus && this.suggestionStatus !== "approved"){
+          return false; // sanity check if this is an unapproved suggestion
+        }
+        
         var notifyObject = {
           cardId: this._id,
           type: this.type,
@@ -1632,6 +1636,10 @@ Template.list_item_context_section.helpers({
       }
       if(!this.shownNotification && parseFloat(Session.get("currentTimeElapsed")) < (parseFloat(this.videoMarker)+1)){
         this.shownNotification = true;
+        if(this.suggestionStatus && this.suggestionStatus !== "approved"){
+          return false; // sanity check if this is an unapproved suggestion
+        }
+        
         var notifyObject = {
           cardId: this._id,
           type: this.type,
@@ -1858,6 +1866,9 @@ Template.list_item_context_section.onRendered(function(){
         if(mostRecentContextId){
           var newContext = ContextBlocks.findOne(mostRecentContextId);
           if(newContext){
+            if(newContext.suggestionStatus && newContext.suggestionStatus !== "approved"){
+              return false; // sanity check if this is an unapproved suggestion
+            }
             var notifyObject = {
               cardId: newContext._id,
               type: newContext.type,
