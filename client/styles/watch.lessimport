@@ -25,6 +25,29 @@
   }
 }
 
+.fa-rotate-45 {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.stream-carousel-container {
+  background-color:#000;
+  color:#fff;
+  .stream-carousel-expander {
+    text-align:center;
+    padding:5px;
+    height:40px;
+    cursor:pointer;
+  }
+}
+
+.expanded-button-on { 
+  color:#ffd64d;
+}
+
 .new-watch{
   .inverse-brand {
     height: 30px;

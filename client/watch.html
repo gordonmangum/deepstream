@@ -631,6 +631,38 @@
 </template>
 
 <template name="context_browser_portrait">
+  <div class="stream-carousel-container">
+    <div class="stream-carousel-expander">
+      <i class="fa fa-square-o fa-2x {{#if streamCarouselExpanded}}fa-rotate-45 expanded-button-on{{/if}}" aria-hidden="true"></i>
+    </div>
+    <div id="carousel-portrait-stream" class="carousel slide" data-interval="false" data-ride="carousel" data-slide-to="1" style="height:{{streamCarouselHeight}}px">
+      <div class="carousel-inner" role="listbox">
+        <div class="item active" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
+          <h1>Stream 1</h1>
+        </div>
+        <div class="item" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
+          <h1>Stream 2</h1>
+        </div>
+        <div class="item" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
+          <h1>Stream 3</h1>
+        </div>
+        <div class="item" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
+          <h1>Stream 4</h1>
+        </div>
+      </div>
+      <!-- Controls -->
+      {{#if streamCarouselExpanded}}
+      <a class="left carousel-control" href="#carousel-portrait-stream" role="button" data-slide="prev">
+        <i class="fa fa-chevron-left glyphicon-chevron-left" aria-hidden="true"></i>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#carousel-portrait-stream" role="button" data-slide="next">
+        <i class="fa fa-chevron-right glyphicon-chevron-right" aria-hidden="true"></i>
+        <span class="sr-only">Next</span>
+      </a>
+      {{/if}}
+    </div>
+  </div>
   <div id="carousel-portrait-context" class="carousel slide" data-interval="false" data-ride="carousel" data-slide-to="1" style="height:{{carouselHeight}}px">
 
   <!-- Wrapper for slides -->

@@ -172,7 +172,7 @@ window.resetMainPlayer = function(){
 window.resetMainPlayer();
 window.showDesktopMode = function (){
   var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
-  var cardSpaceAvailable = Session.get('windowHeightForCarousel') - 51 - videoSpace;
+  var cardSpaceAvailable = Session.get('windowHeightForCarousel') - 51 - videoSpace - 40;
   if(cardSpaceAvailable > 120 && Session.get('windowWidthForCarousel') < 890){
     if(Session.get('showDesktopMode')){
       Session.set('showDesktopMode', false);
@@ -770,7 +770,7 @@ Template.watch_page.helpers({
   },
   loadingScreen (){
     var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
-    var cardSpaceAvailable = Session.get('windowHeightForCarousel') - 51 - videoSpace;
+    var cardSpaceAvailable = Session.get('windowHeightForCarousel') - 51 - videoSpace - 40;
     if(isNaN(videoSpace) || isNaN(cardSpaceAvailable))
       return true;
     return false;
@@ -1271,10 +1271,30 @@ Template.context_browser_portrait.helpers({
   carouselHeight(){
     var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
     if(Session.get('expandedPortraitCards')){
-      return Session.get('windowHeightForCarousel') - 51
+      if(Session.get('expandedStreamCarousel')){
+        return Session.get('windowHeightForCarousel') - 51 - 40 - 200
+      }
+      return Session.get('windowHeightForCarousel') - 51 - 40
     } else {
-      return Session.get('windowHeightForCarousel') - 51 - videoSpace;
+      if(Session.get('expandedStreamCarousel')){
+        return Session.get('windowHeightForCarousel') - 51 - videoSpace - 40 - 200
+      }
+      return Session.get('windowHeightForCarousel') - 51 - videoSpace -40;
     }
+  },
+  streamCarouselHeight(){
+    var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
+    if(Session.get('expandedStreamCarousel')){
+      return 200;
+    } else {
+      return 0;
+    }
+  },
+  streamCarouselExpanded (){
+    if(Session.get('expandedStreamCarousel')){
+      return true;
+    }
+    return false;
   }
 });
 
@@ -1282,9 +1302,15 @@ Template.portrait_item_context_section.helpers({
   carouselHeight(){
     var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
     if(Session.get('expandedPortraitCards')){
-      return Session.get('windowHeightForCarousel') - 51
+      if(Session.get('expandedStreamCarousel')){
+        return Session.get('windowHeightForCarousel') - 51 - 40 - 200
+      }
+      return Session.get('windowHeightForCarousel') - 51 - 40
     } else {
-      return Session.get('windowHeightForCarousel') - 51 - videoSpace;
+      if(Session.get('expandedStreamCarousel')){
+        return Session.get('windowHeightForCarousel') - 51 - videoSpace - 40 - 200
+      }
+      return Session.get('windowHeightForCarousel') - 51 - videoSpace -40;
     }
   },
   showContext(){
@@ -2275,13 +2301,20 @@ Template.portrait_timeline_section.events({
   }
 });
 
+
 Template.portrait_timeline_section.helpers({
   carouselHeight(){
     var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
     if(Session.get('expandedPortraitCards')){
-      return Session.get('windowHeightForCarousel') - 51
+      if(Session.get('expandedStreamCarousel')){
+        return Session.get('windowHeightForCarousel') - 51 - 40 - 200
+      }
+      return Session.get('windowHeightForCarousel') - 51 - 40
     } else {
-      return Session.get('windowHeightForCarousel') - 51 - videoSpace;
+      if(Session.get('expandedStreamCarousel')){
+        return Session.get('windowHeightForCarousel') - 51 - videoSpace - 40 - 200
+      }
+      return Session.get('windowHeightForCarousel') - 51 - videoSpace -40;
     }
   }
 });

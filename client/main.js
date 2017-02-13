@@ -995,6 +995,16 @@ Template.context_browser_portrait.events({
   },
   "click .carousel-control.right" (){
     analytics.track('Clicked portrait carousel control right', trackingInfoFromPage());
+  },
+    "click .stream-carousel-expander" () {
+    console.info('clicked expander');
+    if(Session.get('expandedStreamCarousel')){
+      Session.set('expandedStreamCarousel', false);
+      analytics.track('Clicked close stream carousel', trackingInfoFromPage());
+    } else {
+      Session.set('expandedStreamCarousel', true);
+      analytics.track('Clicked open stream carousel', trackingInfoFromPage());
+    }
   }
 });
 
