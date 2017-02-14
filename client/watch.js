@@ -358,7 +358,8 @@ Template.watch_page.onCreated(function () {
   this.autorun(function(){ // TO-DO Performance, don't rerun on every stream switch, only get fields needed
     if (FlowRouter.subsReady()) {
       var userControlledActiveStreamId = that.userControlledActiveStreamId.get();
-      console.info('runing autorun with id: ' + userControlledActiveStreamId.get())
+      console.info('runing autorun with id: ' + that.userControlledActiveStreamId.get())
+      console.info('runing autorun with id: ' + userControlledActiveStreamId)
       var deepstream = Deepstreams.findOne({shortId: that.data.shortId()});
       var newActiveStream;
       if (!Session.get('curateMode') && userControlledActiveStreamId && deepstream.userStreamSwitchAllowed()) {

@@ -637,12 +637,9 @@
     </div>
     <div id="carousel-portrait-stream" class="carousel slide" data-interval="false" data-ride="carousel" data-slide-to="1" style="height:{{streamCarouselHeight}}px">
       <div class="carousel-inner" role="listbox">
-        <div class="item active" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
-          <h1>{{deepstream.title}}</h1>
-        </div>
         {{#with deepstream}}
         {{#each livestreams}}
-        <div class="item" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
+        <div class="item {{#if active}}active{{/if}}" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
           {{#if active}}
           <div style="
             position: absolute;
