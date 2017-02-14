@@ -631,9 +631,7 @@
 </template>
 
 <template name="context_browser_portrait">
-  {{#with deepstream}}
-  {{> stream_carousel_container}}
-  {{/with}}
+  {{> stream_carousel_container deepstream=deepstream uniqueId="mobile"}}
   <div id="carousel-portrait-context" class="carousel slide" data-interval="false" data-ride="carousel" data-slide-to="1" style="height:{{carouselHeight}}px">
 
   <!-- Wrapper for slides -->
@@ -703,7 +701,8 @@
     <div class="stream-carousel-expander">
       <i class="fa fa-square-o fa-2x {{#if streamCarouselExpanded}}fa-rotate-45 expanded-button-on{{/if}}" aria-hidden="true"></i>
     </div>
-    <div id="carousel-portrait-stream" class="carousel slide" data-interval="false" data-ride="carousel" data-slide-to="1" style="height:{{streamCarouselHeight}}px">
+    <div id="carousel-portrait-stream-{{uniqueId}}" class="carousel slide" data-interval="false" data-ride="carousel" data-slide-to="1" style="height:{{streamCarouselHeight}}px">
+      {{#with deepstream}}
       <div class="carousel-inner" role="listbox">
         {{#each livestreams}}
         <div class="item {{#if active}}active{{/if}}" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
@@ -788,13 +787,14 @@
         </div>
         {{/each}}
       </div>
+      {{/with}}
       <!-- Controls -->
       {{#if streamCarouselExpanded}}
-      <a class="left carousel-control stream-control" href="#carousel-portrait-stream" role="button" data-slide="prev">
+      <a class="left carousel-control stream-control" href="#carousel-portrait-stream-{{uniqueId}}" role="button" data-slide="prev">
         <i class="fa fa-chevron-left glyphicon-chevron-left" aria-hidden="true"></i>
         <span class="sr-only">Previous</span>
       </a>
-      <a class="right carousel-control stream-control" href="#carousel-portrait-stream" role="button" data-slide="next">
+      <a class="right carousel-control stream-control" href="#carousel-portrait-stream-{{uniqueId}}" role="button" data-slide="next">
         <i class="fa fa-chevron-right glyphicon-chevron-right" aria-hidden="true"></i>
         <span class="sr-only">Next</span>
       </a>
@@ -1123,9 +1123,7 @@
       {{/if}}
       <div class="context-area list-mode {{#if soloSidebarContextMode}}hide{{/if}}">
         {{#unless curateMode}}
-        {{#with deepstream}}
-         {{> stream_carousel_container}}
-        {{/with}}
+         {{> stream_carousel_container deepstream=deepstream uniqueId="desktop"}}
         <div class="row">
           <div class="col-xs-12 text-center suggest-content js-link suggest-content-card narrative-section context-section list-item-context-section news-card curator-card" style="margin-bottom:20px;">
             <b>Suggest a Card</b>

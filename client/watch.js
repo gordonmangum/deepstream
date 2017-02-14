@@ -1262,9 +1262,11 @@ Template.stream_li.events({
 
 Template.stream_carousel_container.events({
   "click .carousel-control.left.stream-control" (){
+    $('#carousel-portrait-stream-desktop.carousel').carousel('prev');
     analytics.track('Clicked stream carousel control left', trackingInfoFromPage());
   },
   "click .carousel-control.right.stream-control" (){
+    $('#carousel-portrait-stream-desktop.carousel').carousel('next');
     analytics.track('Clicked stream carousel control right', trackingInfoFromPage());
   },
   "click .stream-carousel-expander" () {
