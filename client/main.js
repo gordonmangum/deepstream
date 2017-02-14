@@ -997,7 +997,6 @@ Template.context_browser_portrait.events({
     analytics.track('Clicked portrait carousel control right', trackingInfoFromPage());
   },
     "click .stream-carousel-expander" () {
-    console.info('clicked expander');
     if(Session.get('expandedStreamCarousel')){
       Session.set('expandedStreamCarousel', false);
       analytics.track('Clicked close stream carousel', trackingInfoFromPage());

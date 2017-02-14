@@ -47,7 +47,7 @@
   text-align: center;
 }
 
-.set-main-stream {
+.set-main-stream, .set-main-stream-carousel {
   cursor: pointer;
 }
 

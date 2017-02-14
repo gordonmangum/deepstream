@@ -665,7 +665,7 @@
           </div>
           {{/if}}
           <div class="row {{#if active}}active{{else}}inactive{{/if}}" data-stream-reference-id="{{reference.id}}" data-stream-id="{{_id}}" style="padding-top:30px;padding-bottom:30px;" >
-            <div class="col-xs-4 col-xs-offset-2 set-main-stream">
+            <div class="col-xs-4 col-xs-offset-2 set-main-stream-carousel">
              
                 <li class="embed-responsive embed-responsive-16by9 stream {{#if active}}active{{/if}} {{#if previewMode}}preview-mode{{/if}}" style="background-image:url({{thumbnailUrl}});background-repeat:no-repeat;background-position: center center;background-size:cover">
                     {{#if live}}
@@ -676,7 +676,7 @@
                 </li>
               
             </div>
-            <div class="col-xs-4 set-main-stream">
+            <div class="col-xs-4 set-main-stream-carousel">
               <p>{{this.title}}</p>
             </div>
           </div>
@@ -684,9 +684,29 @@
         {{/each}}
         {{#each deadstreams}}
         <div class="item" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
-          
+                    {{#if active}}
+          <div style="
+            position: absolute;
+            z-index: 100;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            opacity: 0.8;
+            background-color: grey;
+          ">
+          </div>
+                    <div style="
+            position: absolute;
+            z-index: 100;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+          ">
+            <h2 style="line-height:150px;">Now Playing</h2>
+          </div>
+          {{/if}}
           <div class="row {{#if active}}active{{else}}inactive{{/if}}" data-stream-reference-id="{{reference.id}}" data-stream-id="{{_id}}" style="padding-top:30px;padding-bottom:30px;" >
-            <div class="col-xs-4 col-xs-offset-2 set-main-stream">
+            <div class="col-xs-4 col-xs-offset-2 set-main-stream-carousel">
              
                 <li class="embed-responsive embed-responsive-16by9 stream {{#if active}}active{{/if}} {{#if previewMode}}preview-mode{{/if}}" style="background-image:url({{thumbnailUrl}});background-repeat:no-repeat;background-position: center center;background-size:cover">
                     {{#if live}}
@@ -697,7 +717,7 @@
                 </li>
               
             </div>
-            <div class="col-xs-4 set-main-stream">
+            <div class="col-xs-4 set-main-stream-carousel">
               <p>{{this.title}}</p>
             </div>
           </div>

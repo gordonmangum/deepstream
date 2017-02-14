@@ -964,6 +964,11 @@ Template.watch_page.events({
     }
     analytics.track('Click mini-stream to set main stream', trackingInfoFromPage());
   },
+  'click .set-main-stream-carousel' (e, t){
+    t.userControlledActiveStreamId.set(this._id);
+    analytics.track('Click mini-stream to set main stream', trackingInfoFromPage());
+    Session.set('expandedStreamCarousel', false);
+  },
   'click .delete-stream' (e, t){
     var streamElement = t.$('[data-stream-id=' + this._id + ']');
     streamElement.addClass('to-delete');
@@ -1303,7 +1308,7 @@ Template.context_browser_portrait.helpers({
     return _.where(this.streams, { live: false });
   },
   active (){ // inside #each streams
-    var activeStream = Template.parentData().activeStream();
+    var activeStream = mainPlayer.activeStream.get();
     if (activeStream){
       return this._id === activeStream._id;
     }
