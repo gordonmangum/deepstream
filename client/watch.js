@@ -358,6 +358,7 @@ Template.watch_page.onCreated(function () {
   this.autorun(function(){ // TO-DO Performance, don't rerun on every stream switch, only get fields needed
     if (FlowRouter.subsReady()) {
       var userControlledActiveStreamId = that.userControlledActiveStreamId.get();
+      console.info('runing autorun with id' + userControlledActiveStreamId)
       var deepstream = Deepstreams.findOne({shortId: that.data.shortId()});
       var newActiveStream;
       if (!Session.get('curateMode') && userControlledActiveStreamId && deepstream.userStreamSwitchAllowed()) {
@@ -965,6 +966,7 @@ Template.watch_page.events({
     analytics.track('Click mini-stream to set main stream', trackingInfoFromPage());
   },
   'click .set-main-stream-carousel' (e, t){
+    console.info('selected a stream on the carousel: ' + this._id);
     t.userControlledActiveStreamId.set(this._id);
     analytics.track('Click mini-stream to set main stream', trackingInfoFromPage());
     Session.set('expandedStreamCarousel', false);
