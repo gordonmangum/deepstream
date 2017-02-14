@@ -748,7 +748,7 @@
         </div>
         {{/each}}
         {{#each deadstreams}}
-        <div class="item" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
+        <div class="item {{#if active}}active{{/if}}" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
                     {{#if active}}
           <div style="
             position: absolute;
