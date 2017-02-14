@@ -358,13 +358,15 @@ Template.watch_page.onCreated(function () {
   this.autorun(function(){ // TO-DO Performance, don't rerun on every stream switch, only get fields needed
     if (FlowRouter.subsReady()) {
       var userControlledActiveStreamId = that.userControlledActiveStreamId.get();
-      console.info('runing autorun with id' + userControlledActiveStreamId)
+      console.info('runing autorun with id: ' + userControlledActiveStreamId.get())
       var deepstream = Deepstreams.findOne({shortId: that.data.shortId()});
       var newActiveStream;
       if (!Session.get('curateMode') && userControlledActiveStreamId && deepstream.userStreamSwitchAllowed()) {
         newActiveStream = deepstream.getStream(userControlledActiveStreamId);
+        console.info('userswitch allowed');
       } else {
         newActiveStream = deepstream.activeStream();
+        console.info('no userswitch allowed');
       }
       // hack to remove and reinsert active main stream when the same service is used in old stream and new stream
       var activeStream;
@@ -372,10 +374,12 @@ Template.watch_page.onCreated(function () {
         activeStream = that.activeStream.get();
       });
       if(activeStream && newActiveStream && activeStream.source === newActiveStream.source && activeStream._id !== newActiveStream._id){
+        console.info('switch stream');
         Session.set('removeMainStream', true);
         Meteor.setTimeout(() => Session.set('removeMainStream', false), 0);
       }
-
+      console.log('now set to: ');
+      console.log(newActiveStream);
       that.activeStream.set(newActiveStream);
     }
   });
