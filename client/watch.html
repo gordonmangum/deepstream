@@ -8,9 +8,9 @@
     {{/if}}
   {{/if}}
     <div class="col-xs-{{#if curateMode}}{{#if showContextDeck}}10{{else}}12{{/if}}{{else}}12{{/if}}">
-      {{> context_browser show=showSuggestions suggestions=true contextBlocks=pendingSuggestions deepstream=deepstreamForContext}}
+      {{> context_browser show=showSuggestions suggestions=true contextBlocks=pendingSuggestions deepstream=this}}
       {{> timeline_section show=showTimeline}}
-      {{> context_browser show=showContextDeck contextBlocks=orderedContext curatorName=curatorName}}
+      {{> context_browser show=showContextDeck contextBlocks=orderedContext curatorName=curatorName deepstream=this}}
     </div>
   </div>
 </template>
@@ -631,110 +631,9 @@
 </template>
 
 <template name="context_browser_portrait">
-  <div class="stream-carousel-container">
-    <div class="stream-carousel-expander">
-      <i class="fa fa-square-o fa-2x {{#if streamCarouselExpanded}}fa-rotate-45 expanded-button-on{{/if}}" aria-hidden="true"></i>
-    </div>
-    <div id="carousel-portrait-stream" class="carousel slide" data-interval="false" data-ride="carousel" data-slide-to="1" style="height:{{streamCarouselHeight}}px">
-      <div class="carousel-inner" role="listbox">
-        {{#with deepstream}}
-        {{#each livestreams}}
-        <div class="item {{#if active}}active{{/if}}" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
-          {{#if active}}
-          <div style="
-            position: absolute;
-            z-index: 100;
-            height: 100%;
-            width: 100%;
-            text-align: center;
-            opacity: 0.8;
-            background-color: grey;
-          ">
-          </div>
-                    <div style="
-            position: absolute;
-            z-index: 100;
-            height: 100%;
-            width: 100%;
-            text-align: center;
-          ">
-            <h2 style="line-height:150px;">Now Playing</h2>
-          </div>
-          {{/if}}
-          <div class="row {{#if active}}active{{else}}inactive{{/if}}" data-stream-reference-id="{{reference.id}}" data-stream-id="{{_id}}" style="padding-top:30px;padding-bottom:30px;" >
-            <div class="col-xs-4 col-xs-offset-2 set-main-stream-carousel">
-             
-                <li class="embed-responsive embed-responsive-16by9 stream {{#if active}}active{{/if}} {{#if previewMode}}preview-mode{{/if}}" style="background-image:url({{thumbnailUrl}});background-repeat:no-repeat;background-position: center center;background-size:cover">
-                    {{#if live}}
-                      <div class="mini-live-indicator">
-                        LIVE
-                      </div>
-                    {{/if}}
-                </li>
-              
-            </div>
-            <div class="col-xs-4 set-main-stream-carousel">
-              <p>{{this.title}}</p>
-            </div>
-          </div>
-        </div>
-        {{/each}}
-        {{#each deadstreams}}
-        <div class="item" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
-                    {{#if active}}
-          <div style="
-            position: absolute;
-            z-index: 100;
-            height: 100%;
-            width: 100%;
-            text-align: center;
-            opacity: 0.8;
-            background-color: grey;
-          ">
-          </div>
-                    <div style="
-            position: absolute;
-            z-index: 100;
-            height: 100%;
-            width: 100%;
-            text-align: center;
-          ">
-            <h2 style="line-height:150px;">Now Playing</h2>
-          </div>
-          {{/if}}
-          <div class="row {{#if active}}active{{else}}inactive{{/if}}" data-stream-reference-id="{{reference.id}}" data-stream-id="{{_id}}" style="padding-top:30px;padding-bottom:30px;" >
-            <div class="col-xs-4 col-xs-offset-2 set-main-stream-carousel">
-             
-                <li class="embed-responsive embed-responsive-16by9 stream {{#if active}}active{{/if}} {{#if previewMode}}preview-mode{{/if}}" style="background-image:url({{thumbnailUrl}});background-repeat:no-repeat;background-position: center center;background-size:cover">
-                    {{#if live}}
-                      <div class="mini-live-indicator">
-                        LIVE
-                      </div>
-                    {{/if}}
-                </li>
-              
-            </div>
-            <div class="col-xs-4 set-main-stream-carousel">
-              <p>{{this.title}}</p>
-            </div>
-          </div>
-        </div>
-        {{/each}}
-        {{/with}}
-      </div>
-      <!-- Controls -->
-      {{#if streamCarouselExpanded}}
-      <a class="left carousel-control" href="#carousel-portrait-stream" role="button" data-slide="prev">
-        <i class="fa fa-chevron-left glyphicon-chevron-left" aria-hidden="true"></i>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="right carousel-control" href="#carousel-portrait-stream" role="button" data-slide="next">
-        <i class="fa fa-chevron-right glyphicon-chevron-right" aria-hidden="true"></i>
-        <span class="sr-only">Next</span>
-      </a>
-      {{/if}}
-    </div>
-  </div>
+  {{#with deepstream}}
+  {{> stream_carousel_container}}
+  {{/with}}
   <div id="carousel-portrait-context" class="carousel slide" data-interval="false" data-ride="carousel" data-slide-to="1" style="height:{{carouselHeight}}px">
 
   <!-- Wrapper for slides -->
@@ -797,6 +696,111 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
+</template>
+
+<template name="stream_carousel_container">
+  <div class="stream-carousel-container">
+    <div class="stream-carousel-expander">
+      <i class="fa fa-square-o fa-2x {{#if streamCarouselExpanded}}fa-rotate-45 expanded-button-on{{/if}}" aria-hidden="true"></i>
+    </div>
+    <div id="carousel-portrait-stream" class="carousel slide" data-interval="false" data-ride="carousel" data-slide-to="1" style="height:{{streamCarouselHeight}}px">
+      <div class="carousel-inner" role="listbox">
+        {{#each livestreams}}
+        <div class="item {{#if active}}active{{/if}}" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
+          {{#if active}}
+          <div style="
+            position: absolute;
+            z-index: 100;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            opacity: 0.8;
+            background-color: grey;
+          ">
+          </div>
+                    <div style="
+            position: absolute;
+            z-index: 100;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+          ">
+            <h2 style="line-height:150px;">Now Playing</h2>
+          </div>
+          {{/if}}
+          <div class="row {{#if active}}active{{else}}inactive{{/if}}" data-stream-reference-id="{{reference.id}}" data-stream-id="{{_id}}" style="padding-top:30px;padding-bottom:30px;" >
+            <div class="col-xs-4 col-xs-offset-2 set-main-stream-carousel">
+
+                <li class="embed-responsive embed-responsive-16by9 stream {{#if active}}active{{/if}} {{#if previewMode}}preview-mode{{/if}}" style="background-image:url({{thumbnailUrl}});background-repeat:no-repeat;background-position: center center;background-size:cover">
+                    {{#if live}}
+                      <div class="mini-live-indicator">
+                        LIVE
+                      </div>
+                    {{/if}}
+                </li>
+
+            </div>
+            <div class="col-xs-4 set-main-stream-carousel">
+              <p>{{this.title}}</p>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+        {{#each deadstreams}}
+        <div class="item" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
+                    {{#if active}}
+          <div style="
+            position: absolute;
+            z-index: 100;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            opacity: 0.8;
+            background-color: grey;
+          ">
+          </div>
+                    <div style="
+            position: absolute;
+            z-index: 100;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+          ">
+            <h2 style="line-height:150px;">Now Playing</h2>
+          </div>
+          {{/if}}
+          <div class="row {{#if active}}active{{else}}inactive{{/if}}" data-stream-reference-id="{{reference.id}}" data-stream-id="{{_id}}" style="padding-top:30px;padding-bottom:30px;" >
+            <div class="col-xs-4 col-xs-offset-2 set-main-stream-carousel">
+
+                <li class="embed-responsive embed-responsive-16by9 stream {{#if active}}active{{/if}} {{#if previewMode}}preview-mode{{/if}}" style="background-image:url({{thumbnailUrl}});background-repeat:no-repeat;background-position: center center;background-size:cover">
+                    {{#if live}}
+                      <div class="mini-live-indicator">
+                        LIVE
+                      </div>
+                    {{/if}}
+                </li>
+
+            </div>
+            <div class="col-xs-4 set-main-stream-carousel">
+              <p>{{this.title}}</p>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      <!-- Controls -->
+      {{#if streamCarouselExpanded}}
+      <a class="left carousel-control stream-control" href="#carousel-portrait-stream" role="button" data-slide="prev">
+        <i class="fa fa-chevron-left glyphicon-chevron-left" aria-hidden="true"></i>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control stream-control" href="#carousel-portrait-stream" role="button" data-slide="next">
+        <i class="fa fa-chevron-right glyphicon-chevron-right" aria-hidden="true"></i>
+        <span class="sr-only">Next</span>
+      </a>
+      {{/if}}
+    </div>
+  </div>
 </template>
   
 <template name="portrait_item_context_section">
@@ -1119,6 +1123,9 @@
       {{/if}}
       <div class="context-area list-mode {{#if soloSidebarContextMode}}hide{{/if}}">
         {{#unless curateMode}}
+        {{#with deepstream}}
+         {{> stream_carousel_container}}
+        {{/with}}
         <div class="row">
           <div class="col-xs-12 text-center suggest-content js-link suggest-content-card narrative-section context-section list-item-context-section news-card curator-card" style="margin-bottom:20px;">
             <b>Suggest a Card</b>

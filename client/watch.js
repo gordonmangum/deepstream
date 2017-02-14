@@ -1260,6 +1260,57 @@ Template.stream_li.events({
   }
 });
 
+Template.stream_carousel_container.events({
+  "click .carousel-control.left.stream-control" (){
+    analytics.track('Clicked stream carousel control left', trackingInfoFromPage());
+  },
+  "click .carousel-control.right.stream-control" (){
+    analytics.track('Clicked stream carousel control right', trackingInfoFromPage());
+  },
+  "click .stream-carousel-expander" () {
+    if(Session.get('expandedStreamCarousel')){
+      Session.set('expandedStreamCarousel', false);
+      analytics.track('Clicked close stream carousel', trackingInfoFromPage());
+    } else {
+      Session.set('expandedStreamCarousel', true);
+      analytics.track('Clicked open stream carousel', trackingInfoFromPage());
+    }
+  },
+  "click .set-main-stream" () {
+    Session.set('expandedStreamCarousel', false);
+    analytics.track('Clicked select stream from carousel', trackingInfoFromPage());
+  }
+});
+  
+Template.stream_carousel_container.helpers({
+    streamCarouselHeight(){
+    var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
+    if(Session.get('expandedStreamCarousel')){
+      return 200;
+    } else {
+      return 0;
+    }
+  },
+  streamCarouselExpanded (){
+    if(Session.get('expandedStreamCarousel')){
+      return true;
+    }
+    return false;
+  },
+  livestreams (){
+    return _.where(this.streams, { live: true });
+  },
+  deadstreams (){
+    return _.where(this.streams, { live: false });
+  },
+  active (){ // inside #each streams
+    var activeStream = mainPlayer.activeStream.get();
+    if (activeStream){
+      return this._id === activeStream._id;
+    }
+  }
+});
+
 Template.context_browser_portrait.onRendered(function(){
   var throttledResize;
   var windowSizeDep = new Tracker.Dependency();
@@ -1293,33 +1344,7 @@ Template.context_browser_portrait.helpers({
       }
       return Session.get('windowHeightForCarousel') - 51 - videoSpace -40;
     }
-  },
-  streamCarouselHeight(){
-    var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
-    if(Session.get('expandedStreamCarousel')){
-      return 200;
-    } else {
-      return 0;
-    }
-  },
-  streamCarouselExpanded (){
-    if(Session.get('expandedStreamCarousel')){
-      return true;
-    }
-    return false;
-  },
-  livestreams (){
-    return _.where(this.streams, { live: true });
-  },
-  deadstreams (){
-    return _.where(this.streams, { live: false });
-  },
-  active (){ // inside #each streams
-    var activeStream = mainPlayer.activeStream.get();
-    if (activeStream){
-      return this._id === activeStream._id;
-    }
-  },
+  }
 });
 
 Template.portrait_item_context_section.helpers({
