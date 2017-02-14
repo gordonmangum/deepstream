@@ -631,7 +631,9 @@
 </template>
 
 <template name="context_browser_portrait">
-  {{> stream_carousel_container deepstream=deepstream uniqueId="mobile"}}
+  {{#with deepstream}}
+  {{> stream_carousel_container deepstream=this uniqueId="mobile"}}
+  {{/with}}
   <div id="carousel-portrait-context" class="carousel slide" data-interval="false" data-ride="carousel" data-slide-to="1" style="height:{{carouselHeight}}px">
 
   <!-- Wrapper for slides -->
@@ -1123,7 +1125,9 @@
       {{/if}}
       <div class="context-area list-mode {{#if soloSidebarContextMode}}hide{{/if}}">
         {{#unless curateMode}}
-         {{> stream_carousel_container deepstream=deepstream uniqueId="desktop"}}
+        {{#with deepstream}}
+         {{> stream_carousel_container deepstream=this uniqueId="desktop"}}
+        {{/with}}
         <div class="row">
           <div class="col-xs-12 text-center suggest-content js-link suggest-content-card narrative-section context-section list-item-context-section news-card curator-card" style="margin-bottom:20px;">
             <b>Suggest a Card</b>
