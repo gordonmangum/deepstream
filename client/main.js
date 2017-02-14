@@ -1005,6 +1005,10 @@ Template.context_browser_portrait.events({
       Session.set('expandedStreamCarousel', true);
       analytics.track('Clicked open stream carousel', trackingInfoFromPage());
     }
+  },
+  "click .set-main-stream" () {
+    Session.set('expandedStreamCarousel', false);
+    analytics.track('Clicked select stream from carousel', trackingInfoFromPage());
   }
 });
 

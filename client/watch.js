@@ -1295,7 +1295,19 @@ Template.context_browser_portrait.helpers({
       return true;
     }
     return false;
-  }
+  },
+  livestreams (){
+    return _.where(this.streams, { live: true });
+  },
+  deadstreams (){
+    return _.where(this.streams, { live: false });
+  },
+  active (){ // inside #each streams
+    var activeStream = Template.parentData().activeStream();
+    if (activeStream){
+      return this._id === activeStream._id;
+    }
+  },
 });
 
 Template.portrait_item_context_section.helpers({
@@ -2305,7 +2317,7 @@ Template.portrait_timeline_section.events({
 Template.portrait_timeline_section.helpers({
   carouselHeight(){
     var videoSpace = (Session.get('windowWidthForCarousel')/16)*9;
-    if(Session.get('expandedPortraitCards')){
+        if(Session.get('expandedPortraitCards')){
       if(Session.get('expandedStreamCarousel')){
         return Session.get('windowHeightForCarousel') - 51 - 40 - 200
       }

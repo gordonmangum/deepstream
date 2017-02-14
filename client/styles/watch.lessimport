@@ -33,6 +33,24 @@
     transform: rotate(45deg);
 }
 
+.mini-live-indicator{
+  background-color: @live-color;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  font-size: 11px;
+  font-weight: bold;
+  height: 13px;
+  line-height: 13px;
+  width: 28px;
+  text-align: center;
+}
+
+.set-main-stream {
+  cursor: pointer;
+}
+
 .stream-carousel-container {
   background-color:#000;
   color:#fff;
@@ -336,19 +354,7 @@
       &:not(.preview-mode){
         width:115px;
       }
-      .mini-live-indicator{
-        background-color: @live-color;
-        position: absolute;
-        z-index: 10;
-        left: 0;
-        top: 0;
-        font-size: 11px;
-        font-weight: bold;
-        height: 13px;
-        line-height: 13px;
-        width: 28px;
-        text-align: center;
-      }
+      
 
       &.live-dead-divider{
         // height: @miniStreamHeight * .8;

@@ -192,120 +192,120 @@
        <div class="create-overlay" style="height: {{windowHeight -80}}px;"></div>
       -->
     {{/if}}
-    <div class="row" style="margin-right: 0px;">
-      <div class="{{#if cardListContainerHidden}}col-xs-12{{else}}col-xs-8{{/if}} animate" id="watch-video-container">
-            {{#if showTutorial}}
-            {{> creation_tutorial}}
-            {{/if}}
-            {{#if streamUrl}}
-            <div class="main-stream-container"  style="height: {{mainStreamHeight}}px;">
-            <iframe id="{{mainStreamIFrameId}}"
-                    class="embed-responsive-item {{#unless mainStreamInIFrame}}hide{{/unless}} {{#if facebookIframe}}facebook{{/if}}"
-                    src="{{#if mainStreamInIFrame}}{{streamUrl}}{{/if}}" frameborder="0"
-                    style="height: {{mainStreamHeight}}px; width:100%;"
-                    allowfullscreen></iframe>
-            {{#if mainStreamInFlashPlayer}}
-              {{#unless removeMainStream}}
-              {{#if bambuserPlayer}}
-                <object id="{{mainStreamFlashPlayerId}}" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-                        class="embed-responsive-item main-stream-flash-object " style="height: {{mainStreamHeight}}px; width:100%;">
-                  <embed name="{{mainStreamFlashPlayerId}}" src="//static.bambuser.com/r/player.swf"
-                         type="application/x-shockwave-flash" flashvars="{{mainStreamFlashVars}}" allowfullscreen="true"
-                         allowscriptaccess="always" wmode="opaque"/>
-                  <param name="movie" value="//static.bambuser.com/r/player.swf"/>
-                  <param name="flashvars" value="{{#if mainStreamInFlashPlayer}}{{mainStreamFlashVars}}{{/if}}"/>
-                  <param name="allowfullscreen" value="true"/>
-                  <param name="allowscriptaccess" value="always"/>
-                  <param name="wmode" value="opaque"/>
-                </object>
-              {{else}}
-                {{#if twitchPlayer}}
-                  <object id="{{mainStreamFlashPlayerId}}"
-                          bgcolor='#000000'
-                          data='//www-cdn.jtvnw.net/swflibs/TwitchPlayer.swf'
-                          class="embed-responsive-item main-stream-flash-object "
-                          type='application/x-shockwave-flash'
-                          style="height: {{mainStreamHeight}}px; width:100%;">
+      <div class="row" style="margin-right: 0px;">
+        <div class="{{#if cardListContainerHidden}}col-xs-12{{else}}col-xs-8{{/if}} animate" id="watch-video-container">
+              {{#if showTutorial}}
+              {{> creation_tutorial}}
+              {{/if}}
+              {{#if streamUrl}}
+              <div class="main-stream-container"  style="height: {{mainStreamHeight}}px;">
+              <iframe id="{{mainStreamIFrameId}}"
+                      class="embed-responsive-item {{#unless mainStreamInIFrame}}hide{{/unless}} {{#if facebookIframe}}facebook{{/if}}"
+                      src="{{#if mainStreamInIFrame}}{{streamUrl}}{{/if}}" frameborder="0"
+                      style="height: {{mainStreamHeight}}px; width:100%;"
+                      allowfullscreen></iframe>
+              {{#if mainStreamInFlashPlayer}}
+                {{#unless removeMainStream}}
+                {{#if bambuserPlayer}}
+                  <object id="{{mainStreamFlashPlayerId}}" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+                          class="embed-responsive-item main-stream-flash-object " style="height: {{mainStreamHeight}}px; width:100%;">
+                    <embed name="{{mainStreamFlashPlayerId}}" src="//static.bambuser.com/r/player.swf"
+                           type="application/x-shockwave-flash" flashvars="{{mainStreamFlashVars}}" allowfullscreen="true"
+                           allowscriptaccess="always" wmode="opaque"/>
+                    <param name="movie" value="//static.bambuser.com/r/player.swf"/>
+                    <param name="flashvars" value="{{#if mainStreamInFlashPlayer}}{{mainStreamFlashVars}}{{/if}}"/>
+                    <param name="allowfullscreen" value="true"/>
+                    <param name="allowscriptaccess" value="always"/>
+                    <param name="wmode" value="opaque"/>
+                  </object>
+                {{else}}
+                  {{#if twitchPlayer}}
+                    <object id="{{mainStreamFlashPlayerId}}"
+                            bgcolor='#000000'
+                            data='//www-cdn.jtvnw.net/swflibs/TwitchPlayer.swf'
+                            class="embed-responsive-item main-stream-flash-object "
+                            type='application/x-shockwave-flash'
+                            style="height: {{mainStreamHeight}}px; width:100%;">
 
-                    <param name="allowFullScreen"
-                           value="true"/>
-                    <param name="allowNetworking"
-                           value="all"/>
-                    <param name="allowScriptAccess"
-                           value="always"/>
-                    <param name='movie'
-                           value='//www-cdn.jtvnw.net/swflibs/TwitchPlayer.swf'/>
-                    <param name='flashvars'
-                           value='{{mainStreamFlashVars}}'/>
-                  </object>
-                {{/if}}
-                {{#if twitcastPlayer}}
-                  {{#if PiP}}
-                  <div id="twitcastOverlay" style="width:285px; height:160px;"></div>
-                  <object id="{{mainStreamFlashPlayerId}}" 
-                          classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"  codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" 
-                          width="285" 
-                          height="160"
-                          align="middle"
-                          style="margin-left:-20px;">
-                    <param name="allowScriptAccess" value="always" />
-                    <param name="allowFullScreen" value="true" />
-                    <param name="flashVars" value="{{mainStreamFlashVars}}" />
-                    <param name="movie" value="http://twitcasting.tv/swf/livestreamer2sp.swf" />
-                    <param name="quality" value="high" />
-                    <param name="bgcolor" value="#ffffff" />
-                    <embed src="http://twitcasting.tv/swf/livestreamer2sp.swf" 
-                           quality="high" 
-                           bgcolor="#ffffff" 
-                           width="285" 
-                           height="160" 
-                           name="livestreamer" 
-                           id="livestreamderembed" 
-                           align="middle" 
-                           allowScriptAccess="always" 
-                           allowFullScreen="true" 
-                           type="application/x-shockwave-flash" 
-                           pluginspage="http://www.adobe.com/go/getflashplayer" 
-                           flashVars="{{mainStreamFlashVars}}" >
-                  </object>
-                  {{else}}
-                  <div id="twitcastOverlay" style="width:{{windowWidth}}px; height:{{windowHeight -100}}px;"></div>
-                  <object id="{{mainStreamFlashPlayerId}}" 
-                          classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"  codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" 
-                          width="{{windowWidth}}" 
-                          height="{{windowHeight -50}}"
-                          align="middle"
-                          style="margin-left:-20px;"
-                          class="embed-responsive-item">
-                    <param name="allowScriptAccess" value="always" />
-                    <param name="allowFullScreen" value="true" />
-                    <param name="flashVars" value="{{mainStreamFlashVars}}" />
-                    <param name="movie" value="http://twitcasting.tv/swf/livestreamer2sp.swf" />
-                    <param name="quality" value="high" />
-                    <param name="bgcolor" value="#ffffff" />
-                    <embed src="http://twitcasting.tv/swf/livestreamer2sp.swf" 
-                           quality="high" 
-                           bgcolor="#ffffff" 
-                           width="{{windowWidth}}" 
-                           height="{{windowHeight -50}}" 
-                           name="livestreamer" 
-                           id="livestreamderembed" 
-                           align="middle" 
-                           allowScriptAccess="always" 
-                           allowFullScreen="true" 
-                           type="application/x-shockwave-flash" 
-                           pluginspage="http://www.adobe.com/go/getflashplayer" 
-                           flashVars="{{mainStreamFlashVars}}" >
-                  </object>
+                      <param name="allowFullScreen"
+                             value="true"/>
+                      <param name="allowNetworking"
+                             value="all"/>
+                      <param name="allowScriptAccess"
+                             value="always"/>
+                      <param name='movie'
+                             value='//www-cdn.jtvnw.net/swflibs/TwitchPlayer.swf'/>
+                      <param name='flashvars'
+                             value='{{mainStreamFlashVars}}'/>
+                    </object>
+                  {{/if}}
+                  {{#if twitcastPlayer}}
+                    {{#if PiP}}
+                    <div id="twitcastOverlay" style="width:285px; height:160px;"></div>
+                    <object id="{{mainStreamFlashPlayerId}}" 
+                            classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"  codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" 
+                            width="285" 
+                            height="160"
+                            align="middle"
+                            style="margin-left:-20px;">
+                      <param name="allowScriptAccess" value="always" />
+                      <param name="allowFullScreen" value="true" />
+                      <param name="flashVars" value="{{mainStreamFlashVars}}" />
+                      <param name="movie" value="http://twitcasting.tv/swf/livestreamer2sp.swf" />
+                      <param name="quality" value="high" />
+                      <param name="bgcolor" value="#ffffff" />
+                      <embed src="http://twitcasting.tv/swf/livestreamer2sp.swf" 
+                             quality="high" 
+                             bgcolor="#ffffff" 
+                             width="285" 
+                             height="160" 
+                             name="livestreamer" 
+                             id="livestreamderembed" 
+                             align="middle" 
+                             allowScriptAccess="always" 
+                             allowFullScreen="true" 
+                             type="application/x-shockwave-flash" 
+                             pluginspage="http://www.adobe.com/go/getflashplayer" 
+                             flashVars="{{mainStreamFlashVars}}" >
+                    </object>
+                    {{else}}
+                    <div id="twitcastOverlay" style="width:{{windowWidth}}px; height:{{windowHeight -100}}px;"></div>
+                    <object id="{{mainStreamFlashPlayerId}}" 
+                            classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"  codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" 
+                            width="{{windowWidth}}" 
+                            height="{{windowHeight -50}}"
+                            align="middle"
+                            style="margin-left:-20px;"
+                            class="embed-responsive-item">
+                      <param name="allowScriptAccess" value="always" />
+                      <param name="allowFullScreen" value="true" />
+                      <param name="flashVars" value="{{mainStreamFlashVars}}" />
+                      <param name="movie" value="http://twitcasting.tv/swf/livestreamer2sp.swf" />
+                      <param name="quality" value="high" />
+                      <param name="bgcolor" value="#ffffff" />
+                      <embed src="http://twitcasting.tv/swf/livestreamer2sp.swf" 
+                             quality="high" 
+                             bgcolor="#ffffff" 
+                             width="{{windowWidth}}" 
+                             height="{{windowHeight -50}}" 
+                             name="livestreamer" 
+                             id="livestreamderembed" 
+                             align="middle" 
+                             allowScriptAccess="always" 
+                             allowFullScreen="true" 
+                             type="application/x-shockwave-flash" 
+                             pluginspage="http://www.adobe.com/go/getflashplayer" 
+                             flashVars="{{mainStreamFlashVars}}" >
+                    </object>
+                    {{/if}}
                   {{/if}}
                 {{/if}}
+                {{/unless}}
               {{/if}}
-              {{/unless}}
+            </div>
             {{/if}}
           </div>
-            {{/if}}
-        </div>
-      <div class="{{#if cardListContainerHidden}}col-xs-0{{else}}col-xs-4{{/if}} right animate" style="z-index: 10;" id="card-list-container">
+        <div class="{{#if cardListContainerHidden}}col-xs-0{{else}}col-xs-4{{/if}} right animate" style="z-index: 10;" id="card-list-container">
           {{#unless showCurateTools}}
           {{#unless cardListContainerHidden}}
           <style>
@@ -638,17 +638,72 @@
     <div id="carousel-portrait-stream" class="carousel slide" data-interval="false" data-ride="carousel" data-slide-to="1" style="height:{{streamCarouselHeight}}px">
       <div class="carousel-inner" role="listbox">
         <div class="item active" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
-          <h1>Stream 1</h1>
+          <h1>{{deepstream.title}}</h1>
         </div>
+        {{#with deepstream}}
+        {{#each livestreams}}
         <div class="item" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
-          <h1>Stream 2</h1>
+          {{#if active}}
+          <div style="
+            position: absolute;
+            z-index: 100;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            opacity: 0.8;
+            background-color: grey;
+          ">
+          </div>
+                    <div style="
+            position: absolute;
+            z-index: 100;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+          ">
+            <h2 style="line-height:150px;">Now Playing</h2>
+          </div>
+          {{/if}}
+          <div class="row {{#if active}}active{{else}}inactive{{/if}}" data-stream-reference-id="{{reference.id}}" data-stream-id="{{_id}}" style="padding-top:30px;padding-bottom:30px;" >
+            <div class="col-xs-4 col-xs-offset-2 set-main-stream">
+             
+                <li class="embed-responsive embed-responsive-16by9 stream {{#if active}}active{{/if}} {{#if previewMode}}preview-mode{{/if}}" style="background-image:url({{thumbnailUrl}});background-repeat:no-repeat;background-position: center center;background-size:cover">
+                    {{#if live}}
+                      <div class="mini-live-indicator">
+                        LIVE
+                      </div>
+                    {{/if}}
+                </li>
+              
+            </div>
+            <div class="col-xs-4 set-main-stream">
+              <p>{{this.title}}</p>
+            </div>
+          </div>
         </div>
+        {{/each}}
+        {{#each deadstreams}}
         <div class="item" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
-          <h1>Stream 3</h1>
+          
+          <div class="row {{#if active}}active{{else}}inactive{{/if}}" data-stream-reference-id="{{reference.id}}" data-stream-id="{{_id}}" style="padding-top:30px;padding-bottom:30px;" >
+            <div class="col-xs-4 col-xs-offset-2 set-main-stream">
+             
+                <li class="embed-responsive embed-responsive-16by9 stream {{#if active}}active{{/if}} {{#if previewMode}}preview-mode{{/if}}" style="background-image:url({{thumbnailUrl}});background-repeat:no-repeat;background-position: center center;background-size:cover">
+                    {{#if live}}
+                      <div class="mini-live-indicator">
+                        LIVE
+                      </div>
+                    {{/if}}
+                </li>
+              
+            </div>
+            <div class="col-xs-4 set-main-stream">
+              <p>{{this.title}}</p>
+            </div>
+          </div>
         </div>
-        <div class="item" style="height:{{streamCarouselHeight}}px;overflow:hidden;">
-          <h1>Stream 4</h1>
-        </div>
+        {{/each}}
+        {{/with}}
       </div>
       <!-- Controls -->
       {{#if streamCarouselExpanded}}
