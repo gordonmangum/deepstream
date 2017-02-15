@@ -699,7 +699,8 @@
 </template>
 
 <template name="stream_carousel_container">
-  <div class="stream-carousel-container">
+  
+  <div class="stream-carousel-container" style="{{#with deepstream}}{{#if directorMode}}display:none;{{/if}}{{/with}}">
     <div class="stream-carousel-expander">
       <i class="fa fa-square-o fa-2x {{#if streamCarouselExpanded}}fa-rotate-45 expanded-button-on{{/if}}" aria-hidden="true"></i>
     </div>
