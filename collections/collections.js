@@ -627,7 +627,7 @@ Schema.Deepstreams = new SimpleSchema({
   },
   onAir: {
     type: Boolean,
-    defaultValue: false
+    defaultValue: true
   },
   onAirSince: {
     type: Date,
