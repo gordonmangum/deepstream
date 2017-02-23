@@ -414,6 +414,9 @@ Template.deepstreams.helpers({
           _.extend(selector, {
             streams: { "$exists": true, "$ne": [] } // there is at least one stream
           });
+          _.extend(selector, {
+            contextBlocks: { "$exists": true, "$ne": [] } // there is at least one context block
+          });
           break;
         case 'search':
           var regExp = buildRegExp(Session.get('homeStreamListQuery'));
