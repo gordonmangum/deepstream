@@ -448,7 +448,12 @@ Template.deepstream_preview.helpers({
     return this.description || 'Description not currently provided';
   },
   title () {
-    return this.title || '(untitled)';
+    if(this.title){
+      return this.title;
+    } else if (this.streams && this.streams[0]){
+      return this.streams[0].reference.title;
+    }
+    return '(untitled)';
   },
   linkPath () {
     return Template.instance().data.linkToCurate ? this.curatePath() : this.watchPath();
