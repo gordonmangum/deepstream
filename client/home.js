@@ -411,10 +411,10 @@ Template.deepstreams.helpers({
           _.extend(sort, {
             savedAt: -1
           });
+          /*
           _.extend(selector, {
             streams: { $exists: true, $ne: [] } // there is at least one stream
           });
-          /*
           _.extend(selector, {
             contextBlocks: { $exists: true, $ne: [] } // there is at least one context block
           });
