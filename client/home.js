@@ -412,12 +412,11 @@ Template.deepstreams.helpers({
             savedAt: -1
           });
           _.extend(selector, {
-            streams: { "$exists": true, "$ne": [] } // there is at least one stream
+            streams: { $exists: true, $ne: [] } // there is at least one stream
           });
-          /*
           _.extend(selector, {
-            contextBlocks: { "$exists": true, "$ne": [] } // there is at least one context block
-          });*/
+            contextBlocks: { $exists: true, $ne: [] } // there is at least one context block
+          });
           break;
         case 'search':
           var regExp = buildRegExp(Session.get('homeStreamListQuery'));
