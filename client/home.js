@@ -411,6 +411,9 @@ Template.deepstreams.helpers({
           _.extend(sort, {
             savedAt: -1
           });
+          _.extend(selector, {
+            streams: { "$exists": true, "$ne": [] } // there is at least one stream
+          });
           break;
         case 'search':
           var regExp = buildRegExp(Session.get('homeStreamListQuery'));
