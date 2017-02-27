@@ -453,7 +453,7 @@ Template.deepstream_preview.helpers({
   description () {
     if(this.description){
       return this.description;
-    } else if (this.streams && this.streams[0]){
+    } else if (this.streams && this.streams[0] && this.streams[0].reference.description && this.streams[0].reference.description !==""){
       return this.streams[0].reference.description;
     }
     return 'Description not currently provided';
