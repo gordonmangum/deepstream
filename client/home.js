@@ -451,7 +451,12 @@ Template.deepstream_preview.helpers({
     return this.topContextsOfTypes(HOMEPAGE_PREVIEW_CONTEXT_TYPES, 2);
   },
   description () {
-    return this.description || 'Description not currently provided';
+    if(this.description){
+      return this.description;
+    } else if (this.streams && this.streams[0]){
+      return this.streams[0].reference.description;
+    }
+    return 'Description not currently provided';
   },
   title () {
     if(this.title){
