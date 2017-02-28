@@ -557,6 +557,10 @@ Stream = (function (_super) {
               return cloudinaryLink + 'v1470843170/placeholder_vn2movie_h7qqi7.png';
             case 'www.vine.co':
               return cloudinaryLink + 'v1470843170/placeholder_vn2movie_h7qqi7.png';
+            case 'vplayer.nbcsports.com':
+              return cloudinaryLink + 'v1488300830/placeholder_nbc_vgtzj8.png';
+            case 'www.vplayer.nbcsports.com':
+              return cloudinaryLink + 'v1488300830/placeholder_nbc_vgtzj8.png';
             case 'youtube.com':
               return cloudinaryLink + 'v1472609327/placeholder_wpmovie_cqbfeb.png';
             case 'www.youtube.com':
@@ -636,6 +640,10 @@ Stream = (function (_super) {
               return cloudinaryLink + 'v1470843170/placeholder_vn2movie_h7qqi7.png';
             case 'www.vine.co':
               return cloudinaryLink + 'v1470843170/placeholder_vn2movie_h7qqi7.png';
+            case 'vplayer.nbcsports.com':
+              return cloudinaryLink + 'v1488300830/placeholder_nbc_vgtzj8.png';
+            case 'www.vplayer.nbcsports.com':
+              return cloudinaryLink + 'v1488300830/placeholder_nbc_vgtzj8.png';
             case 'youtube.com':
               return cloudinaryLink + 'v1472609327/placeholder_wpmovie_cqbfeb.png';
             case 'www.youtube.com':
