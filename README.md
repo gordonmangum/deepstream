@@ -35,6 +35,7 @@ Supported providers currently:
 - Meerkat (username)
 - Twitcast (username)
 - Vine (embed code)
+- NBC Sports (embed code -- n.b. vplayer.nbcsports.com amp akamai player)
 - wral.com & wralsportsfan.com (videoJs in iFrame)
 - player.waywire.com (Currently Branded as 'the Root')
 - player.pbs.org
