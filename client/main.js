@@ -919,6 +919,22 @@ Template.context_browser.events({
   
 });
 
+Template.context_browser_portrait.onCreated(function(){
+  Meteor.setTimeout(function(){
+    console.info('helloooooooooo')
+    console.info($('#carousel-portrait-context .carousel-inner'))
+    $('#carousel-portrait-context .carousel-inner').each(function() {
+      if ($(this).children('div').length === 1){ 
+        $(this).siblings('.carousel-control, .carousel-indicators').hide();
+        console.info('hide the portrait context switcher');
+      } else {
+        console.info('show the portrait context switcher');
+        $(this).siblings('.carousel-control, .carousel-indicators').show();
+      }
+    });
+  });
+});
+
 Template.context_browser_portrait.helpers({
   userFavorited () {
     console.log(Session.get('streamShortId'))

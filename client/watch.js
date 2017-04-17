@@ -1260,6 +1260,29 @@ Template.stream_li.events({
   }
 });
 
+Template.stream_carousel_container.onCreated(function(){
+  Meteor.setTimeout(function(){
+    $('#carousel-portrait-stream-mobile .carousel-inner').each(function() {
+      if ($(this).children('div').length === 1){ 
+        console.info('hide the stream switcher');
+        $(this).siblings('.carousel-control, .carousel-indicators').hide();
+      } else {
+        console.info('show the stream switcher');
+        $(this).siblings('.carousel-control, .carousel-indicators').show();
+      }
+    });
+    $('#carousel-portrait-stream-desktop .carousel-inner').each(function() {
+      if ($(this).children('div').length === 1){ 
+        console.info('hide the desktop stream switcher');
+        $(this).siblings('.carousel-control, .carousel-indicators').hide();
+      } else {
+        console.info('show the desktop stream switcher');
+        $(this).siblings('.carousel-control, .carousel-indicators').show();
+      }
+    });
+  });
+});
+
 Template.stream_carousel_container.events({
   "click .carousel-control.left.stream-control" (){
     $('#carousel-portrait-stream-desktop.carousel').carousel('prev');
